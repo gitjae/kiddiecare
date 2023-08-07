@@ -26,13 +26,15 @@ public class HospitalInfoController {
     private String ypos = "&yPos=" + y;
 
     private String radius = "&radius=" + r;
+
     @GetMapping("/fetch")
     public String fetchExternalData(Model model){
         String externalApiUrl =
-                "https://apis.data.go.kr/B551182/hospInfoServicev2/getHospBasisList?ServiceKey=" + decode + xpos + ypos + radius;
+                "https://apis.data.go.kr/B551182/hospInfoServicev2/getHospBasisList?ServiceKey=" + encode + xpos + ypos + radius;
+
         Duration cacheTtl = Duration.ofMinutes(1);
 
-        ApiResponse apiResponse = externalApiService.fetchData(externalApiUrl, cacheTtl);
+        ApiResponse apiResponse = externalApiService.fetchData2(externalApiUrl, cacheTtl);
         model.addAttribute("apiResponse", apiResponse);
 
         return "externalData";
