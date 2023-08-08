@@ -26,6 +26,7 @@ public class UserController {
     public Map join(@RequestBody UserRequestDto userDto){
         JSONObject jsonObject = new JSONObject();
 
+        //Optional<User> dupl = userRepository.findUserById(userDto.getId());
         Optional<User> dupl = userRepository.findUserById(userDto.getId());
 
         if(!dupl.isEmpty()){
