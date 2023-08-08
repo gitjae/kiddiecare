@@ -38,4 +38,10 @@ public class User {
         this.email = userDto.getEmail();
         this.isValid = true;
     }
+
+    public void update(UserRequestDto userDto){
+        this.password = userDto.getPassword();
+        this.phone = userDto.getPhone();
+        this.email = userDto.getEmail();
+    }
 }

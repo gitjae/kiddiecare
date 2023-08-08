@@ -25,7 +25,7 @@ public class LogController {
 
     @PostMapping("login")
     public Map login(@RequestBody UserRequestDto userDto, Model model){
-        Optional<User> user = userRepository.findUserById(userDto.getId());
+        Optional<User> user = userRepository.findUserByIdAndIsValid(userDto.getId(), true);
         JSONObject json = new JSONObject();
         if(!user.isEmpty() && userDto.getPassword().equals(user.get().getPassword())){
             model.addAttribute("log", userDto.getId());
