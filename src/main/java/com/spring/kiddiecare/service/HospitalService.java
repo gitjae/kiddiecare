@@ -1,7 +1,7 @@
 package com.spring.kiddiecare.service;
 
-import com.spring.kiddiecare.domain.Hospital.Hospital;
-import com.spring.kiddiecare.domain.Hospital.HospitalRepository;
+import com.spring.kiddiecare.domain.hospital.Hospital;
+import com.spring.kiddiecare.domain.hospital.HospitalRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

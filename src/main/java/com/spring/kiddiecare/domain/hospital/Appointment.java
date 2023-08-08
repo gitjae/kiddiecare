@@ -1,12 +1,9 @@
 package com.spring.kiddiecare.domain.hospital;
 
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -49,7 +46,7 @@ public class Appointment {
         this.modifiedTime = modifiedTime;
     }
 
-    public Appointment(AppoRequestDto appoDto) {
+    public Appointment(com.spring.kiddiecare.domain.hospital.AppoRequestDto appoDto) {
     }
 
 //    @PrePersist
