@@ -22,4 +22,10 @@ public class MainController {
     }
     @GetMapping("/admin/login")
     public String adminLogin(){return "adminLogin";}
+
+    @GetMapping("admin/appointment")
+    public String hospitalReservationForm() {
+        return "hospitalAppointmentForm";
+    }
+
 }

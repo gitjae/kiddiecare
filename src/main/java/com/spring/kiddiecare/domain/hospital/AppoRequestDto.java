@@ -3,9 +3,6 @@ package com.spring.kiddiecare.domain.hospital;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Id;
-import java.sql.Timestamp;
-
 @Getter
 @Setter
 public class AppoRequestDto {
@@ -24,4 +21,18 @@ public class AppoRequestDto {
     private int appoStatus;
 //    private Timestamp createdTime;
 //    private Timestamp modifiedTime;
+
+
+    @Override
+    public String toString() {
+        return "AppoRequestDto{" +
+                "appoNo=" + appoNo +
+                ", id=" + id +
+                ", usersNo=" + usersNo +
+                ", timeNo=" + timeNo +
+                ", symptom='" + symptom + '\'' +
+                ", note='" + note + '\'' +
+                ", appoStatus=" + appoStatus +
+                '}';
+    }
 }
