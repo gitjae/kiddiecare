@@ -28,7 +28,7 @@ public class UserAppointment_UserAppointmentServiceTest {
      */
 
     @InjectMocks        // 테스트 대상 클래스에 Mock 객체 주입
-    private UserAppointment_Service userAppointmentService;
+    private UserAppointmentService userAppointmentService;
 
     @Mock               // Mock 객체 생성
     private UserAppointmentRepository userAppointmentRepository;
