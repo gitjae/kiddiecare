@@ -54,11 +54,4 @@ public class Appointment extends Timestamp {
         this.appoStatus = appoDto.getAppoStatus();
     }
 
-//    public Appointment(AppoRequestDto appoDto) {
-//    }
-
-//    @PrePersist
-//    public void prePersist() {
-//        this.createdTime = new Timestamp(System.currentTimeMillis());
-//    }
 }
