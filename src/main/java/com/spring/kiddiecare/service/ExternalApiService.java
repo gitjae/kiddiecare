@@ -61,10 +61,14 @@ public class ExternalApiService {
 
         String jsonPrintString = null;
 
+        System.out.println("fe2 in");
+
         String cachedDate = valueOps.get(url);
         if(cachedDate != null){
             return new ApiResponse(cachedDate, "cache");
         }
+
+        System.out.println("fe2 no cache");
 
         try {
             URL url1 = new URL(url);
@@ -78,14 +82,17 @@ public class ExternalApiService {
                 result.append(returnLine);
             }
 
+            System.out.println("fe2 api return");
+
             JSONObject jsonObject = XML.toJSONObject(result.toString());
             jsonPrintString = jsonObject.toString();
+
+            System.out.println("fe2 json convert");
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         if(jsonPrintString != null && !jsonPrintString.contains("SERVICE ERROR")){
-
             valueOps.set(url, jsonPrintString, cacheTtl);
             return new ApiResponse(jsonPrintString, "API");
         }
