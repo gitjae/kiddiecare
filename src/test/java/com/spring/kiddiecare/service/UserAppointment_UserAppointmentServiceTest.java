@@ -1,7 +1,7 @@
 package com.spring.kiddiecare.service;
 
-import com.spring.kiddiecare.domain.Hospital.Hospital;
-import com.spring.kiddiecare.domain.Hospital.HospitalRepository;
+import com.spring.kiddiecare.domain.hospital.Hospital;
+import com.spring.kiddiecare.domain.hospital.HospitalRepository;
 import com.spring.kiddiecare.domain.UserAppointment.UserAppointmentDto;
 import com.spring.kiddiecare.domain.UserAppointment.UserAppointmentRepository;
 import org.junit.jupiter.api.BeforeEach;
