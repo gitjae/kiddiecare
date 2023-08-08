@@ -50,6 +50,11 @@ dependencies {
     // Swagger
     // https://mvnrepository.com/artifact/io.springfox/springfox-boot-starter
     implementation 'io.springfox:springfox-boot-starter:3.0.0'
+    // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-redis
+    // implementation 'org.springframework.boot:spring-boot-starter-data-redis:2.7.4'
+
+    // Redis
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 }
 
 tasks.named('test') {
