@@ -1,4 +1,4 @@
-package com.spring.kiddiecare.domain.hospital;
+package com.spring.kiddiecare.util;
 
 import lombok.Getter;
 import lombok.Setter;
