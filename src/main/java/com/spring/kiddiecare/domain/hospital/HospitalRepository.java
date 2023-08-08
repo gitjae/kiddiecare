@@ -1,4 +1,4 @@
-package com.spring.kiddiecare.domain.Hospital;
+package com.spring.kiddiecare.domain.hospital;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

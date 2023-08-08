@@ -1,16 +1,19 @@
 package com.spring.kiddiecare.controller;
 
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import io.swagger.models.Response;
 import org.springframework.web.bind.annotation.*;
 
-@ApiResponses({
-        @ApiResponse(code = 200, message = "Success"),
-        @ApiResponse(code = 400, message = "Bad Request"),
-        @ApiResponse(code = 500, message = "Internal Server Error")
-})
+//@ApiResponses({
+//        @ApiResponse(code = 200, message = "Success"),
+//        @ApiResponse(code = 400, message = "Bad Request"),
+//        @ApiResponse(code = 500, message = "Internal Server Error")
+//})
 
+@Api(tags="API Controller test")
 @RestController
 @RequestMapping("/v1")
 public class ApiController {
@@ -31,8 +34,11 @@ public class ApiController {
         return num1 + num2;
     }
 
-    @GetMapping("/minus/{x}")
+    @ApiOperation(value="뺄셈", notes = "빼기: x - y값 입력")
+    @PostMapping("/minus/{x}")
     public int minus(@PathVariable int x, @RequestParam int y) {
         return x - y;
     }
+
+
 }

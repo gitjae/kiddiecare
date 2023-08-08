@@ -1,22 +1,17 @@
 package com.spring.kiddiecare.domain.hospital;
 
 
-import lombok.AllArgsConstructor;
+import com.spring.kiddiecare.util.Timestamp;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
-
 import javax.persistence.*;
-import java.sql.Timestamp;
+
 
 @Getter
-@Setter
 @NoArgsConstructor
 @Entity
 @Table(name="hospital_appointment")
-public class Appointment {
+public class Appointment extends Timestamp {
     @Id
     private int appoNo;
 
@@ -31,13 +26,15 @@ public class Appointment {
     private String symptom;
     private String note;
     private int appoStatus;
-    @Column(name = "created_time")
-    private Timestamp createdTime;
-    @Column(name = "modified_time")
-    private Timestamp modifiedTime;
+    
+
+//    @Column(name = "created_time")
+//    private Timestamp createdTime;
+//    @Column(name = "modified_time")
+//    private Timestamp modifiedTime;
 
 
-    public Appointment(int appoNo, int id, int usersNo, int timeNo, String symptom, String note, int appoStatus, Timestamp createdTime, Timestamp modifiedTime) {
+    public Appointment(int appoNo, int id, int usersNo, int timeNo, String symptom, String note, int appoStatus) {
         this.appoNo = appoNo;
         this.id = id;
         this.usersNo = usersNo;
@@ -45,12 +42,20 @@ public class Appointment {
         this.symptom = symptom;
         this.note = note;
         this.appoStatus = appoStatus;
-        this.createdTime = createdTime;
-        this.modifiedTime = modifiedTime;
     }
 
     public Appointment(AppoRequestDto appoDto) {
+        this.appoNo = appoDto.getAppoNo();
+        this.id = appoDto.getId();
+        this.usersNo = appoDto.getUsersNo();
+        this.timeNo = appoDto.getTimeNo();
+        this.symptom = appoDto.getSymptom();
+        this.note = appoDto.getNote();
+        this.appoStatus = appoDto.getAppoStatus();
     }
+
+//    public Appointment(AppoRequestDto appoDto) {
+//    }
 
 //    @PrePersist
 //    public void prePersist() {
