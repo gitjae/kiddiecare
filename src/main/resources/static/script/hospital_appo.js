@@ -1,3 +1,9 @@
+// $(function() {
+//     $("#time_set").append(
+//
+//     )
+// });
+
 function appo_create(){
     let name = $('#hospital_name').val();
     let memo = $('#hospital_announcement').val();
@@ -13,14 +19,14 @@ function appo_create(){
 
     $.ajax({
         type: "POST",
-        url: "/api/v1/admin/appo/write",
+        url: "/api/v1/admin/appo/appo-add",
         data: JSON.stringify(data),
         contentType: "application/json",
 
     }).done(function (result) {
-        if(result.write === "success") {
+        if(result.add === "success") {
             alert("병원 정보 업로드 성공!");
-            location.href="/";
+            // location.href="/";
         } else {
             alert("업로드 실패..");
         }
