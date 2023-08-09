@@ -6,6 +6,7 @@
     <title>병원 상세정보</title>
     <link href="/css/hospital-detail-css.css" rel="stylesheet">
 </head>
+<c:import url="header.jsp"></c:import>
 <body>
 
 <div class="kakaoMap-area">

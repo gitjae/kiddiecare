@@ -6,6 +6,7 @@
     <title>사용자 예약 페이지</title>
     <script src="/script/user-booking.js"></script>
 </head>
+<c:import url="header.jsp"></c:import>
 <body>
 <h3>진료예약</h3>
 
@@ -19,7 +20,7 @@
     <p>진료일</p>
     <input type="text" id="treatmentDay" value="" readonly>
     <p>보호자명</p>
-    <input type="text" id="guardian" value="guardian" readonly>
+    <input type="text" id="guardian" value=${userName} readonly>            <%-- 수정 필요 --%>
     <p>자녀정보</p>
     <input type="text" id="children" value="children">
     <p>증상</p>

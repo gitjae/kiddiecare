@@ -7,4 +7,6 @@ window.onload = function() {
 
     document.getElementById('treatmentDate').value = treatmentDate;
     document.getElementById('treatmentDay').value = treatmentDay;
+
+    console.log("userName : ", userName);   // 수정 필요
 };

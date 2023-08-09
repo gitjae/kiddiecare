@@ -2,6 +2,8 @@ package com.spring.kiddiecare.controller;
 
 import com.spring.kiddiecare.domain.doctor.Doctor;
 import com.spring.kiddiecare.domain.hospital.Hospital;
+import com.spring.kiddiecare.domain.user.User;
+import com.spring.kiddiecare.domain.user.UserRepository;
 import com.spring.kiddiecare.service.DoctorService;
 import com.spring.kiddiecare.service.HospitalService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,12 +16,14 @@ import java.util.List;
 @Controller
 @RequestMapping("/appointment")
 public class UserAppointmentController {
-
     @Autowired
     private HospitalService hospitalService;
 
     @Autowired
     private DoctorService doctorService;
+
+    @Autowired
+    private UserRepository userRepository;
 
     // 파라미터로 병원코드 받아서 단일 병원 정보 나타내기
     @GetMapping("/hospitalDetail")
@@ -40,6 +44,7 @@ public class UserAppointmentController {
             @RequestParam("ykiho") String ykiho,
             @RequestParam("treatmentDate") String treatmentDate,
             @RequestParam("treatmentDay") String treatmentDay,
+            @ModelAttribute("log") String userId,
             Model model) {
 
         // 병원 정보
@@ -53,6 +58,12 @@ public class UserAppointmentController {
         // 진료 날짜와 요일
         model.addAttribute("treatmentDate", treatmentDate);
         model.addAttribute("treatmentDay", treatmentDay);
+
+        // 사용자 아이디로 사용자 이름 찾기 -- 수정 필요
+        User user = userRepository.findUserById(userId).orElse(null);
+        if (user != null) {
+            model.addAttribute("userName", user.getName());
+        }
 
         return "userBooking";
     }

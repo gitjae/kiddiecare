@@ -1,0 +1,15 @@
+button{
+    height: 35px;
+    background: #3E85EF;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+input{
+    outline: none;
+    border: none;
+    border-bottom: 1px solid #bebebe;
+}
+
