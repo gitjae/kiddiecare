@@ -10,6 +10,7 @@
 <html>
 <head>
     <title>Title</title>
+    <link href="/css/header.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
     <script src="/script/logout-api.js"></script>
 </head>
