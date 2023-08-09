@@ -6,12 +6,11 @@ import com.spring.kiddiecare.domain.hospital.AppoRequestDto;
 import com.spring.kiddiecare.domain.hospital.Appointment;
 import lombok.RequiredArgsConstructor;
 import org.json.JSONObject;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
+
+import static com.spring.kiddiecare.util.RandomUtil.createRanNum;
 
 @RestController
 @RequiredArgsConstructor
@@ -20,38 +19,24 @@ public class AppointmentController {
 
     private final AppoRepository appoRepository;
 
-//    private final AppoRepository appoRepository;
-//    @PostMapping("add")
-//    public Map addAppo(@ModelAttribute AppoRequestDto appoDto) {
-//        Appointment appo = new Appointment(appoDto);
-//        JSONObject json = new JSONObject();
-//        System.out.println(appo);
-////        appoRepository.save(appo);
-//        json.put("result", "success");
-//
-//        return json.toMap();
-//
-//    }
 
-    @PostMapping(value = "write", consumes = {"multipart/form-data"})
-    public Map wrtie(@ModelAttribute AppoRequestDto appoDto) {
+    @PostMapping(value = "write", consumes = {"application/json"})
+    public Map wrtie(@RequestBody AppoRequestDto appoDto) {
         JSONObject json = new JSONObject();
 
-        appoDto.setAppoNo(1);
-        appoDto.setId(1);
-        appoDto.setUsersNo(1);
-        appoDto.setTimeNo(1);
+        int randNumber = Integer.parseInt(createRanNum());
+
+        appoDto.setNo(randNumber);
+        appoDto.setPatientId(1);
+        appoDto.setGuardian(1);
+        appoDto.setTimeSlotNo(1);
         appoDto.setSymptom("");
 
         System.out.println(appoDto);
-        if(appoDto != null) {
-            Appointment appo = new Appointment(appoDto);
-            appoRepository.save(appo);
+        Appointment appo = new Appointment(appoDto);
+        appoRepository.save(appo);
 
-            json.put("write", "success");
-        } else {
-            json.put("write", "fail");
-        }
+        json.put("write", "success");
 
         return json.toMap();
     }

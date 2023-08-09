@@ -14,7 +14,7 @@
 </head>
 <body>
     <div>
-        <form method="post" onsubmit="return false" enctype="multipart/form-data">
+        <form method="post" onsubmit="return false">
             <input type="text" id="hospital_name" name="hospital_name" placeholder="병원명">
             <input type="text" id="hospital_announcement" name="hospital_announcement" placeholder="병원 공지사항">
             <input type="text" id="count" name="count" placeholder="현재 예약자 수">

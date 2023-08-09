@@ -14,10 +14,9 @@ function appo_create(){
     $.ajax({
         type: "POST",
         url: "/api/v1/admin/appo/write",
-        timeout: 0,
         data: JSON.stringify(data),
         contentType: "application/json",
-        dataType: "json",
+
     }).done(function (result) {
         if(result.write === "success") {
             alert("병원 정보 업로드 성공!");
