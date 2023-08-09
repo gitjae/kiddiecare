@@ -4,7 +4,7 @@
 <html>
 <head>
     <title>병원 상세정보</title>
-    <link href="/script/hospital-detail-css.css" rel="stylesheet">
+    <link href="/css/hospital-detail-css.css" rel="stylesheet">
 </head>
 <body>
 
@@ -21,13 +21,16 @@
     <h3 id="hospital-intro">${hospital.hospitalIntro}</h3>
 
     <div class="doctor-info">
-        <div class="doctor-card">
-            <p>의사 아이콘 영역</p><br>
-            <p id="doctor-name">의사DB) 의사이름</p>
-            <p id="doctor-offDay">의사DB) 휴진일</p>
-        </div>
+        <c:forEach items="${doctors}" var="doctor">
+            <div class="doctor-card">
+                <p>&#127976; &#128138;</p>
+                <p id="doctor-no">의사 번호 : ${doctor.no}</p>
+                <p id="doctor-name">의사 이름 : ${doctor.doctorName}</p>
+                <p id="doctor-offDay">의사DB) 휴진일</p>
+            </div>
+        </c:forEach>
     </div>
-<%--    </c:forEach>--%>
+    <%--    </c:forEach>--%>
 
     <table class="Calendar">
         <thead>
@@ -56,6 +59,8 @@
     <div class="book-time-table">
         병원DB) 예약시간 테이블 표
     </div>
+
+    <button id="booking-btn">예약하기</button>
 
 </div>
 <script src="/script/hospital-detail.js"></script>
