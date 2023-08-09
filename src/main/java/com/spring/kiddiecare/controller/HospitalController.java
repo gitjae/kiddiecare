@@ -1,4 +1,4 @@
-package com.spring.kiddiecare.controller.Hospital;
+package com.spring.kiddiecare.controller;
 
 import com.spring.kiddiecare.service.HospitalService;
 import org.springframework.beans.factory.annotation.Autowired;
