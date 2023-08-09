@@ -10,7 +10,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="/css/login.css">
+    <link rel="stylesheet" href="/css/admin-login.css">
     <title>login</title>
 </head>
 <body>
