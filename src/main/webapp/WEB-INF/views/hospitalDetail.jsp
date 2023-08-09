@@ -60,7 +60,8 @@
         병원DB) 예약시간 테이블 표
     </div>
 
-    <button id="booking-btn">예약하기</button>
+    <button id="booking-btn" data-ykiho="${hospital.ykiho}">예약하기</button>
+
 
 </div>
 <script src="/script/hospital-detail.js"></script>
