@@ -20,11 +20,14 @@ public class AppointmentController {
     private final AppoRepository appoRepository;
 
 
-    @PostMapping(value = "write", consumes = {"application/json"})
-    public Map wrtie(@RequestBody AppoRequestDto appoDto) {
+    @PostMapping(value = "appo-add", consumes = {"application/json"})
+    public Map appo_add(@RequestBody AppoRequestDto appoDto) {
         JSONObject json = new JSONObject();
 
         int randNumber = Integer.parseInt(createRanNum());
+//        String randNumber = createRanNum();
+
+        System.out.println(randNumber);
 
         appoDto.setNo(randNumber);
         appoDto.setPatientId(1);
@@ -36,10 +39,19 @@ public class AppointmentController {
         Appointment appo = new Appointment(appoDto);
         appoRepository.save(appo);
 
-        json.put("write", "success");
+        json.put("add", "success");
 
         return json.toMap();
     }
 
+    @PostMapping (value = "doc-add", consumes = {"application/json"})
+    public Map doc_add(@RequestBody AppoRequestDto appoDto) {
+        JSONObject json = new JSONObject();
+
+
+
+        json.put("add", "success");
+        return json.toMap();
+    }
 
 }
