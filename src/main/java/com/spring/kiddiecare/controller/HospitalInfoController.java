@@ -83,7 +83,7 @@ public class HospitalInfoController {
     @GetMapping("/home")
     public String home(Model model){
         //String log = (String) request.getAttribute("log", WebRequest.SCOPE_SESSION);
-        String log = "redberry";
+        String log = "ingu";
 
         Optional<User> foundUser = userRepository.findUserById(log);
         if(foundUser.isPresent()){

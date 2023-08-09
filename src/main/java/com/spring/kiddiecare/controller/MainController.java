@@ -28,4 +28,6 @@ public class MainController {
         return "hospitalAppointmentForm";
     }
 
+    @GetMapping("/geolocation")
+    public String geolocation() { return "geolocation"; }
 }
