@@ -45,7 +45,7 @@ class ExternalApiServiceTest {
 
         Duration cacheTtl = Duration.ofMinutes(1);
 
-        ApiResponse result = externalApiService.fetchData2(url, cacheTtl);
+        ApiResponse result = externalApiService.fetchData(url, cacheTtl);
 
 
     }

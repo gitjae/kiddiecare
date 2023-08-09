@@ -58,7 +58,9 @@ dependencies {
     // Redis
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 
-
+    // xml RestTemplate 응답 처리용 jaxb-runtime
+    // https://mvnrepository.com/artifact/org.glassfish.jaxb/jaxb-runtime
+    implementation 'org.glassfish.jaxb:jaxb-runtime:2.3.6'
 }
 
 tasks.named('test') {

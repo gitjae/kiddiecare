@@ -1,21 +1,21 @@
 package com.spring.kiddiecare.service;
 
 import com.spring.kiddiecare.util.ApiResponse;
+import com.spring.kiddiecare.util.hospbasis.HospBasisItem;
+import com.spring.kiddiecare.util.hospbasis.HospBasisBody;
+import com.spring.kiddiecare.util.hospbasis.HospBasisResponse;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.json.XML;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.connection.StringRedisConnection;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.net.*;
 import java.time.Duration;
+import java.util.List;
 
 @Service
 public class ExternalApiService {
@@ -156,4 +156,36 @@ public class ExternalApiService {
 //        }
 //    }
 
+
+    public ApiResponse fetchDataClass(String url, Duration cacheTtl) {
+        String cachedData = valueOps.get(url);
+        if (cachedData != null) {
+            return new ApiResponse(cachedData, "cache");
+        }
+
+        String data = null;
+
+        try {
+            URI uri = new URI(url);
+            HospBasisResponse response = restTemplate.getForObject(uri, HospBasisResponse.class);
+            System.out.println(response);
+            HospBasisBody body = response.getBody();
+            List<HospBasisItem> items = body.getItems();
+            for(HospBasisItem item : items){
+                System.out.println("item : " + item.getYadmNm());
+            }
+            JSONArray jsonArray = new JSONArray(items);
+            data = jsonArray.toString();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        System.out.println("data:" + data);
+
+        if (data != null) {
+            valueOps.set(url, data, cacheTtl);
+            return new ApiResponse(data, "API");
+        }
+
+        return new ApiResponse(data, "error");
+    }
 }

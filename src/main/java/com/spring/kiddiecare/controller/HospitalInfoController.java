@@ -96,7 +96,7 @@ public class HospitalInfoController {
 
             Duration cacheTtl = Duration.ofSeconds(5);
 
-            ApiResponse apiResponse = externalApiService.fetchData(url, cacheTtl);
+            ApiResponse apiResponse = externalApiService.fetchDataClass(url, cacheTtl);
             model.addAttribute("apiResponse", apiResponse);
 
 
