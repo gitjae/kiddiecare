@@ -13,6 +13,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.Duration;
 import java.util.Optional;
@@ -22,28 +24,29 @@ import java.util.Optional;
 public class HospitalInfoController {
     @Autowired
     private ExternalApiService externalApiService;
+    private String baseUrl = "https://apis.data.go.kr/B551182/";
+    private String hospInfoService="+hospInfoServicev2/getHospBasisList?ServiceKey=";
+    private String admDtlInfoService="+MadmDtlInfoService2/getTrnsprtInfo2?serviceKey=";
     @Autowired
     private final UserRepository userRepository;
 
 
     @Value("${myapp.decode}")
-    private String decode;
-
+    private String decodeServiceKey;
     @Value("${myapp.encode}")
-    private String encode;
-
+    private String encodeServiceKey;
+    private String keyword = "&yadmNm=";
     private String x = "128.5493894";
     private String y = "35.9348614";
     private String r = "100";
     private String xpos = "&xPos=" + x;
     private String ypos = "&yPos=" + y;
-
     private String radius = "&radius=" + r;
 
     @GetMapping("/fetch")
     public String fetchExternalData(Model model){
         String externalApiUrl =
-                "https://apis.data.go.kr/B551182/hospInfoServicev2/getHospBasisList?ServiceKey=" + encode;
+                "https://apis.data.go.kr/B551182/hospInfoServicev2/getHospBasisList?ServiceKey=" + encodeServiceKey;
 
         Duration cacheTtl = Duration.ofMinutes(1);
 
@@ -61,6 +64,14 @@ public class HospitalInfoController {
      dgsbjtCd: 11 (소아청소년과 진료코드)
      yadmNm: 병원이름
      */
+//    @GetMapping ("/search")
+//    public String search(@RequestParam(defaultValue="") String requestKeyword, Model model){
+//        String Url = baseUrl + hospInfoService + encodeServiceKey + keyword + requestKeyword ;
+//        Duration cacheTtl = Duration.ofDays(1);
+//        ApiResponse apiResponse = externalApiService.fetchData2(Url, cacheTtl);
+//        model.addAttribute("apiResponse", apiResponse);
+//        return "externalData";
+//    }
 
 
     // TODO 검색결과를 클릭시 병원 상세 정보가 나오는 로직
