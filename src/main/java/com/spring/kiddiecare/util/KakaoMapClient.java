@@ -16,6 +16,7 @@ import java.net.HttpURLConnection;
 
 @Component
 public class KakaoMapClient {
+
     private final RestTemplate restTemplate;
     //@Value("${kakao.rest_api_key}")
 

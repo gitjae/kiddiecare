@@ -1,6 +1,8 @@
 package com.spring.kiddiecare.controller;
 
 import com.spring.kiddiecare.domain.hospitalInfo.HospitalInfo;
+import com.spring.kiddiecare.domain.user.User;
+import com.spring.kiddiecare.domain.user.UserRepository;
 import com.spring.kiddiecare.service.ExternalApiService;
 import com.spring.kiddiecare.util.ApiResponse;
 import lombok.RequiredArgsConstructor;
@@ -9,13 +11,20 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.context.request.WebRequest;
 
 import java.time.Duration;
+import java.util.Optional;
 
+@RequiredArgsConstructor
 @Controller
 public class HospitalInfoController {
     @Autowired
     private ExternalApiService externalApiService;
+    @Autowired
+    private final UserRepository userRepository;
+
 
     @Value("${myapp.decode}")
     private String decode;
@@ -60,6 +69,33 @@ public class HospitalInfoController {
     // TODO 내 위치 기반으로 반경 200M 안에 있는 병원 목록이 나오는 로직
 
     // TODO 사용자 집 위치 기반으로 반경 200M 안에 있는 병원 목록이 나오는 로직
+    @GetMapping("/home")
+    public String home(Model model){
+        //String log = (String) request.getAttribute("log", WebRequest.SCOPE_SESSION);
+        String log = "redberry";
+
+        Optional<User> foundUser = userRepository.findUserById(log);
+        if(foundUser.isPresent()){
+            User user = foundUser.get();
+            String pageNo = "&pageNo=1";
+            String dgsbjtCd = "&dgsbjtCd=11";
+            String xpos1 = "&xPos="+user.getXpos();
+            String ypos1 = "&yPos="+user.getYpos();
+            String radius1 = "&radius=200";
+
+            String baseUrl = "https://apis.data.go.kr/B551182/hospInfoServicev2/getHospBasisList?ServiceKey=";
+            String url = baseUrl + encode + pageNo + dgsbjtCd + xpos1 + ypos1 + radius1;
+
+            Duration cacheTtl = Duration.ofSeconds(5);
+
+            ApiResponse apiResponse = externalApiService.fetchData(url, cacheTtl);
+            model.addAttribute("apiResponse", apiResponse);
+
+
+        }
+        return "externalData";
+    }
+
 
     // TODO 회원가입시 도로명 주소로 x,y좌표 저장하는 로직
 
