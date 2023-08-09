@@ -1,14 +1,10 @@
-// document.addEventListener("DOMContentLoaded", function () {
-//     buildCalendar();
-// });
-
 window.onload = function () {
     buildCalendar();
 }
 
 let nowMonth = new Date();
 let today = new Date();
-today.setHours(0, 0, 0, 0);    // 비교 편의를 위해 today의 시간을 초기화
+today.setHours(0, 0, 0, 0);
 
 // 달력 생성 : 해당 달에 맞춰 테이블을 만들고, 날짜를 채워 넣기
 function buildCalendar() {
@@ -64,6 +60,7 @@ function buildCalendar() {
 
 let selectDate = null; // 날짜 저장 (Date 타입)
 let selectDay = null;   // 요일 저장 (String 타입)
+let formattedDate = null;
 // 날짜 선택
 function choiceDate(nowColumn) {
     if (document.getElementsByClassName("choiceDay")[0]) {                              // 기존에 선택한 날짜가 있으면
@@ -76,9 +73,11 @@ function choiceDate(nowColumn) {
     let dayNames = ["일", "월", "화", "수", "목", "금", "토"];
     selectDay = dayNames[selectDate.getDay()]; // 선택된 요일 저장
 
-    let formattedDate = selectDate.getFullYear() + "-" + leftPad(selectDate.getMonth() + 1) + "-" + leftPad(selectDate.getDate());  // --> 선택된 날짜: Thu Aug 17 2023 00:00:00 GMT+0900 (한국 표준시) 값 변경
+    formattedDate = selectDate.getFullYear() + "-" + leftPad(selectDate.getMonth() + 1) + "-" + leftPad(selectDate.getDate());  // --> 선택된 날짜: Thu Aug 17 2023 00:00:00 GMT+0900 (한국 표준시) 값 변경
     console.log("선택된 날짜:", formattedDate);
     console.log("선택된 요일:", selectDay);
+
+
 }
 
 // 이전달 버튼 클릭
@@ -100,4 +99,9 @@ function leftPad(value) {
         return value;
     }
     return value;
+}
+
+document.getElementById("booking-btn").onclick = function() {
+    let ykiho = this.getAttribute("data-ykiho");
+    location.href = `/appointment/booking?ykiho=${ykiho}&treatmentDate=${formattedDate}&treatmentDay=${selectDay}`;
 }

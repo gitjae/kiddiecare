@@ -34,4 +34,28 @@ public class UserAppointmentController {
 
         return "hospitalDetail";
     }
+
+    @GetMapping("/booking")
+    public String showBookingPage(
+            @RequestParam("ykiho") String ykiho,
+            @RequestParam("treatmentDate") String treatmentDate,
+            @RequestParam("treatmentDay") String treatmentDay,
+            Model model) {
+
+        // 병원 정보
+        Hospital hospital = hospitalService.findHospitalByYkiho(ykiho);
+        model.addAttribute("hospital", hospital);
+
+        // 해당 병원의 의사 정보
+        List<Doctor> doctors = doctorService.findDoctorsByYkiho(ykiho);
+        model.addAttribute("doctors", doctors);
+
+        // 진료 날짜와 요일
+        model.addAttribute("treatmentDate", treatmentDate);
+        model.addAttribute("treatmentDay", treatmentDay);
+
+        return "userBooking";
+    }
+
+
 }

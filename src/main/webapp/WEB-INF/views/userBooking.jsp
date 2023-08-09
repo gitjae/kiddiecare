@@ -4,18 +4,31 @@
 <html>
 <head>
     <title>사용자 예약 페이지</title>
+    <script src="/script/user-booking.js"></script>
 </head>
 <body>
-<%--    <form action="/reserve" method="post">--%>
-<%--        <h2>병원명</h2>--%>
-<%--            <button id="hospitalId">다고쳐소아과</button>--%>
-<%--            <button id="noHospitalId">없는병원</button>--%>
-<%--        <h2>부모 ID</h2>--%>
-<%--            <input type="text" name="parentId">--%>
-<%--        <h2>자녀 ID</h2>--%>
-<%--            <input type="text" name="childId">--%>
+<h3>진료예약</h3>
 
-<%--        <input type="submit" value="예약하기">--%>
-<%--    </form>--%>
+<form action="/reserve" method="post">
+    <p>병원명</p>
+    <input type="text" id="hospitalName" value=${hospital.hospitalName} readonly>
+    <p>병원주소</p>
+    <input type="text" id="hospitalAddr" value="hospitalAddr" readonly>
+    <p>진료날짜</p>
+    <input type="text" id="treatmentDate" value="" readonly>
+    <p>진료일</p>
+    <input type="text" id="treatmentDay" value="" readonly>
+    <p>보호자명</p>
+    <input type="text" id="guardian" value="guardian" readonly>
+    <p>자녀정보</p>
+    <input type="text" id="children" value="children">
+    <p>증상</p>
+    <input type="text" id="symptom" value="symptom">
+    <p>참고사항</p>
+    <input type="text" id="note" value="note"><br/>
+
+    <input type="submit" id="payBtn" value="결제하기">
+</form>
+
 </body>
 </html>
