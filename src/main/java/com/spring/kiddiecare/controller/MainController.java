@@ -5,6 +5,27 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class MainController {
+
+    @GetMapping("/")
+    public String index(){
+        return "index";
+    }
+
+    @GetMapping("join")
+    public String join(){
+        return "join";
+    }
+
+    @GetMapping("login")
+    public String userLogin(){
+        return "login";
+    }
     @GetMapping("/admin/login")
-    public String login(){return "adminLogin";}
+    public String adminLogin(){return "adminLogin";}
+
+    @GetMapping("admin/appointment")
+    public String hospitalReservationForm() {
+        return "hospitalAppointmentForm";
+    }
+
 }

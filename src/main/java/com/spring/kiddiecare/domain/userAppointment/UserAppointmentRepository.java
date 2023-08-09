@@ -1,4 +1,4 @@
-package com.spring.kiddiecare.domain.UserAppointment;
+package com.spring.kiddiecare.domain.userAppointment;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
