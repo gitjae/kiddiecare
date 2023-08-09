@@ -1,6 +1,7 @@
 package com.spring.kiddiecare.service;
 
 import com.spring.kiddiecare.util.ApiResponse;
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.XML;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,9 +30,9 @@ public class ExternalApiService {
         this.valueOps = redisTemplate.opsForValue();
     }
 
-    public ApiResponse fetchData(String url, Duration cacheTtl){
+    public ApiResponse fetchData(String url, Duration cacheTtl) {
         String cachedDate = valueOps.get(url);
-        if(cachedDate != null){
+        if (cachedDate != null) {
             return new ApiResponse(cachedDate, "cache");
         }
 
@@ -46,7 +47,7 @@ public class ExternalApiService {
         System.out.println("data:" + data);
 
 
-        if(data != null && !data.contains("SERVICE ERROR")){
+        if (data != null && !data.contains("SERVICE ERROR")) {
 
             valueOps.set(url, data, cacheTtl);
             return new ApiResponse(data, "API");
@@ -55,48 +56,59 @@ public class ExternalApiService {
         return new ApiResponse(data, "error");
     }
 
-
-    public ApiResponse fetchData2(String url, Duration cacheTtl){
+    public ApiResponse fetchData2(String url,Duration cacheTtl) {
         StringBuffer result = new StringBuffer();
-
-        String jsonPrintString = null;
-
-        System.out.println("fe2 in");
-
         String cachedDate = valueOps.get(url);
-        if(cachedDate != null){
+
+        if (cachedDate != null) {
             return new ApiResponse(cachedDate, "cache");
         }
 
-        System.out.println("fe2 no cache");
-
         try {
             URL url1 = new URL(url);
-
             HttpURLConnection urlConnection = (HttpURLConnection) url1.openConnection();
             urlConnection.connect();
             BufferedInputStream bufferedInputStream = new BufferedInputStream(urlConnection.getInputStream());
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(bufferedInputStream, "UTF-8"));
             String returnLine;
-            while ((returnLine = bufferedReader.readLine()) != null){
+
+            while ((returnLine = bufferedReader.readLine()) != null) {
                 result.append(returnLine);
             }
 
-            System.out.println("fe2 api return");
-
+            // xml 형식의 데이터를 json으로 변환합니다.
             JSONObject jsonObject = XML.toJSONObject(result.toString());
-            jsonPrintString = jsonObject.toString();
 
-            System.out.println("fe2 json convert");
+            // 오류가 있는지 검사합니다.
+            if (jsonObject.toString().contains("SERVICE ERROR")) {
+                return new ApiResponse(jsonObject.toString(), "error");
+            }
+
+            // "items" 항목을 추출합니다.
+            JSONArray itemArr = jsonObject.getJSONObject("response").getJSONObject("body").getJSONObject("items").getJSONArray("item");
+
+            JSONObject jsonData = new JSONObject();
+            for (int i = 0; i < itemArr.length(); i++) {
+                JSONObject item = itemArr.getJSONObject(i);
+                JSONObject value = new JSONObject();
+                value.put("XPos", item.getDouble("XPos"));
+                value.put("YPos", item.getDouble("YPos"));
+                value.put("yadmNm", item.getString("yadmNm"));
+                value.put("telno", item.getString("telno"));
+                value.put("estbDd", item.getInt("estbDd"));
+                jsonData.put(item.getString("ykiho"),value);
+            }
+//            // 첫 번째 "item"을 추출합니다.
+//            JSONObject jsonPrintobj = itemArr.getJSONObject(0);
+
+            // 추출된 데이터를 캐시에 저장합니다.
+            valueOps.set(url, jsonData.toString(), cacheTtl);
+            return new ApiResponse(jsonData.toString(), "API");
+
         } catch (Exception e) {
             e.printStackTrace();
+            return new ApiResponse("error", "API");
         }
-
-        if(jsonPrintString != null && !jsonPrintString.contains("SERVICE ERROR")){
-            valueOps.set(url, jsonPrintString, cacheTtl);
-            return new ApiResponse(jsonPrintString, "API");
-        }
-
-        return new ApiResponse(jsonPrintString, "error");
     }
+
 }

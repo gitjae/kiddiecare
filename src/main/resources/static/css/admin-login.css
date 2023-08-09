@@ -1,0 +1,115 @@
+@font-face{
+    font-family: 'nanum';
+    src: url(/font/NanumSquareNeo-cBd.ttf);
+    font-weight: 400;
+}
+
+@font-face{
+    font-family: 'nanum';
+    src: url(/font/NanumSquareNeo-eHv.ttf);
+    font-weight: 700;
+}
+
+html, body{
+    min-height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+input:focus {
+    outline: none;
+}
+
+.login-area{
+    min-width: 500px;
+    height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    position: relative;
+    max-width: 376px;
+    margin: 0px auto;
+    box-shadow: rgba(0, 0, 0, 0.12) 0px 3px 6px -4px, rgba(0, 0, 0, 0.08) 0px 6px 16px 0px, rgba(0, 0, 0, 0.05) 0px 9px 28px 8px;
+    border-radius: 8px;
+    overflow: hidden;
+    gap: 30px;
+}
+
+.icon-area{
+    margin: 20px;
+}
+
+.icon-area a{
+    text-decoration: none;
+    color: black;
+}
+
+.icon-area a:hover a:visited{
+    cursor: pointer;
+    color: black;
+}
+
+.icon-area span{
+    font-size: 36px;
+}
+
+.login-form{
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 300px;
+}
+
+.input-setting{
+    border: 1px solid rgb(228, 229, 237);
+    border-radius: 4px;
+    height: 30px;
+    font-size: 15px;
+}
+
+.login-form input{
+    border: none;
+    box-sizing: border-box;
+    text-align: left;
+    color: inherit;
+    background-color: transparent;
+    font-size: inherit;
+    height: 30px;
+    width: 100%;
+}
+
+.login-form button {
+    width: 100%;
+    height: 42px;
+    border : none;
+    box-sizing: border-box;
+    font-size: inherit;
+}
+
+.sign-up-area{
+    width: 100%;
+    height: 42px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border : none;
+    box-sizing: border-box;
+    margin-bottom: 20px;
+}
+
+.sign-up-a{
+    cursor: pointer;
+    user-select: none;
+    color: rgb(48, 52, 65);
+    text-decoration: none;
+}
+
+span,a,h1,h4{
+    font-family: 'nanum';
+}
+
+input::placeholder {
+    font-family: 'nanum';
+}

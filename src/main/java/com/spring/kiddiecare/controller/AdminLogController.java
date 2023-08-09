@@ -1,8 +1,8 @@
 package com.spring.kiddiecare.controller;
 
 import com.spring.kiddiecare.domain.hospitalAdmin.Admin;
+import com.spring.kiddiecare.domain.hospitalAdmin.AdminRepository;
 import com.spring.kiddiecare.domain.hospitalAdmin.AdminRequestDto;
-import com.spring.kiddiecare.domain.hospitalAdmin.AdminRespository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -19,49 +19,49 @@ import java.util.Optional;
 @RequestMapping("admin")
 public class AdminLogController {
 
-    private final AdminRespository adminRespository;
-
-//    @SessionScope
-//    @PostMapping(value = "login/check")
-//    public ModelAndView login(@ModelAttribute AdminRequestDto adminDto, WebRequest request) {
-//        boolean sessionIsNull = Optional.ofNullable(request.getAttribute("log", WebRequest.SCOPE_SESSION)).isEmpty();
-//        Optional<String> adminId = Optional.ofNullable(adminDto.getAdminId());
-//        Optional<String> adminPw = Optional.ofNullable(adminDto.getAdminPw());
-//        String prevUrl = request.getHeader("referer");
-//        String redirectUrl = "redirect:" + prevUrl;
-//
-//        if (sessionIsNull || adminId.isEmpty() || adminPw.isEmpty()){
-//            return new ModelAndView(redirectUrl);
-//        }
-//
-//        Admin admin = adminRespository.findByAdminIdAndAdminPw(adminId.get(), adminPw.get());
-//        if (admin != null) {
-//            ModelAndView modelAndView = new ModelAndView(redirectUrl);
-//            modelAndView.addObject("log", admin.getAdminName());
-//            return modelAndView;
-//        } else {
-//            return new ModelAndView(redirectUrl);
-//        }
-//    }
+    private final AdminRepository adminRepository;
 
     @SessionScope
     @PostMapping(value = "login/check")
     public ModelAndView login(@ModelAttribute AdminRequestDto adminDto, WebRequest request) {
-        String prevUrl = request.getHeader("referer");
-        String redirectUrl = "redirect:" + prevUrl;
-        System.out.println(adminDto);
+        boolean sessionIsNull = Optional.ofNullable(request.getAttribute("log", WebRequest.SCOPE_SESSION)).isEmpty();
+        Optional<String> adminId = Optional.ofNullable(adminDto.getAdminId());
+        Optional<String> adminPw = Optional.ofNullable(adminDto.getAdminPw());
+        ModelAndView modelAndView = new ModelAndView();
 
-        return Optional.ofNullable(request.getAttribute("log", WebRequest.SCOPE_SESSION))
-                .filter(__ -> adminDto.getAdminId() != null && adminDto.getAdminPw() != null)
-                .map(__ -> adminRespository.findByAdminIdAndAdminPw(adminDto.getAdminId(), adminDto.getAdminPw()))
-                .map(admin -> {
-                    ModelAndView modelAndView = new ModelAndView("/");
-                    modelAndView.addObject("log", admin.getAdminName());
-                    return modelAndView;
-                })
-                .orElse(new ModelAndView(redirectUrl));
+        if (!sessionIsNull){
+            return new ModelAndView("redirect:/");
+        }
+
+        if(adminId.isEmpty() || adminPw.isEmpty()){
+            return new ModelAndView("redirect:/login");
+        }
+
+        Admin admin = adminRepository.findByAdminIdAndAdminPw(adminId.get(), adminPw.get());
+        if (admin != null) {
+            modelAndView.setViewName("redirect:/");
+            modelAndView.addObject("log", admin.getAdminName());
+            return modelAndView;
+        } else {
+            return new ModelAndView("redirect:/");
+        }
     }
 
+//    @SessionScope
+//    @PostMapping(value = "login/check")
+//    public ModelAndView login(@ModelAttribute AdminRequestDto adminDto, WebRequest request) {
+//        return Optional.ofNullable(request.getAttribute("log", WebRequest.SCOPE_SESSION))
+//                .filter(__ -> adminDto.getAdminId() != null && adminDto.getAdminPw() != null)
+//                .map(__ -> adminRepository.findByAdminIdAndAdminPw(adminDto.getAdminId(), adminDto.getAdminPw()))
+//                .map(admin -> {
+//                    ModelAndView modelAndView = new ModelAndView("redirect:/");
+//                    modelAndView.addObject("log", admin.getAdminName());
+//                    return modelAndView;
+//                })
+//                .orElseGet(() -> {
+//                    return new ModelAndView("redirect:/");
+//                });
+//    }
 
     @GetMapping("logout")
     public String logout(WebRequest request, SessionStatus status){ // 세션에 대한 권한을 준다. 없으면 remove가 실행되지 않는다.
