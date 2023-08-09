@@ -26,17 +26,23 @@
             <label for="date">
                 <input type="date" id="date" max="2023-09-09" min="2023-08-09" value="2023-08-09">
             </label>
+
             <table id="time_set">
                 <thead>
-                    <tr>
-                        <th>시간</th>
-                        <th>예약가능 수</th>
-                    </tr>
+                <tr>
+                    <th>Time</th>
+                    <th>Max</th>
+                    <th>Count</th>
+                    <th>Block</th>
+                    <th>Enable</th>
+                </tr>
                 </thead>
+                <tbody id="time_set_body">
+
+                </tbody>
             </table>
+
             <input type="text" id="hospital_announcement" name="hospital_announcement" placeholder="병원 공지사항">
-            <input type="text" id="count" name="count" placeholder="현재 예약자 수">
-            <input type="text" id="max" name="max" placeholder="예약 가능한 최대 인원수">
 
             <button onclick="appo_create()">예약 생성</button>
         </form>

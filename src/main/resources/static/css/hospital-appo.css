@@ -14,3 +14,16 @@ ul, ol {
     list-style: none;
 }
 
+table, th, td {
+    border : none;
+}
+
+th, td {
+    width: 100px;
+    text-align: center;
+}
+
+table {
+    padding: 30px;
+    background: lightgray;
+}
