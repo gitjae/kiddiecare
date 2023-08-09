@@ -30,14 +30,16 @@ public class ExternalApiService {
         this.valueOps = redisTemplate.opsForValue();
     }
 
+
     public ApiResponse fetchData(String url, Duration cacheTtl) {
+        JSONObject result = new JSONObject();
         String cachedDate = valueOps.get(url);
         if (cachedDate != null) {
             return new ApiResponse(cachedDate, "cache");
         }
 
-
         String data = null;
+
         try {
             URI uri = new URI(url);
             data = restTemplate.getForObject(uri, String.class);
@@ -46,9 +48,7 @@ public class ExternalApiService {
         }
         System.out.println("data:" + data);
 
-
-        if (data != null && !data.contains("SERVICE ERROR")) {
-
+        if (result != null) {
             valueOps.set(url, data, cacheTtl);
             return new ApiResponse(data, "API");
         }
@@ -56,59 +56,104 @@ public class ExternalApiService {
         return new ApiResponse(data, "error");
     }
 
-    public ApiResponse fetchData2(String url,Duration cacheTtl) {
-        StringBuffer result = new StringBuffer();
+    public ApiResponse hospList(String url, Duration cacheTtl) {
+        JSONObject result = new JSONObject();
         String cachedDate = valueOps.get(url);
-
         if (cachedDate != null) {
             return new ApiResponse(cachedDate, "cache");
         }
 
+        String data = null;
+
         try {
-            URL url1 = new URL(url);
-            HttpURLConnection urlConnection = (HttpURLConnection) url1.openConnection();
-            urlConnection.connect();
-            BufferedInputStream bufferedInputStream = new BufferedInputStream(urlConnection.getInputStream());
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(bufferedInputStream, "UTF-8"));
-            String returnLine;
+            data = restTemplate.getForObject(new URI(url), String.class);
 
-            while ((returnLine = bufferedReader.readLine()) != null) {
-                result.append(returnLine);
-            }
+            JSONObject jsonData = new JSONObject(data);
+            int numOfRows = jsonData.getJSONObject("response").getJSONObject("body").getInt("numOfRows");
+            int pageNo = jsonData.getJSONObject("response").getJSONObject("body").getInt("pageNo");
+            int totalCount = jsonData.getJSONObject("response").getJSONObject("body").getInt("totalCount");
 
-            // xml 형식의 데이터를 json으로 변환합니다.
-            JSONObject jsonObject = XML.toJSONObject(result.toString());
-
-            // 오류가 있는지 검사합니다.
-            if (jsonObject.toString().contains("SERVICE ERROR")) {
-                return new ApiResponse(jsonObject.toString(), "error");
-            }
-
-            // "items" 항목을 추출합니다.
-            JSONArray itemArr = jsonObject.getJSONObject("response").getJSONObject("body").getJSONObject("items").getJSONArray("item");
-
-            JSONObject jsonData = new JSONObject();
-            for (int i = 0; i < itemArr.length(); i++) {
-                JSONObject item = itemArr.getJSONObject(i);
+            JSONArray itemList  = jsonData.getJSONObject("response").getJSONObject("body").getJSONObject("items").getJSONArray("item");
+            for (int i = 0; i < itemList.length(); i++) {
                 JSONObject value = new JSONObject();
+                JSONObject item = itemList.getJSONObject(i);
                 value.put("XPos", item.getDouble("XPos"));
                 value.put("YPos", item.getDouble("YPos"));
                 value.put("yadmNm", item.getString("yadmNm"));
                 value.put("telno", item.getString("telno"));
                 value.put("estbDd", item.getInt("estbDd"));
-                jsonData.put(item.getString("ykiho"),value);
+                result.put(item.getString("ykiho"),value);
             }
-//            // 첫 번째 "item"을 추출합니다.
-//            JSONObject jsonPrintobj = itemArr.getJSONObject(0);
+            result.put("numOfRows",numOfRows);
+            result.put("pageNo",pageNo);
+            result.put("totalCount",totalCount);
 
-            // 추출된 데이터를 캐시에 저장합니다.
-            valueOps.set(url, jsonData.toString(), cacheTtl);
-            return new ApiResponse(jsonData.toString(), "API");
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ApiResponse("error", "API");
+        } catch (URISyntaxException e) {
+            throw new RuntimeException(e);
         }
+        System.out.println("data:" + data);
+
+        if (result != null) {
+            valueOps.set(url, result.toString(), cacheTtl);
+            return new ApiResponse(result.toString(), "API");
+        }
+
+        return new ApiResponse(data, "error");
     }
+
+//    public ApiResponse fetchData2(String url,Duration cacheTtl) {
+//        StringBuffer result = new StringBuffer();
+//        String cachedDate = valueOps.get(url);
+//
+//        if (cachedDate != null) {
+//            return new ApiResponse(cachedDate, "cache");
+//        }
+//
+//        try {
+//            URL url1 = new URL(url);
+//            HttpURLConnection urlConnection = (HttpURLConnection) url1.openConnection();
+//            urlConnection.connect();
+//            BufferedInputStream bufferedInputStream = new BufferedInputStream(urlConnection.getInputStream());
+//            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(bufferedInputStream, "UTF-8"));
+//            String returnLine;
+//
+//            while ((returnLine = bufferedReader.readLine()) != null) {
+//                result.append(returnLine);
+//            }
+//
+//            // xml 형식의 데이터를 json으로 변환합니다.
+//            JSONObject jsonObject = XML.toJSONObject(result.toString());
+//
+//            // 오류가 있는지 검사합니다.
+//            if (jsonObject.toString().contains("SERVICE ERROR")) {
+//                return new ApiResponse(jsonObject.toString(), "error");
+//            }
+//
+//            // "items" 항목을 추출합니다.
+//            JSONArray itemArr = jsonObject.getJSONObject("response").getJSONObject("body").getJSONObject("items").getJSONArray("item");
+//
+//            JSONObject jsonData = new JSONObject();
+//            for (int i = 0; i < itemArr.length(); i++) {
+//                JSONObject item = itemArr.getJSONObject(i);
+//                JSONObject value = new JSONObject();
+//                value.put("XPos", item.getDouble("XPos"));
+//                value.put("YPos", item.getDouble("YPos"));
+//                value.put("yadmNm", item.getString("yadmNm"));
+//                value.put("telno", item.getString("telno"));
+//                value.put("estbDd", item.getInt("estbDd"));
+//                jsonData.put(item.getString("ykiho"),value);
+//            }
+////            // 첫 번째 "item"을 추출합니다.
+////            JSONObject jsonPrintobj = itemArr.getJSONObject(0);
+//
+//            // 추출된 데이터를 캐시에 저장합니다.
+//            valueOps.set(url, jsonData.toString(), cacheTtl);
+//            return new ApiResponse(jsonData.toString(), "API");
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return new ApiResponse("error", "API");
+//        }
+//    }
 
 }

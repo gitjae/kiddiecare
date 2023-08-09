@@ -25,8 +25,8 @@ public class HospitalInfoController {
     @Autowired
     private ExternalApiService externalApiService;
     private String baseUrl = "https://apis.data.go.kr/B551182/";
-    private String hospInfoService="+hospInfoServicev2/getHospBasisList?ServiceKey=";
-    private String admDtlInfoService="+MadmDtlInfoService2/getTrnsprtInfo2?serviceKey=";
+    private String hospInfoService="hospInfoServicev2/getHospBasisList?ServiceKey=";
+    private String admDtlInfoService="MadmDtlInfoService2/getTrnsprtInfo2?serviceKey=";
     @Autowired
     private final UserRepository userRepository;
 
@@ -35,7 +35,6 @@ public class HospitalInfoController {
     private String decodeServiceKey;
     @Value("${myapp.encode}")
     private String encodeServiceKey;
-    private String keyword = "&yadmNm=";
     private String x = "128.5493894";
     private String y = "35.9348614";
     private String r = "100";
@@ -45,12 +44,11 @@ public class HospitalInfoController {
 
     @GetMapping("/fetch")
     public String fetchExternalData(Model model){
-        String externalApiUrl =
-                "https://apis.data.go.kr/B551182/hospInfoServicev2/getHospBasisList?ServiceKey=" + encodeServiceKey;
-
+        String keyword = "&yadmNm=";
+        String url = baseUrl + hospInfoService + encodeServiceKey;
         Duration cacheTtl = Duration.ofMinutes(1);
 
-        ApiResponse apiResponse = externalApiService.fetchData2(externalApiUrl, cacheTtl);
+        ApiResponse apiResponse = externalApiService.hospList(url, cacheTtl);
         model.addAttribute("apiResponse", apiResponse);
 
         return "externalData";
@@ -75,7 +73,6 @@ public class HospitalInfoController {
 
 
     // TODO 검색결과를 클릭시 병원 상세 정보가 나오는 로직
-
 
     // TODO 내 위치 기반으로 반경 200M 안에 있는 병원 목록이 나오는 로직
 
