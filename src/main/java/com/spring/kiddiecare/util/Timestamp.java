@@ -16,8 +16,8 @@ import java.time.LocalDateTime;
 @Setter
 public class Timestamp {
     @CreatedDate
-    private LocalDateTime createdAt;
+    private LocalDateTime createdTime;
 
     @LastModifiedDate
-    private LocalDateTime modifiedAt;
+    private LocalDateTime modifiedTime;
 }

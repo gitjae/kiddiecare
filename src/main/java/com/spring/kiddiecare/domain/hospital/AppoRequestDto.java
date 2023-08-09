@@ -6,30 +6,27 @@ import lombok.Setter;
 @Getter
 @Setter
 public class AppoRequestDto {
-    private int appoNo;
+    private int no;
 
     // children
-    private int id;
+    private int patientId;
 
     // users(보호자)
-    private int usersNo;
+    private int guardian;
 
     // time_slots_limit
-    private int timeNo;
+    private int timeSlotNo;
     private String symptom;
     private String note;
     private int appoStatus;
-//    private Timestamp createdTime;
-//    private Timestamp modifiedTime;
-
 
     @Override
     public String toString() {
         return "AppoRequestDto{" +
-                "appoNo=" + appoNo +
-                ", id=" + id +
-                ", usersNo=" + usersNo +
-                ", timeNo=" + timeNo +
+                "no=" + no +
+                ", patientId=" + patientId +
+                ", guardian=" + guardian +
+                ", timeSlotNo=" + timeSlotNo +
                 ", symptom='" + symptom + '\'' +
                 ", note='" + note + '\'' +
                 ", appoStatus=" + appoStatus +
