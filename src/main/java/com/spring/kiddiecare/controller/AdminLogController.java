@@ -29,9 +29,12 @@ public class AdminLogController {
         Optional<String> adminPw = Optional.ofNullable(adminDto.getAdminPw());
         ModelAndView modelAndView = new ModelAndView();
 
-        if (!sessionIsNull || adminId.isEmpty() || adminPw.isEmpty()){
-            System.out.println("dddd");
+        if (!sessionIsNull){
             return new ModelAndView("redirect:/");
+        }
+
+        if(adminId.isEmpty() || adminPw.isEmpty()){
+            return new ModelAndView("redirect:/login");
         }
 
         Admin admin = adminRepository.findByAdminIdAndAdminPw(adminId.get(), adminPw.get());
