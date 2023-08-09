@@ -18,6 +18,9 @@ public class UserResponseDto {
     private boolean gender;
     private int phone;
     private String email;
+    private String postcode;
+    private String addr;
+    private String addr_detail;
     private String token;
     private boolean isValid;
 }
