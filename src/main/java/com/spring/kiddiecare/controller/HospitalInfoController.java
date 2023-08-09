@@ -95,7 +95,7 @@ public class HospitalInfoController {
             String radius1 = "&radius=200";
 
             String baseUrl = "https://apis.data.go.kr/B551182/hospInfoServicev2/getHospBasisList?ServiceKey=";
-            String url = baseUrl + encode + pageNo + dgsbjtCd + xpos1 + ypos1 + radius1;
+            String url = baseUrl + encodeServiceKey + pageNo + dgsbjtCd + xpos1 + ypos1 + radius1;
 
             Duration cacheTtl = Duration.ofSeconds(5);
 
