@@ -1,15 +1,10 @@
 package com.spring.kiddiecare.domain.hospitalAdmin;
 
-import com.spring.kiddiecare.util.Timestamp;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Lob;
-import java.lang.management.ThreadInfo;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @NoArgsConstructor
@@ -17,6 +12,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @Entity
+@Table(name = "hospital_admin")
 @ToString
 public class Admin{
     @Id
