@@ -5,6 +5,7 @@ import com.spring.kiddiecare.domain.user.User;
 import com.spring.kiddiecare.domain.user.UserRepository;
 import com.spring.kiddiecare.service.ExternalApiService;
 import com.spring.kiddiecare.util.ApiResponse;
+import com.spring.kiddiecare.util.hospbasis.HospBasisResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -80,7 +81,7 @@ public class HospitalInfoController {
     @GetMapping("/home")
     public String home(Model model){
         //String log = (String) request.getAttribute("log", WebRequest.SCOPE_SESSION);
-        String log = "ingu";
+        String log = "redberry";
 
         Optional<User> foundUser = userRepository.findUserById(log);
         if(foundUser.isPresent()){
@@ -96,8 +97,8 @@ public class HospitalInfoController {
 
             Duration cacheTtl = Duration.ofSeconds(5);
 
-            ApiResponse apiResponse = externalApiService.fetchDataClass(url, cacheTtl);
-            model.addAttribute("apiResponse", apiResponse);
+            HospBasisResponse response = externalApiService.fetchDataClass(url, cacheTtl);
+            model.addAttribute("response", response);
 
 
         }

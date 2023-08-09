@@ -14,6 +14,9 @@
 <body>
     <h1>Date Source : ${apiResponse.source}</h1>
     <p>${apiResponse.data}</p>
-    <p>response : ${apiResponse.data}</p>
+    <c:forEach items="${response.body.items}" var="item">
+        <p>병원명 : ${item.yadmNm}</p>
+        <p>양호기호 : ${item.ykiho}</p>
+    </c:forEach>
 </body>
 </html>

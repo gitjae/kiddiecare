@@ -20,11 +20,11 @@ import java.util.List;
 @Service
 public class ExternalApiService {
     private final RestTemplate restTemplate;
-    private final StringRedisTemplate redisTemplate;
-    private ValueOperations<String, String> valueOps;
+    private final RedisTemplate redisTemplate;
+    private ValueOperations<String, HospBasisResponse> valueOps;
 
     @Autowired
-    public ExternalApiService(StringRedisTemplate redisTemplate){
+    public ExternalApiService(RedisTemplate redisTemplate){
         this.restTemplate = new RestTemplate();
         this.redisTemplate = redisTemplate;
         this.valueOps = redisTemplate.opsForValue();
@@ -33,16 +33,16 @@ public class ExternalApiService {
 
     public ApiResponse fetchData(String url, Duration cacheTtl) {
         JSONObject result = new JSONObject();
-        String cachedDate = valueOps.get(url);
+        HospBasisResponse cachedDate = valueOps.get(url);
         if (cachedDate != null) {
-            return new ApiResponse(cachedDate, "cache");
+            return new ApiResponse(cachedDate.toString(), "cache");
         }
 
-        String data = null;
+        HospBasisResponse data = null;
 
         try {
             URI uri = new URI(url);
-            data = restTemplate.getForObject(uri, String.class);
+            data = restTemplate.getForObject(uri, HospBasisResponse.class);
         } catch (URISyntaxException e) {
             throw new RuntimeException(e);
         }
@@ -50,23 +50,23 @@ public class ExternalApiService {
 
         if (result != null) {
             valueOps.set(url, data, cacheTtl);
-            return new ApiResponse(data, "API");
+            return new ApiResponse(data.toString(), "API");
         }
 
-        return new ApiResponse(data, "error");
+        return new ApiResponse(data.toString(), "error");
     }
 
     public ApiResponse hospList(String url, Duration cacheTtl) {
         JSONObject result = new JSONObject();
-        String cachedDate = valueOps.get(url);
+        HospBasisResponse cachedDate = valueOps.get(url);
         if (cachedDate != null) {
-            return new ApiResponse(cachedDate, "cache");
+            return new ApiResponse(cachedDate.toString(), "cache");
         }
 
-        String data = null;
+        HospBasisResponse data = null;
 
         try {
-            data = restTemplate.getForObject(new URI(url), String.class);
+            data = restTemplate.getForObject(new URI(url), HospBasisResponse.class);
 
             JSONObject jsonData = new JSONObject(data);
             int numOfRows = jsonData.getJSONObject("response").getJSONObject("body").getInt("numOfRows");
@@ -94,11 +94,11 @@ public class ExternalApiService {
         System.out.println("data:" + data);
 
         if (result != null) {
-            valueOps.set(url, result.toString(), cacheTtl);
+            valueOps.set(url, data, cacheTtl);
             return new ApiResponse(result.toString(), "API");
         }
 
-        return new ApiResponse(data, "error");
+        return new ApiResponse(data.toString(), "error");
     }
 
 //    public ApiResponse fetchData2(String url,Duration cacheTtl) {
@@ -157,25 +157,18 @@ public class ExternalApiService {
 //    }
 
 
-    public ApiResponse fetchDataClass(String url, Duration cacheTtl) {
-        String cachedData = valueOps.get(url);
+    public HospBasisResponse fetchDataClass(String url, Duration cacheTtl) {
+        HospBasisResponse cachedData = valueOps.get(url);
         if (cachedData != null) {
-            return new ApiResponse(cachedData, "cache");
+            return cachedData;
         }
 
-        String data = null;
+        HospBasisResponse data = null;
 
         try {
             URI uri = new URI(url);
             HospBasisResponse response = restTemplate.getForObject(uri, HospBasisResponse.class);
-            System.out.println(response);
-            HospBasisBody body = response.getBody();
-            List<HospBasisItem> items = body.getItems();
-            for(HospBasisItem item : items){
-                System.out.println("item : " + item.getYadmNm());
-            }
-            JSONArray jsonArray = new JSONArray(items);
-            data = jsonArray.toString();
+            data = response;
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -183,9 +176,9 @@ public class ExternalApiService {
 
         if (data != null) {
             valueOps.set(url, data, cacheTtl);
-            return new ApiResponse(data, "API");
+            return data;
         }
 
-        return new ApiResponse(data, "error");
+        return data;
     }
 }
