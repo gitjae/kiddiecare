@@ -4,13 +4,16 @@ import com.spring.kiddiecare.domain.hospitalAdmin.Admin;
 import com.spring.kiddiecare.domain.hospitalAdmin.AdminRepository;
 import com.spring.kiddiecare.domain.hospitalAdmin.AdminRequestDto;
 import lombok.RequiredArgsConstructor;
+import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.context.annotation.SessionScope;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.Map;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -23,28 +26,36 @@ public class AdminLogController {
 
     @SessionScope
     @PostMapping(value = "login/check")
-    public ModelAndView login(@ModelAttribute AdminRequestDto adminDto, WebRequest request) {
-        boolean sessionIsNull = Optional.ofNullable(request.getAttribute("log", WebRequest.SCOPE_SESSION)).isEmpty();
+    public Map login(@RequestBody AdminRequestDto adminDto, Model model) {
+        System.out.println(adminDto);
+        JSONObject response = new JSONObject();
+//        boolean sessionIsNull = Optional.ofNullable(request.getAttribute("log", WebRequest.SCOPE_SESSION)).isEmpty();
         Optional<String> adminId = Optional.ofNullable(adminDto.getAdminId());
         Optional<String> adminPw = Optional.ofNullable(adminDto.getAdminPw());
-        ModelAndView modelAndView = new ModelAndView();
 
-        if (!sessionIsNull){
-            return new ModelAndView("redirect:/");
-        }
+//        if (!sessionIsNull){
+//            response.put("adminLogin","fail");
+//            return response.toMap();
+//        }
 
         if(adminId.isEmpty() || adminPw.isEmpty()){
-            return new ModelAndView("redirect:/login");
+            response.put("adminLogin","fail");
+            return response.toMap();
         }
 
         Admin admin = adminRepository.findByAdminIdAndAdminPw(adminId.get(), adminPw.get());
-        if (admin != null) {
-            modelAndView.setViewName("redirect:/");
-            modelAndView.addObject("log", admin.getAdminName());
-            return modelAndView;
-        } else {
-            return new ModelAndView("redirect:/");
+        if (admin == null) {
+            response.put("adminLogin","fail");
+            return response.toMap();
         }
+
+        System.out.println("여기옴");
+        System.out.println(admin.getAdminId());
+        System.out.println(admin.getYkiho());
+        model.addAttribute("log",admin.getAdminId());
+        model.addAttribute("Ykiho",admin.getYkiho());
+        response.put("adminLogin","success");
+        return response.toMap();
     }
 
 //    @SessionScope
