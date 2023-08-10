@@ -19,6 +19,7 @@ public class AdminController {
     private final AdminService adminService;
     private final AdminRepository adminRepository;
 
+//    @GetMapping("")
 //    @PutMapping("update/{adminName}")
 //    public Map adminUpdate(@PathVariable String adminName, @RequestBody AdminRequestDto adminDto, WebRequest request){
 ////        Optional<String> session = Optional.ofNullable(request.getAttribute("log", WebRequest.SCOPE_SESSION));
@@ -57,4 +58,5 @@ public class AdminController {
 //        }
 //        return result.toMap();
 //    }
+
 }
