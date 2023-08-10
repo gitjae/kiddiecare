@@ -12,6 +12,7 @@ import javax.xml.bind.annotation.*;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "item")
 public class HospBasisItem {
+    // 주소
     @XmlElement(name = "addr")
     private String addr;
 

@@ -9,7 +9,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>캐싱테스트</title>
+    <title>목록</title>
 </head>
 <body>
     <h1>Date Source : ${apiResponse.source}</h1>
