@@ -30,4 +30,7 @@ public class MainController {
 
     @GetMapping("/geolocation")
     public String geolocation() { return "geolocation"; }
+
+    @GetMapping("mypage")
+    public String mypage() { return "mypage"; }
 }
