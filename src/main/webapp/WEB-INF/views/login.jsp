@@ -9,6 +9,7 @@
 <html>
 <head>
     <title>Title</title>
+    <link rel="stylesheet" href="/css/login.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
     <script src="/script/login-api.js"></script>
 </head>
@@ -27,6 +28,9 @@
             </div>
             <div id="div-btn">
                 <button id="submit" onclick="login()">로그인</button>
+            </div>
+            <div id="div-kakao">
+                <button onclick=""><a href="#">카카오 로그인</a></button>
             </div>
         </div>
     </section>

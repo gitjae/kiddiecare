@@ -101,4 +101,5 @@ public class HospBasisItem {
 
     @XmlElement(name = "ykiho")
     private String ykiho;
+
 }

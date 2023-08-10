@@ -1,5 +1,7 @@
 package com.spring.kiddiecare.util;
 
+import com.spring.kiddiecare.util.hospbasis.HospBasisBody;
+import com.spring.kiddiecare.util.hospbasis.HospBasisItem;
 import com.spring.kiddiecare.util.hospbasis.HospBasisResponse;
 import lombok.RequiredArgsConstructor;
 import org.json.JSONObject;

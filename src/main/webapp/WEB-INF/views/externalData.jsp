@@ -17,6 +17,8 @@
     <c:forEach items="${response.body.items}" var="item">
         <p>병원명 : ${item.yadmNm}</p>
         <p>양호기호 : ${item.ykiho}</p>
+        <p>${item.XPos}</p>
+        <p>${item.YPos}</p>
     </c:forEach>
 </body>
 </html>

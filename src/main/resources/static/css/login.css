@@ -1,0 +1,49 @@
+#main-section{
+    margin: 0 auto;
+}
+
+#form{
+    text-align: center;
+    width: 60%;
+    margin: 100px auto;
+}
+
+#form>div{
+    text-align: left;
+}
+
+div{
+    width: 100%;
+    margin: 0 auto;
+}
+label{
+    display: inline-block;
+    width: 100px;
+    margin-right: 20px;
+}
+input{
+    display: inline-block;
+    width: 80%;
+    height: 40px;
+    box-sizing: border-box;
+    border: 2px solid dodgerblue;
+    border-radius: 10px;
+    margin: 30px auto;
+}
+
+#submit{
+    display: inline-block;
+    height: 40px;
+    box-sizing: border-box;
+    border: 2px solid dodgerblue;
+    border-radius: 10px;
+    margin: 30px auto;
+    width: 80px;
+    background-color: inherit;
+}
+
+#submit:hover{
+    background-color: dodgerblue;
+    color: white;
+    cursor: pointer;
+}

@@ -10,6 +10,7 @@
 <html>
 <head>
     <title>Title</title>
+    <link rel="stylesheet" href="/css/join.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
     <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
     <script src="/script/join-api.js"></script>
@@ -21,7 +22,7 @@
                 <div id="div-id">
                     <label for="id">아이디</label>
                     <input type="text" id="id" name="id">
-                    <input type="button" id="duplChk" value="중복확인" onclick="dupl()">
+                    <input type="button" id="duplChk" value="중복확인" onclick="idDuplChk()">
                 </div>
                 <div id="div-pw">
                     <label for="password">비밀번호</label>
@@ -40,7 +41,7 @@
                     <input type="text" id="birth" name="birth">
                 </div>
                 <div id="div-gender">
-                    <label>성별</label>
+                    <label id="label-gender">성별</label>
 
                     <label for="gender-m">남</label>
                     <input type="radio" id="gender-m" name="gender" value="m">
