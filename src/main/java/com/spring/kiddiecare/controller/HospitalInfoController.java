@@ -53,7 +53,6 @@ public class HospitalInfoController {
     @GetMapping("/search/detail")
     public String detailSearch(@RequestParam String ykiho, Model model){
         String url = baseUrl + admDtlInfoService + encodeServiceKey + "&ykiho=" + ykiho ;
-        System.out.println(url);
         Duration cacheTtl = Duration.ofMinutes(1);
 
         HospBasisResponse apiResponse = openApiDataUtil.fetchDataClass(url, cacheTtl);
