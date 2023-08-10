@@ -14,21 +14,21 @@
     <p>병원명</p>
     <input type="text" id="hospitalName" value=${hospital.hospitalName} readonly>
     <p>병원주소</p>
-    <input type="text" id="hospitalAddr" value="hospitalAddr" readonly>
+    <input type="text" id="hospitalAddr" value="테스트병원주소" readonly> <%-- 테스트 후 value값 바꾸기 --%>
     <p>진료날짜</p>
     <input type="text" id="treatmentDate" value="" readonly>
     <p>진료일</p>
     <input type="text" id="treatmentDay" value="" readonly>
     <p>보호자명</p>
-    <input type="text" id="guardian" value=${userName} readonly>            <%-- 수정 필요 --%>
+    <input type="text" id="guardian" value=${userName} readonly>
     <p>자녀정보</p>
-    <input type="text" id="children" value="children">
+    <input type="text" id="children" value="children">   <%-- 테스트 후 value값 바꾸기 --%>
     <p>증상</p>
     <input type="text" id="symptom" value="symptom">
     <p>참고사항</p>
     <input type="text" id="note" value="note"><br/>
 
-    <input type="submit" id="payBtn" value="결제하기">
+    <input type="submit" id="payBtn" value="결제하기 패스하고 예약꽂기">
 </form>
 
 </body>

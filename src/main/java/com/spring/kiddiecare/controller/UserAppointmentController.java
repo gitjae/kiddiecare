@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@SessionAttributes({"log"})
 @Controller
 @RequestMapping("/appointment")
 public class UserAppointmentController {
@@ -59,7 +60,7 @@ public class UserAppointmentController {
         model.addAttribute("treatmentDate", treatmentDate);
         model.addAttribute("treatmentDay", treatmentDay);
 
-        // 사용자 아이디로 사용자 이름 찾기 -- 수정 필요
+        // 사용자 아이디로 사용자 이름 찾기
         User user = userRepository.findUserById(userId).orElse(null);
         if (user != null) {
             model.addAttribute("userName", user.getName());
