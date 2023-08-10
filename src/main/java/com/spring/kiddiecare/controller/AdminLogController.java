@@ -13,48 +13,35 @@ import org.springframework.web.context.annotation.SessionScope;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpSession;
 import java.util.Map;
 import java.util.Optional;
 
 @RequiredArgsConstructor
-@Controller
+@RestController
 @SessionAttributes({"log"}) // 세션을 사용하고 있다라는걸 바인딩 해줘야함
 @RequestMapping("admin")
 public class AdminLogController {
 
     private final AdminRepository adminRepository;
 
-    @SessionScope
     @PostMapping(value = "login/check")
-    public Map login(@RequestBody AdminRequestDto adminDto, Model model) {
+    public Map login(@RequestBody AdminRequestDto adminDto, HttpSession session) {
         System.out.println(adminDto);
         JSONObject response = new JSONObject();
 //        boolean sessionIsNull = Optional.ofNullable(request.getAttribute("log", WebRequest.SCOPE_SESSION)).isEmpty();
         Optional<String> adminId = Optional.ofNullable(adminDto.getAdminId());
         Optional<String> adminPw = Optional.ofNullable(adminDto.getAdminPw());
-
-//        if (!sessionIsNull){
-//            response.put("adminLogin","fail");
-//            return response.toMap();
-//        }
-
-        if(adminId.isEmpty() || adminPw.isEmpty()){
-            response.put("adminLogin","fail");
-            return response.toMap();
+        if(adminId.isPresent() && adminPw.isPresent()){
+            Admin admin = adminRepository.findByAdminIdAndAdminPw(adminId.get(), adminPw.get());
+            if (admin != null) {
+                session.setAttribute("log",admin.getAdminId());
+                session.setAttribute("Ykiho",admin.getYkiho());
+                response.put("adminLogin","success");
+                return response.toMap();
+            }
         }
-
-        Admin admin = adminRepository.findByAdminIdAndAdminPw(adminId.get(), adminPw.get());
-        if (admin == null) {
-            response.put("adminLogin","fail");
-            return response.toMap();
-        }
-
-        System.out.println("여기옴");
-        System.out.println(admin.getAdminId());
-        System.out.println(admin.getYkiho());
-        model.addAttribute("log",admin.getAdminId());
-        model.addAttribute("Ykiho",admin.getYkiho());
-        response.put("adminLogin","success");
+        response.put("adminLogin","fail");
         return response.toMap();
     }
 
