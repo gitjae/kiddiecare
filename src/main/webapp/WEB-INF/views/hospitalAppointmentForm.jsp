@@ -19,12 +19,12 @@
 
 <%--            <input type="text" id="ykiho" name="ykiho" placeholder="">--%>
             <input type="text" id="ykiho" name="ykiho" placeholder="병원코드">
-            <input type="text" id="doctor_name" name="doctor_name" placeholder="의사명">
+            <input type="text" id="doctor_no" name="doctor_no" placeholder="의사코드">
             <input type="text" id="doctor_average_time_of_care" name="doctor_average_time_of_care" placeholder="의사평균진료시간[분단위]">
 
             <h2>병원 예약 생성</h2>
             <label for="date">
-                <input type="date" id="date" max="2023-09-09" min="2023-08-09" value="2023-08-09">
+                <input type="date" id="date" value="">
             </label>
 
             <table id="time_set">
@@ -38,7 +38,6 @@
                 </tr>
                 </thead>
                 <tbody id="time_set_body">
-
                 </tbody>
             </table>
 
@@ -46,9 +45,7 @@
 
             <button onclick="appo_create()">예약 생성</button>
         </form>
-
     </div>
-
     <script src="/script/hospital_appo.js"></script>
 </body>
 </html>
