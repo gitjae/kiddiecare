@@ -3,6 +3,8 @@ package com.spring.kiddiecare.controller;
 import com.spring.kiddiecare.domain.user.User;
 import com.spring.kiddiecare.domain.user.UserRepository;
 import com.spring.kiddiecare.util.OpenApiDataUtil;
+import com.spring.kiddiecare.util.hospbasis.HospBasisBody;
+import com.spring.kiddiecare.util.hospbasis.HospBasisItem;
 import com.spring.kiddiecare.util.hospbasis.HospBasisResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -11,7 +13,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.time.Duration;
+import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -19,15 +24,25 @@ import java.util.Optional;
 public class HospitalInfoController {
     private final UserRepository userRepository;
     private final OpenApiDataUtil openApiDataUtil;
-//    private final OpenApiDataUtil openApiDataUtil;
-    private String baseUrl = "https://apis.data.go.kr/B551182/";
-    private String hospInfoService="hospInfoServicev2/getHospBasisList?ServiceKey=";
-    private String admDtlInfoService="MadmDtlInfoService2/getTrnsprtInfo2?serviceKey=";
-    private String a= "getDtlInfo2";
 
-    @Value("${myapp.decode}")
+    private String baseUrl = "https://apis.data.go.kr/B551182/";
+    private String hospInfoService="hospInfoServicev2/";
+    private String admDtlInfoService="MadmDtlInfoService2/";
+    private String HospList = "getHospBasisList";
+    private String getDtlInfo = "getDtlInfo2";
+    private String getDgsbjtInfo = "getDgsbjtInfo2?";
+    private String getTrnsprtInfo  = "getTrnsprtInfo2?";
+
+    private String pageNo = "&pageNo=";
+    private String yadmNm = "&yadmNm=";
+    private String ykiho = "&ykiho=";
+    private String xPos = "&xPos=";
+    private String yPos = "&yPos=";
+    private String radius = "&radius=200";
+
+    @Value("${external.api.decode}")
     private String decodeServiceKey;
-    @Value("${myapp.encode}")
+    @Value("${external.api.encode}")
     private String encodeServiceKey;
 
     /**
@@ -36,14 +51,36 @@ public class HospitalInfoController {
      @return externalData 템플릿을 렌더링한 결과
      */
     @GetMapping("search/list")
-    public String fetchExternalData(Model model){
-        String url = baseUrl + hospInfoService + encodeServiceKey;
-        Duration cacheTtl = Duration.ofMinutes(1);
+    public String getHospList(Model model, @RequestParam(defaultValue="") String keyword,
+                              @RequestParam(defaultValue="1") String requestPageNo){
 
-        HospBasisResponse apiResponse = openApiDataUtil.hosInfoList(url, cacheTtl);
-        model.addAttribute("list", apiResponse);
-        return "externalData";
+        String encodedParamValue = null;
+        try {
+            encodedParamValue = URLEncoder.encode(keyword, "UTF-8");
+        }catch (UnsupportedEncodingException e){
+            return "hospitalSearchList";
+        }
+
+        // 리스트 불러오기
+        String uri = pageNo + requestPageNo + yadmNm + encodedParamValue;
+        String url = baseUrl + hospInfoService + HospList + encodeServiceKey + uri;
+        Duration cacheTtl = Duration.ofMinutes(1);
+        HospBasisBody response = openApiDataUtil.hosInfoList(url, uri, cacheTtl);
+
+        int maxPageCount = response.getTotalCount()/response.getNumOfRows();
+        int currentPage = response.getPageNo();
+
+        for(HospBasisItem item : response.getItems()){
+            String hospInfoUri = ykiho + item.getYkiho() + "&_type=json";
+            String hospInfoUrl = baseUrl + admDtlInfoService + getDtlInfo + encodeServiceKey +hospInfoUri;
+            System.out.println("Url: "+hospInfoUrl);
+            HospBasisBody apiResponse = openApiDataUtil.hosInfoDetail(hospInfoUrl, hospInfoUri,cacheTtl);
+        }
+
+        model.addAttribute("response", response);
+        return "hospitalSearchList";
     }
+
 
     /**
      외부 API에서 병원 상세 정보를 가져와서 모델에 추가하고, hospitalDetail 템플릿을 렌더링한다.
@@ -51,12 +88,12 @@ public class HospitalInfoController {
      @return externalData 템플릿을 렌더링한 결과
      */
     @GetMapping("/search/detail")
-    public String detailSearch(@RequestParam String ykiho, Model model){
-        String url = baseUrl + admDtlInfoService + encodeServiceKey + "&ykiho=" + ykiho ;
+    public String getHospDetail(@RequestParam String requestYkiho, Model model){
+        String url = baseUrl + admDtlInfoService + encodeServiceKey + ykiho + requestYkiho ;
         Duration cacheTtl = Duration.ofMinutes(1);
 
-        HospBasisResponse apiResponse = openApiDataUtil.fetchDataClass(url, cacheTtl);
-        model.addAttribute("apiResponse", apiResponse);
+//        HospBasisResponse apiResponse = openApiDataUtil.fetchDataClass(url, cacheTtl);
+//        model.addAttribute("apiResponse", apiResponse);
         return "hospitalDetail";
     }
 
@@ -80,10 +117,8 @@ public class HospitalInfoController {
 
             Duration cacheTtl = Duration.ofSeconds(5);
 
-            HospBasisResponse response = openApiDataUtil.fetchDataClass(url, cacheTtl);
-            model.addAttribute("response", response);
-
-
+//            HospBasisResponse response = openApiDataUtil.fetchDataClass(url, cacheTtl);
+//            model.addAttribute("response", response);
         }
         return "externalData";
     }
