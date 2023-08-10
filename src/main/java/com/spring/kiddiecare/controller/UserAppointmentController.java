@@ -1,5 +1,7 @@
 package com.spring.kiddiecare.controller;
 
+import com.spring.kiddiecare.domain.children.Children;
+import com.spring.kiddiecare.domain.children.ChildrenRepository;
 import com.spring.kiddiecare.domain.doctor.Doctor;
 import com.spring.kiddiecare.domain.hospital.Hospital;
 import com.spring.kiddiecare.domain.user.User;
@@ -25,6 +27,9 @@ public class UserAppointmentController {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private ChildrenRepository childrenRepository;
 
     // 파라미터로 병원코드 받아서 단일 병원 정보 나타내기
     @GetMapping("/hospitalDetail")
@@ -64,6 +69,10 @@ public class UserAppointmentController {
         User user = userRepository.findUserById(userId).orElse(null);
         if (user != null) {
             model.addAttribute("userName", user.getName());
+
+            // 해당 사용자의 자녀 정보
+            List<Children> childrenList = childrenRepository.findByParentNo(user.getNo());
+            model.addAttribute("children", childrenList);
         }
 
         return "userBooking";
