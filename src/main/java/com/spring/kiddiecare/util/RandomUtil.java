@@ -18,7 +18,7 @@ public class RandomUtil {
         }
 
         LocalDate now = LocalDate.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyMMdd"); //ex) 23080955
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyMMdd"); //ex) 23080988
         String formdate = now.format(formatter);
 
         String result = formdate + sb;

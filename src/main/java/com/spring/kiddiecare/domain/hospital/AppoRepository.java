@@ -5,5 +5,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface AppoRepository extends JpaRepository<Appointment, Integer> {
-//    public Appointment findByNo(Integer no);
+    public Appointment findByNo(Integer no);
 }
