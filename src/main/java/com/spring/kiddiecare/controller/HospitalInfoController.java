@@ -6,6 +6,7 @@ import com.spring.kiddiecare.util.CalenderAndGetTrmtUtil;
 import com.spring.kiddiecare.util.OpenApiDataUtil;
 import com.spring.kiddiecare.util.hospInfo.HospDetailBody;
 import com.spring.kiddiecare.util.hospInfo.HospDetailItem;
+import com.spring.kiddiecare.util.hospSubInfo.HospSubItem;
 import com.spring.kiddiecare.util.hospbasis.HospBasisBody;
 import com.spring.kiddiecare.util.hospbasis.HospBasisItem;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +23,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.time.Duration;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -35,16 +37,16 @@ public class HospitalInfoController {
     private String baseUrl = "https://apis.data.go.kr/B551182/";
     private String hospInfoService="hospInfoServicev2/";
     private String admDtlInfoService="MadmDtlInfoService2/";
-    private String HospList = "getHospBasisList";
-    private String getDtlInfo = "getDtlInfo2";
+    private String HospList = "getHospBasisList?";
+    private String getDtlInfo = "getDtlInfo2?";
     private String getDgsbjtInfo = "getDgsbjtInfo2?";
     private String getTrnsprtInfo  = "getTrnsprtInfo2?";
-
     private String pageNo = "&pageNo=";
     private String yadmNm = "&yadmNm=";
-    private String ykiho = "&ykiho=";
+    private String ykihoUri = "&ykiho=";
     private String xPos = "&xPos=";
     private String yPos = "&yPos=";
+//    private Duration cacheTtl = Duration.ofMinutes(3);
     private String radius = "&radius=500";
 
     @Value("${external.api.decode}")
@@ -52,13 +54,14 @@ public class HospitalInfoController {
     @Value("${external.api.encode}")
     private String encodeServiceKey;
 
+
     /**
      외부 API에서 병원 정보를 가져와서 모델에 추가하고, externalData 템플릿을 렌더링한다.
      @param model 렌더링할 데이터를 담을 모델 객체
      @return externalData 템플릿을 렌더링한 결과
      */
     @GetMapping("search/list")
-    public Map getHospList(Model model, @RequestParam(defaultValue="") String keyword,
+    public Map getHospList(@RequestParam(defaultValue="") String keyword,
                            @RequestParam(defaultValue="1") String requestPageNo){
         JSONObject result = new JSONObject();
         // keyword 인코딩
@@ -73,14 +76,15 @@ public class HospitalInfoController {
         // hospList 불러오기
         String uri = pageNo + requestPageNo + yadmNm + encodedParamValue;
         String url = baseUrl + hospInfoService + HospList + encodeServiceKey + uri;
-        Duration cacheTtl = Duration.ofMinutes(1);
+        System.out.println("dd "+url);
+        Duration cacheTtl = Duration.ofMinutes(3);
         HospBasisBody hospListData = openApiDataUtil.getHospList(url, uri, cacheTtl);
 
         if(hospListData != null){
             result.put("result","success");
             for(HospBasisItem item : hospListData.getItems()){
                 JSONObject dataSet = new JSONObject();
-                String hospInfoUrl = baseUrl + admDtlInfoService + getDtlInfo + encodeServiceKey + ykiho + item.getYkiho() ;
+                String hospInfoUrl = baseUrl + admDtlInfoService + getDtlInfo + encodeServiceKey + ykihoUri + item.getYkiho() ;
                 HospDetailBody hospInfoData = openApiDataUtil.getHospData(hospInfoUrl, item.getYkiho(), cacheTtl);
                 HospDetailItem data = hospInfoData.getItems().getItem();
                 dataSet.put("telno",item.getTelno());
@@ -105,17 +109,25 @@ public class HospitalInfoController {
 
     /**
      외부 API에서 병원 상세 정보를 가져와서 모델에 추가하고, hospitalDetail 템플릿을 렌더링한다.
-     @param model 렌더링할 데이터를 담을 모델 객체
-     @return externalData 템플릿을 렌더링한 결과
+     @param ykiho 데이터를 담을 모델 객체
+     @return Map 템플릿을 렌더링한 결과
      */
     @GetMapping("/search/detail")
-    public String getHospDetail(@RequestParam String requestYkiho, Model model){
-        String url = baseUrl + admDtlInfoService + encodeServiceKey + ykiho + requestYkiho ;
-        Duration cacheTtl = Duration.ofMinutes(1);
-
-//        HospBasisResponse apiResponse = openApiDataUtil.fetchDataClass(url, cacheTtl);
-//        model.addAttribute("apiResponse", apiResponse);
-        return "hospitalDetail";
+    public Map getHospDetail(@RequestParam(defaultValue="") String ykiho){
+        JSONObject result = new JSONObject();
+        if(ykiho.isEmpty()){
+            return result.put("result","fail").toMap();
+        }
+        String url = baseUrl + admDtlInfoService + getDgsbjtInfo + encodeServiceKey + ykihoUri + ykiho;
+        System.out.println(url);
+        List<HospSubItem> hospListData = openApiDataUtil.getHospSubData(url, ykiho);
+        if(hospListData != null){
+            result.put("result","success");
+            result.put("data",hospListData);
+        }else{
+            result.put("result","fail");
+        }
+        return result.toMap();
     }
 
 
