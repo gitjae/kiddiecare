@@ -69,6 +69,7 @@ public class UserAppointmentController {
         User user = userRepository.findUserById(userId).orElse(null);
         if (user != null) {
             model.addAttribute("userName", user.getName());
+            model.addAttribute("parentId", user.getNo());
 
             // 해당 사용자의 자녀 정보
             List<Children> childrenList = childrenRepository.findByParentNo(user.getNo());
@@ -78,5 +79,15 @@ public class UserAppointmentController {
         return "userBooking";
     }
 
+    @GetMapping("/getChildrenByParentId")
+    @ResponseBody
+    public List<Children> getChildrenByParentId(@RequestParam("parentId") int parentId) {
+
+        List<Children> children = childrenRepository.findByParentNo(parentId);
+        System.out.println("자녀 정보 : " + children);
+        // Fetched children: [com.spring.kiddiecare.domain.children.Children@72694adc, com.spring.kiddiecare.domain.children.Children@72694adc]
+
+        return childrenRepository.findByParentNo(parentId);
+    }
 
 }

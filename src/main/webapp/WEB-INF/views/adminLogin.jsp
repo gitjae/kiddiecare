@@ -11,6 +11,9 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="/css/admin-login.css">
+    <script
+            src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script src="/script/admin-login.js"></script>
     <title>login</title>
 </head>
 <body>
@@ -24,7 +27,7 @@
                 <span>Spring rest API</span>
             </a>
         </div>
-        <form class="login-form" method="POST" action="/admin/login/check" enctype="multipart/form-data">
+        <form class="login-form" method="POST">
             <div class="input-setting">
                 <input type="text" required placeholder="아이디를 입력해 주세요." name="adminId" class="current-id">
             </div>
@@ -32,7 +35,7 @@
                 <input type="password" required placeholder="비밀번호를 입력해 주세요." name="adminPw" class="current-password">
             </div>
             <div>
-                <button role="button" color="skyblue" type="submit" class="submit-btn"><span>로그인</span></button>
+                <input type="button" id="submit-btn" value="로그인" onclick="checkValue(form)">
             </div>
         </form>
         <div class="sign-up-area">
