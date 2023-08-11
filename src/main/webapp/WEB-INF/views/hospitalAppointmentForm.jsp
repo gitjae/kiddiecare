@@ -13,14 +13,20 @@
     <link rel="stylesheet" href="/css/hospital-appo.css">
     <title>병원 예약하기 생성</title>
 </head>
+<c:import url="header.jsp"></c:import>
 <body>
     <div>
         <form method="post" onsubmit="return false">
 
 <%--            <input type="text" id="ykiho" name="ykiho" placeholder="">--%>
-            <input type="text" id="ykiho" name="ykiho" placeholder="병원코드">
-            <input type="text" id="doctor_no" name="doctor_no" placeholder="의사코드">
-            <input type="text" id="doctor_average_time_of_care" name="doctor_average_time_of_care" placeholder="의사평균진료시간[분단위]">
+            <input type="text" id="hospital_name" name="hospital_name">
+            <input type="text" id="ykiho" name="ykiho" placeholder="병원코드" value="${Ykiho}" style="display: none">
+            <select name="doctor_list" id="doctor_list">
+                <option value="">의사선택</option>
+            </select>
+<%--            <input type="text" id="doctor_no" name="doctor_no" placeholder="의사코드">--%>
+
+<%--            <input type="text" id="doctor_average_time_of_care" name="doctor_average_time_of_care" placeholder="의사평균진료시간[분단위]">--%>
 
             <h2>병원 예약 생성</h2>
             <label for="date">

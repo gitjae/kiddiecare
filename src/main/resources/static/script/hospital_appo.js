@@ -1,6 +1,52 @@
+// 페이지 시작 시 바로 실행
 $(function() {
     updateTable();
     apply_event();
+    set_date();
+    get_hospital_name();
+    get_doctor();
+});
+
+const dateInput = document.getElementById("date");
+const timeSetBody = document.getElementById("time_set_body");
+const doctorList = document.getElementById('doctor_list');
+
+function get_hospital_name() {
+    let ykiho = $('#ykiho').val();
+
+    $.ajax({
+        url: `/hospitalName/${ykiho}`,
+        method: 'GET',
+        timeout: 0
+    }).done(function (response) {
+        console.log(response);
+        $('#hospital_name').val(response.hospitalName);
+    }).fail(function (error) {
+        console.log(error);
+    });
+}
+function get_doctor() {
+    let ykiho = $('#ykiho').val();
+
+
+    $.ajax({
+        url:`/api/v1/admin/appo/${ykiho}`,
+        method: "GET",
+        timeout: 0
+    }).done(function (list) {
+        list.forEach(doctor => {
+            console.log(doctor.doctorName);
+            const option = document.createElement('option');
+            option.value = doctor.doctorName;
+            option.innerText = doctor.doctorName;
+
+            doctorList.appendChild(option);
+        })
+
+    })
+}
+
+function set_date(){
     let sDate = new Date();
     let eDate = new Date();
 
@@ -20,11 +66,7 @@ $(function() {
 
     document.getElementById('date').value = new Date().toISOString().substring(0, 10);
 
-});
-
-const dateInput = document.getElementById("date");
-const timeSetBody = document.getElementById("time_set_body");
-
+}
 
 const data = [
     // {time: "9:00", max: 0, count: 0, block: 0, enable: 0},
@@ -97,7 +139,6 @@ function apply_event(){
 
 function appo_create(){
     convertInputsToJson();
-
 }
 
 
