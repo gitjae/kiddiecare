@@ -2,10 +2,10 @@ package com.spring.kiddiecare.controller;
 
 import com.spring.kiddiecare.domain.user.User;
 import com.spring.kiddiecare.domain.user.UserRepository;
+import com.spring.kiddiecare.util.CalenderAndGetTrmtUtil;
 import com.spring.kiddiecare.util.OpenApiDataUtil;
 import com.spring.kiddiecare.util.hospInfo.HospDetailBody;
 import com.spring.kiddiecare.util.hospInfo.HospDetailItem;
-import com.spring.kiddiecare.util.hospInfo.HospDetailItems;
 import com.spring.kiddiecare.util.hospbasis.HospBasisBody;
 import com.spring.kiddiecare.util.hospbasis.HospBasisItem;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +27,7 @@ import java.util.Optional;
 public class HospitalInfoController {
     private final UserRepository userRepository;
     private final OpenApiDataUtil openApiDataUtil;
+    private final CalenderAndGetTrmtUtil calenderAndGetTrmtUtil;
 
     private String baseUrl = "https://apis.data.go.kr/B551182/";
     private String hospInfoService="hospInfoServicev2/";
@@ -70,21 +71,31 @@ public class HospitalInfoController {
         String uri = pageNo + requestPageNo + yadmNm + encodedParamValue;
         String url = baseUrl + hospInfoService + HospList + encodeServiceKey + uri;
         Duration cacheTtl = Duration.ofMinutes(1);
-        System.out.println("URL:"+url);
         HospBasisBody hospListData = openApiDataUtil.getHospList(url, uri, cacheTtl);
 
         if(hospListData != null){
+            result.put("result","success");
             for(HospBasisItem item : hospListData.getItems()){
+                JSONObject dataSet = new JSONObject();
                 String hospInfoUrl = baseUrl + admDtlInfoService + getDtlInfo + encodeServiceKey + ykiho + item.getYkiho() ;
-                System.out.println("Url: "+hospInfoUrl);
                 HospDetailBody hospInfoData = openApiDataUtil.getHospData(hospInfoUrl, item.getYkiho(), cacheTtl);
-                HospDetailItems InfoData = hospInfoData.getItems();
+                HospDetailItem data = hospInfoData.getItems().getItem();
+                dataSet.put("telno",item.getTelno());
+                dataSet.put("addr",item.getAddr());
+                dataSet.put("hospitalName",item.getYadmNm());
+                dataSet.put("xPos",item.getXPos());
+                dataSet.put("yPos",item.getYPos());
+                if(data!=null){
+                    dataSet.put("noTrmtHoli",data.getNoTrmtHoli());
+                    dataSet.put("noTrmtSun",data.getNoTrmtSun());
+                    dataSet.put("weekday",calenderAndGetTrmtUtil.getStartByWeekday(data));
+                }
+                result.put(item.getYkiho(),dataSet);
             }
+        }else{
+            result.put("result","No data");
         }
         // List의 정보 마다 상세정보 불러오기
-
-        result.put("result","success");
-        result.put("data","");
         return result.toMap();
     }
 
