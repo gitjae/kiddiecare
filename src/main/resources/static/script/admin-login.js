@@ -21,15 +21,14 @@ function checkValue(htmlForm) {
 
     if (check === true) {
         console.log("dd")
-        var data = { adminId: ID, adminPw: PW }
         $.ajax({
             method: "POST",
             url: "/admin/login/check",
-            data: JSON.stringify(data),
-            contentType: "application/json; charset=utf-8",
-            success: function(adminLogin) {
-                console.log(adminLogin);
-                if (adminLogin === "success") {
+            data: JSON.stringify({adminId:ID, adminPw: PW }),
+            contentType:'application/json; charset=utf-8',
+            success: function(data) {
+                console.log(data);
+                if (data.adminLogin === "success") {
                     location.href = "/admin/appointment";
                 } else {
                     alert('아이디와 비밀번호가 일치하지 않습니다.');
