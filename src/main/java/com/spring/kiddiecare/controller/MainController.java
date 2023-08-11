@@ -21,6 +21,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.WebRequest;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -68,11 +69,20 @@ public class MainController {
     @GetMapping("/geolocation")
     public String geolocation() { return "geolocation"; }
 
-    @GetMapping("mypage/{id}")
-    public String mypage(@PathVariable String id
+    @GetMapping("childRegister")
+    public String childResister(){return "childRegister";}
+
+    @GetMapping("mypage")
+    public String mypage(WebRequest request
             , @PageableDefault(size = 2, direction = Sort.Direction.DESC) Pageable pageable
             , Model model) {
-        Optional<User> foundUser = userRepository.findUserById(id);
+        String log = (String) request.getAttribute("log", WebRequest.SCOPE_SESSION);
+
+        if(log == null){
+            return "login";
+        }
+
+        Optional<User> foundUser = userRepository.findUserById(log);
 
         if(foundUser.isPresent()){
             User user = foundUser.get();
@@ -105,8 +115,8 @@ public class MainController {
             }
 
             model.addAttribute("user", userDto);
-            model.addAttribute("children", childrendDtos);
-            model.addAttribute("appointments", appoDtos);
+//            model.addAttribute("children", childrendDtos);
+//            model.addAttribute("appointments", appoDtos);
         }
         return "mypage";
     }

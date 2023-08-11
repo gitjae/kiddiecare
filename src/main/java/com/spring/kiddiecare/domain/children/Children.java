@@ -22,4 +22,12 @@ public class Children {
     private int birth;
     private int gender;
     private String info;
+
+    public Children(ChildrenRequestDto childDto, int parentNo){
+        this.parentNo = parentNo;
+        this.name = childDto.getName();
+        this.birth = childDto.getBirth();
+        this.gender = childDto.getGender();
+        this.info = childDto.getInfo();
+    }
 }
