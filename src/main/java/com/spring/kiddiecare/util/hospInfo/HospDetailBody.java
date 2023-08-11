@@ -1,9 +1,9 @@
 package com.spring.kiddiecare.util.hospInfo;
 
-import com.spring.kiddiecare.util.hospbasis.HospBasisItem;
+import com.spring.kiddiecare.util.hospInfo.HospDetailItem;
 import lombok.*;
 
-import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.*;
 import java.util.List;
 
 @ToString
@@ -11,9 +11,19 @@ import java.util.List;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlRootElement(name = "body")
 public class HospDetailBody {
-    private List<HospDetailInfo> items;
+
+    @XmlElement(name = "items")
+    private HospDetailItems items;
+
+    @XmlElement(name = "numOfRows")
     private int numOfRows;
+
+    @XmlElement(name = "pageNo")
     private int pageNo;
+
+    @XmlElement(name = "totalCount")
     private int totalCount;
 }

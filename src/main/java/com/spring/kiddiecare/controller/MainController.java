@@ -23,6 +23,9 @@ public class MainController {
     @GetMapping("/admin/login")
     public String adminLogin(){return "adminLogin";}
 
+    @GetMapping("/hospital/Search")
+    public String hospitalSearch(){return "hospitalSearchList";}
+
     @GetMapping("admin/appointment")
     public String hospitalReservationForm() {
         return "hospitalAppointmentForm";

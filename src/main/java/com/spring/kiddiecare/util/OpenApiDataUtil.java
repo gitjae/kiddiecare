@@ -1,26 +1,20 @@
 package com.spring.kiddiecare.util;
 
-import com.spring.kiddiecare.util.hospInfo.HospDetailInfoResponse;
-import com.spring.kiddiecare.util.hospInfo.HospDetailInfoResponseJson;
+
+import com.spring.kiddiecare.util.hospInfo.HospDetailBody;
+import com.spring.kiddiecare.util.hospInfo.HospDetailResponse;
 import com.spring.kiddiecare.util.hospbasis.HospBasisBody;
-import com.spring.kiddiecare.util.hospbasis.HospBasisItem;
 import com.spring.kiddiecare.util.hospbasis.HospBasisResponse;
-import lombok.RequiredArgsConstructor;
-import org.json.JSONObject;
+import com.spring.kiddiecare.util.hospInfo.HospDetailBody;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.time.Duration;
-import java.util.List;
-import java.util.Map;
+
 
 @Component
 public class OpenApiDataUtil {
@@ -28,14 +22,17 @@ public class OpenApiDataUtil {
     private final RestTemplate restTemplate;
     private final RedisTemplate redisTemplate;
     private ValueOperations<String, HospBasisBody> valueOps;
+    private ValueOperations<String, HospDetailBody> valueOpsDetail;
     @Autowired // inner 클래스 위에 있는 변수들을 생성해준다. @Autowired는 원래는 쓰지 않고 @RequiredArgsConstructor 사용
     public OpenApiDataUtil(RedisTemplate redisTemplate) {
         this.restTemplate = new RestTemplate();
         this.redisTemplate = redisTemplate;
         this.valueOps = redisTemplate.opsForValue();
+        this.valueOpsDetail = redisTemplate.opsForValue();
     }
 
-    public HospBasisBody hosInfoList(String url, String uri, Duration cacheTtl) {
+    public HospBasisBody getHospList(String url, String uri, Duration cacheTtl) {
+        // 캐시 데이터 확인하기
         HospBasisBody cachedData = valueOps.get(uri);
         if (cachedData != null) {
             return cachedData;
@@ -47,7 +44,6 @@ public class OpenApiDataUtil {
             System.out.println(uri);
             HospBasisResponse data = restTemplate.getForObject(reqeusturl, HospBasisResponse.class);
             resultBody = data.getBody();
-            System.out.println(resultBody);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -60,52 +56,27 @@ public class OpenApiDataUtil {
         return null;
     }
 
-    public HospBasisBody hosInfoDetail(String url, String uri, Duration cacheTtl) {
-        HospBasisBody cachedData = valueOps.get(uri);
+    public HospDetailBody getHospData(String url, String ykiho, Duration cacheTtl) {
+        // 캐시 데이터 확인하기
+        HospDetailBody cachedData = valueOpsDetail.get(ykiho);
         if (cachedData != null) {
             return cachedData;
         }
 
-        HospBasisBody result = null;
+        HospDetailBody resultBody = null;
         try {
             URI reqeusturl = new URI(url);
-            System.out.println(uri);
-            HospDetailInfoResponse data = restTemplate.getForObject(reqeusturl , HospDetailInfoResponse.class);
-            System.out.println(data);
+            HospDetailResponse data = restTemplate.getForObject(reqeusturl, HospDetailResponse.class);
+            resultBody = data.getBody();
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        if (result != null) {
-            valueOps.set(uri, result, cacheTtl);
-            return result;
+        if (resultBody != null) {
+            valueOpsDetail.set(ykiho, resultBody, cacheTtl);
+            return resultBody;
         }
 
         return null;
     }
-
-//    public HospBasisResponse fetchDataClass(String url, Duration cacheTtl) {
-//        HospBasisResponse cachedData = valueOps.get(url);
-//        HospBasisResponse data = null;
-//
-//        if (cachedData != null) {
-//            return cachedData;
-//        }
-//
-//        try {
-//            URI uri = new URI(url);
-//            data = restTemplate.getForObject(uri, HospBasisResponse.class);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//
-//        if (data != null) {
-//            valueOps.set(url, data, cacheTtl);
-//            return data;
-//        }
-//
-//        return null;
-//    }
-
-
 }
