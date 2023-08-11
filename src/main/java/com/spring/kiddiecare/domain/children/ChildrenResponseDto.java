@@ -10,7 +10,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ChildrenResponseDto {
-    private int no;     // id
+    private int id;     // id
     private int parentNo;
     private String name;
     private int birth;
@@ -18,7 +18,7 @@ public class ChildrenResponseDto {
     private String info;
 
     public ChildrenResponseDto(Children child){
-        this.no = child.getNo();
+        this.id = child.getId();
         this.parentNo = child.getParentNo();
         this.name = child.getName();
         this.birth = child.getBirth();

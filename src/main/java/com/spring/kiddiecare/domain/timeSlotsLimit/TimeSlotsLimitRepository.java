@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface TimeSlotsLimitRepository extends JpaRepository<TimeSlotsLimit, Long> {
+public interface TimeSlotsLimitRepository extends JpaRepository<TimeSlotsLimit, Integer> {
     List<TimeSlotsLimit> findByYkiho(String ykiho);
 }
