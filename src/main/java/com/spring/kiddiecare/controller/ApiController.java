@@ -1,11 +1,18 @@
 package com.spring.kiddiecare.controller;
 
+import com.spring.kiddiecare.domain.user.User;
+import com.spring.kiddiecare.domain.user.UserRepository;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.models.Response;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.WebRequest;
+
+import java.util.Map;
+import java.util.Optional;
 
 //@ApiResponses({
 //        @ApiResponse(code = 200, message = "Success"),
@@ -14,9 +21,11 @@ import org.springframework.web.bind.annotation.*;
 //})
 
 @Api(tags="API Controller test")
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/v1")
 public class ApiController {
+    private final UserRepository userRepository;
 
     @GetMapping("/api/hello1")
     public String hello1() {

@@ -9,16 +9,19 @@ import com.spring.kiddiecare.util.hospInfo.HospDetailItem;
 import com.spring.kiddiecare.util.hospbasis.HospBasisBody;
 import com.spring.kiddiecare.util.hospbasis.HospBasisItem;
 import lombok.RequiredArgsConstructor;
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.context.request.WebRequest;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.time.Duration;
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.Optional;
 
@@ -42,7 +45,7 @@ public class HospitalInfoController {
     private String ykiho = "&ykiho=";
     private String xPos = "&xPos=";
     private String yPos = "&yPos=";
-    private String radius = "&radius=200";
+    private String radius = "&radius=500";
 
     @Value("${external.api.decode}")
     private String decodeServiceKey;
@@ -117,28 +120,57 @@ public class HospitalInfoController {
 
 
     @GetMapping("/home")
-    public String home(Model model){
-        //String log = (String) request.getAttribute("log", WebRequest.SCOPE_SESSION);
-        String log = "redberry";
+    public Map home(WebRequest request, @RequestParam(defaultValue="1") String requestPageNo){
+        String log = (String) request.getAttribute("log", WebRequest.SCOPE_SESSION);
+
+        //String log = "apple";
+
+        JSONObject jsonObject = new JSONObject();
 
         Optional<User> foundUser = userRepository.findUserById(log);
         if(foundUser.isPresent()){
             User user = foundUser.get();
-            String pageNo = "&pageNo=1";
+
             String dgsbjtCd = "&dgsbjtCd=11";
-            String xpos1 = "&xPos="+user.getXpos();
-            String ypos1 = "&yPos="+user.getYpos();
-            String radius1 = "&radius=200";
 
-            String baseUrl = "https://apis.data.go.kr/B551182/hospInfoServicev2/getHospBasisList?ServiceKey=";
-            String url = baseUrl + encodeServiceKey + pageNo + dgsbjtCd + xpos1 + ypos1 + radius1;
+            String uri = pageNo + requestPageNo + dgsbjtCd + xPos + user.getXpos() + yPos + user.getYpos() + radius;
 
-            Duration cacheTtl = Duration.ofSeconds(5);
+            String url = baseUrl + hospInfoService + HospList + encodeServiceKey + uri;
+            Duration cacheTtl = Duration.ofMinutes(1);
+            HospBasisBody hospListData = openApiDataUtil.getHospList(url, uri, cacheTtl);
 
-//            HospBasisResponse response = openApiDataUtil.fetchDataClass(url, cacheTtl);
-//            model.addAttribute("response", response);
+            if(hospListData != null){
+                jsonObject.put("result","success");
+                jsonObject.put("centerX", user.getXpos());
+                jsonObject.put("centerY", user.getYpos());
+                ArrayList<JSONObject> list = new ArrayList<>();
+                for(HospBasisItem item : hospListData.getItems()) {
+                    JSONObject dataSet = new JSONObject();
+                    String hospInfoUrl = baseUrl + admDtlInfoService + getDtlInfo + encodeServiceKey + ykiho + item.getYkiho();
+                    HospDetailBody hospInfoData = openApiDataUtil.getHospData(hospInfoUrl, item.getYkiho(), cacheTtl);
+                    HospDetailItem data = hospInfoData.getItems().getItem();
+                    dataSet.put("telno", item.getTelno());
+                    dataSet.put("addr", item.getAddr());
+                    dataSet.put("hospitalName", item.getYadmNm());
+                    dataSet.put("xPos", item.getXPos());
+                    dataSet.put("yPos", item.getYPos());
+                    if (data != null) {
+                        dataSet.put("noTrmtHoli", data.getNoTrmtHoli());
+                        dataSet.put("noTrmtSun", data.getNoTrmtSun());
+                        dataSet.put("weekday", calenderAndGetTrmtUtil.getStartByWeekday(data));
+                    }
+                    //jsonObject.put(item.getYkiho(), dataSet);
+                    list.add(dataSet);
+                }
+                jsonObject.put("list", list);
+            } else {
+                jsonObject.put("result", "No Data");
+            }
+        } else {
+            jsonObject.put("result", "Can't Found User Addr");
         }
-        return "externalData";
+
+        return jsonObject.toMap();
     }
 
 }
