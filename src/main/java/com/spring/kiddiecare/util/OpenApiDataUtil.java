@@ -41,7 +41,6 @@ public class OpenApiDataUtil {
         HospBasisBody resultBody = null;
         try {
             URI reqeusturl = new URI(url);
-            System.out.println(uri);
             HospBasisResponse data = restTemplate.getForObject(reqeusturl, HospBasisResponse.class);
             resultBody = data.getBody();
         } catch (Exception e) {
