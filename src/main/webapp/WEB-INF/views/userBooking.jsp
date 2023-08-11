@@ -100,23 +100,4 @@
     <input type="submit" id="payBtn" value="결제하기 패스하고 예약꽂기">
 </form>
 </body>
-<%--<script>--%>
-<%--    function selectChildren(childNo) {--%>
-<%--        document.getElementById("selectedChildNo").value = childNo;--%>
-<%--    }--%>
-
-<%--    function renderChildCard(child) {--%>
-<%--        const card = `--%>
-<%--            <div class="children-card">--%>
-<%--                <h4>${child.name}</h4>--%>
-<%--                <p>생년월일: ${child.birth}</p>--%>
-<%--                <p>성별: ${child.gender === 1 || child.gender === 3 ? '남자' : '여자'}</p>--%>
-<%--                <p>추가 정보: ${child.info}</p>--%>
-<%--                <button class="select-children" onclick="selectChildren(${child.no})">선택</button>--%>
-<%--            </div>--%>
-<%--        `;--%>
-
-<%--        $("#childrenContainer").append(card);--%>
-<%--    }--%>
-<%--</script>--%>
 </html>

@@ -58,26 +58,44 @@ function buildCalendar() {
     }
 }
 
+// 날짜 선택, 각 날짜의 timeSlots
 let selectDate = null; // 날짜 저장 (Date 타입)
 let selectDay = null;   // 요일 저장 (String 타입)
 let formattedDate = null;
-// 날짜 선택
+
 function choiceDate(nowColumn) {
     if (document.getElementsByClassName("choiceDay")[0]) {                              // 기존에 선택한 날짜가 있으면
+
         document.getElementsByClassName("choiceDay")[0].classList.remove("choiceDay");  // 해당 날짜의 "choiceDay" class 제거
     }
     nowColumn.classList.add("choiceDay");           // 선택된 날짜에 "choiceDay" class 추가
-
     // 클릭된 날짜 및 요일 저장
+
     selectDate = new Date(nowMonth.getFullYear(), nowMonth.getMonth(), parseInt(nowColumn.innerText)); // 선택된 날짜 저장
     let dayNames = ["일", "월", "화", "수", "목", "금", "토"];
     selectDay = dayNames[selectDate.getDay()]; // 선택된 요일 저장
-
     formattedDate = selectDate.getFullYear() + "-" + leftPad(selectDate.getMonth() + 1) + "-" + leftPad(selectDate.getDate());  // --> 선택된 날짜: Thu Aug 17 2023 00:00:00 GMT+0900 (한국 표준시) 값 변경
-    console.log("선택된 날짜:", formattedDate);
+
+    console.log("선택된 날짜:", formattedDate);  // String
     console.log("선택된 요일:", selectDay);
 
+    document.querySelector('.time-slots-table').style.display = 'block';        // css
 
+    fetch(`/getAvailableTimeSlots?date=${formattedDate}`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (Array.isArray(data)) {
+                updateAvailableTimeSlots(data);
+            } else {
+                console.error('Invalid data format:', data);
+            }
+        })
+        .catch(error => console.error('Error:', error));
 }
 
 // 이전달 버튼 클릭
@@ -105,3 +123,21 @@ document.getElementById("booking-btn").onclick = function() {
     let ykiho = this.getAttribute("data-ykiho");
     location.href = `/appointment/booking?ykiho=${ykiho}&treatmentDate=${formattedDate}&treatmentDay=${selectDay}`;
 }
+
+function updateAvailableTimeSlots(data) {
+    const timeSlotsTable = document.querySelector('.time-slots-table');
+    let timeSlotsContent = '<h2 class="time-slots-info">예약 가능 타임 테이블</h2>';
+
+    data.forEach(timeSlot => {
+        timeSlotsContent += `
+            <div class="time-slot-card">
+                <div class="time-slot-content">
+                    ${timeSlot.time} (${timeSlot.count}/${timeSlot.enable})
+                </div>
+            </div>
+        `;
+    });
+
+    timeSlotsTable.innerHTML = timeSlotsContent;
+}
+
