@@ -57,7 +57,7 @@
         </tbody>
     </table>
 
-    <div class="book-time-table">
+    <div class="time-slots-table">
         병원DB) 예약시간 테이블 표
     </div>
 
