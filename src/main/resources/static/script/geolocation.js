@@ -20,7 +20,10 @@ $(function (){
             var positions = []
             res.list.forEach(hosp => {
                 var position = {
-                    content : `<div>${hosp.hospitalName}</div>`,
+                    content : `<div>${hosp.hospitalName}</div>
+                                <div>${hosp.addr}</div>
+                                <div>${hosp.telno}</div>
+                                <div>${hosp.weekday}</div>`,
                     latlng : new kakao.maps.LatLng(hosp.yPos, hosp.xPos)
                 }
                 positions.push(position);
