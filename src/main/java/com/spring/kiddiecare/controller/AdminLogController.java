@@ -17,7 +17,7 @@ import java.util.Map;
 import java.util.Optional;
 
 @RequiredArgsConstructor
-@Controller
+@RestController
 @SessionAttributes({"log"}) // 세션을 사용하고 있다라는걸 바인딩 해줘야함
 @RequestMapping("admin")
 public class AdminLogController {

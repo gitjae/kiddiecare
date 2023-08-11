@@ -21,11 +21,12 @@ function checkValue(htmlForm) {
 
     if (check === true) {
         console.log("dd")
+        var data = { adminId: ID, adminPw: PW }
         $.ajax({
             method: "POST",
             url: "/admin/login/check",
-            data: { adminId: ID, adminPw: PW },
-            dataType: "json",
+            data: JSON.stringify(data),
+            contentType: "application/json; charset=utf-8",
             success: function(adminLogin) {
                 console.log(adminLogin);
                 if (adminLogin === "success") {
