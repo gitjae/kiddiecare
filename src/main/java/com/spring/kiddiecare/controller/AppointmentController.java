@@ -23,8 +23,8 @@ public class AppointmentController {
     private final TimeSlotsLimitRepository timeSlotsLimitRepository;
     private final DoctorRepository doctorRepository;
     @Transactional
-    @PostMapping(value="appo-add", consumes = {"application/json"})
-    public Map appo_add(@RequestBody List<TimeSlotsLimitRequestDto> list) {
+    @PostMapping(value="timeset-add", consumes = {"application/json"})
+    public Map timeset_add(@RequestBody List<TimeSlotsLimitRequestDto> list) {
 
         JSONObject json = new JSONObject();
 
@@ -40,6 +40,7 @@ public class AppointmentController {
 
         return json.toMap();
     }
+
 
     @GetMapping("{ykiho}")
     public List<Doctor> getDoctors(@PathVariable String ykiho) {
