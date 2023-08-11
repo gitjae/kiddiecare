@@ -20,6 +20,7 @@ public class TimeSlotsLimitRequestDto {
     private int max;
     private int block;
     private int enable;
+    private String ykiho;
 
 
     @Override
@@ -33,6 +34,7 @@ public class TimeSlotsLimitRequestDto {
                 ", max='" + max + '\'' +
                 ", block='" + block + '\'' +
                 ", enable='" + enable + '\'' +
+                ", ykiho='" + ykiho + '\'' +
                 '}';
     }
 }
