@@ -26,6 +26,7 @@ public class TimeSlotsLimit {
     private int max;
     private int block;
     private int enable;
+    private String yKiho;
 
     public TimeSlotsLimit(TimeSlotsLimitRequestDto timeSlotsDto) {
         this.doctorNo = Long.parseLong(timeSlotsDto.getDoctorNo() + "");
