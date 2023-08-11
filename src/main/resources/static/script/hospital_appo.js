@@ -1,4 +1,52 @@
+// 페이지 시작 시 바로 실행
 $(function() {
+    updateTable();
+    apply_event();
+    set_date();
+    get_hospital_name();
+    get_doctor();
+});
+
+const dateInput = document.getElementById("date");
+const timeSetBody = document.getElementById("time_set_body");
+const doctorList = document.getElementById('doctor_list');
+
+function get_hospital_name() {
+    let ykiho = $('#ykiho').val();
+
+    $.ajax({
+        url: `/hospitalName/${ykiho}`,
+        method: 'GET',
+        timeout: 0
+    }).done(function (response) {
+        console.log(response);
+        $('#hospital_name').val(response.hospitalName);
+    }).fail(function (error) {
+        console.log(error);
+    });
+}
+function get_doctor() {
+    let ykiho = $('#ykiho').val();
+
+
+    $.ajax({
+        url:`/api/v1/admin/appo/${ykiho}`,
+        method: "GET",
+        timeout: 0
+    }).done(function (list) {
+        list.forEach(doctor => {
+            console.log(doctor.doctorName);
+            const option = document.createElement('option');
+            option.value = doctor.doctorName;
+            option.innerText = doctor.doctorName;
+
+            doctorList.appendChild(option);
+        })
+
+    })
+}
+
+function set_date(){
     let sDate = new Date();
     let eDate = new Date();
 
@@ -18,11 +66,7 @@ $(function() {
 
     document.getElementById('date').value = new Date().toISOString().substring(0, 10);
 
-});
-
-const dateInput = document.getElementById("date");
-const timeSetBody = document.getElementById("time_set_body");
-
+}
 
 const data = [
     // {time: "9:00", max: 0, count: 0, block: 0, enable: 0},
@@ -72,7 +116,11 @@ function calculateEnable(e) {
 }
 dateInput.addEventListener("change", () => {
     updateTable();
+    apply_event();
 
+});
+
+function apply_event(){
     // 각 입력 상자들의 DOM 요소 가져오기
     let inputMax = document.querySelectorAll("input[id^='max_']");
     let inputCount = document.querySelectorAll("input[id^='count_']");
@@ -85,20 +133,12 @@ dateInput.addEventListener("change", () => {
         inputCount[i].addEventListener("input", calculateEnable, false);
         inputBlock[i].addEventListener("input", calculateEnable, false);
     }
-});
+}
 
-// Initialize the table with the default date value
-updateTable();
+// updateTable();
 
 function appo_create(){
-    let name = $('#hospital_name').val();
-    let memo = $('#hospital_announcement').val();
-    let count = $('#count').val();
-    let max = $('#max').val();
-    let date = $('#date').val();
-
     convertInputsToJson();
-
 }
 
 
@@ -139,18 +179,17 @@ function convertInputsToJson() {
     $.ajax({
         type: "POST",
         url: "/api/v1/admin/appo/appo-add",
-        // data: JSON.stringify(appo_data),
         data: JSON.stringify(result),
         contentType: "application/json",
 
     }).done(function (result) {
-        alert(result.result);
-        // if(result.result === "success") {
-        //     alert("병원 정보 업로드 성공!");
-        //     // location.href="/";
-        // } else {
-        //     alert("업로드 실패..");
-        // }
+        // alert(result.result);
+        if(result.result === "success") {
+            alert("병원 정보 업로드 성공!");
+            // location.href="/";
+        } else {
+            alert("업로드 실패..");
+        }
     })
     console.log(result);
     return result;
