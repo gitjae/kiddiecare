@@ -21,23 +21,9 @@ import java.util.List;
 @Controller
 @RequestMapping("/appointment")
 public class UserAppointmentController {
-    @Autowired
     private HospitalService hospitalService;
-    @Autowired
     private DoctorService doctorService;
-    @Autowired
     private UserRepository userRepository;
-    @Autowired
     private ChildrenRepository childrenRepository;
-    @Autowired
     private TimeSlotsLimitService timeSlotsLimitService;
-
-
-    // 파라미터로 병원코드 받아서 단일 병원 정보 나타내기
-
-
-
-
-
-
 }

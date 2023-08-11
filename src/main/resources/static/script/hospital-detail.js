@@ -81,22 +81,47 @@ function choiceDate(nowColumn) {
 
     document.querySelector('.time-slots-table').style.display = 'block';        // css
 
-    fetch(`/getAvailableTimeSlots?date=${formattedDate}`)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
+    let ykiho = document.getElementById("hospital-name").getAttribute("ykiho");
+    console.log("ykiho : ", ykiho);
+
+    $.ajax({
+        url: "/timeSlotsDateGetByYkiho",
+        method: "GET",
+        data: {
+            ykiho: ykiho,
+            date: selectDate
+        }
+    }).done(res => {
+        console.log(res);
+        console.log(res.slots);
+        res.slots.forEach(slot => {
+
+            // 이제 slot.date ... 필요한거 받아와서 화면에 처리
         })
-        .then(data => {
-            if (Array.isArray(data)) {
-                updateAvailableTimeSlots(data);
-            } else {
-                console.error('Invalid data format:', data);
-            }
-        })
-        .catch(error => console.error('Error:', error));
+    }
+
+    ).fail(function() {
+        console.error("timeSlotsGet");
+    });
 }
+
+// 화면에 나타내기
+// function updateAvailableTimeSlots(data) {
+//     const timeSlotsTable = document.querySelector('.time-slots-table');
+//     let timeSlotsContent = '<h2 class="time-slots-info">예약 가능 타임 테이블</h2>';
+//
+//     data.forEach(timeSlot => {
+//         timeSlotsContent += `
+//             <div class="time-slot-card">
+//                 <div class="time-slot-content">
+//                     ${timeSlot.time} (${timeSlot.count}/${timeSlot.enable})
+//                 </div>
+//             </div>
+//         `;
+//     });
+//
+//     timeSlotsTable.innerHTML = timeSlotsContent;
+// }
 
 // 이전달 버튼 클릭
 function prevCalendar() {
@@ -119,25 +144,8 @@ function leftPad(value) {
     return value;
 }
 
-document.getElementById("booking-btn").onclick = function() {
-    let ykiho = this.getAttribute("data-ykiho");
-    location.href = `/appointment/booking?ykiho=${ykiho}&treatmentDate=${formattedDate}&treatmentDay=${selectDay}`;
-}
-
-function updateAvailableTimeSlots(data) {
-    const timeSlotsTable = document.querySelector('.time-slots-table');
-    let timeSlotsContent = '<h2 class="time-slots-info">예약 가능 타임 테이블</h2>';
-
-    data.forEach(timeSlot => {
-        timeSlotsContent += `
-            <div class="time-slot-card">
-                <div class="time-slot-content">
-                    ${timeSlot.time} (${timeSlot.count}/${timeSlot.enable})
-                </div>
-            </div>
-        `;
-    });
-
-    timeSlotsTable.innerHTML = timeSlotsContent;
-}
+// document.getElementById("booking-btn").onclick = function() {
+//     let ykiho = this.getAttribute("data-ykiho");
+//     location.href = `/appointment/booking?ykiho=${ykiho}&treatmentDate=${formattedDate}&treatmentDay=${selectDay}`;
+// }
 
