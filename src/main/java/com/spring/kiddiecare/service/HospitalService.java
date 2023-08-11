@@ -18,6 +18,7 @@ public class HospitalService {
     }
 
     public Hospital findHospitalByYkiho(String ykiho) {
+        System.out.println("service: " +ykiho);
         return hospitalRepository.findByYkiho(ykiho);
     }
 

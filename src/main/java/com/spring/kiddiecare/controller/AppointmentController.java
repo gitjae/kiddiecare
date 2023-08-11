@@ -1,5 +1,7 @@
 package com.spring.kiddiecare.controller;
 
+import com.spring.kiddiecare.domain.doctor.Doctor;
+import com.spring.kiddiecare.domain.doctor.DoctorRepository;
 import com.spring.kiddiecare.domain.timeSlotsLimit.TimeSlotsLimit;
 import com.spring.kiddiecare.domain.timeSlotsLimit.TimeSlotsLimitRepository;
 import com.spring.kiddiecare.domain.timeSlotsLimit.TimeSlotsLimitRequestDto;
@@ -19,7 +21,7 @@ public class AppointmentController {
 
 //    private final AppoRepository appoRepository;
     private final TimeSlotsLimitRepository timeSlotsLimitRepository;
-
+    private final DoctorRepository doctorRepository;
     @Transactional
     @PostMapping(value="appo-add", consumes = {"application/json"})
     public Map appo_add(@RequestBody List<TimeSlotsLimitRequestDto> list) {
@@ -33,12 +35,16 @@ public class AppointmentController {
             TimeSlotsLimit timeSlotsLimit = new TimeSlotsLimit(dto);
 //            timeSlotsLimit.setCount(timeSlotsLimit.getCount()+1);
             timeSlotsLimitRepository.save(timeSlotsLimit);
-            json.put("result", timeSlotsLimit.getTime());
         }
+            json.put("result", "success");
+
         return json.toMap();
     }
 
-
+    @GetMapping("{ykiho}")
+    public List<Doctor> getDoctors(@PathVariable String ykiho) {
+        return doctorRepository.findByYkiho(ykiho);
+    }
 
 
 //    @PostMapping(value = "appo-add", consumes = {"application/json"})

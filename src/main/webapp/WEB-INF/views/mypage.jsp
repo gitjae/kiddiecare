@@ -33,12 +33,37 @@
         <section id="main-section">
             <div class="main-div" id="div-user">
                 <p>유저</p>
+                <div id="user">
+                    <p>${user.name}</p>
+                    <p>${user.email}</p>
+                </div>
             </div>
             <div class="main-div" id="div-children">
                 <p>자녀</p>
+                <c:forEach items="${children}" var="child">
+                    <p>이름 : ${child.name}</p>
+                    <p>성별 : ${child.gender}</p>
+                    <p>생년월일 : ${child.birth}</p>
+                    <p>참고사항 : ${child.info}</p>
+                </c:forEach>
+                <div class="children">
+
+                </div>
             </div>
             <div class="main-div" id="div-appo">
                 <p>예약</p>
+                <c:forEach items="${appointments}" var="appo">
+                    <div class="appo">
+                        <p>예약번호 : ${appo.no}</p>
+                        <p>병원이름 : ${appo.hospital}</p>
+                        <p>예약일정 : ${appo.date} ${appo.time}</p>
+                        <p>담당의 : ${appo.doctor}</p>
+                        <p>예약상태 : ${appo.appoStatus}</p>
+                        <p>환자이름 : ${appo.name}</p>
+                        <p>증상 : ${appo.symptom}</p>
+                        <p>참고사항 : ${appo.note}</p>
+                    </div>
+                </c:forEach>
             </div>
             <div class="main-div" id="div-review">
                 <p>후기</p>

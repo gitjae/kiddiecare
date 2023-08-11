@@ -21,6 +21,26 @@ public class UserResponseDto {
     private String postcode;
     private String addr;
     private String addr_detail;
+    private double xpos;
+    private double ypos;
     private String token;
     private boolean isValid;
+
+    public UserResponseDto(User user){
+        this.no = user.getNo();
+        this.id = user.getId();
+        this.password = user.getPassword();
+        this.name = user.getName();
+        this.birth = user.getBirth();
+        this.gender = user.isGender();
+        this.phone = user.getPhone();
+        this.email = user.getEmail();
+        this.postcode = user.getPostcode();
+        this.addr = user.getAddr();
+        this.addr_detail = user.getAddr_detail();
+        this.xpos = user.getXpos();
+        this.ypos = user.getYpos();
+        this.token = user.getToken();
+        this.isValid = user.isValid();
+    }
 }

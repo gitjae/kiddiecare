@@ -26,6 +26,7 @@ public class TimeSlotsLimit {
     private int max;
     private int block;
     private int enable;
+    private String ykiho;       // hospital table FK 추가
 
     public TimeSlotsLimit(TimeSlotsLimitRequestDto timeSlotsDto) {
         this.doctorNo = Long.parseLong(timeSlotsDto.getDoctorNo() + "");
@@ -36,6 +37,7 @@ public class TimeSlotsLimit {
         this.max = timeSlotsDto.getMax();
         this.block = timeSlotsDto.getBlock();
         this.enable = timeSlotsDto.getEnable();
+        this.ykiho = timeSlotsDto.getYkiho();       // hospital table FK 추가
     }
 
     public void setCount(int count) {
