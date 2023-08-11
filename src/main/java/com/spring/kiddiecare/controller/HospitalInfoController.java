@@ -3,24 +3,27 @@ package com.spring.kiddiecare.controller;
 import com.spring.kiddiecare.domain.user.User;
 import com.spring.kiddiecare.domain.user.UserRepository;
 import com.spring.kiddiecare.util.OpenApiDataUtil;
+import com.spring.kiddiecare.util.hospInfo.HospDetailBody;
+import com.spring.kiddiecare.util.hospInfo.HospDetailItem;
+import com.spring.kiddiecare.util.hospInfo.HospDetailItems;
 import com.spring.kiddiecare.util.hospbasis.HospBasisBody;
 import com.spring.kiddiecare.util.hospbasis.HospBasisItem;
-import com.spring.kiddiecare.util.hospbasis.HospBasisResponse;
 import lombok.RequiredArgsConstructor;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.time.Duration;
-import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RequiredArgsConstructor
-@Controller
+@RestController
 public class HospitalInfoController {
     private final UserRepository userRepository;
     private final OpenApiDataUtil openApiDataUtil;
@@ -51,34 +54,38 @@ public class HospitalInfoController {
      @return externalData 템플릿을 렌더링한 결과
      */
     @GetMapping("search/list")
-    public String getHospList(Model model, @RequestParam(defaultValue="") String keyword,
-                              @RequestParam(defaultValue="1") String requestPageNo){
-
+    public Map getHospList(Model model, @RequestParam(defaultValue="") String keyword,
+                           @RequestParam(defaultValue="1") String requestPageNo){
+        JSONObject result = new JSONObject();
+        // keyword 인코딩
         String encodedParamValue = null;
         try {
             encodedParamValue = URLEncoder.encode(keyword, "UTF-8");
         }catch (UnsupportedEncodingException e){
-            return "hospitalSearchList";
+            result.put("result","Encoding Error");
+            return result.toMap();
         }
 
-        // 리스트 불러오기
+        // hospList 불러오기
         String uri = pageNo + requestPageNo + yadmNm + encodedParamValue;
         String url = baseUrl + hospInfoService + HospList + encodeServiceKey + uri;
         Duration cacheTtl = Duration.ofMinutes(1);
-        HospBasisBody response = openApiDataUtil.hosInfoList(url, uri, cacheTtl);
+        System.out.println("URL:"+url);
+        HospBasisBody hospListData = openApiDataUtil.getHospList(url, uri, cacheTtl);
 
-        int maxPageCount = response.getTotalCount()/response.getNumOfRows();
-        int currentPage = response.getPageNo();
-
-        for(HospBasisItem item : response.getItems()){
-            String hospInfoUri = ykiho + item.getYkiho() + "&_type=json";
-            String hospInfoUrl = baseUrl + admDtlInfoService + getDtlInfo + encodeServiceKey +hospInfoUri;
-            System.out.println("Url: "+hospInfoUrl);
-            HospBasisBody apiResponse = openApiDataUtil.hosInfoDetail(hospInfoUrl, hospInfoUri,cacheTtl);
+        if(hospListData != null){
+            for(HospBasisItem item : hospListData.getItems()){
+                String hospInfoUrl = baseUrl + admDtlInfoService + getDtlInfo + encodeServiceKey + ykiho + item.getYkiho() ;
+                System.out.println("Url: "+hospInfoUrl);
+                HospDetailBody hospInfoData = openApiDataUtil.getHospData(hospInfoUrl, item.getYkiho(), cacheTtl);
+                HospDetailItems InfoData = hospInfoData.getItems();
+            }
         }
+        // List의 정보 마다 상세정보 불러오기
 
-        model.addAttribute("response", response);
-        return "hospitalSearchList";
+        result.put("result","success");
+        result.put("data","");
+        return result.toMap();
     }
 
 

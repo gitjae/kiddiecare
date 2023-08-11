@@ -1,5 +1,6 @@
 package com.spring.kiddiecare.util.hospbasis;
 
+import com.spring.kiddiecare.util.hospInfo.HospDetailItem;
 import lombok.*;
 
 import javax.xml.bind.annotation.*;

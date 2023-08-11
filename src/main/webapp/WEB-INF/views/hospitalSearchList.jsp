@@ -22,7 +22,6 @@
             <c:forEach items="${response}" var="item">
                 <div class="hospList">
                     <a>
-
                     </a>
                     <span>병원명 : ${item.yadmNm}</span>
                     <span>병원 주소: ${item.addr}</span>
