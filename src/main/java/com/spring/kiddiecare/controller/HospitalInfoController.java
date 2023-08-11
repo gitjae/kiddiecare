@@ -57,7 +57,7 @@ public class HospitalInfoController {
 
     /**
      외부 API에서 병원 정보를 가져와서 모델에 추가하고, externalData 템플릿을 렌더링한다.
-     @param model 렌더링할 데이터를 담을 모델 객체
+     //@param model 렌더링할 데이터를 담을 모델 객체
      @return externalData 템플릿을 렌더링한 결과
      */
     @GetMapping("search/list")
@@ -158,7 +158,7 @@ public class HospitalInfoController {
                 ArrayList<JSONObject> list = new ArrayList<>();
                 for(HospBasisItem item : hospListData.getItems()) {
                     JSONObject dataSet = new JSONObject();
-                    String hospInfoUrl = baseUrl + admDtlInfoService + getDtlInfo + encodeServiceKey + ykiho + item.getYkiho();
+                    String hospInfoUrl = baseUrl + admDtlInfoService + getDtlInfo + encodeServiceKey + ykihoUri + item.getYkiho();
                     HospDetailBody hospInfoData = openApiDataUtil.getHospData(hospInfoUrl, item.getYkiho(), cacheTtl);
                     HospDetailItem data = hospInfoData.getItems().getItem();
                     dataSet.put("telno", item.getTelno());
