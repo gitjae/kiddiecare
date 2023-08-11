@@ -1,4 +1,6 @@
 $(function() {
+    updateTable();
+    apply_event();
     let sDate = new Date();
     let eDate = new Date();
 
@@ -72,7 +74,11 @@ function calculateEnable(e) {
 }
 dateInput.addEventListener("change", () => {
     updateTable();
+    apply_event();
 
+});
+
+function apply_event(){
     // 각 입력 상자들의 DOM 요소 가져오기
     let inputMax = document.querySelectorAll("input[id^='max_']");
     let inputCount = document.querySelectorAll("input[id^='count_']");
@@ -85,18 +91,11 @@ dateInput.addEventListener("change", () => {
         inputCount[i].addEventListener("input", calculateEnable, false);
         inputBlock[i].addEventListener("input", calculateEnable, false);
     }
-});
+}
 
-// Initialize the table with the default date value
-updateTable();
+// updateTable();
 
 function appo_create(){
-    let name = $('#hospital_name').val();
-    let memo = $('#hospital_announcement').val();
-    let count = $('#count').val();
-    let max = $('#max').val();
-    let date = $('#date').val();
-
     convertInputsToJson();
 
 }
@@ -139,18 +138,17 @@ function convertInputsToJson() {
     $.ajax({
         type: "POST",
         url: "/api/v1/admin/appo/appo-add",
-        // data: JSON.stringify(appo_data),
         data: JSON.stringify(result),
         contentType: "application/json",
 
     }).done(function (result) {
-        alert(result.result);
-        // if(result.result === "success") {
-        //     alert("병원 정보 업로드 성공!");
-        //     // location.href="/";
-        // } else {
-        //     alert("업로드 실패..");
-        // }
+        // alert(result.result);
+        if(result.result === "success") {
+            alert("병원 정보 업로드 성공!");
+            // location.href="/";
+        } else {
+            alert("업로드 실패..");
+        }
     })
     console.log(result);
     return result;

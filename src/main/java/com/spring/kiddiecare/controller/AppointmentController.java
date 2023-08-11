@@ -33,8 +33,9 @@ public class AppointmentController {
             TimeSlotsLimit timeSlotsLimit = new TimeSlotsLimit(dto);
 //            timeSlotsLimit.setCount(timeSlotsLimit.getCount()+1);
             timeSlotsLimitRepository.save(timeSlotsLimit);
-            json.put("result", timeSlotsLimit.getTime());
         }
+            json.put("result", "success");
+
         return json.toMap();
     }
 

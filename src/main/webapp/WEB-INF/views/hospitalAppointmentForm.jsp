@@ -27,21 +27,20 @@
                 <input type="date" id="date" value="">
             </label>
 
+            <button>인원수 초기화</button>
             <table id="time_set">
                 <thead>
                 <tr>
-                    <th>Time</th>
-                    <th>Max</th>
-                    <th>Count</th>
-                    <th>Block</th>
-                    <th>Enable</th>
+                    <th>시간</th>
+                    <th>최대 예약 가능 인원</th>
+                    <th>현재 예약자 수</th>
+                    <th>보류 인원 수</th>
+                    <th>최종 예약 가능 인원</th>
                 </tr>
                 </thead>
                 <tbody id="time_set_body">
                 </tbody>
             </table>
-
-            <input type="text" id="hospital_announcement" name="hospital_announcement" placeholder="병원 공지사항">
 
             <button onclick="appo_create()">예약 생성</button>
         </form>
