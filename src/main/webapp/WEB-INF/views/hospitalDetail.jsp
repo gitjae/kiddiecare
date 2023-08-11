@@ -13,7 +13,6 @@
     카카오맵 지도 영역
 </div>
 
-<%--<c:forEach var="hospital" items="${hospitals}">--%>
 <div class="hospital-detail-info">
     <h2 class="info-title">상세정보</h2>
     <h3 id="hospital-name">${hospital.hospitalName}</h3>
@@ -31,7 +30,6 @@
             </div>
         </c:forEach>
     </div>
-    <%--    </c:forEach>--%>
 
     <table class="Calendar">
         <thead>
@@ -58,7 +56,14 @@
     </table>
 
     <div class="time-slots-table">
-        병원DB) 예약시간 테이블 표
+        <h2 class="time-slots-info">예약 가능 타임 테이블</h2>
+        <c:forEach items="${timeSlotsLimits}" var="timeSlotsLimit">
+            <div class="time-slot-card">
+                <div class="time-slot-content">
+                        ${timeSlotsLimit.time}<br>(${timeSlotsLimit.count}/${timeSlotsLimit.enable})
+                </div>
+            </div>
+        </c:forEach>
     </div>
 
     <button id="booking-btn" data-ykiho="${hospital.ykiho}">예약하기</button>

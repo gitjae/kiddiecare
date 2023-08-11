@@ -32,6 +32,7 @@ public class UserAppointmentController {
     @Autowired
     private TimeSlotsLimitService timeSlotsLimitService;
 
+
     // 파라미터로 병원코드 받아서 단일 병원 정보 나타내기
     @GetMapping("/hospitalDetail")
     public String showReservePage(@RequestParam("ykiho") String ykiho, Model model) {
@@ -44,8 +45,8 @@ public class UserAppointmentController {
         model.addAttribute("doctors", doctors);
 
         // 병원의 진료 정보
-        List<TimeSlotsLimit> timeSlotsLimits = timeSlotsLimitService.findTimeSlotsByYkiho(ykiho);
-        model.addAttribute("timeSlots", timeSlotsLimits);
+//        List<TimeSlotsLimit> timeSlotsLimits = timeSlotsLimitService.findTimeSlotsByYkiho(ykiho);
+//        model.addAttribute("timeSlotsLimits", timeSlotsLimits);
 
         return "hospitalDetail";
     }
@@ -76,7 +77,7 @@ public class UserAppointmentController {
             model.addAttribute("userName", user.getName());
             model.addAttribute("parentId", user.getNo());
 
-            // 해당 사용자의 자녀 정보
+            // 해당 사용자의 자녀 정보 ---> 수정필요
             List<Children> childrenList = childrenRepository.findByParentNo(user.getNo());
             model.addAttribute("children", childrenList);
         }
@@ -84,15 +85,15 @@ public class UserAppointmentController {
         return "userBooking";
     }
 
-    @GetMapping("/getChildrenByParentId")
-    @ResponseBody
-    public List<Children> getChildrenByParentId(@RequestParam("parentId") int parentId) {
-
-        List<Children> children = childrenRepository.findByParentNo(parentId);
-        System.out.println("자녀 정보 : " + children);
-        // Fetched children: [com.spring.kiddiecare.domain.children.Children@72694adc, com.spring.kiddiecare.domain.children.Children@72694adc]
-
-        return childrenRepository.findByParentNo(parentId);
-    }
+//    @GetMapping("/getChildrenByParentId")
+//    @ResponseBody
+//    public List<Children> getChildrenByParentId(@RequestParam("parentId") int parentId) {
+//
+//        List<Children> children = childrenRepository.findByParentNo(parentId);
+//        System.out.println("자녀 정보 : " + children);
+//        // Fetched children: [com.spring.kiddiecare.domain.children.Children@72694adc, com.spring.kiddiecare.domain.children.Children@72694adc]
+//
+//        return childrenRepository.findByParentNo(parentId);
+//    }
 
 }

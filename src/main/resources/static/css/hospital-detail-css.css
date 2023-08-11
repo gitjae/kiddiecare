@@ -1,3 +1,11 @@
+/* 카카오맵 영역 */
+.kakaoMap-area{
+    width: 80%;
+    height: 300px;
+    border: 1px solid black;
+    border-radius: 10px;
+}
+
 /* 예약 캘린더 */
 td {
     width: 50px;
@@ -38,10 +46,26 @@ td {
     cursor: pointer;
 }
 
-/* 카카오맵 영역 */
-.kakaoMap-area{
-    width: 80%;
-    height: 300px;
-    border: 1px solid black;
-    border-radius: 10px;
+/* 타임 테이블 */
+.time-slots-table {
+    display: none;
+}
+
+.time-slot-card {
+    display: inline-block;
+    padding: 15px;
+    margin: 5px;
+    border: 1px solid #e0e0e0;
+    box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.1);
+    width: 150px;
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.time-slot-card:hover {
+    transform: scale(1.05);
+}
+
+.time-slot-content {
+    font-size: 16px;
 }
