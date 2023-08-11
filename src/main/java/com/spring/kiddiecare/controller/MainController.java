@@ -13,6 +13,7 @@ import com.spring.kiddiecare.domain.user.UserRepository;
 import com.spring.kiddiecare.domain.user.UserResponseDto;
 import com.spring.kiddiecare.service.DoctorService;
 import com.spring.kiddiecare.service.HospitalService;
+import com.spring.kiddiecare.service.TimeSlotsLimitService;
 import com.spring.kiddiecare.util.AppoView;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -40,6 +41,7 @@ public class MainController {
     private final DoctorRepository doctorRepository;
     private final HospitalService hospitalService;
     private final DoctorService doctorService;
+    private final TimeSlotsLimitService timeSlotsLimitService;
 
     @GetMapping("/")
     public String index(){
@@ -148,8 +150,9 @@ public class MainController {
             model.addAttribute("parentId", user.getNo());
 
             // 해당 사용자의 자녀 정보 ---> 수정필요
-            List<Children> childrenList = childrenRepository.findByParentNo(user.getNo());
-            model.addAttribute("children", childrenList);
+//            List<Children> childrenList = childrenRepository.findByParentNo(user.getNo());
+//            model.addAttribute("children", childrenList);
+            List<Children> children = childrenRepository.findByParentNo(user.getNo());
         }
 
         return "userBooking";
@@ -164,10 +167,6 @@ public class MainController {
         // 해당 병원의 의사 정보
         List<Doctor> doctors = doctorService.findDoctorsByYkiho(ykiho);
         model.addAttribute("doctors", doctors);
-
-        // 병원의 진료 정보
-//        List<TimeSlotsLimit> timeSlotsLimits = timeSlotsLimitService.findTimeSlotsByYkiho(ykiho);
-//        model.addAttribute("timeSlotsLimits", timeSlotsLimits);
 
         return "hospitalDetail";
     }

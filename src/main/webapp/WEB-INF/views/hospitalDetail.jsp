@@ -15,7 +15,7 @@
 
 <div class="hospital-detail-info">
     <h2 class="info-title">상세정보</h2>
-    <h3 id="hospital-name">${hospital.hospitalName}</h3>
+    <h3 id="hospital-name" ykiho="${hospital.ykiho}">${hospital.hospitalName}</h3>
     <h3 id="hospital-addr">병원DB) 주소</h3>
     <h3 id="hospital-operate-time">병원DB) 운영시간</h3>
     <h3 id="hospital-intro">${hospital.hospitalIntro}</h3>
