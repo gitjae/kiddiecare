@@ -22,23 +22,18 @@ public class AdminController {
     private final PasswordEncoder passwordEncoder;
 
     @PostMapping("id/check")
-    public Map adminIdDuplCheck(){
+    public Map adminIdDuplCheck(@RequestBody AdminRequestDto adminDto){
         JSONObject result = new JSONObject();
-
-        return result.toMap();
-    }
-
-    @GetMapping("hosp/check")
-    public Map hospCheck(){
-        JSONObject result = new JSONObject();
-
+        Admin admin = adminRepository.findByAdminId(adminDto.getAdminId());
+        String message = admin == null ? "Not a duplicate value." : "duplicate value";
+        result.put("response", message);
         return result.toMap();
     }
 
     @PostMapping("join")
     public Map adminJoin(@RequestBody AdminRequestDto adminDto){
         JSONObject result = new JSONObject();
-        // 데이터 확인
+        // 데이터값 확인
         if(adminDto == null){
             result.put("response","fail cause joinForm data is null");
             return result.toMap();
@@ -63,25 +58,43 @@ public class AdminController {
         return result.toMap();
     }
 
+//    @PostMapping("pw/check")
+//    public Map adminPwSameCheck(@RequestBody AdminRequestDto adminDto, WebRequest request){
+//        JSONObject result = new JSONObject();
+//        Optional<String> session = Optional.ofNullable(request.getAttribute("log", WebRequest.SCOPE_SESSION).toString());
+//        session.orElseGet(()->result.put("response",""))
+//        if(adminDto!= null){
+//
+//        }else{
+//            result.put("response","");
+//        }
+//        Optional<Admin> admin = Optional.ofNullable(Optional.ofNullable(adminRepository.findByAdminId(adminDto.getAdminId()))
+//                .orElseGet(() -> {
+//                    result.put("response", "Not a duplicate value.");
+//                    return null;
+//                }));
+//        if(admin.isPresent()) result.put("response","duplicate value");
+//        return result.toMap();
+//    }
+
     // TODO 전체적인 로직 수정 해야함
     @PutMapping("update/{adminName}")
     public Map adminUpdate(@PathVariable String adminName, @RequestBody AdminRequestDto adminDto, WebRequest request){
-//        Optional<String> session = Optional.ofNullable(request.getAttribute("log", WebRequest.SCOPE_SESSION).toString());
+        Optional<String> session = Optional.ofNullable(request.getAttribute("log", WebRequest.SCOPE_SESSION).toString());
         JSONObject result = new JSONObject();
 
-        // 세션 확인
-//        if(session.isPresent()){ // isEmpty
-//            result.put("response","fail cause session does not exist.");
-//            return result.toMap();
-//        }
-//
-//        // 세션값과 수정하려는 정보와 일치하는지 확인
-//        if(session.get().equals(adminName)) { // !
-//            result.put("response", "fail cause session and admin do not match.");
-//            return result.toMap();
-//        }
+        //세션 확인
+        if(session.isEmpty()){
+            result.put("response","fail cause session does not exist.");
+            return result.toMap();
+        }
 
-        System.out.println(adminDto);
+        // 세션값과 수정하려는 정보와 일치하는지 확인
+        if(!session.get().equals(adminName)) {
+            result.put("response", "fail cause session and admin do not match.");
+            return result.toMap();
+        }
+
         // 비밀번호 Encrypt
         if(adminDto == null){
             result.put("response", "fail cause joinForm data is null.");
@@ -91,16 +104,11 @@ public class AdminController {
         }
 
         //DB에서 데이터가 있는지 확인후 수정 로직
-        Optional<Admin> adminInfo = Optional.ofNullable(adminRepository.findByAdminIdAndAdminPw(adminDto.getAdminId(),adminDto.getAdminPw()));
-        if (!adminInfo.isPresent()) {
-            try {
-                adminService.updateAdminByNo(adminDto);
-                result.put("response", "success");
-            } catch (Exception e) {
-                result.put("response", "fail cause cannot save.");
-            }
-        }else{
-            result.put("response", "fail cause no info.");
+        try {
+            adminService.updateAdminByNo(adminDto);
+            result.put("response", "success");
+        } catch (Exception e) {
+            result.put("response", "fail cause cannot save.");
         }
 
         return result.toMap();

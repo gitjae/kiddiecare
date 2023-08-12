@@ -51,13 +51,12 @@ public class HospitalInfoController {
     @Value("${external.api.encode}")
     private String encodeServiceKey;
 
-
     /**
      외부 API에서 병원 정보를 가져와서 모델에 추가하고, externalData 템플릿을 렌더링한다.
      @param keyword 렌더링할 데이터를 담을 모델 객체
      @return externalData 템플릿을 렌더링한 결과
      */
-    @GetMapping("search/list")
+    @GetMapping("search/hospList")
     public Map getHospList(@RequestParam(defaultValue="") String keyword,
                            @RequestParam(defaultValue="1") String requestPageNo){
         JSONObject result = new JSONObject();
@@ -73,7 +72,6 @@ public class HospitalInfoController {
         // hospList 불러오기
         String uri = pageNo + requestPageNo + yadmNm + encodedParamValue;
         String url = baseUrl + hospInfoService + HospList + encodeServiceKey + uri;
-        System.out.println("dd "+url);
         Duration cacheTtl = Duration.ofMinutes(3);
         HospBasisBody hospListData = openApiDataUtil.getHospList(url, uri, cacheTtl);
 
