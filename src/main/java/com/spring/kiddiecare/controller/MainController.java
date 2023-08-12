@@ -152,7 +152,7 @@ public class MainController {
             // 해당 사용자의 자녀 정보 ---> 수정필요
 //            List<Children> childrenList = childrenRepository.findByParentNo(user.getNo());
 //            model.addAttribute("children", childrenList);
-            List<Children> children = childrenRepository.findByParentNo(user.getNo());
+//            List<Children> children = childrenRepository.findByParentNo(user.getNo());
         }
 
         return "userBooking";

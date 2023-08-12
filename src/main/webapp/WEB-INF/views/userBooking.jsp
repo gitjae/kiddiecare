@@ -62,6 +62,8 @@
     <input type="text" id="treatmentDate" value="" readonly>
     <p>진료일</p>
     <input type="text" id="treatmentDay" value="" readonly>
+    <p>진료시간</p>
+    <input type="text" id="treatmentDate" value="" readonly>
     <p>보호자명</p>
     <input type="text" id="guardian" value=${userName} readonly>
     <input type="hidden" id="parentId" value="${parentId}" />

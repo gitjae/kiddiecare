@@ -6,6 +6,14 @@ let nowMonth = new Date();
 let today = new Date();
 today.setHours(0, 0, 0, 0);
 
+let selectedSlotInfo = {
+    doctorNo: null,
+    date: null,
+    time: null,
+    weekday: null,
+    ykiho: null
+};
+
 // 달력 생성 : 해당 달에 맞춰 테이블을 만들고, 날짜를 채워 넣기
 function buildCalendar() {
     let firstDate = new Date(nowMonth.getFullYear(), nowMonth.getMonth(), 1);
@@ -111,11 +119,16 @@ function showTimeSlots(slots) {
     let timeSlotsContent = '<h2 class="time-slots-info">예약 가능 시간</h2>';
 
     slots.forEach(slot => {
-        // 예약이 찾는지 확인
+        // 예약 풀부킹 확인
         let isFull = slot.max === slot.count;
 
         timeSlotsContent += `
-            <div class="time-slot-card ${isFull ? 'full-time-slot' : ''}">
+            <div class="time-slot-card ${isFull ? 'full-time-slot' : ''}" 
+                 data-doctorNo="${slot.doctorNo}" 
+                 data-date="${slot.date}" 
+                 data-time="${slot.time}" 
+                 data-weekday="${slot.weekday}" 
+                 data-ykiho="${slot.ykiho}">
                 <div class="time-slot-content">
                     ${slot.time}<br>(${slot.count}/${slot.max})
                 </div>
@@ -124,6 +137,20 @@ function showTimeSlots(slots) {
     });
 
     timeSlotsTable.innerHTML = timeSlotsContent;
+
+    // 각 타임 슬롯 클릭 이벤트
+    document.querySelectorAll('.time-slot-card').forEach(card => {
+        card.addEventListener('click', function() {
+            selectedSlotInfo.doctorNo = this.getAttribute('data-doctorNo');
+            selectedSlotInfo.date = this.getAttribute('data-date');
+            selectedSlotInfo.time = this.getAttribute('data-time');
+            selectedSlotInfo.weekday = this.getAttribute('data-weekday');
+            selectedSlotInfo.ykiho = this.getAttribute('data-ykiho');
+
+            console.log(selectedSlotInfo);
+        });
+    });
+
 }
 
 // 이전달 버튼 클릭
@@ -147,8 +174,8 @@ function leftPad(value) {
     return value;
 }
 
-// document.getElementById("booking-btn").onclick = function() {
-//     let ykiho = this.getAttribute("data-ykiho");
-//     location.href = `/appointment/booking?ykiho=${ykiho}&treatmentDate=${formattedDate}&treatmentDay=${selectDay}`;
-// }
+document.getElementById("booking-btn").onclick = function() {
+    let ykiho = this.getAttribute("data-ykiho");
+    location.href = `/appointment/booking?ykiho=${ykiho}&treatmentDate=${formattedDate}&treatmentDay=${selectDay}`;
+}
 

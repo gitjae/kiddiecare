@@ -44,23 +44,23 @@ $(document).ready(function() {
     document.getElementById('treatmentDay').value = treatmentDay;
 
     // 자녀 정보
-    const parentId = $("#parentId").val();
-    console.log("parentId : ", parentId);
-
-    $.ajax({
-        url: `/appointment/getChildrenByParentId?parentId=${parentId}`,
-        type: "GET",
-        dataType: 'json',
-        success: function(childrenData) {
-            $('#childrenList').empty();  // 기존에 추가된 자녀 정보 삭제
-            if (childrenData && childrenData.length > 0) {
-                childrenData.forEach(child => {
-                    renderChildCard(child);
-                });
-            }
-        },
-        error: function(err) {
-            console.error('Error fetching children data:', err.responseText);
-        }
-    });
+    // const parentId = $("#parentId").val();
+    // console.log("parentId : ", parentId);
+    //
+    // $.ajax({
+    //     url: `/appointment/getChildrenByParentId?parentId=${parentId}`,
+    //     type: "GET",
+    //     dataType: 'json',
+    //     success: function(childrenData) {
+    //         $('#childrenList').empty();  // 기존에 추가된 자녀 정보 삭제
+    //         if (childrenData && childrenData.length > 0) {
+    //             childrenData.forEach(child => {
+    //                 renderChildCard(child);
+    //             });
+    //         }
+    //     },
+    //     error: function(err) {
+    //         console.error('Error fetching children data:', err.responseText);
+    //     }
+    // });
 });
