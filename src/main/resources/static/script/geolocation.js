@@ -98,10 +98,63 @@ function getUserLocation() {
 }
 
 function setPosition(position) {
-    xPos = position.coords.latitude;
-    yPos = position.coords.longitude;
+    xPos = position.coords.longitude;
+    yPos = position.coords.latitude;
 
-    var moveLatLon = new kakao.maps.LatLng(xPos, yPos);
+    $.ajax({
+        method:'GET',
+        url:`/location`,
+        data:{
+            x:xPos,
+            y:yPos
+        }
+    }).done(res => {
+        console.log(res);
+        if(res.result === 'success'){
+            makeMap();
+
+            var positions = []
+            res.list.forEach(hosp => {
+                var position = {
+                    content : `<div>${hosp.hospitalName}</div>
+                                <div>${hosp.addr}</div>
+                                <div>${hosp.telno}</div>
+                                <div>${hosp.weekday}</div>`,
+                    latlng : new kakao.maps.LatLng(hosp.yPos, hosp.xPos)
+                }
+                positions.push(position);
+            })
+
+            bounds = new kakao.maps.LatLngBounds();
+
+            for (var i = 0; i < positions.length; i ++) {
+                // 마커를 생성합니다
+                marker = new kakao.maps.Marker({
+                    map: map, // 마커를 표시할 지도
+                    position: positions[i].latlng // 마커의 위치
+                });
+
+                bounds.extend(positions[i].latlng);
+
+                // 마커에 표시할 인포윈도우를 생성합니다
+                infowindow = new kakao.maps.InfoWindow({
+                    content: positions[i].content // 인포윈도우에 표시할 내용
+                });
+
+                // 마커에 mouseover 이벤트와 mouseout 이벤트를 등록합니다
+                // 이벤트 리스너로는 클로저를 만들어 등록합니다
+                // for문에서 클로저를 만들어 주지 않으면 마지막 마커에만 이벤트가 등록됩니다
+                kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));
+                kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
+            }
+
+            setBounds(bounds);
+        } else {
+            alert(res.result);
+        }
+    })
+
+    var moveLatLon = new kakao.maps.LatLng(yPos, xPos);
     map.setCenter(moveLatLon);
 }
 

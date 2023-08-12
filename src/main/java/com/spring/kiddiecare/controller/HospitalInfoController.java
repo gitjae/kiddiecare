@@ -151,7 +151,7 @@ public class HospitalInfoController {
             Duration cacheTtl = Duration.ofMinutes(1);
             HospBasisBody hospListData = openApiDataUtil.getHospList(url, uri, cacheTtl);
 
-            if(hospListData != null){
+            /*if(hospListData != null){
                 jsonObject.put("result","success");
                 jsonObject.put("centerX", user.getXpos());
                 jsonObject.put("centerY", user.getYpos());
@@ -177,7 +177,10 @@ public class HospitalInfoController {
                 jsonObject.put("list", list);
             } else {
                 jsonObject.put("result", "No Data");
-            }
+            }*/
+            jsonObject = makeResponse(hospListData, cacheTtl);
+            jsonObject.put("centerX", user.getXpos());
+            jsonObject.put("centerY", user.getYpos());
         } else {
             jsonObject.put("result", "Can't Found User Addr");
         }
@@ -185,4 +188,80 @@ public class HospitalInfoController {
         return jsonObject.toMap();
     }
 
+    @GetMapping("/location")
+    public Map location(WebRequest request, @RequestParam(defaultValue="1") String requestPageNo
+            , @RequestParam String x, @RequestParam String y){
+        //JSONObject jsonObject = new JSONObject();
+
+        String dgsbjtCd = "&dgsbjtCd=11";
+
+        String uri = pageNo + requestPageNo + dgsbjtCd + xPos + x + yPos + y + radius;
+
+        String url = baseUrl + hospInfoService + HospList + encodeServiceKey + uri;
+        Duration cacheTtl = Duration.ofMinutes(1);
+        HospBasisBody hospListData = openApiDataUtil.getHospList(url, uri, cacheTtl);
+
+        /*if(hospListData != null){
+            jsonObject.put("result","success");
+
+            ArrayList<JSONObject> list = new ArrayList<>();
+            for(HospBasisItem item : hospListData.getItems()) {
+                JSONObject dataSet = new JSONObject();
+                String hospInfoUrl = baseUrl + admDtlInfoService + getDtlInfo + encodeServiceKey + ykihoUri + item.getYkiho();
+                HospDetailBody hospInfoData = openApiDataUtil.getHospData(hospInfoUrl, item.getYkiho(), cacheTtl);
+                HospDetailItem data = hospInfoData.getItems().getItem();
+                dataSet.put("telno", item.getTelno());
+                dataSet.put("addr", item.getAddr());
+                dataSet.put("hospitalName", item.getYadmNm());
+                dataSet.put("xPos", item.getXPos());
+                dataSet.put("yPos", item.getYPos());
+                if (data != null) {
+                    dataSet.put("noTrmtHoli", data.getNoTrmtHoli());
+                    dataSet.put("noTrmtSun", data.getNoTrmtSun());
+                    dataSet.put("weekday", calenderAndGetTrmtUtil.getStartByWeekday(data));
+                }
+                //jsonObject.put(item.getYkiho(), dataSet);
+                list.add(dataSet);
+            }
+            jsonObject.put("list", list);
+        } else {
+            jsonObject.put("result", "No Data");
+        }*/
+        JSONObject jsonObject = makeResponse(hospListData, cacheTtl);
+
+        return jsonObject.toMap();
+    }
+
+    public JSONObject makeResponse(HospBasisBody hospListData, Duration cacheTtl){
+        JSONObject jsonObject = new JSONObject();
+
+        if(hospListData != null){
+            jsonObject.put("result","success");
+
+            ArrayList<JSONObject> list = new ArrayList<>();
+            for(HospBasisItem item : hospListData.getItems()) {
+                JSONObject dataSet = new JSONObject();
+                String hospInfoUrl = baseUrl + admDtlInfoService + getDtlInfo + encodeServiceKey + ykihoUri + item.getYkiho();
+                HospDetailBody hospInfoData = openApiDataUtil.getHospData(hospInfoUrl, item.getYkiho(), cacheTtl);
+                HospDetailItem data = hospInfoData.getItems().getItem();
+                dataSet.put("telno", item.getTelno());
+                dataSet.put("addr", item.getAddr());
+                dataSet.put("hospitalName", item.getYadmNm());
+                dataSet.put("xPos", item.getXPos());
+                dataSet.put("yPos", item.getYPos());
+                if (data != null) {
+                    dataSet.put("noTrmtHoli", data.getNoTrmtHoli());
+                    dataSet.put("noTrmtSun", data.getNoTrmtSun());
+                    dataSet.put("weekday", calenderAndGetTrmtUtil.getStartByWeekday(data));
+                }
+                //jsonObject.put(item.getYkiho(), dataSet);
+                list.add(dataSet);
+            }
+            jsonObject.put("list", list);
+        } else {
+            jsonObject.put("result", "No Data");
+        }
+
+        return jsonObject;
+    }
 }
