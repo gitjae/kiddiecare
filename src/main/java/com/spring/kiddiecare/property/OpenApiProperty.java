@@ -1,6 +1,5 @@
 package com.spring.kiddiecare.property;
 
-import io.swagger.v3.oas.models.OpenAPI;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;

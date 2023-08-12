@@ -51,7 +51,9 @@ dependencies {
 
     // Swagger
     // https://mvnrepository.com/artifact/io.springfox/springfox-boot-starter
-    implementation 'io.springfox:springfox-boot-starter:3.0.0'
+//    implementation 'io.springfox:springfox-boot-starter:3.0.0'
+    implementation 'io.springfox:springfox-swagger2:2.9.2'
+    implementation 'io.springfox:springfox-swagger-ui:2.9.2'
     // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-redis
     // implementation 'org.springframework.boot:spring-boot-starter-data-redis:2.7.4'
 
@@ -61,6 +63,9 @@ dependencies {
     // xml RestTemplate 응답 처리용 jaxb-runtime
     // https://mvnrepository.com/artifact/org.glassfish.jaxb/jaxb-runtime
     implementation 'org.glassfish.jaxb:jaxb-runtime:2.3.6'
+
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+
 }
 
 tasks.named('test') {

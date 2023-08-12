@@ -6,6 +6,7 @@ import com.spring.kiddiecare.domain.hospitalAdmin.AdminRequestDto;
 import com.spring.kiddiecare.service.AdminService;
 import lombok.RequiredArgsConstructor;
 import org.json.JSONObject;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
 
@@ -18,45 +19,113 @@ import java.util.Optional;
 public class AdminController {
     private final AdminService adminService;
     private final AdminRepository adminRepository;
+    private final PasswordEncoder passwordEncoder;
 
-//    @GetMapping("")
-//    @PutMapping("update/{adminName}")
-//    public Map adminUpdate(@PathVariable String adminName, @RequestBody AdminRequestDto adminDto, WebRequest request){
-////        Optional<String> session = Optional.ofNullable(request.getAttribute("log", WebRequest.SCOPE_SESSION));
-//        JSONObject result = new JSONObject();
-//
-//        if(session.isEmpty()){
-//            result.put("join","fail");
+    @PostMapping("id/check")
+    public Map adminIdDuplCheck(){
+        JSONObject result = new JSONObject();
+
+        return result.toMap();
+    }
+
+    @GetMapping("hosp/check")
+    public Map hospCheck(){
+        JSONObject result = new JSONObject();
+
+        return result.toMap();
+    }
+
+    @PostMapping("join")
+    public Map adminJoin(@RequestBody AdminRequestDto adminDto){
+        JSONObject result = new JSONObject();
+        // 데이터 확인
+        if(adminDto == null){
+            result.put("response","fail cause joinForm data is null");
+            return result.toMap();
+        }
+
+        // 데이터베이스에 있는지 확인
+        Optional<Admin> userIsNull = Optional.ofNullable(adminRepository.findByAdminId(adminDto.getAdminId()));
+        if(userIsNull.isEmpty()){
+            // 비밀번호 encoded
+            String encodedPassword = passwordEncoder.encode(adminDto.getAdminPw());
+            adminDto.setAdminPw(encodedPassword);
+            Admin admin = new Admin(adminDto);
+            try {
+                adminService.joinAdminUserByAdmin(admin);
+            }catch (Exception e){
+                result.put("response","fail cause db error");
+            }
+        }else{
+            result.put("response","fail cause user that already exists");
+        }
+
+        return result.toMap();
+    }
+
+    // TODO 전체적인 로직 수정 해야함
+    @PutMapping("update/{adminName}")
+    public Map adminUpdate(@PathVariable String adminName, @RequestBody AdminRequestDto adminDto, WebRequest request){
+//        Optional<String> session = Optional.ofNullable(request.getAttribute("log", WebRequest.SCOPE_SESSION).toString());
+        JSONObject result = new JSONObject();
+
+        // 세션 확인
+//        if(session.isPresent()){ // isEmpty
+//            result.put("response","fail cause session does not exist.");
 //            return result.toMap();
 //        }
 //
-//        adminRepository.findByAdminName()
-//
-//        try{
-//            adminRepository.findById(adminDto.get).orElseThrow(
-//                    ()-> new IllegalArgumentException("존재하지 않는 게시글 입니다.")
-//            );(userDto.getUsername());
-//            adminService.createUser(userDto);
-//            result.put("join","success");
-//        }catch (Exception e){
-//            e.printStackTrace();
-//            result.put("join","fail");
+//        // 세션값과 수정하려는 정보와 일치하는지 확인
+//        if(session.get().equals(adminName)) { // !
+//            result.put("response", "fail cause session and admin do not match.");
+//            return result.toMap();
 //        }
-//        return result.toMap();
-//    }
-//
-//    @DeleteMapping("leave/{adminName}")
-//    public Map delete(@PathVariable String username){
-//        JSONObject result = new JSONObject();
-//        try{
-//            adminService.getUserById(username);
-//            adminService.deleteUserById(username);
-//            result.put("leave","success");
-//        }catch (Exception e){
-//            e.printStackTrace();
-//            result.put("leave","fail");
-//        }
-//        return result.toMap();
-//    }
+
+        System.out.println(adminDto);
+        // 비밀번호 Encrypt
+        if(adminDto == null){
+            result.put("response", "fail cause joinForm data is null.");
+            return result.toMap();
+        }else{
+            adminDto.setAdminPw(passwordEncoder.encode(adminDto.getAdminPw()));
+        }
+
+        //DB에서 데이터가 있는지 확인후 수정 로직
+        Optional<Admin> adminInfo = Optional.ofNullable(adminRepository.findByAdminIdAndAdminPw(adminDto.getAdminId(),adminDto.getAdminPw()));
+        if (!adminInfo.isPresent()) {
+            try {
+                adminService.updateAdminByNo(adminDto);
+                result.put("response", "success");
+            } catch (Exception e) {
+                result.put("response", "fail cause cannot save.");
+            }
+        }else{
+            result.put("response", "fail cause no info.");
+        }
+
+        return result.toMap();
+    }
+
+    @DeleteMapping("leave/{adminName}")
+    public Map delete(@PathVariable String adminName, WebRequest request,AdminRequestDto adminDto){
+        JSONObject result = new JSONObject();
+        Optional<String> session = Optional.ofNullable(request.getAttribute("log", WebRequest.SCOPE_SESSION).toString());
+
+        if(session.isEmpty()){
+            result.put("join","fail cause session does not exist.");
+            return result.toMap();
+        }
+
+        Optional<Admin> adminInfo = Optional.ofNullable(adminRepository.findByadminNameAndAdminPw(adminName,adminDto.getAdminPw()));
+        if(adminInfo.isPresent()){
+            try{
+                adminService.deleteAdminByNo(adminInfo.get().getNo());
+                result.put("leave","success");
+            }catch (Exception e){
+                result.put("leave","fail cause cannot delete.");
+            }
+        }
+        return result.toMap();
+    }
 
 }
