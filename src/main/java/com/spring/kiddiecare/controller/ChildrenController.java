@@ -2,16 +2,14 @@ package com.spring.kiddiecare.controller;
 
 import com.spring.kiddiecare.domain.children.Children;
 import com.spring.kiddiecare.domain.children.ChildrenRepository;
+import com.spring.kiddiecare.domain.children.ChildrenRequestDto;
 import com.spring.kiddiecare.domain.user.User;
 import com.spring.kiddiecare.domain.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.json.JSONObject;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
 
 import java.util.List;
@@ -50,4 +48,20 @@ public class ChildrenController {
 //
 //        return childrenRepository.findByParentNo(parentId);
 //    }
+
+    @PostMapping("child")
+    public Map childRegister(@RequestBody ChildrenRequestDto childDto, WebRequest request){
+        String log = (String) request.getAttribute("log", WebRequest.SCOPE_SESSION);
+        JSONObject jsonObject = new JSONObject();
+        Optional<User> foundUser = userRepository.findUserById(log);
+        if(foundUser.isPresent()){
+            User user = foundUser.get();
+            Children child = new Children(childDto, user.getNo());
+            childrenRepository.save(child);
+            jsonObject.put("register","success");
+            return jsonObject.toMap();
+        }
+        jsonObject.put("register","fail");
+        return jsonObject.toMap();
+    }
 }

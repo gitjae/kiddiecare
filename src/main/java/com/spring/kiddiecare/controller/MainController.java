@@ -13,6 +13,7 @@ import com.spring.kiddiecare.domain.user.UserRepository;
 import com.spring.kiddiecare.domain.user.UserResponseDto;
 import com.spring.kiddiecare.service.DoctorService;
 import com.spring.kiddiecare.service.HospitalService;
+import com.spring.kiddiecare.service.TimeSlotsLimitService;
 import com.spring.kiddiecare.util.AppoView;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -21,6 +22,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.WebRequest;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,6 +41,7 @@ public class MainController {
     private final DoctorRepository doctorRepository;
     private final HospitalService hospitalService;
     private final DoctorService doctorService;
+    private final TimeSlotsLimitService timeSlotsLimitService;
 
     @GetMapping("/")
     public String index(){
@@ -71,11 +74,20 @@ public class MainController {
     @GetMapping("/geolocation")
     public String geolocation() { return "geolocation"; }
 
-    @GetMapping("mypage/{id}")
-    public String mypage(@PathVariable String id
+    @GetMapping("childRegister")
+    public String childResister(){return "childRegister";}
+
+    @GetMapping("mypage")
+    public String mypage(WebRequest request
             , @PageableDefault(size = 2, direction = Sort.Direction.DESC) Pageable pageable
             , Model model) {
-        Optional<User> foundUser = userRepository.findUserById(id);
+        String log = (String) request.getAttribute("log", WebRequest.SCOPE_SESSION);
+
+        if(log == null){
+            return "login";
+        }
+
+        Optional<User> foundUser = userRepository.findUserById(log);
 
         if(foundUser.isPresent()){
             User user = foundUser.get();
@@ -108,8 +120,8 @@ public class MainController {
             }
 
             model.addAttribute("user", userDto);
-            model.addAttribute("children", childrendDtos);
-            model.addAttribute("appointments", appoDtos);
+//            model.addAttribute("children", childrendDtos);
+//            model.addAttribute("appointments", appoDtos);
         }
         return "mypage";
     }
@@ -141,8 +153,9 @@ public class MainController {
             model.addAttribute("parentId", user.getNo());
 
             // 해당 사용자의 자녀 정보 ---> 수정필요
-            List<Children> childrenList = childrenRepository.findByParentNo(user.getNo());
-            model.addAttribute("children", childrenList);
+//            List<Children> childrenList = childrenRepository.findByParentNo(user.getNo());
+//            model.addAttribute("children", childrenList);
+            List<Children> children = childrenRepository.findByParentNo(user.getNo());
         }
 
         return "userBooking";
@@ -157,10 +170,6 @@ public class MainController {
         // 해당 병원의 의사 정보
         List<Doctor> doctors = doctorService.findDoctorsByYkiho(ykiho);
         model.addAttribute("doctors", doctors);
-
-        // 병원의 진료 정보
-//        List<TimeSlotsLimit> timeSlotsLimits = timeSlotsLimitService.findTimeSlotsByYkiho(ykiho);
-//        model.addAttribute("timeSlotsLimits", timeSlotsLimits);
 
         return "hospitalDetail";
     }

@@ -5,15 +5,19 @@
   Time: 오후 5:52
   To change this template use File | Settings | File Templates.
 --%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
   <title>Title</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=89098ae2758f1c766fe8ab93b869f264"></script>
     <script src="/script/geolocation.js"></script>
 </head>
 <body>
     <h1>User's Location</h1>
     <button onclick="getUserLocation()">Get Location</button>
     <p id="locationInfo"></p>
+    <div id="map" style="width:500px;height:400px;"></div>
 </body>
 </html>

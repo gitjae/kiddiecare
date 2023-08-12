@@ -29,20 +29,6 @@ public class AppoViewController {
     private final UserRepository userRepository;
     private final AppoRepository appoRepository;
 
-    @GetMapping("appointment/{page}")
-    public Map appoPage(WebRequest request, @PageableDefault(size = 2) Pageable pageable, @PathVariable int page){
-        String log = (String) request.getAttribute("log", WebRequest.SCOPE_SESSION);
 
-        JSONObject jsonObject = new JSONObject();
-
-        Optional<User> foundUser = userRepository.findUserById(log);
-        if (foundUser.isPresent()){
-            User user = foundUser.get();
-            List<Appointment> appointments = appoRepository.findAllByGuardian(pageable.withPage(page-1), user.getNo());
-            jsonObject.put("appointments", appointments);
-        }
-
-        return jsonObject.toMap();
-    }
 
 }

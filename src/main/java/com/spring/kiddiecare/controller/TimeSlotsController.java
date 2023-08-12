@@ -1,15 +1,27 @@
 package com.spring.kiddiecare.controller;
 
-import com.spring.kiddiecare.service.TimeSlotsLimitService;
+import com.spring.kiddiecare.domain.timeSlotsLimit.TimeSlotsLimit;
+import com.spring.kiddiecare.domain.timeSlotsLimit.TimeSlotsLimitRepository;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.annotation.*;
+import org.w3c.dom.ls.LSInput;
 
-@Controller
+import java.util.*;
+
+@RestController
 @SessionAttributes({"log"})
 public class TimeSlotsController {
-
     @Autowired
-    private TimeSlotsLimitService timeSlotsLimitService;
+    private TimeSlotsLimitRepository timeSlotsLimitRepository;
+
+    @GetMapping("/timeSlotsDateGetByYkiho")
+    public Map timeSlotsDateGetByYkiho(@RequestParam String ykiho, @RequestParam Date date){
+        JSONObject jsonObject = new JSONObject();
+        List<TimeSlotsLimit> slots = timeSlotsLimitRepository.findTimeSlotsLimitByYkihoAndDate(ykiho, date);
+        jsonObject.put("slots", slots);
+        return jsonObject.toMap();
+    }
+
 }
 
