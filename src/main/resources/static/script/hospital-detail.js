@@ -7,6 +7,14 @@ let nowMonth = new Date();
 let today = new Date();
 today.setHours(0, 0, 0, 0);
 
+let selectedSlotInfo = {
+    doctorNo: null,
+    date: null,
+    time: null,
+    weekday: null,
+    ykiho: null
+};
+
 // 달력 생성 : 해당 달에 맞춰 테이블을 만들고, 날짜를 채워 넣기
 function buildCalendar() {
     let firstDate = new Date(nowMonth.getFullYear(), nowMonth.getMonth(), 1);
@@ -69,9 +77,8 @@ function choiceDate(nowColumn) {
 
         document.getElementsByClassName("choiceDay")[0].classList.remove("choiceDay");  // 해당 날짜의 "choiceDay" class 제거
     }
-    nowColumn.classList.add("choiceDay");           // 선택된 날짜에 "choiceDay" class 추가
+    nowColumn.classList.add("choiceDay");
     // 클릭된 날짜 및 요일 저장
-
     selectDate = new Date(nowMonth.getFullYear(), nowMonth.getMonth(), parseInt(nowColumn.innerText)); // 선택된 날짜 저장
     let dayNames = ["일", "월", "화", "수", "목", "금", "토"];
     selectDay = dayNames[selectDate.getDay()]; // 선택된 요일 저장
@@ -85,6 +92,8 @@ function choiceDate(nowColumn) {
     let ykiho = document.getElementById("hospital-name").getAttribute("ykiho");
     console.log("ykiho : ", ykiho);
 
+    document.querySelector('.time-slots-table').innerHTML = '';     // ajax 호출 전에 슬롯 정보 초기화시켜서 데이터가 있는 날 -> 없는 날 클릭하면 다시 호출되도록
+
     $.ajax({
         url: "/timeSlotsDateGetByYkiho",
         method: "GET",
@@ -95,10 +104,9 @@ function choiceDate(nowColumn) {
     }).done(res => {
         console.log(res);
         console.log(res.slots);
-        res.slots.forEach(slot => {
-
-            // 이제 slot.date ... 필요한거 받아와서 화면에 처리
-        })
+        if (res.slots && res.slots.length > 0) {  // slots 데이터가 있을 경우에만 화면 업데이트
+            showTimeSlots(res.slots);
+        }
     }
 
     ).fail(function() {
@@ -106,23 +114,59 @@ function choiceDate(nowColumn) {
     });
 }
 
-// 화면에 나타내기
-// function updateAvailableTimeSlots(data) {
-//     const timeSlotsTable = document.querySelector('.time-slots-table');
-//     let timeSlotsContent = '<h2 class="time-slots-info">예약 가능 타임 테이블</h2>';
-//
-//     data.forEach(timeSlot => {
-//         timeSlotsContent += `
-//             <div class="time-slot-card">
-//                 <div class="time-slot-content">
-//                     ${timeSlot.time} (${timeSlot.count}/${timeSlot.enable})
-//                 </div>
-//             </div>
-//         `;
-//     });
-//
-//     timeSlotsTable.innerHTML = timeSlotsContent;
-// }
+// 타임 슬롯 화면에 나타내기
+function showTimeSlots(slots) {
+    const timeSlotsTable = document.querySelector('.time-slots-table');
+    let timeSlotsContent = '<h2 class="time-slots-info">예약 가능 시간</h2>';
+
+    slots.forEach(slot => {
+        // 예약 풀부킹 확인
+        let isFull = slot.max === slot.count;
+
+        timeSlotsContent += `
+            <div class="time-slot-card ${isFull ? 'full-time-slot' : ''}" 
+                 data-doctorNo="${slot.doctorNo}" 
+                 data-date="${slot.date}" 
+                 data-time="${slot.time}" 
+                 data-weekday="${slot.weekday}" 
+                 data-ykiho="${slot.ykiho}">
+                <div class="time-slot-content">
+                    ${slot.time}<br>(${slot.count}/${slot.max})
+                </div>
+            </div>
+        `;
+    });
+
+    timeSlotsTable.innerHTML = timeSlotsContent;
+
+    // 선택한 타임 슬롯
+    let currentSelectedCard = null;
+
+    // 각 타임 슬롯 클릭 이벤트
+    document.querySelectorAll('.time-slot-card').forEach(card => {
+        card.addEventListener('click', function() {
+            // 이전에 선택된 카드의 배경색을 원래대로 돌려놓기
+            if (currentSelectedCard) {
+                currentSelectedCard.style.backgroundColor = '';
+            }
+
+            // 클릭된 카드의 배경색 변경
+            this.style.backgroundColor = '#e0e0e0';
+
+            // 현재 선택된 카드 업데이트
+            currentSelectedCard = this;
+
+            selectedSlotInfo.doctorNo = this.getAttribute('data-doctorNo');
+            selectedSlotInfo.date = this.getAttribute('data-date');
+            selectedSlotInfo.time = this.getAttribute('data-time');
+            selectedSlotInfo.weekday = this.getAttribute('data-weekday');
+            selectedSlotInfo.ykiho = this.getAttribute('data-ykiho');
+
+            console.log(selectedSlotInfo);
+        });
+    });
+
+}
 
 // 이전달 버튼 클릭
 function prevCalendar() {
@@ -136,7 +180,7 @@ function nextCalendar() {
     buildCalendar();    // 달력 다시 생성
 }
 
-// input값이 한자리 숫자인 경우 앞에 '0' 붙혀주는 함수
+// input값이 한자리 숫자인 경우 앞에 '0' 붙여주는 함수
 function leftPad(value) {
     if (value < 10) {
         value = "0" + value;
@@ -145,10 +189,14 @@ function leftPad(value) {
     return value;
 }
 
-// document.getElementById("booking-btn").onclick = function() {
-//     let ykiho = this.getAttribute("data-ykiho");
-//     location.href = `/appointment/booking?ykiho=${ykiho}&treatmentDate=${formattedDate}&treatmentDay=${selectDay}`;
-// }
+document.getElementById("booking-btn").onclick = function() {
+    let ykiho = this.getAttribute("data-ykiho");
+    location.href = `/appointment/booking?ykiho=${ykiho}
+                    &treatmentDate=${formattedDate}&treatmentDay=${selectDay}
+                    &doctorNo=${selectedSlotInfo.doctorNo}&slotTime=${selectedSlotInfo.time}
+                    &slotWeekday=${selectedSlotInfo.weekday}`;
+}
+
 
 function getHospInfoDetail(){
     const url = window.location.href;

@@ -69,3 +69,12 @@ td {
 .time-slot-content {
     font-size: 16px;
 }
+
+/* max = count timeSlots 비활성화 */
+.full-time-slot {
+    background-color: #E9E9E9;
+    pointer-events: none;  /* 클릭 방지 */
+    cursor: not-allowed;  /* 커서 모양 변경 */
+    opacity: 0.5;
+}
+
