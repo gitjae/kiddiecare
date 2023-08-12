@@ -1,4 +1,5 @@
 window.onload = function () {
+    getHospInfoDetail();
     buildCalendar();
 }
 
@@ -149,3 +150,13 @@ function leftPad(value) {
 //     location.href = `/appointment/booking?ykiho=${ykiho}&treatmentDate=${formattedDate}&treatmentDay=${selectDay}`;
 // }
 
+function getHospInfoDetail(){
+    const url = window.location.href;
+    const ykiho = url.split('ykiho=')[1].split('&')[0];
+    $.ajax({
+        method: 'GET',
+        url: `/hospital/detail?ykiho=${ykiho}`,
+    }).done(res => {
+        console.log(res)
+    })
+}

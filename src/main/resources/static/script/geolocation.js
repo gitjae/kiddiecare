@@ -20,7 +20,7 @@ $(function (){
             var positions = []
             res.list.forEach(hosp => {
                 var position = {
-                    content : `<div>${hosp.hospitalName}</div>
+                    content : `<div class="hospital-name" ykiho="${hosp.ykiho}">${hosp.hospitalName}</div>
                                 <div>${hosp.addr}</div>
                                 <div>${hosp.telno}</div>
                                 <div>${hosp.weekday}</div>`,
@@ -49,6 +49,7 @@ $(function (){
                 // 이벤트 리스너로는 클로저를 만들어 등록합니다
                 // for문에서 클로저를 만들어 주지 않으면 마지막 마커에만 이벤트가 등록됩니다
                 kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));
+                kakao.maps.event.addListener(marker, 'click', makeClickListener(map, marker, infowindow));
                 kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
             }
 
@@ -63,6 +64,24 @@ $(function (){
 function makeOverListener(map, marker, infowindow) {
     return function() {
         infowindow.open(map, marker);
+    };
+}
+
+function makeClickListener(map, marker, infowindow) {
+    return function() {
+        // 인포윈도우를 엽니다.
+        infowindow.open(map, marker);
+
+        // 인포윈도우의 content를 DOMParser를 사용해 HTML 요소로 변환합니다.
+        const parser = new DOMParser();
+        const contentHTML = parser.parseFromString(infowindow.getContent(), 'text/html');
+
+        // 변환된 HTML에서 클래스가 'hospital-name'인 요소의 ykiho 값을 가져옵니다.
+        const hospitalName = contentHTML.querySelector('.hospital-name');
+        const ykiho = hospitalName.getAttribute('ykiho');
+
+        // 콘솔에 ykiho 값을 출력합니다.
+        location.href = `/appointment/hospitalDetail?ykiho=${ykiho}`
     };
 }
 
@@ -116,7 +135,7 @@ function setPosition(position) {
             var positions = []
             res.list.forEach(hosp => {
                 var position = {
-                    content : `<div>${hosp.hospitalName}</div>
+                    content : `<div class="hospital-name" ykiho="${hosp.ykiho}">${hosp.hospitalName}</div>
                                 <div>${hosp.addr}</div>
                                 <div>${hosp.telno}</div>
                                 <div>${hosp.weekday}</div>`,
@@ -145,6 +164,7 @@ function setPosition(position) {
                 // 이벤트 리스너로는 클로저를 만들어 등록합니다
                 // for문에서 클로저를 만들어 주지 않으면 마지막 마커에만 이벤트가 등록됩니다
                 kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));
+                kakao.maps.event.addListener(marker, 'click', makeClickListener(map, marker, infowindow));
                 kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
             }
 

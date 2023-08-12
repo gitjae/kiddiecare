@@ -74,6 +74,12 @@ public class MainController {
     @GetMapping("childRegister")
     public String childResister(){return "childRegister";}
 
+    @GetMapping("/hospitalInfo")
+    public String hospitalInfo(Model model) {
+        model.addAttribute("hospitals", hospitalService.findAllHospitals());
+        return "hospitalInfo";
+    }
+
     @GetMapping("mypage")
     public String mypage(WebRequest request
             , @PageableDefault(size = 2, direction = Sort.Direction.DESC) Pageable pageable

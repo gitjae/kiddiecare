@@ -232,6 +232,33 @@ public class HospitalInfoController {
         return jsonObject.toMap();
     }
 
+    @GetMapping("hospital/detail")
+    public Map getHospitalInfo(@RequestParam(defaultValue="") String keyword){
+        JSONObject jsonObject = new JSONObject();
+
+        String encodedParamValue = null;
+        try {
+            encodedParamValue = URLEncoder.encode(keyword, "UTF-8");
+        }catch (UnsupportedEncodingException e){
+            jsonObject.put("result","Encoding Error");
+            return jsonObject.toMap();
+        }
+
+        // hospList 불러오기
+        String uri = yadmNm + encodedParamValue;
+        String url = baseUrl + hospInfoService + HospList + encodeServiceKey + uri;
+        //System.out.println("dd "+url);
+        Duration cacheTtl = Duration.ofMinutes(3);
+        HospBasisBody hospListData = openApiDataUtil.getHospList(url, uri, cacheTtl);
+
+        //System.out.println("info:"+hospListData);
+
+        jsonObject.put("result", "success");
+        jsonObject = makeResponse(hospListData, cacheTtl);
+
+        return jsonObject.toMap();
+    }
+
     public JSONObject makeResponse(HospBasisBody hospListData, Duration cacheTtl){
         JSONObject jsonObject = new JSONObject();
 
@@ -244,6 +271,7 @@ public class HospitalInfoController {
                 String hospInfoUrl = baseUrl + admDtlInfoService + getDtlInfo + encodeServiceKey + ykihoUri + item.getYkiho();
                 HospDetailBody hospInfoData = openApiDataUtil.getHospData(hospInfoUrl, item.getYkiho(), cacheTtl);
                 HospDetailItem data = hospInfoData.getItems().getItem();
+                dataSet.put("ykiho", item.getYkiho());
                 dataSet.put("telno", item.getTelno());
                 dataSet.put("addr", item.getAddr());
                 dataSet.put("hospitalName", item.getYadmNm());
