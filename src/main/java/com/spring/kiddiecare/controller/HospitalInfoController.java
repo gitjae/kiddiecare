@@ -34,33 +34,32 @@ public class HospitalInfoController {
     private final OpenApiDataUtil openApiDataUtil;
     private final CalenderAndGetTrmtUtil calenderAndGetTrmtUtil;
 
-    private String baseUrl = "https://apis.data.go.kr/B551182/";
-    private String hospInfoService="hospInfoServicev2/";
-    private String admDtlInfoService="MadmDtlInfoService2/";
-    private String HospList = "getHospBasisList?";
-    private String getDtlInfo = "getDtlInfo2?";
-    private String getDgsbjtInfo = "getDgsbjtInfo2?";
-    private String getTrnsprtInfo  = "getTrnsprtInfo2?";
-    private String pageNo = "&pageNo=";
-    private String yadmNm = "&yadmNm=";
-    private String ykihoUri = "&ykiho=";
-    private String xPos = "&xPos=";
-    private String yPos = "&yPos=";
+    private final String baseUrl = "https://apis.data.go.kr/B551182/";
+    private final String hospInfoService="hospInfoServicev2/";
+    private final String admDtlInfoService="MadmDtlInfoService2/";
+    private final String HospList = "getHospBasisList?";
+    private final String getDtlInfo = "getDtlInfo2?";
+    private final String getDgsbjtInfo = "getDgsbjtInfo2?";
+    private final String getTrnsprtInfo  = "getTrnsprtInfo2?";
+    private final String pageNo = "&pageNo=";
+    private final String yadmNm = "&yadmNm=";
+    private final String ykihoUri = "&ykiho=";
+    private final String xPos = "&xPos=";
+    private final String yPos = "&yPos=";
+    private final String radius = "&radius=200";
 //    private Duration cacheTtl = Duration.ofMinutes(3);
-    private String radius = "&radius=500";
 
     @Value("${external.api.decode}")
     private String decodeServiceKey;
     @Value("${external.api.encode}")
     private String encodeServiceKey;
 
-
     /**
      외부 API에서 병원 정보를 가져와서 모델에 추가하고, externalData 템플릿을 렌더링한다.
-     //@param model 렌더링할 데이터를 담을 모델 객체
+     @param keyword 렌더링할 데이터를 담을 모델 객체
      @return externalData 템플릿을 렌더링한 결과
      */
-    @GetMapping("search/list")
+    @GetMapping("search/hospList")
     public Map getHospList(@RequestParam(defaultValue="") String keyword,
                            @RequestParam(defaultValue="1") String requestPageNo){
         JSONObject result = new JSONObject();
@@ -76,7 +75,6 @@ public class HospitalInfoController {
         // hospList 불러오기
         String uri = pageNo + requestPageNo + yadmNm + encodedParamValue;
         String url = baseUrl + hospInfoService + HospList + encodeServiceKey + uri;
-        System.out.println("dd "+url);
         Duration cacheTtl = Duration.ofMinutes(3);
         HospBasisBody hospListData = openApiDataUtil.getHospList(url, uri, cacheTtl);
 

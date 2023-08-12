@@ -21,8 +21,4 @@ public class AdminResponseDto {
     private String adminName;
     private String adminEmail;
     private byte[] file;
-    @CreatedDate
-    private LocalDateTime adminCreateTime;
-    @LastModifiedDate
-    private LocalDateTime adminModifiedTime;
 }
