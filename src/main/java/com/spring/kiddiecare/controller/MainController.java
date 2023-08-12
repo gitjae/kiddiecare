@@ -65,6 +65,9 @@ public class MainController {
         return "hospitalAppointmentForm";
     }
 
+    @GetMapping("admin/appointment/create")
+    public String hospitalReservationCreate() {return  "hospitalAppointmentCreate";}
+
     @GetMapping("/geolocation")
     public String geolocation() { return "geolocation"; }
 
