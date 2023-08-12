@@ -55,15 +55,15 @@
 
 <form action="/reserve" method="post">
     <p>병원명</p>
-    <input type="text" id="hospitalName" value=${hospital.hospitalName} readonly>
+    <input type="text" id="hospitalName" value="${hospitalName}" readonly>
     <p>병원주소</p>
     <input type="text" id="hospitalAddr" value="테스트병원주소" readonly> <%-- 테스트 후 value값 바꾸기 --%>
     <p>진료날짜</p>
-    <input type="text" id="treatmentDate" value="" readonly>
+    <input type="text" id="treatmentDate" value="${param.treatmentDate}" readonly>
     <p>진료일</p>
-    <input type="text" id="treatmentDay" value="" readonly>
+    <input type="text" id="treatmentDay" value="${param.treatmentDay}" readonly>
     <p>진료시간</p>
-    <input type="text" id="treatmentDate" value="" readonly>
+    <input type="text" id="treatmentTime" value="${param.slotTime}" readonly>
     <p>보호자명</p>
     <input type="text" id="guardian" value=${userName} readonly>
     <input type="hidden" id="parentId" value="${parentId}" />

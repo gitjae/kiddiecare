@@ -138,9 +138,23 @@ function showTimeSlots(slots) {
 
     timeSlotsTable.innerHTML = timeSlotsContent;
 
+    // 선택한 타임 슬롯
+    let currentSelectedCard = null;
+
     // 각 타임 슬롯 클릭 이벤트
     document.querySelectorAll('.time-slot-card').forEach(card => {
         card.addEventListener('click', function() {
+            // 이전에 선택된 카드의 배경색을 원래대로 돌려놓기
+            if (currentSelectedCard) {
+                currentSelectedCard.style.backgroundColor = '';
+            }
+
+            // 클릭된 카드의 배경색 변경
+            this.style.backgroundColor = '#e0e0e0';
+
+            // 현재 선택된 카드 업데이트
+            currentSelectedCard = this;
+
             selectedSlotInfo.doctorNo = this.getAttribute('data-doctorNo');
             selectedSlotInfo.date = this.getAttribute('data-date');
             selectedSlotInfo.time = this.getAttribute('data-time');
@@ -176,6 +190,10 @@ function leftPad(value) {
 
 document.getElementById("booking-btn").onclick = function() {
     let ykiho = this.getAttribute("data-ykiho");
-    location.href = `/appointment/booking?ykiho=${ykiho}&treatmentDate=${formattedDate}&treatmentDay=${selectDay}`;
+    location.href = `/appointment/booking?ykiho=${ykiho}
+                    &treatmentDate=${formattedDate}&treatmentDay=${selectDay}
+                    &doctorNo=${selectedSlotInfo.doctorNo}&slotTime=${selectedSlotInfo.time}
+                    &slotWeekday=${selectedSlotInfo.weekday}`;
 }
+
 

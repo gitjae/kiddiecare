@@ -41,7 +41,6 @@ public class MainController {
     private final DoctorRepository doctorRepository;
     private final HospitalService hospitalService;
     private final DoctorService doctorService;
-    private final TimeSlotsLimitService timeSlotsLimitService;
 
     @GetMapping("/")
     public String index(){
@@ -128,12 +127,19 @@ public class MainController {
             @RequestParam("ykiho") String ykiho,
             @RequestParam("treatmentDate") String treatmentDate,
             @RequestParam("treatmentDay") String treatmentDay,
+            @RequestParam("doctorNo") String doctorNo,
+            @RequestParam("slotTime") String slotTime,
+            @RequestParam("slotWeekday") String slotWeekday,
             @ModelAttribute("log") String userId,
             Model model) {
 
         // 병원 정보
         Hospital hospital = hospitalService.findHospitalByYkiho(ykiho);
         model.addAttribute("hospital", hospital);
+
+        // 병원 이름
+        String hospitalName = hospitalService.findHospitalNameByYkiho(ykiho);
+        model.addAttribute("hospitalName", hospitalName);
 
         // 해당 병원의 의사 정보
         List<Doctor> doctors = doctorService.findDoctorsByYkiho(ykiho);
@@ -142,6 +148,11 @@ public class MainController {
         // 진료 날짜와 요일
         model.addAttribute("treatmentDate", treatmentDate);
         model.addAttribute("treatmentDay", treatmentDay);
+
+        // 슬롯 정보
+        model.addAttribute("doctorNo", doctorNo);
+        model.addAttribute("slotTime", slotTime);
+        model.addAttribute("slotWeekday", slotWeekday);
 
         // 사용자 아이디로 사용자 이름 찾기
         User user = userRepository.findUserById(userId).orElse(null);
