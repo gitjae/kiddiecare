@@ -1,5 +1,7 @@
 package com.spring.kiddiecare.util.hospbasis;
 
+import com.spring.kiddiecare.util.hospInfo.HospDetailItem;
+import com.spring.kiddiecare.util.hospInfo.HospDetailItems;
 import lombok.*;
 
 import javax.xml.bind.annotation.*;
@@ -10,7 +12,7 @@ import javax.xml.bind.annotation.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "item")
+@XmlRootElement(name = "item")
 public class HospBasisItem {
 
     @XmlElement(name = "addr")
@@ -22,29 +24,29 @@ public class HospBasisItem {
     @XmlElement(name = "clCdNm")
     private String clCdNm; // 종별코드명
 
-    @XmlElement(name = "cmdcGdrCnt")
-    private String cmdcGdrCnt; // 한방일반의 인원수
-
-    @XmlElement(name = "cmdcIntnCnt")
-    private String cmdcIntnCnt; // 한방인턴 인원수
-
-    @XmlElement(name = "cmdcResdntCnt")
-    private String cmdcResdntCnt; // 한방레지던트 인원수
-
-    @XmlElement(name = "cmdcSdrCnt")
-    private String cmdcSdrCnt; // 한방전문의 인원수
-
-    @XmlElement(name = "detyGdrCnt")
-    private String detyGdrCnt; // 치과일반의 인원수
-
-    @XmlElement(name = "detyIntnCnt")
-    private String detyIntnCnt; // 치과인턴 인원수
-
-    @XmlElement(name = "detyResdntCnt")
-    private String detyResdntCnt; // 치과레지던트 인원수
-
-    @XmlElement(name = "detySdrCnt")
-    private String detySdrCnt; // 치과전문의 인원수
+//    @XmlElement(name = "cmdcGdrCnt")
+//    private String cmdcGdrCnt; // 한방일반의 인원수
+//
+//    @XmlElement(name = "cmdcIntnCnt")
+//    private String cmdcIntnCnt; // 한방인턴 인원수
+//
+//    @XmlElement(name = "cmdcResdntCnt")
+//    private String cmdcResdntCnt; // 한방레지던트 인원수
+//
+//    @XmlElement(name = "cmdcSdrCnt")
+//    private String cmdcSdrCnt; // 한방전문의 인원수
+//
+//    @XmlElement(name = "detyGdrCnt")
+//    private String detyGdrCnt; // 치과일반의 인원수
+//
+//    @XmlElement(name = "detyIntnCnt")
+//    private String detyIntnCnt; // 치과인턴 인원수
+//
+//    @XmlElement(name = "detyResdntCnt")
+//    private String detyResdntCnt; // 치과레지던트 인원수
+//
+//    @XmlElement(name = "detySdrCnt")
+//    private String detySdrCnt; // 치과전문의 인원수
 
     @XmlElement(name = "distance")
     private String distance; // 거리
@@ -73,8 +75,8 @@ public class HospBasisItem {
     @XmlElement(name = "mdeptSdrCnt")
     private String mdeptSdrCnt; // 의과전문의 인원수
 
-    @XmlElement(name = "pnursCnt")
-    private String pnursCnt; // 조산사 인원수
+//    @XmlElement(name = "pnursCnt")
+//    private String pnursCnt; // 조산사 인원수
 
     @XmlElement(name = "postNo")
     private String postNo; // 우편번호
@@ -105,5 +107,4 @@ public class HospBasisItem {
 
     @XmlElement(name = "ykiho")
     private String ykiho; // 암호화된 요양기호
-
 }

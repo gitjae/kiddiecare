@@ -1,6 +1,7 @@
 package com.spring.kiddiecare.util.hospInfo;
 
 import com.spring.kiddiecare.util.hospSubInfo.HospSubItem;
+import com.spring.kiddiecare.util.hospbasis.HospBasisItem;
 import lombok.*;
 
 import javax.xml.bind.annotation.*;
@@ -78,5 +79,6 @@ public class HospDetailItem {
     private String plcDist; // 병원 지역
     @XmlElement(name = "parkQty")
     private String parkQty; // 주차장 정보
-    private List<HospSubItem> subItems;
+    private List<HospSubItem> subItems; // 진료 과목 정보
+    private HospBasisItem BasisItem;
 }
