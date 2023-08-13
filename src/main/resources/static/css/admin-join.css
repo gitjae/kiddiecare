@@ -1,0 +1,19 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    display: flex;
+    justify-items: center;
+    align-items: center;
+    min-height: 100vh;
+    background: #3E85EF;
+}
+
+section{
+    width: 420px;
+    margin: 0 auto;
+    background: #4CAF50;
+}

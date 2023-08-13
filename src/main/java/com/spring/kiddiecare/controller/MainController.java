@@ -59,6 +59,9 @@ public class MainController {
     @GetMapping("/admin/login")
     public String adminLogin(){return "adminLogin";}
 
+    @GetMapping("/admin/join")
+    public String adminJoin(){return "adminJoin";}
+
     @GetMapping("/hospital/Search")
     public String hospitalSearch(){return "hospitalSearchList";}
 
