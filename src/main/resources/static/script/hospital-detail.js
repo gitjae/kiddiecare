@@ -8,11 +8,7 @@ let today = new Date();
 today.setHours(0, 0, 0, 0);
 
 let selectedSlotInfo = {
-    doctorNo: null,
-    date: null,
-    time: null,
-    weekday: null,
-    ykiho: null
+    doctorNo: null, date: null, time: null, weekday: null, ykiho: null
 };
 
 // 달력 생성 : 해당 달에 맞춰 테이블을 만들고, 날짜를 채워 넣기
@@ -40,8 +36,6 @@ function buildCalendar() {
 
         let nowColumn = nowRow.insertCell();        // 새 열을 추가하고
         nowColumn.innerText = leftPad(nowDay.getDate());      // 추가한 열에 날짜 입력
-
-
         if (nowDay.getDay() == 0) {                 // 일요일인 경우 글자색 빨강으로
             nowColumn.style.color = "#DC143C";
         }
@@ -49,8 +43,6 @@ function buildCalendar() {
             nowColumn.style.color = "#0000CD";
             nowRow = tbody_Calendar.insertRow();    // 새로운 행 추가
         }
-
-
         if (nowDay < today) {                       // 지난날인 경우
             nowColumn.className = "pastDay";
         } else if (nowDay.getFullYear() == today.getFullYear() && nowDay.getMonth() == today.getMonth() && nowDay.getDate() == today.getDate()) { // 오늘인 경우
@@ -74,7 +66,6 @@ let formattedDate = null;
 
 function choiceDate(nowColumn) {
     if (document.getElementsByClassName("choiceDay")[0]) {                              // 기존에 선택한 날짜가 있으면
-
         document.getElementsByClassName("choiceDay")[0].classList.remove("choiceDay");  // 해당 날짜의 "choiceDay" class 제거
     }
     nowColumn.classList.add("choiceDay");
@@ -95,11 +86,8 @@ function choiceDate(nowColumn) {
     document.querySelector('.time-slots-table').innerHTML = '';     // ajax 호출 전에 슬롯 정보 초기화시켜서 데이터가 있는 날 -> 없는 날 클릭하면 다시 호출되도록
 
     $.ajax({
-        url: "/timeSlotsDateGetByYkiho",
-        method: "GET",
-        data: {
-            ykiho: ykiho,
-            date: selectDate
+        url: "/timeSlotsDateGetByYkiho", method: "GET", data: {
+            ykiho: ykiho, date: selectDate
         }
     }).done(res => {
         console.log(res);
@@ -107,9 +95,7 @@ function choiceDate(nowColumn) {
         if (res.slots && res.slots.length > 0) {  // slots 데이터가 있을 경우에만 화면 업데이트
             showTimeSlots(res.slots);
         }
-    }
-
-    ).fail(function() {
+    }).fail(function () {
         console.error("timeSlotsGet");
     });
 }
@@ -144,7 +130,7 @@ function showTimeSlots(slots) {
 
     // 각 타임 슬롯 클릭 이벤트
     document.querySelectorAll('.time-slot-card').forEach(card => {
-        card.addEventListener('click', function() {
+        card.addEventListener('click', function () {
             // 이전에 선택된 카드의 배경색을 원래대로 돌려놓기
             if (currentSelectedCard) {
                 currentSelectedCard.style.backgroundColor = '';
@@ -189,25 +175,53 @@ function leftPad(value) {
     return value;
 }
 
-document.getElementById("booking-btn").onclick = function() {
-    let ykiho = this.getAttribute("data-ykiho");
-    location.href = `/appointment/booking?ykiho=${ykiho}
-                    &treatmentDate=${formattedDate}&treatmentDay=${selectDay}
-                    &doctorNo=${selectedSlotInfo.doctorNo}&slotTime=${selectedSlotInfo.time}
-                    &slotWeekday=${selectedSlotInfo.weekday}`;
+// document.getElementById("booking-btn").onclick = function () {
+//     let ykiho = this.getAttribute("data-ykiho");
+//     location.href = `/appointment/booking?ykiho=${ykiho}
+//                     &treatmentDate=${formattedDate}&treatmentDay=${selectDay}
+//                     &doctorNo=${selectedSlotInfo.doctorNo}&slotTime=${selectedSlotInfo.time}
+//                     &slotWeekday=${selectedSlotInfo.weekday}`;
+// }
+
+function getHospitalNameFromUrl() {
+    const currentUrl = new URL(window.location.href);
+    const hospitalName = currentUrl.searchParams.get('hospitalName');
+    return hospitalName;
 }
 
+function getHospInfoDetail() {
+    const hospitalName = getHospitalNameFromUrl();
+    console.log("hospitalName : ", hospitalName);
 
-function getHospInfoDetail(){
-    const url = window.location.href;
-    const ykiho = url.split('ykiho=')[1].split('&')[0];
     $.ajax({
         method: 'GET',
-        url: `/hospital/detail?ykiho=${ykiho}`,
-    }).done(res => {
-        console.log(res)
-        const item = res.item;
-        $('#hospital-name').text(item.yadmNm);
-        $('#hospital-addr').text(item.addr);
+        url: `/api/appointment/hospitalDetail?hospitalName=${hospitalName}`,
     })
+        .done(res => {
+            console.log(res);
+            if (res.dbHospitalData) {
+                document.getElementById('hospital-name').textContent = res.dbHospitalData.hospitalName;
+                document.getElementById('hospital-name').setAttribute('ykiho', res.dbHospitalData.ykiho);
+                document.getElementById('hospital-intro').textContent = res.dbHospitalData.hospitalIntro;
+
+                // 의사 정보 처리
+                let doctorContainer = document.querySelector(".doctor-info");
+                doctorContainer.innerHTML = ''; // Clear existing doctor info
+
+                res.doctors.forEach(doctor => {
+                    let doctorCard = document.createElement('div');
+                    doctorCard.classList.add('doctor-card');
+                    doctorCard.innerHTML = `
+                    <p>&#127976; &#128138;</p>
+                    <p id="doctor-no">의사 번호 : ${doctor.no}</p>
+                    <p id="doctor-name">의사 이름 : ${doctor.doctorName}</p>
+                    <p id="doctor-offDay">의사DB) 휴진일</p>`;
+
+                    doctorContainer.appendChild(doctorCard);
+                });
+            }
+        })
+        .fail(err => {
+            console.error("Error:", err);
+        });
 }
