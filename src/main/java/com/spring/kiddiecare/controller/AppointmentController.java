@@ -10,6 +10,7 @@ import com.spring.kiddiecare.domain.timeSlotsLimit.TimeSlotsLimitRepository;
 import com.spring.kiddiecare.domain.timeSlotsLimit.TimeSlotsLimitRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.json.JSONObject;
+import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
@@ -77,74 +78,21 @@ public class AppointmentController {
 //        return json.toMap();
 //    }
 
-    @PostMapping
-    public Map<String, Boolean> bookAppointment(@RequestBody Map<String, Object> requestData) {
-
-        int patientId;
-        Object patientIdObj = requestData.get("patientId");
-        if (patientIdObj instanceof String) {
-            patientId = Integer.parseInt((String) patientIdObj);
-        } else if (patientIdObj instanceof Integer) {
-            patientId = (Integer) patientIdObj;
-        } else {
-            throw new IllegalArgumentException("patientId에 대한 잘못된 유형");
-        }
-
-        int guardian;
-        Object guardianObj = requestData.get("guardian");
-        if (guardianObj instanceof Integer) {
-            guardian = (Integer) guardianObj;
-        } else if (guardianObj instanceof String) {
-            guardian = Integer.parseInt((String) guardianObj);
-        } else {
-            throw new IllegalArgumentException("guardian에 대한 잘못된 유형");
-        }
-
-        int timeSlotNo;
-        Object timeSlotObj = requestData.get("timeSlotNo");
-        if (timeSlotObj instanceof Integer) {
-            timeSlotNo = (Integer) timeSlotObj;
-        } else if (timeSlotObj instanceof String) {
-            timeSlotNo = Integer.parseInt((String) timeSlotObj);
-        } else {
-            throw new IllegalArgumentException("timeSlotNo에 대한 잘못된 유형");
-        }
-
-        String symptom = requestData.get("symptom") instanceof String ? (String) requestData.get("symptom") : null;
-        String note = requestData.get("note") instanceof String ? (String) requestData.get("note") : null;
-
-        // For appoStatus
-        int appoStatus;
-        Object appoStatusObj = requestData.get("appoStatus");
-        if (appoStatusObj instanceof Integer) {
-            appoStatus = (Integer) appoStatusObj;
-        } else if (appoStatusObj instanceof String) {
-            appoStatus = Integer.parseInt((String) appoStatusObj);
-        } else {
-            throw new IllegalArgumentException("appoStatus에 대한 잘못된 유형");
-        }
-
+    @PostMapping(consumes = {"application/json"})
+    public ResponseEntity<Map<String, Boolean>> bookAppointment(@RequestBody AppoRequestDto appoDto) {
         HashMap<String, Boolean> response = new HashMap<>();
-        try {
-            AppoRequestDto appoDto = new AppoRequestDto();
-            appoDto.setPatientId(patientId);
-            appoDto.setGuardian(guardian);
-            appoDto.setTimeSlotNo(timeSlotNo);
-            appoDto.setSymptom(symptom);
-            appoDto.setNote(note);
-            appoDto.setAppoStatus(appoStatus);
 
+        try {
             Appointment appointment = new Appointment(appoDto);
             appoRepository.save(appointment);
-
             response.put("success", true);
+            return ResponseEntity.ok(response);
         } catch(Exception e) {
             response.put("success", false);
             e.printStackTrace();
+            return ResponseEntity.status(500).body(response);  // 500 Internal Server Error 반환
         }
-        return response;
     }
-
 
 
 }

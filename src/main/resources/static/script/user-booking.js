@@ -28,6 +28,11 @@ function renderChildCard(child) {
     $("#childrenContainer").append(card);
 }
 
+// 예약번호용 난수 생성
+function generateEightDigitRandom() {
+    return Math.floor(10000000 + Math.random() * 90000000);
+}
+
 $(document).ready(function () {
     // 약관
     $(".term-content").hide();
@@ -85,15 +90,17 @@ $(document).ready(function () {
     $("#payBtn").on('click', function (e) {
         e.preventDefault();
 
-        let childrenId = $("#selectedChildNo").val();
-        let guardianId = $("#log").val();
+        let patientId = $("#selectedChildNo").val();
+        let parentId = $("#parentId").val();
         let timeSlotNo = $("#timeSlotNo").val();
         let symptom = $("#symptom").val();
         let note = $("#note").val();
         let appoStatus = 1; // 기본값 설정 (변경 가능)
+        let appoNo = generateEightDigitRandom();    // 난수 생성
 
-        console.log("childrenId : ", childrenId);
-        console.log("guardianId : ", guardianId);
+        console.log("appoNo :", appoNo);
+        console.log("patientId : ", patientId);
+        console.log("parentId : ", parentId);
         console.log("timeSlotNo : ", timeSlotNo);
         console.log("symptom : ", symptom);
         console.log("note : ", note);
@@ -104,8 +111,9 @@ $(document).ready(function () {
             dataType: 'json',
             contentType: "application/json",
             data: JSON.stringify({
-                patientId: childrenId,
-                guardian: guardianId,
+                no: appoNo,
+                patientId: patientId,
+                guardian: parentId,
                 timeSlotNo: timeSlotNo,
                 symptom: symptom,
                 note: note,
@@ -113,7 +121,7 @@ $(document).ready(function () {
             }),
             success: function (response) {
                 if (response.success) {
-                    window.location.href = "/bookingComplete.jsp";
+                    window.location.href = `/bookingComplete`;
                 } else {
                     alert("예약 실패");
                 }

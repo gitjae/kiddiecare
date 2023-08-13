@@ -84,6 +84,11 @@ public class MainController {
         return "hospitalInfo";
     }
 
+    @GetMapping("bookingComplete")
+    public String bookingComplete() {
+        return "bookingComplete";
+    }
+
     @GetMapping("mypage")
     public String mypage(WebRequest request
             , @PageableDefault(size = 2, direction = Sort.Direction.DESC) Pageable pageable
