@@ -125,7 +125,6 @@ public class HospitalInfoController {
         return result.toMap();
     }
 
-
     @GetMapping("/home")
     public String home(Model model){
         //String log = (String) request.getAttribute("log", WebRequest.SCOPE_SESSION);

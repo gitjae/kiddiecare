@@ -55,6 +55,7 @@ public class OpenApiDataUtil {
         }
 
         if (resultBody != null) {
+            System.out.println("리스트 정보 받아오기");
             valueOps.set(uri, resultBody, cacheTtl);
             return resultBody;
         }
