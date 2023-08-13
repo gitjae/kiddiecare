@@ -18,6 +18,7 @@
     <header>
         <p>log : ${log}</p>
         <a href="/login">로그인</a>
+        <a href="/mypage">마이페이지</a>
         <a href="#" onclick="logout()">로그아웃</a>
     </header>
 </body>

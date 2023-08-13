@@ -8,6 +8,6 @@ import java.util.List;
 
 @Repository
 public interface TimeSlotsLimitRepository extends JpaRepository<TimeSlotsLimit, Integer> {
-    List<TimeSlotsLimit> findByYkiho(String ykiho);
-    List<TimeSlotsLimit> findByYkihoAndDate(String ykiho, Date date);
+    List<TimeSlotsLimit> findTimeSlotsLimitByYkihoAndDate(String ykiho, Date date);
+
 }

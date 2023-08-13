@@ -29,6 +29,7 @@
 <%--            <input type="text" id="doctor_average_time_of_care" name="doctor_average_time_of_care" placeholder="의사평균진료시간[분단위]">--%>
 
             <h2>병원 예약 생성</h2>
+
             <label for="date">
                 <input type="date" id="date" value="">
             </label>

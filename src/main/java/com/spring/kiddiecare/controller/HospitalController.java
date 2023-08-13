@@ -15,12 +15,6 @@ public class HospitalController {
     @Autowired
     private HospitalService hospitalService;
 
-    @GetMapping("/hospitalInfo")
-    public String hospitalInfo(Model model) {
-        model.addAttribute("hospitals", hospitalService.findAllHospitals());
-        return "hospitalInfo";
-    }
-
     @GetMapping("/hospitalName/{ykiho}")
     @ResponseBody
     public Hospital hospitalName(@PathVariable String ykiho) {

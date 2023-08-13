@@ -18,8 +18,15 @@ public class HospitalService {
     }
 
     public Hospital findHospitalByYkiho(String ykiho) {
-        System.out.println("service: " +ykiho);
         return hospitalRepository.findByYkiho(ykiho);
     }
+
+    // 코드로 병원 이름 찾기
+    public String findHospitalNameByYkiho(String ykiho) {
+        String hospitalName = hospitalRepository.findNameByYkiho(ykiho);
+        System.out.println("Hospital Name: " + hospitalName);
+        return hospitalName;
+    }
+
 
 }

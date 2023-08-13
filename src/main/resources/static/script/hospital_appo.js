@@ -151,6 +151,7 @@ function convertInputsToJson() {
     const result = [];
     let date = $('#date').val();
     let docNum = $('#doctor_no').val();
+    let ykiho = $('#ykiho').val();
 
     let date_for_weekday = new Date(date);
     let weekday = ["일","월","화","수","목","금","토"];
@@ -171,14 +172,15 @@ function convertInputsToJson() {
             block: block,
             enable: enable,
             date: date,
-            weekday: weekday
+            weekday: weekday,
+            ykiho: ykiho
         };
         result.push(data);
     }
     console.log(result);
     $.ajax({
         type: "POST",
-        url: "/api/v1/admin/appo/appo-add",
+        url: "/api/v1/admin/appo/timeset-add",
         data: JSON.stringify(result),
         contentType: "application/json",
 

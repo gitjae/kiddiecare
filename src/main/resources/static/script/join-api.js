@@ -20,7 +20,7 @@ function join(){
     const pwChk = $('#passwordChk').val();
     const name = $('#name').val();
     const birth = $('#birth').val();
-    const gender = $('input[name=gender]:checked') == 'm' ? true : false;
+    const gender = $('input[name=gender]:checked').val() == 'm' ? true : false;
     const phone = $('#phone').val();
     const email = $('#email').val();
     const postcode = $('#addr1').val();

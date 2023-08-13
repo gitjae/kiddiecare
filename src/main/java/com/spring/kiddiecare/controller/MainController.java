@@ -13,6 +13,7 @@ import com.spring.kiddiecare.domain.user.UserRepository;
 import com.spring.kiddiecare.domain.user.UserResponseDto;
 import com.spring.kiddiecare.service.DoctorService;
 import com.spring.kiddiecare.service.HospitalService;
+import com.spring.kiddiecare.service.TimeSlotsLimitService;
 import com.spring.kiddiecare.util.AppoView;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -21,6 +22,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.WebRequest;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,14 +67,32 @@ public class MainController {
         return "hospitalAppointmentForm";
     }
 
+    @GetMapping("admin/appointment/create")
+    public String hospitalReservationCreate() {return  "hospitalAppointmentCreate";}
+
     @GetMapping("/geolocation")
     public String geolocation() { return "geolocation"; }
 
-    @GetMapping("mypage/{id}")
-    public String mypage(@PathVariable String id
+    @GetMapping("childRegister")
+    public String childResister(){return "childRegister";}
+
+    @GetMapping("/hospitalInfo")
+    public String hospitalInfo(Model model) {
+        model.addAttribute("hospitals", hospitalService.findAllHospitals());
+        return "hospitalInfo";
+    }
+
+    @GetMapping("mypage")
+    public String mypage(WebRequest request
             , @PageableDefault(size = 2, direction = Sort.Direction.DESC) Pageable pageable
             , Model model) {
-        Optional<User> foundUser = userRepository.findUserById(id);
+        String log = (String) request.getAttribute("log", WebRequest.SCOPE_SESSION);
+
+        if(log == null){
+            return "login";
+        }
+
+        Optional<User> foundUser = userRepository.findUserById(log);
 
         if(foundUser.isPresent()){
             User user = foundUser.get();
@@ -105,8 +125,8 @@ public class MainController {
             }
 
             model.addAttribute("user", userDto);
-            model.addAttribute("children", childrendDtos);
-            model.addAttribute("appointments", appoDtos);
+//            model.addAttribute("children", childrendDtos);
+//            model.addAttribute("appointments", appoDtos);
         }
         return "mypage";
     }
@@ -116,12 +136,19 @@ public class MainController {
             @RequestParam("ykiho") String ykiho,
             @RequestParam("treatmentDate") String treatmentDate,
             @RequestParam("treatmentDay") String treatmentDay,
+            @RequestParam("doctorNo") String doctorNo,
+            @RequestParam("slotTime") String slotTime,
+            @RequestParam("slotWeekday") String slotWeekday,
             @ModelAttribute("log") String userId,
             Model model) {
 
         // 병원 정보
         Hospital hospital = hospitalService.findHospitalByYkiho(ykiho);
         model.addAttribute("hospital", hospital);
+
+        // 병원 이름
+        String hospitalName = hospitalService.findHospitalNameByYkiho(ykiho);
+        model.addAttribute("hospitalName", hospitalName);
 
         // 해당 병원의 의사 정보
         List<Doctor> doctors = doctorService.findDoctorsByYkiho(ykiho);
@@ -131,6 +158,11 @@ public class MainController {
         model.addAttribute("treatmentDate", treatmentDate);
         model.addAttribute("treatmentDay", treatmentDay);
 
+        // 슬롯 정보
+        model.addAttribute("doctorNo", doctorNo);
+        model.addAttribute("slotTime", slotTime);
+        model.addAttribute("slotWeekday", slotWeekday);
+
         // 사용자 아이디로 사용자 이름 찾기
         User user = userRepository.findUserById(userId).orElse(null);
         if (user != null) {
@@ -138,8 +170,9 @@ public class MainController {
             model.addAttribute("parentId", user.getNo());
 
             // 해당 사용자의 자녀 정보 ---> 수정필요
-            List<Children> childrenList = childrenRepository.findByParentNo(user.getNo());
-            model.addAttribute("children", childrenList);
+//            List<Children> childrenList = childrenRepository.findByParentNo(user.getNo());
+//            model.addAttribute("children", childrenList);
+//            List<Children> children = childrenRepository.findByParentNo(user.getNo());
         }
 
         return "userBooking";
@@ -154,10 +187,6 @@ public class MainController {
         // 해당 병원의 의사 정보
         List<Doctor> doctors = doctorService.findDoctorsByYkiho(ykiho);
         model.addAttribute("doctors", doctors);
-
-        // 병원의 진료 정보
-//        List<TimeSlotsLimit> timeSlotsLimits = timeSlotsLimitService.findTimeSlotsByYkiho(ykiho);
-//        model.addAttribute("timeSlotsLimits", timeSlotsLimits);
 
         return "hospitalDetail";
     }

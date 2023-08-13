@@ -39,6 +39,7 @@ public class OpenApiDataUtil {
     }
 
     public HospBasisBody getHospList(String url, String uri, Duration cacheTtl) {
+        System.out.println("url:"+url);
         // 캐시 데이터 확인하기
         HospBasisBody cachedData = valueOps.get(uri);
         if (cachedData != null) {
