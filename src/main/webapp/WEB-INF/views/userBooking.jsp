@@ -25,6 +25,7 @@
     <p>보호자명</p>
     <input type="text" id="guardian" value=${userName} readonly>
     <input type="hidden" id="parentId" value="${parentId}" />
+    <input type="hidden" id="log" value="${log}" />
     <p>자녀정보</p>
     <div id="childrenContainer"></div>
     <input type="hidden" id="selectedChildNo" />

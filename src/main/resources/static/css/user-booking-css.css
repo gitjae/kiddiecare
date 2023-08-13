@@ -37,3 +37,7 @@
     border-radius: 3px;
     cursor: pointer;
 }
+
+.selected-card {
+    background-color: #e6e6e6;
+}
