@@ -1,4 +1,4 @@
-package com.spring.kiddiecare.util;
+package com.spring.kiddiecare.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;

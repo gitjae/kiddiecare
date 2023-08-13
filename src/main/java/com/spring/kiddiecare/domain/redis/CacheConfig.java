@@ -1,4 +1,4 @@
-package com.spring.kiddiecare.util;
+package com.spring.kiddiecare.domain.redis;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.CacheManager;

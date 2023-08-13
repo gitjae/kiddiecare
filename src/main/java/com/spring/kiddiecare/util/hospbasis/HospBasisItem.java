@@ -1,6 +1,7 @@
 package com.spring.kiddiecare.util.hospbasis;
 
 import com.spring.kiddiecare.util.hospInfo.HospDetailItem;
+import com.spring.kiddiecare.util.hospInfo.HospDetailItems;
 import lombok.*;
 
 import javax.xml.bind.annotation.*;
@@ -11,7 +12,7 @@ import javax.xml.bind.annotation.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "item")
+@XmlRootElement(name = "item")
 public class HospBasisItem {
 
     @XmlElement(name = "addr")
@@ -106,7 +107,4 @@ public class HospBasisItem {
 
     @XmlElement(name = "ykiho")
     private String ykiho; // 암호화된 요양기호
-
-    private HospDetailItem hospDetailItem;
-
 }
