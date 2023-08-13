@@ -17,9 +17,4 @@ public class DoctorService {
     public List<Doctor> findDoctorsByYkiho(String ykiho) {
         return doctorRepository.findByYkiho(ykiho);
     }
-
-
-
-
-
 }

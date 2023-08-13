@@ -18,7 +18,8 @@
     <button id="one-hospitalPage">병원상세페이지(단일)</button>
     <script>
         document.getElementById('one-hospitalPage').addEventListener('click',e=>{
-            window.location = '/appointment/hospitalDetail?ykiho=JDQ4MTYyMiM1MSMkMSMkMCMkODkkMzgxMzUxIzExIyQxIyQzIyQ3OSQyNjE4MzIjNDEjJDEjJDgjJDgz';
+            window.location = '/appointment/hospitalDetail?hospitalName=가톨릭대학교인천성모병원';
+            // window.location = 'api/appointment/hospitalDetail?hospitalName=가톨릭대학교인천성모병원';
         });
     </script>
 

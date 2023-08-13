@@ -10,5 +10,8 @@ public interface HospitalRepository extends JpaRepository<Hospital, String> {
 //     병원코드로 병원 이름 찾기
     String findNameByYkiho(String ykiho);
 
+    // 병원 이름으로 병원 찾기
+    Hospital findByHospitalName(String hospitalName);
+
 }
 

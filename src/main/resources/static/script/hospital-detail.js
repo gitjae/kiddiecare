@@ -40,8 +40,6 @@ function buildCalendar() {
 
         let nowColumn = nowRow.insertCell();        // 새 열을 추가하고
         nowColumn.innerText = leftPad(nowDay.getDate());      // 추가한 열에 날짜 입력
-
-
         if (nowDay.getDay() == 0) {                 // 일요일인 경우 글자색 빨강으로
             nowColumn.style.color = "#DC143C";
         }
@@ -49,8 +47,6 @@ function buildCalendar() {
             nowColumn.style.color = "#0000CD";
             nowRow = tbody_Calendar.insertRow();    // 새로운 행 추가
         }
-
-
         if (nowDay < today) {                       // 지난날인 경우
             nowColumn.className = "pastDay";
         } else if (nowDay.getFullYear() == today.getFullYear() && nowDay.getMonth() == today.getMonth() && nowDay.getDate() == today.getDate()) { // 오늘인 경우
@@ -74,7 +70,6 @@ let formattedDate = null;
 
 function choiceDate(nowColumn) {
     if (document.getElementsByClassName("choiceDay")[0]) {                              // 기존에 선택한 날짜가 있으면
-
         document.getElementsByClassName("choiceDay")[0].classList.remove("choiceDay");  // 해당 날짜의 "choiceDay" class 제거
     }
     nowColumn.classList.add("choiceDay");
@@ -200,11 +195,18 @@ document.getElementById("booking-btn").onclick = function() {
 
 function getHospInfoDetail(){
     const url = window.location.href;
-    const ykiho = url.split('ykiho=')[1].split('&')[0];
+    const decodeUrl = decodeURIComponent(url);
+    console.log("decodeUrl : ", decodeUrl);  // decodeUrl을 가지고 db에서 정보 비교하고
+
+    // const hospitalName = decodeURIComponent(url.split('hospitalName=')[1].split('&')[0]);
     $.ajax({
         method: 'GET',
-        url: `/hospital/detail?ykiho=${ykiho}`,
-    }).done(res => {
-        console.log(res)
+        url: `/api/appointment/hospitalDetail?hospitalName=${decodeUrl}`,
     })
+        .done(res => {
+            console.log(res);
+        })
+        .fail(err => {
+            console.error("Error:", err);
+        });
 }

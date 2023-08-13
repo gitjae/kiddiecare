@@ -56,8 +56,6 @@
 <form action="/reserve" method="post">
     <p>병원명</p>
     <input type="text" id="hospitalName" value="${hospitalName}" readonly>
-    <p>병원주소</p>
-    <input type="text" id="hospitalAddr" value="테스트병원주소" readonly> <%-- 테스트 후 value값 바꾸기 --%>
     <p>진료날짜</p>
     <input type="text" id="treatmentDate" value="${param.treatmentDate}" readonly>
     <p>진료일</p>
