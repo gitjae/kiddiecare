@@ -8,7 +8,7 @@ let today = new Date();
 today.setHours(0, 0, 0, 0);
 
 let selectedSlotInfo = {
-    doctorNo: null, date: null, time: null, weekday: null, ykiho: null
+    doctorNo: null, date: null, time: null, weekday: null, ykiho: null, timeSlotNo: null
 };
 
 // 달력 생성 : 해당 달에 맞춰 테이블을 만들고, 날짜를 채워 넣기
@@ -115,7 +115,8 @@ function showTimeSlots(slots) {
                  data-date="${slot.date}" 
                  data-time="${slot.time}" 
                  data-weekday="${slot.weekday}" 
-                 data-ykiho="${slot.ykiho}">
+                 data-ykiho="${slot.ykiho}"
+                 data-timeSlotNo="${slot.no}">
                 <div class="time-slot-content">
                     ${slot.time}<br>(${slot.count}/${slot.max})
                 </div>
@@ -147,6 +148,7 @@ function showTimeSlots(slots) {
             selectedSlotInfo.time = this.getAttribute('data-time');
             selectedSlotInfo.weekday = this.getAttribute('data-weekday');
             selectedSlotInfo.ykiho = this.getAttribute('data-ykiho');
+            selectedSlotInfo.timeSlotNo = this.getAttribute('data-timeSlotNo');
 
             console.log(selectedSlotInfo);
         });
@@ -184,7 +186,7 @@ function getHospitalNameFromUrl() {
 // 예약하기 버튼 액션
 document.getElementById("booking-btn").onclick = function () {
     let hospitalName = encodeURIComponent(getHospitalNameFromUrl().trim());
-    location.href = `/appointment/booking?hospitalName=${hospitalName}&treatmentDate=${formattedDate}&treatmentDay=${selectDay}&doctorNo=${selectedSlotInfo.doctorNo}&slotTime=${selectedSlotInfo.time}&slotWeekday=${selectedSlotInfo.weekday}`;
+    location.href = `/appointment/booking?hospitalName=${hospitalName}&treatmentDate=${formattedDate}&treatmentDay=${selectDay}&doctorNo=${selectedSlotInfo.doctorNo}&slotTime=${selectedSlotInfo.time}&slotWeekday=${selectedSlotInfo.weekday}&timeSlotNo=${selectedSlotInfo.timeSlotNo}`;
 }
 
 // 정보 뿌리기

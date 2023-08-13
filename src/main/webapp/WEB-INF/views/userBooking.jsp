@@ -21,11 +21,13 @@
     <input type="text" id="treatmentDay" value="${treatmentDay}" readonly>
     <p>진료시간</p>
     <input type="text" id="treatmentTime" value="${slotTime}" readonly>
+    <input type="hidden" id="timeSlotNo" value="${timeSlotNo}" />
     <p>보호자명</p>
     <input type="text" id="guardian" value=${userName} readonly>
     <input type="hidden" id="parentId" value="${parentId}" />
     <p>자녀정보</p>
     <div id="childrenContainer"></div>
+    <input type="hidden" id="selectedChildNo" />
     <p>증상</p>
     <input type="text" id="symptom" value="symptom">
     <p>참고사항</p>

@@ -9,6 +9,8 @@ import com.spring.kiddiecare.util.RandomUtil;
 import com.spring.kiddiecare.util.SMSSender;
 import lombok.RequiredArgsConstructor;
 import org.json.JSONObject;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.context.request.WebRequest;
@@ -163,6 +165,16 @@ public class UserController {
 
         jsonObject.put("verify", "fail");
         return jsonObject.toMap();
+    }
+
+    @GetMapping("/getNoById")
+    public ResponseEntity<?> getNoById(@RequestParam String id) {
+        Optional<User> user = userRepository.findUserById(id);
+        if(user.isPresent()) {
+            return ResponseEntity.ok(user.get().getNo());
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("제공된 ID로 사용자를 찾을 수 없음");
+        }
     }
 }
 

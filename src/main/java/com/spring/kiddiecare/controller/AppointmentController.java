@@ -2,6 +2,9 @@ package com.spring.kiddiecare.controller;
 
 import com.spring.kiddiecare.domain.doctor.Doctor;
 import com.spring.kiddiecare.domain.doctor.DoctorRepository;
+import com.spring.kiddiecare.domain.hospital.AppoRepository;
+import com.spring.kiddiecare.domain.hospital.AppoRequestDto;
+import com.spring.kiddiecare.domain.hospital.Appointment;
 import com.spring.kiddiecare.domain.timeSlotsLimit.TimeSlotsLimit;
 import com.spring.kiddiecare.domain.timeSlotsLimit.TimeSlotsLimitRepository;
 import com.spring.kiddiecare.domain.timeSlotsLimit.TimeSlotsLimitRequestDto;
@@ -10,6 +13,7 @@ import org.json.JSONObject;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -22,6 +26,8 @@ public class AppointmentController {
 //    private final AppoRepository appoRepository;
     private final TimeSlotsLimitRepository timeSlotsLimitRepository;
     private final DoctorRepository doctorRepository;
+    private AppoRepository appoRepository;
+
     @Transactional
     @PostMapping(value="timeset-add", consumes = {"application/json"})
     public Map timeset_add(@RequestBody List<TimeSlotsLimitRequestDto> list) {
@@ -72,5 +78,19 @@ public class AppointmentController {
 //        return json.toMap();
 //    }
 
+    @PostMapping
+    public Map<String, Boolean> bookAppointment(@RequestBody AppoRequestDto appoDto) {
+        HashMap<String, Boolean> response = new HashMap<>();
+
+        try {
+            Appointment appointment = new Appointment(appoDto);
+            appoRepository.save(appointment);
+            response.put("success", true);
+        } catch(Exception e) {
+            response.put("success", false);
+        }
+
+        return response;
+    }
 
 }
