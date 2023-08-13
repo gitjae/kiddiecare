@@ -26,4 +26,15 @@ public class RandomUtil {
 //        return sb.toString();
         return result;
     }
+
+    public String makeRandomCode(){
+        String code = "";
+
+        for(int i=0;i<6;i++){
+            int r = (int) (Math.random() * 10);
+            code += String.valueOf(r);
+        }
+
+        return code;
+    }
 }

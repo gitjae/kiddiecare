@@ -44,7 +44,7 @@
                     <label id="label-gender">성별</label>
 
                     <label for="gender-m">남</label>
-                    <input type="radio" id="gender-m" name="gender" value="m">
+                    <input type="radio" id="gender-m" name="gender" value="m" checked>
 
                     <label for="gender-f">여</label>
                     <input type="radio" id="gender-f" name="gender" value="f">
@@ -52,6 +52,11 @@
                 <div id="div-phone">
                     <label for="phone">전화번호</label>
                     <input type="text" id="phone" name="phone">
+                    <button id="send" onclick="sendCode()">인증번호발송</button>
+                </div>
+                <div id="div-code">
+                    <input type="text" id="code" name="code">
+                    <button id="verify" onclick="verify()">인증하기</button>
                 </div>
                 <div id="div-email">
                     <label for="email">이메일</label>

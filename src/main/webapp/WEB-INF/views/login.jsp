@@ -32,6 +32,9 @@
             <div id="div-kakao">
                 <button onclick=""><a href="#">카카오 로그인</a></button>
             </div>
+            <div id="div-find">
+                <a href="#">아이디/비밀번호 찾기</a>
+            </div>
         </div>
     </section>
 </div>

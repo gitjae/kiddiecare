@@ -206,5 +206,8 @@ function getHospInfoDetail(){
         url: `/hospital/detail?ykiho=${ykiho}`,
     }).done(res => {
         console.log(res)
+        const item = res.item;
+        $('#hospital-name').text(item.yadmNm);
+        $('#hospital-addr').text(item.addr);
     })
 }

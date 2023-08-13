@@ -41,7 +41,7 @@ function getChildren(page){
         childrenPage = page;
         $('#children').empty();
         res.children.forEach(child => {
-            $('#children').append(`<p>이름 : ${child.name}</p>
+            $('#children').append(`<p child-no="${child.id}">이름 : ${child.name}</p>
                     <p>성별 : ${child.gender}</p>
                     <p>생년월일 : ${child.birth}</p>
                     <p>참고사항 : ${child.info}</p>`);

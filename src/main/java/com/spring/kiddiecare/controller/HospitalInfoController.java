@@ -46,7 +46,7 @@ public class HospitalInfoController {
     private final String ykihoUri = "&ykiho=";
     private final String xPos = "&xPos=";
     private final String yPos = "&yPos=";
-    private final String radius = "&radius=200";
+    private final String radius = "&radius=1000";
 //    private Duration cacheTtl = Duration.ofMinutes(3);
 
     @Value("${external.api.decode}")
@@ -197,7 +197,7 @@ public class HospitalInfoController {
 
         String url = baseUrl + hospInfoService + HospList + encodeServiceKey + uri;
         Duration cacheTtl = Duration.ofMinutes(1);
-        HospBasisBody hospListData = openApiDataUtil.getHospList(url, uri, cacheTtl);
+        HospBasisBody hospListData = openApiDataUtil.getHospList2(url, uri, cacheTtl);
 
         /*if(hospListData != null){
             jsonObject.put("result","success");
@@ -231,19 +231,21 @@ public class HospitalInfoController {
     }
 
     @GetMapping("hospital/detail")
-    public Map getHospitalInfo(@RequestParam(defaultValue="") String keyword){
+    public Map getHospitalInfo(@RequestParam(defaultValue="") String ykiho){
         JSONObject jsonObject = new JSONObject();
 
-        String encodedParamValue = null;
-        try {
-            encodedParamValue = URLEncoder.encode(keyword, "UTF-8");
-        }catch (UnsupportedEncodingException e){
-            jsonObject.put("result","Encoding Error");
-            return jsonObject.toMap();
+        HospBasisItem item = openApiDataUtil.getHospBasisItem(ykiho);
+
+        if(item !=null){
+            jsonObject.put("result","success");
+            jsonObject.put("item", item);
+        } else {
+            jsonObject.put("result","fail");
         }
 
+        /*
         // hospList 불러오기
-        String uri = yadmNm + encodedParamValue;
+        String uri = ykihoUri + ykiho;
         String url = baseUrl + hospInfoService + HospList + encodeServiceKey + uri;
         //System.out.println("dd "+url);
         Duration cacheTtl = Duration.ofMinutes(3);
@@ -253,6 +255,7 @@ public class HospitalInfoController {
 
         jsonObject.put("result", "success");
         jsonObject = makeResponse(hospListData, cacheTtl);
+        */
 
         return jsonObject.toMap();
     }

@@ -35,13 +35,20 @@
                 <p>유저</p>
                 <div id="user">
                     <p>${user.name}</p>
+                    <p>${user.birth}</p>
+                    <p>${user.gender}</p>
+                    <p>${user.phone}</p>
                     <p>${user.email}</p>
+                    <p>${user.addr}</p>
+                    <p>${user.addr_detail}</p>
                 </div>
+                <button id="user-update">수정</button>
             </div>
             <div class="main-div" id="div-children">
                 <div id="children">
 
                 </div>
+                <a href="childRegister">자녀등록</a>
                 <button onclick="prevChildren()">prev</button>
                 <button onclick="nextChildren()">next</button>
             </div>

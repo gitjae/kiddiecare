@@ -5,12 +5,16 @@ import com.spring.kiddiecare.domain.user.UserRepository;
 import com.spring.kiddiecare.domain.user.UserRequestDto;
 import com.spring.kiddiecare.domain.user.UserResponseDto;
 import com.spring.kiddiecare.service.UserService;
+import com.spring.kiddiecare.util.RandomUtil;
+import com.spring.kiddiecare.util.SMSSender;
 import lombok.RequiredArgsConstructor;
 import org.json.JSONObject;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.context.request.WebRequest;
 
+import javax.servlet.http.HttpSession;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -84,6 +88,81 @@ public class UserController {
         }
         json.put("delete","fail");
         return json.toMap();
+    }
+
+    @PostMapping("sendcode")
+    public Map SmsSend(@RequestParam String number, HttpSession session){
+        JSONObject jsonObject = new JSONObject();
+
+        int phone = Integer.parseInt(number);
+        Optional<User> foundUser = userRepository.findUserByPhone(phone);
+        if (foundUser.isPresent()){
+            jsonObject.put("send","fail");
+            jsonObject.put("dupl","true");
+            return jsonObject.toMap();
+        }
+
+        SMSSender smsSender = new SMSSender();
+        RandomUtil randomUtil = new RandomUtil();
+        String code = randomUtil.makeRandomCode();
+
+        String message = "[우리동네소아과] 인증번호 [" + code + "]를 입력해주세요.";
+
+        // 임시 문자 발송 제한
+        session.setAttribute("code", code);
+        session.setAttribute("time", LocalDateTime.now());
+        System.out.println(code);
+        System.out.println(LocalDateTime.now());
+        jsonObject.put("send","success");
+        jsonObject.put("dupl","false");
+        jsonObject.put("code",code);
+
+        // 문자발송 코드
+        /*Map responseBody = null;
+        try {
+            responseBody = smsSender.sendSms(number, message);
+            if(responseBody != null){
+                String statusCode = (String) responseBody.get("statusCode");
+                if(statusCode.equals("202")){
+                    session.setAttribute("code", code);
+                    session.setAttribute("time", LocalDateTime.now());
+                    System.out.println(LocalDateTime.now());
+                    jsonObject.put("send","success");
+                    jsonObject.put("dupl","false");
+                    jsonObject.put("code",code);
+                    return jsonObject.toMap();
+                }
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        jsonObject.put("send","fail");*/
+        return jsonObject.toMap();
+    }
+
+    @GetMapping("verify")
+    public Map verifyCode(@RequestParam(name = "code") String code, HttpSession session){
+        JSONObject jsonObject = new JSONObject();
+
+        String sessionCode = (String) session.getAttribute("code");
+        LocalDateTime time = (LocalDateTime) session.getAttribute("time");
+
+        System.out.println("scode"+sessionCode);
+        System.out.println("code"+code);
+        System.out.println("time"+time);
+
+        if(sessionCode != null && time != null){
+            if(time.plusMinutes(3).isAfter(LocalDateTime.now())){
+                if (sessionCode.equals(code)){
+                    jsonObject.put("verify", "success");
+                    return jsonObject.toMap();
+                }
+            }
+        }
+
+        jsonObject.put("verify", "fail");
+        return jsonObject.toMap();
     }
 }
 

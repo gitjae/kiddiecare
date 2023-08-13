@@ -5,6 +5,7 @@ var getMail = RegExp(/^[a-z0-9\.\-_]+@([a-z0-9\-]+\.)+[a-z]{2,6}$/); // 이메�
 var getBirth = RegExp(/^(19[0-9][0-9]|20\d{2})(0[0-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])$/); // 19991010 형식만 입력가능
 var getPhone = RegExp(/^[0-9]{10,11}$/);
 var duplChk = false;
+var phoneChk = false;
 
 $(document).ready(function (){
     $('#id').on("change",function (){
@@ -71,6 +72,11 @@ function join(){
     if(!getPhone.test(phone)){
         $('#phone').val("");
         alert("전화번호");
+        return false;
+    }
+
+    if(!phoneChk){
+        alert("전화번호 인증");
         return false;
     }
 
@@ -173,6 +179,51 @@ function idDuplChk(){
         } else {
             duplChk = true;
             alert("사용가능한 아이디");
+        }
+    })
+}
+
+function sendCode(){
+    const phone = $('#phone').val();
+
+    if(!getPhone.test(phone)){
+        $('#phone').val("");
+        alert("전화번호");
+        return false;
+    }
+
+    $.ajax({
+        method:'POST',
+        url:'api/v1/users/sendcode',
+        data:{number:phone}
+    }).done(res => {
+        if(res.send === 'success'){
+            if(res.dupl === 'true'){
+                alert("이미 등록된 전화번호 입니다.");
+            } else {
+                console.log(res.code)
+                $('#verify').prop("disabled", false);
+            }
+        }
+    })
+}
+
+function verify(){
+    const code = $('#code').val();
+    $.ajax({
+        method:'GET',
+        url:'api/v1/users/verify',
+        data:{code:code}
+    }).done(res => {
+        console.log(res)
+        if(res.verify === 'success'){
+            $('#phone').prop("disabled",true);
+            $('#send').prop("disabled",true);
+            $('#code').prop("disabled",true);
+            $('#verify').prop("disabled",true);
+            phoneChk = true;
+        } else {
+            alert("인증에 실패했습니다.")
         }
     })
 }

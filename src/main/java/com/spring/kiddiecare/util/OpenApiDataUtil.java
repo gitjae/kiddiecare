@@ -7,6 +7,7 @@ import com.spring.kiddiecare.util.hospSubInfo.HospSubBody;
 import com.spring.kiddiecare.util.hospSubInfo.HospSubItem;
 import com.spring.kiddiecare.util.hospSubInfo.HospSubResponse;
 import com.spring.kiddiecare.util.hospbasis.HospBasisBody;
+import com.spring.kiddiecare.util.hospbasis.HospBasisItem;
 import com.spring.kiddiecare.util.hospbasis.HospBasisResponse;
 import com.spring.kiddiecare.util.hospInfo.HospDetailBody;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,7 @@ public class OpenApiDataUtil {
     private final RestTemplate restTemplate;
     private final RedisTemplate redisTemplate;
     private ValueOperations<String, HospBasisBody> valueOps;
+    private ValueOperations<String, HospBasisItem> valueOpsItem;
     private ValueOperations<String, HospDetailBody> valueOpsDetail;
     private ValueOperations<String, HospSubBody> valueOpsSub;
     @Autowired // inner 클래스 위에 있는 변수들을 생성해준다. @Autowired는 원래는 쓰지 않고 @RequiredArgsConstructor 사용
@@ -36,6 +38,7 @@ public class OpenApiDataUtil {
         this.valueOps = redisTemplate.opsForValue();
         this.valueOpsDetail = redisTemplate.opsForValue();
         this.valueOpsSub = redisTemplate.opsForValue();
+        this.valueOpsItem = redisTemplate.opsForValue();
     }
 
     public HospBasisBody getHospList(String url, String uri, Duration cacheTtl) {
@@ -122,4 +125,41 @@ public class OpenApiDataUtil {
 
         return null;
     }
+
+
+    public HospBasisBody getHospList2(String url, String uri, Duration cacheTtl) {
+        System.out.println("url:"+url);
+        // 캐시 데이터 확인하기
+        HospBasisBody cachedData = valueOps.get(uri);
+        if (cachedData != null) {
+            return cachedData;
+        }
+
+        HospBasisBody resultBody = null;
+        try {
+            URI reqeusturl = new URI(url);
+            HospBasisResponse data = restTemplate.getForObject(reqeusturl, HospBasisResponse.class);
+            resultBody = data.getBody();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        if (resultBody != null) {
+            valueOps.set(uri, resultBody, cacheTtl);
+
+            for(HospBasisItem item : resultBody.getItems()){
+                valueOpsItem.set("basis_"+item.getYkiho(), item, cacheTtl);
+            }
+            return resultBody;
+        }
+
+        return null;
+    }
+
+    public HospBasisItem getHospBasisItem(String ykiho){
+        HospBasisItem item = valueOpsItem.get("basis_" + ykiho);
+
+        return item;
+    }
+
 }

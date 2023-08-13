@@ -11,4 +11,6 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     public List<User> findAllById(String id);
 
     public Optional<User> findUserByIdAndIsValid(String id, boolean valid);
+
+    public Optional<User> findUserByPhone(int phone);
 }
