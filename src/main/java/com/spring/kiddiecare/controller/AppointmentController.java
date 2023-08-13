@@ -23,10 +23,9 @@ import java.util.Map;
 @RequestMapping("api/v1/admin/appo")
 public class AppointmentController {
 
-//    private final AppoRepository appoRepository;
+    private final AppoRepository appoRepository;
     private final TimeSlotsLimitRepository timeSlotsLimitRepository;
     private final DoctorRepository doctorRepository;
-    private AppoRepository appoRepository;
 
     @Transactional
     @PostMapping(value="timeset-add", consumes = {"application/json"})
@@ -79,18 +78,73 @@ public class AppointmentController {
 //    }
 
     @PostMapping
-    public Map<String, Boolean> bookAppointment(@RequestBody AppoRequestDto appoDto) {
-        HashMap<String, Boolean> response = new HashMap<>();
+    public Map<String, Boolean> bookAppointment(@RequestBody Map<String, Object> requestData) {
 
+        int patientId;
+        Object patientIdObj = requestData.get("patientId");
+        if (patientIdObj instanceof String) {
+            patientId = Integer.parseInt((String) patientIdObj);
+        } else if (patientIdObj instanceof Integer) {
+            patientId = (Integer) patientIdObj;
+        } else {
+            throw new IllegalArgumentException("patientId에 대한 잘못된 유형");
+        }
+
+        int guardian;
+        Object guardianObj = requestData.get("guardian");
+        if (guardianObj instanceof Integer) {
+            guardian = (Integer) guardianObj;
+        } else if (guardianObj instanceof String) {
+            guardian = Integer.parseInt((String) guardianObj);
+        } else {
+            throw new IllegalArgumentException("guardian에 대한 잘못된 유형");
+        }
+
+        int timeSlotNo;
+        Object timeSlotObj = requestData.get("timeSlotNo");
+        if (timeSlotObj instanceof Integer) {
+            timeSlotNo = (Integer) timeSlotObj;
+        } else if (timeSlotObj instanceof String) {
+            timeSlotNo = Integer.parseInt((String) timeSlotObj);
+        } else {
+            throw new IllegalArgumentException("timeSlotNo에 대한 잘못된 유형");
+        }
+
+        String symptom = requestData.get("symptom") instanceof String ? (String) requestData.get("symptom") : null;
+        String note = requestData.get("note") instanceof String ? (String) requestData.get("note") : null;
+
+        // For appoStatus
+        int appoStatus;
+        Object appoStatusObj = requestData.get("appoStatus");
+        if (appoStatusObj instanceof Integer) {
+            appoStatus = (Integer) appoStatusObj;
+        } else if (appoStatusObj instanceof String) {
+            appoStatus = Integer.parseInt((String) appoStatusObj);
+        } else {
+            throw new IllegalArgumentException("appoStatus에 대한 잘못된 유형");
+        }
+
+        HashMap<String, Boolean> response = new HashMap<>();
         try {
+            AppoRequestDto appoDto = new AppoRequestDto();
+            appoDto.setPatientId(patientId);
+            appoDto.setGuardian(guardian);
+            appoDto.setTimeSlotNo(timeSlotNo);
+            appoDto.setSymptom(symptom);
+            appoDto.setNote(note);
+            appoDto.setAppoStatus(appoStatus);
+
             Appointment appointment = new Appointment(appoDto);
             appoRepository.save(appointment);
+
             response.put("success", true);
         } catch(Exception e) {
             response.put("success", false);
+            e.printStackTrace();
         }
-
         return response;
     }
+
+
 
 }

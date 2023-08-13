@@ -92,8 +92,14 @@ $(document).ready(function () {
         let note = $("#note").val();
         let appoStatus = 1; // 기본값 설정 (변경 가능)
 
+        console.log("childrenId : ", childrenId);
+        console.log("guardianId : ", guardianId);
+        console.log("timeSlotNo : ", timeSlotNo);
+        console.log("symptom : ", symptom);
+        console.log("note : ", note);
+
         $.ajax({
-            url: "api/v1/admin/appo",
+            url: "/api/v1/admin/appo",
             type: "POST",
             dataType: 'json',
             contentType: "application/json",
