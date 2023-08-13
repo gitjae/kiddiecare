@@ -33,14 +33,6 @@ $(document).ready(function() {
         }
     });
 
-    // 진료일
-    let urlParams = new URLSearchParams(window.location.search);
-    let treatmentDate = urlParams.get('treatmentDate');
-    let treatmentDay = urlParams.get('treatmentDay');
-
-    document.getElementById('treatmentDate').value = treatmentDate;
-    document.getElementById('treatmentDay').value = treatmentDay;
-
     // 자녀 정보
     // const parentId = $("#parentId").val();
     // console.log("parentId : ", parentId);

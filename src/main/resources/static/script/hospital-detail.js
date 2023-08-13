@@ -175,20 +175,19 @@ function leftPad(value) {
     return value;
 }
 
-// document.getElementById("booking-btn").onclick = function () {
-//     let ykiho = this.getAttribute("data-ykiho");
-//     location.href = `/appointment/booking?ykiho=${ykiho}
-//                     &treatmentDate=${formattedDate}&treatmentDay=${selectDay}
-//                     &doctorNo=${selectedSlotInfo.doctorNo}&slotTime=${selectedSlotInfo.time}
-//                     &slotWeekday=${selectedSlotInfo.weekday}`;
-// }
-
 function getHospitalNameFromUrl() {
     const currentUrl = new URL(window.location.href);
     const hospitalName = currentUrl.searchParams.get('hospitalName');
     return hospitalName;
 }
 
+// 예약하기 버튼 액션
+document.getElementById("booking-btn").onclick = function () {
+    let hospitalName = encodeURIComponent(getHospitalNameFromUrl().trim());
+    location.href = `/appointment/booking?hospitalName=${hospitalName}&treatmentDate=${formattedDate}&treatmentDay=${selectDay}&doctorNo=${selectedSlotInfo.doctorNo}&slotTime=${selectedSlotInfo.time}&slotWeekday=${selectedSlotInfo.weekday}`;
+}
+
+// 정보 뿌리기
 function getHospInfoDetail() {
     const hospitalName = getHospitalNameFromUrl();
     console.log("hospitalName : ", hospitalName);

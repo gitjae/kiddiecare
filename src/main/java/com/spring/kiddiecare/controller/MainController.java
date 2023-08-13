@@ -133,7 +133,7 @@ public class MainController {
 
     @GetMapping("appointment/booking")
     public String showBookingPage(
-            @RequestParam("ykiho") String ykiho,        // -> hospital name 으로 변경해야됨
+            @RequestParam("hospitalName") String hospitalName,
             @RequestParam("treatmentDate") String treatmentDate,
             @RequestParam("treatmentDay") String treatmentDay,
             @RequestParam("doctorNo") String doctorNo,
@@ -142,13 +142,16 @@ public class MainController {
             @ModelAttribute("log") String userId,
             Model model) {
 
+        // 병원 이름을 사용하여 ykiho 값을 조회
+        String ykiho = hospitalService.findYkihoByHospitalName(hospitalName);
+
         // 병원 정보
         Hospital hospital = hospitalService.findHospitalByYkiho(ykiho);
         model.addAttribute("hospital", hospital);
 
         // 병원 이름
-        String hospitalName = hospitalService.findHospitalNameByYkiho(ykiho);
-        model.addAttribute("hospitalName", hospitalName);
+        String hospitalNameFromService = hospitalService.findHospitalNameByYkiho(ykiho); // 변수명 변경하여 중복을 피합니다.
+        model.addAttribute("hospitalName", hospitalNameFromService);
 
         // 해당 병원의 의사 정보
         List<Doctor> doctors = doctorService.findDoctorsByYkiho(ykiho);
