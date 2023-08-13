@@ -58,20 +58,17 @@
                 <button id="set-date" onclick="setDate()">날짜 범위 설정</button>
 
                 <div>
-                    <input type="checkbox" id="except-holidays">
-                    <label for="except-holidays">공휴일제외</label>
-                    <input type="checkbox" id="except-sunday">
-                    <label for="except-sunday">일요일제외</label>
-                </div>
-
-                <div>
                     <h3>제외날짜</h3>
                     <input type="date" id="except-day">
                     <input type="button" id="except-add" onclick="exceptAdd()" value="추가">
+                    <div>
+                        <input type="checkbox" id="except-holidays">
+                        <label for="except-holidays">공휴일제외</label>
+                        <input type="checkbox" id="except-sunday">
+                        <label for="except-sunday">일요일제외</label>
+                    </div>
                     <div id="except-days-area">
-<%--                        <button id="check1" class="remove">2023-01-01 x</button>--%>
-<%--                        <button id="check2" class="remove">2023-01-02 x</button>--%>
-<%--                        <button id="check3" class="remove">2023-01-03 x</button>--%>
+
                     </div>
                 </div>
                 <button id="time-set-btn" onclick="timeSetBtn()">시간 범위 설정하기</button>
