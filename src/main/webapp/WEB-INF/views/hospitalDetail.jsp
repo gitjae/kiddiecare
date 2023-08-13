@@ -15,20 +15,18 @@
 
 <div class="hospital-detail-info">
     <h2 class="info-title">상세정보</h2>
-    <h3 id="hospital-name" ykiho="${hospital.ykiho}">${hospital.hospitalName}</h3>
-    <h3 id="hospital-addr">병원DB) 주소</h3>
-    <h3 id="hospital-operate-time">병원DB) 운영시간</h3>
-    <h3 id="hospital-intro">${hospital.hospitalIntro}</h3>
+    <h3 id="hospital-name"></h3>
+    <h3 id="hospital-addr"></h3>
+    <h3 id="hospital-operate-time"></h3>
+    <h3 id="hospital-intro"></h3>
 
     <div class="doctor-info">
-        <c:forEach items="${doctors}" var="doctor">
             <div class="doctor-card">
                 <p>&#127976; &#128138;</p>
-                <p id="doctor-no">의사 번호 : ${doctor.no}</p>
-                <p id="doctor-name">의사 이름 : ${doctor.doctorName}</p>
-                <p id="doctor-offDay">의사DB) 휴진일</p>
+                <p id="doctor-no"></p>
+                <p id="doctor-name"></p>
+                <p id="doctor-offDay"></p>
             </div>
-        </c:forEach>
     </div>
 
     <table class="Calendar">

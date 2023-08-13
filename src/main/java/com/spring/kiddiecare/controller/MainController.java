@@ -180,14 +180,6 @@ public class MainController {
 
     @GetMapping("appointment/hospitalDetail")
     public String showReservePage(@RequestParam("hospitalName") String hospitalName, Model model) {       // -> hospitalName 으로 변경하고 내용 삭제하고 ajax(api->HospitalInfoController의 getHospitalInfo, 우리DB)로 요청보낸 후 나머지는 js에서 처리
-        // 병원 정보
-//        Hospital hospital = hospitalService.findHospitalByYkiho(ykiho);
-//        model.addAttribute("hospital", hospital);
-//
-//        // 해당 병원의 의사 정보
-//        List<Doctor> doctors = doctorService.findDoctorsByYkiho(ykiho);
-//        model.addAttribute("doctors", doctors);
-
         return "hospitalDetail";
     }
 }
