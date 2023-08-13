@@ -80,7 +80,7 @@ public class HospitalInfoController {
             for(HospBasisItem item : hospListData.getItems()){
                 JSONObject dataSet = new JSONObject();
                 String hospInfoUrl = baseUrl + admDtlInfoService + getDtlInfo + encodeServiceKey + ykihoUri + item.getYkiho() ;
-                HospDetailBody hospInfoData = openApiDataUtil.getHospData(hospInfoUrl, item.getYkiho(), cacheTtl);
+                HospDetailBody hospInfoData = openApiDataUtil.getHospData(hospInfoUrl, item.getYadmNm(), cacheTtl);
                 HospDetailItem data = hospInfoData.getItems().getItem();
                 dataSet.put("telno",item.getTelno());
                 dataSet.put("addr",item.getAddr());

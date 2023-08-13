@@ -58,24 +58,26 @@ public class AdminController {
         return result.toMap();
     }
 
-//    @PostMapping("pw/check")
-//    public Map adminPwSameCheck(@RequestBody AdminRequestDto adminDto, WebRequest request){
-//        JSONObject result = new JSONObject();
-//        Optional<String> session = Optional.ofNullable(request.getAttribute("log", WebRequest.SCOPE_SESSION).toString());
-//        session.orElseGet(()->result.put("response",""))
-//        if(adminDto!= null){
-//
-//        }else{
-//            result.put("response","");
-//        }
+    // pw and
+    @PostMapping("pw/check")
+    public Map adminPwSameCheck(@RequestBody AdminRequestDto adminDto, WebRequest request){
+        JSONObject result = new JSONObject();
+        Optional<String> session = Optional.ofNullable(request.getAttribute("log", WebRequest.SCOPE_SESSION).toString());
+        if(session.isPresent()){
+            Admin admin = adminRepository.findByAdminName(session.get());
+            String message = admin.getAdminPw().equals(adminDto.getAdminPw()) ? "duplicate value" : "Not a duplicate value.";
+            result.put("response",message);
+        }else{
+            result.put("response","fail session is null");
+        }
 //        Optional<Admin> admin = Optional.ofNullable(Optional.ofNullable(adminRepository.findByAdminId(adminDto.getAdminId()))
 //                .orElseGet(() -> {
 //                    result.put("response", "Not a duplicate value.");
 //                    return null;
 //                }));
 //        if(admin.isPresent()) result.put("response","duplicate value");
-//        return result.toMap();
-//    }
+        return result.toMap();
+    }
 
     // TODO 전체적인 로직 수정 해야함
     @PutMapping("update/{adminName}")
