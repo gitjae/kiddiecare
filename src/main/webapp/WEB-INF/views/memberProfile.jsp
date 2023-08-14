@@ -131,7 +131,7 @@
                         <li><strong>채희재(Heejae Chae)</strong></li>
                         <div class="info-row">
                             <img src="/image/Email.png" alt="My Image">
-                            <span>oeglks601@gmail.com</span>
+                            <span>heejae0629@naver.com</span>
                         </div>
                         <div class="info-row">
                             <img src="/image/GitHub.png" alt="My Image">

@@ -21,14 +21,15 @@
 <body>
 <div class="container">
     <section>
-        <div class="index-session-title">
-            <p>병원이 닫고 나서도, 급하게 방문할 때도</p>
-            <p>병원의 진료 정보를 실시간으로 확인해 보세요!</p>
-        </div>
-
-        <div class="index-search">
-            <input type="text" class="search-input" placeholder="병원명 또는 지역으로 검색할 수 있어요." name="searchText" maxlength="100">
-            <button type="submit" class="search-btn">검색</button>
+        <div class="index-session">
+            <div class="session-title">
+                <p>병원이 닫고 나서도, 급하게 방문할 때도</p>
+                <p>병원의 진료 정보를 실시간으로 확인해 보세요!</p>
+            </div>
+            <div class="index-search">
+                <input type="text" class="search-input" placeholder="병원명 또는 지역으로 검색할 수 있어요." name="searchText" maxlength="100">
+                <button type="submit" class="search-btn">검색</button>
+            </div>
         </div>
 
         <div class="shortCut-area">
