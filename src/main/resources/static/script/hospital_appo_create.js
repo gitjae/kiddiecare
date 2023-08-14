@@ -5,6 +5,9 @@
 // const day = date.getDate();
 // const dayOfWeek = dayNames[date.getDay()];
 
+let finalList = [];
+let setWeekdayArr = [];
+
 $(function () {
     let today = new Date();
     today.setDate(today.getDate());
@@ -44,6 +47,7 @@ function get_hospital_name() {
         console.log(error);
     });
 }
+
 
 // <제외날짜> 날짜 클릭 시 클릭한 날짜 삭제 가능
 document.addEventListener('DOMContentLoaded', function() {
@@ -96,7 +100,6 @@ function dayWeekExtrc(date, setWeekdayArr) {
     if(!duplWeek) {
         setWeekdayArr.push(date.getDay());
     }
-    console.log(setWeekdayArr);
 }
 
 function setDate() {
@@ -107,14 +110,12 @@ function setDate() {
     const day = document.getElementById('except-day');
     day.min = startDate;
     day.max = endDate;
-
-
 }
 
 // 날짜 범위 설정 끝났을 시 시간 범위 설정하기
 function timeSetBtn() {
     let setDateArr = [];
-    let setWeekdayArr = [];
+    // let setWeekdayArr = [];
     let sundayArr = [];
     let exceptDaysArr = [];
 
@@ -136,7 +137,7 @@ function timeSetBtn() {
         for (let date = startDate; date <= endDate; date.setDate(date.getDate() + 1)) {
             if(date.getDay() !== 0) {
                 setDateArr.push(date.toISOString().split('T')[0]);
-            // 일요일 담기
+                // 일요일 담기
             } else {
                 sundayArr.push(date.toISOString().split('T')[0]);
             }
@@ -155,7 +156,7 @@ function timeSetBtn() {
     }
 
     // 담은날짜->제외날짜 필터링
-    const finalList = setDateArr.filter(function(item) {
+    finalList = setDateArr.filter(function(item) {
         return !exceptDaysArr.includes(item);
     });
 
@@ -166,12 +167,12 @@ function timeSetBtn() {
     })
 
     setWeekdayArr.sort();
-    console.log("끝"+setWeekdayArr);
-
-    console.log("담은날짜" + setDateArr);
-    console.log("일요일" + sundayArr);
-    console.log("제외날짜" + exceptDaysArr);
-    console.log("요일" + setWeekdayArr);
+    // console.log("끝"+setWeekdayArr);
+    //
+    // console.log("담은날짜" + setDateArr);
+    // console.log("일요일" + sundayArr);
+    // console.log("제외날짜" + exceptDaysArr);
+    // console.log("요일" + setWeekdayArr);
     console.log("최종날짜" + finalList);
 
     // 받아온 요일 정보 배열
@@ -194,17 +195,13 @@ function timeSetBtn() {
             </div>
         `;
     }
-
     setWeekday.innerHTML = output;
-
-    saveTimes(finalList, setWeekdayArr);
-
 }
 
-
-function saveTimes(finalList, setWeekdayArr) {
+function saveTimes() {
     const dateList = [];
     let weekdays = ["일","월","화","수","목","금","토"];
+    let groupedData = {};
 
     const dateFormat = date => `${date.getFullYear()}-${("0" + (date.getMonth() + 1)).slice(-2)}-${("0" + date.getDate()).slice(-2)}`; // 날짜 형식 변환 함수
     finalList.forEach(function (day) {
@@ -232,8 +229,29 @@ function saveTimes(finalList, setWeekdayArr) {
                     max: maxNum, // 총 인원
                 });
             }
-            console.log(data);
+            
+            // 전체적으로 크게 날짜별로 그룹 묶어주기
+            data.forEach(item => {
+                if(!groupedData[item.date]) {
+                    groupedData[item.date] = []; // 해당 날짜의 키가 없으면 빈 배열 추가
+                }
+                groupedData[item.date].push(item); // 날짜별 배열에 데이터 추가
+            })
         }
     });
 
+    console.log(groupedData);
+
+    $.ajax({
+        type: "POST",
+        url: "/api/v1/admin/appo/timeset-create",
+        data: JSON.stringify(groupedData),
+        contentType: "application/json; charset=utf-8",
+        success: function (response) {
+            console.log("저장 성공!");
+        },
+        error: function (error) {
+            console.log("저장 실패...ㅠ");
+        }
+    });
 }

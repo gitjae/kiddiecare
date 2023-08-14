@@ -11,13 +11,6 @@
 <head>
     <title>AppointmentCreate</title>
 
-    <!-- jQuery UI -->
-    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
-    <script src="/script/hospital_appo_create.js"></script>
-
     <link href="/css/hospital_appo_create.css" rel="stylesheet">
 </head>
 <c:import url="header.jsp"></c:import>
@@ -105,11 +98,12 @@
                     <input type="number" id="d-end-minute" value="00" readonly/>
                 </div>
 
-                <button>예약 생성하기</button>
+                <button onclick="saveTimes()">예약 생성하기</button>
             </div>
         </div>
 
     </section>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
     <script src="/script/hospital_appo_create.js"></script>
 </body>
 </html>

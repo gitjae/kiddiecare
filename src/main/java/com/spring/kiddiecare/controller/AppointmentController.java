@@ -41,6 +41,26 @@ public class AppointmentController {
         return json.toMap();
     }
 
+    @Transactional
+    @PostMapping("timeset-create")
+    public void timeset_create(@RequestBody Map<String, Object> groupedData) {
+        for (String key : groupedData.keySet()) {
+            List<Map<String, Object>> dataList = (List<Map<String, Object>>) groupedData.get(key);
+            for (Map<String, Object> dataMap : dataList) {
+                String date = (String) dataMap.get("date");
+                String weekday = (String) dataMap.get("weekday");
+                String time = (String) dataMap.get("time");
+                String max = (String) dataMap.get("max");
+
+                // 잘 들어와졌는지 테스트
+                System.out.println("date " + date);
+                System.out.println("weekday " + weekday);
+                System.out.println("time" + time);
+                System.out.println("max" + max);
+            }
+        }
+    }
+
 
     @GetMapping("{ykiho}")
     public List<Doctor> getDoctors(@PathVariable String ykiho) {
