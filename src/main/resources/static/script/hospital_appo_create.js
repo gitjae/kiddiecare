@@ -8,7 +8,6 @@
 let finalList = [];
 let setWeekdayArr = [];
 
-
 $(function () {
     let today = new Date();
     today.setDate(today.getDate());
@@ -31,10 +30,11 @@ $(function () {
     console.log("lastday: "+lastDate);
 
     get_hospital_name();
+    get_doctor_list();
 });
 
 // 병원명 설정
-function get_hospital_name() {
+    function get_hospital_name() {
     let ykiho = $('#ykiho').val();
 
     $.ajax({
@@ -49,6 +49,44 @@ function get_hospital_name() {
     });
 }
 
+function get_doctor_list() {
+    let ykiho = document.getElementById('ykiho').value;
+    let num = 1;
+    const element = document.getElementsByClassName('select-option')[0];
+
+    $.ajax({
+        url: `/api/v1/admin/appo/${ykiho}`,
+        method: 'GET',
+        timeout: 0
+    }).done(function (doctorList) {
+        doctorList.forEach(doctor => {
+            const option = document.createElement("div");
+            option.className = "option";
+            // option.id = doctor.no;
+            // option.innerText = doctor.doctorName;
+            option.innerText = doctor.no;
+            num += 1;
+            element.appendChild(option);
+        });
+    }).fail(function (error) {
+        console.log(error);
+    });
+
+    element.addEventListener('click', function (e) {
+        if (e.target.classList.contains('option')) {
+            const prevSelectedItem = document.querySelector('.selected');
+            if (prevSelectedItem) {
+                prevSelectedItem.classList.remove('selected');
+            }
+            e.target.classList.add('selected');
+
+            // 선택된 의사 이름 표시
+            const selectedDoctor = document.getElementById('selectedDoctor');
+            selectedDoctor.textContent = e.target.textContent;
+            console.log(selectedDoctor.textContent);
+        }
+    });
+}
 
 // <제외날짜> 날짜 클릭 시 클릭한 날짜 삭제 가능
 document.addEventListener('DOMContentLoaded', function() {
@@ -203,6 +241,19 @@ function saveTimes() {
     const dateList = [];
     let weekdays = ["일","월","화","수","목","금","토"];
     let groupedData = {};
+    let hospitalCode = document.getElementById('ykiho').value;
+    // 선택한 의사명
+    const selectedDoctor = document.getElementById('selectedDoctor').textContent;
+
+    // 제외할 시간(점심시간)
+    let lunchCheck = document.getElementById('no-lunch').checked;
+    const lStartHour = parseInt(document.getElementById('l-start-hour').value, 10);
+    const lEndHour = parseInt(document.getElementById('l-end-hour').value, 10);
+
+    // 제외할 시간(저녁시간)
+    let dinnerCheck = document.getElementById('no-dinner').checked;
+    const dStartHour = parseInt(document.getElementById('d-start-hour').value, 10);
+    const dEndHour = parseInt(document.getElementById('d-end-hour').value, 10);
 
     const dateFormat = date => `${date.getFullYear()}-${("0" + (date.getMonth() + 1)).slice(-2)}-${("0" + date.getDate()).slice(-2)}`; // 날짜 형식 변환 함수
     finalList.forEach(function (day) {
@@ -219,14 +270,7 @@ function saveTimes() {
             const dayIndex = setWeekdayArr.indexOf(weekDay);
             const startHour = parseInt(document.getElementById(`start-hour-${dayIndex}`).value, 10);
             const endHour = parseInt(document.getElementById(`end-hour-${dayIndex}`).value, 10);
-            // 제외할 시간(점심시간)
-            let lunchCheck = document.getElementById('no-lunch').checked;
-            const lStartHour = parseInt(document.getElementById('l-start-hour').value, 10);
-            const lEndHour = parseInt(document.getElementById('l-end-hour').value, 10);
-            // 제외할 시간(저녁시간)
-            let dinnerCheck = document.getElementById('no-dinner').checked;
-            const dStartHour = parseInt(document.getElementById('d-start-hour').value, 10);
-            const dEndHour = parseInt(document.getElementById('d-end-hour').value, 10);
+
             const maxNum = document.getElementById(`max-num-${dayIndex}`).value;
 
             // 시간 범위 내의 값들을 데이터 배열에 추가
@@ -243,6 +287,8 @@ function saveTimes() {
 
                 data.push({
                     date: dateFormat(day), // 날짜 문자열
+                    ykiho: hospitalCode,
+                    doctorNo: selectedDoctor,
                     weekday: weekdays[weekDay], // 요일 문자열
                     time: hour, // 시간 문자열
                     max: maxNum, // 총 인원

@@ -50,11 +50,17 @@ public class HospitalController {
         return jsonObject.toMap();
     }
 
+    // 병원코드로 의사명 받아오기
+    @GetMapping("/api/v1/admin/appo/{ykiho}")
+    public List<Doctor> doctorList(@PathVariable String ykiho) {
+        return doctorService.findDoctorsByYkiho(ykiho);
+    }
+
     // 윤정이 작업 코드 주석처리 -> 희수
-//    @GetMapping("/hospitalName/{ykiho}")
-//    @ResponseBody
-//    public Hospital hospitalName(@PathVariable String ykiho) {
-//        return hospitalService.findHospitalByYkiho(ykiho);
-//    }
+    @GetMapping("/hospitalName/{ykiho}")
+    @ResponseBody
+    public Hospital hospitalName(@PathVariable String ykiho) {
+        return hospitalService.findHospitalByYkiho(ykiho);
+    }
 
 }

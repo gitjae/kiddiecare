@@ -18,19 +18,19 @@ public class HospitalAppointmentService {
     // 코드 중복체크
     public String duplCode() {
         // ** 수정한거
-//        String ranNum;
-//        Appointment foundAppointment;
-//
-//        while(true) {
-//            ranNum = createRanNum();
-//            foundAppointment = appoRepository.findByNo(ranNum);
-//
-//            if(foundAppointment == null) {
-//                break;
-//            }
-//        }
-//
-//        return ranNum;
+        String ranNum;
+        Appointment foundAppointment;
+
+        while(true) {
+            ranNum = createRanNum();
+            foundAppointment = appoRepository.findByNo(ranNum);
+
+            if(foundAppointment == null) {
+                break;
+            }
+        }
+
+        return ranNum;
 
         // ** 수정전
 //        while(true) {
@@ -44,7 +44,6 @@ public class HospitalAppointmentService {
 
 //        return appo;
 
-        return null;
     }
 
 }

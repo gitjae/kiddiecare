@@ -33,16 +33,9 @@
         <div class="select-area">
             <h1>스케줄 생성</h1>
             <h1>의사 선택</h1>
+            <div id="selectedDoctor"></div>
             <div class="select-option">
-                <div class="doctor-area">
 
-                </div>
-                <div class="doctor-area">
-
-                </div>
-                <div class="doctor-area">
-
-                </div>
             </div>
 
             <div class="date-set-area">
@@ -84,7 +77,7 @@
                     <input type="number" id="l-start-hour" min="1" max="12" value="12"/>
                     <input type="number" id="l-start-minute" value="00" readonly/>
                     부터
-                    <input type="number" id="l-end-hour" value="01"/>
+                    <input type="number" id="l-end-hour" value="1"/>
                     <input type="number" id="l-end-minute" value="00" readonly/>
                 </div>
 
