@@ -14,6 +14,8 @@
                 <li><a href="/privacyTerm" target="_blank">개인정보처리방침</a></li>
                 <li> | </li>
                 <li><a href="/locationTerm" target="_blank">위치기반서비스 이용약관</a></li>
+                <li> | </li>
+                <li><a href="/memberProfile" target="_blank">MEMBER PROFILE</a></li>
             </ul>
         </div>
 

@@ -90,6 +90,9 @@ public class MainController {
     @GetMapping("userTerm")
     public String userTerm(){return "userTerm";}
 
+    @GetMapping("memberProfile")
+    public String memberProfile(){return "memberProfile";}
+
     @GetMapping("/hospitalInfo")
     public String hospitalInfo(Model model) {
         model.addAttribute("hospitals", hospitalService.findAllHospitals());
