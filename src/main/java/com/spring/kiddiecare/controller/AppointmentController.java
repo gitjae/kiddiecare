@@ -8,6 +8,7 @@ import com.spring.kiddiecare.domain.hospital.Appointment;
 import com.spring.kiddiecare.domain.timeSlotsLimit.TimeSlotsLimit;
 import com.spring.kiddiecare.domain.timeSlotsLimit.TimeSlotsLimitRepository;
 import com.spring.kiddiecare.domain.timeSlotsLimit.TimeSlotsLimitRequestDto;
+import com.spring.kiddiecare.service.HospitalAppointmentService;
 import lombok.RequiredArgsConstructor;
 import org.json.JSONObject;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +29,7 @@ public class AppointmentController {
     private final AppoRepository appoRepository;
     private final TimeSlotsLimitRepository timeSlotsLimitRepository;
     private final DoctorRepository doctorRepository;
+    private final HospitalAppointmentService hospitalAppointmentService;
 
     @Transactional
     @PostMapping(value="timeset-add", consumes = {"application/json"})
@@ -62,8 +64,8 @@ public class AppointmentController {
                 int enable = rowData.getMax();
                 rowData.setEnable(enable);
                 // 임시
-                rowData.setDoctorNo(2);
-                rowData.setYkiho("JDQ4MTYyMiM1MSMkMSMkMCMkODkkMzgxMzUxIzExIyQxIyQzIyQ3OSQyNjE4MzIjNDEjJDEjJDgjJDgz");
+//                rowData.setDoctorNo(2);
+//                rowData.setYkiho("JDQ4MTYyMiM1MSMkMSMkMCMkODkkMzgxMzUxIzExIyQxIyQzIyQ3OSQyNjE4MzIjNDEjJDEjJDgjJDgz");
 
                 // 잘 들어와졌는지 테스트
 //                System.out.println("date " + date);
@@ -80,10 +82,11 @@ public class AppointmentController {
     }
 
 
-    @GetMapping("{ykiho}")
-    public List<Doctor> getDoctors(@PathVariable String ykiho) {
-        return doctorRepository.findByYkiho(ykiho);
-    }
+    // 충돌나서 주석처리.
+//    @GetMapping("{ykiho}")
+//    public List<Doctor> getDoctors(@PathVariable String ykiho) {
+//        return doctorRepository.findByYkiho(ykiho);
+//    }
 
 
 //    @PostMapping(value = "appo-add", consumes = {"application/json"})
@@ -114,7 +117,8 @@ public class AppointmentController {
     public ResponseEntity<Map<String, Boolean>> bookAppointment(@RequestBody AppoRequestDto appoDto) {
         HashMap<String, Boolean> response = new HashMap<>();
         // 난수 생성
-        // setter로 난수만 appoDto에 추가
+        // setter로 난수만 appoDto에 추가했음!
+        appoDto.setNo(hospitalAppointmentService.duplCode());
         try {
             Appointment appointment = new Appointment(appoDto);
             appoRepository.save(appointment);

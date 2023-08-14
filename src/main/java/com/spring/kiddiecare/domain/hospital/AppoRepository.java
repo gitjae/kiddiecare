@@ -9,7 +9,7 @@ import java.util.List;
 @Repository
 public interface AppoRepository extends JpaRepository<Appointment, Integer> {
 //    public Appointment findByNo(Integer no);
-//    public Appointment findByNo(String no);
+    public Appointment findByNo(String no);
 
     public List<Appointment> findAllByGuardian(int userNo);
 
