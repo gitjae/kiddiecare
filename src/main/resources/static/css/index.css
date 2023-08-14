@@ -1,3 +1,113 @@
-.index-session{
+@font-face {
+    font-family: 'omyu_pretty';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-01@1.0/omyu_pretty.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+h2{
+    font-family: 'omyu_pretty', sans-serif;
+    font-size: xx-large;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+section{
+    overflow-y: unset;
+    /*padding: 4%;*/
+}
+
+.container {
     display: flex;
+    justify-content: space-between;
+    padding: 2%;
+}
+
+.index-search{
+    width: 50%;
+    text-align: end;
+}
+
+.search-input{
+    width: 50%;
+    margin-right: 10px;
+}
+
+.top-title{
+    letter-spacing: 2px;
+    color: #74AEDB;
+    font-weight: 700;
+    font-size: larger;
+}
+
+.bottom-title{
+    letter-spacing: 2px;
+    color: #737373;
+}
+
+.index-session {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.shortCut-area {
+    display: flex;
+    width: 100%;
+    height: 90%;
+    gap: 20px;
+    justify-content: space-between;
+}
+
+.shortCut-area2{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.shortCut-area p{
+    color: #737373;
+    margin-bottom: 20px;
+}
+
+.find-nearby-hospital-div, .favorite-hospital-div, .admin-myPage, .user-myPage {
+    position: relative;
+    background: #E4F3FF;
+    padding: 20px;
+}
+
+.shortCut-area img {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    width: 100px;
+    height: 100px;
+    opacity: 0.7;       /* 숫자가 클수록 불투명 */
+}
+
+.find-nearby-hospital-div img, .user-myPage img{
+    width: 200px;
+    height: 200px;
+}
+
+
+/* order : 가장 작은 순서가 앞 */
+.find-nearby-hospital-div {
+    order: 0; /* Flex order로 배치 순서 지정 */
+    width: 30%;
+}
+
+.favorite-hospital-div {
+    order: 1;
+    height: 50%;
+}
+
+.admin-myPage {
+    order: 2;
+    height: 50%;
+}
+
+.user-myPage {
+    order: 3;
+    width: 30%;
 }

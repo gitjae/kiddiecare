@@ -11,26 +11,30 @@
 <body>
 <div class="container">
     <section>
-        <div class="kakaoMap-area">
-            카카오맵 지도 영역
-        </div>
-
-        <div class="hospital-detail-info">
-            <h2 class="info-title">상세정보</h2>
-            <h3 id="hospital-name"></h3>
-            <h3 id="hospital-addr"></h3>
-            <h3 id="hospital-operate-time"></h3>
-            <h3 id="hospital-intro"></h3>
-
-            <div class="doctor-info">
-                    <div class="doctor-card">
-                        <p>&#127976; &#128138;</p>
-                        <p id="doctor-no"></p>
-                        <p id="doctor-name"></p>
-                        <p id="doctor-offDay"></p>
-                    </div>
+        <div class="wrap1">
+            <div class="kakaoMap-area">
+                카카오맵 지도 영역
             </div>
 
+            <div class="hospital-detail-info">
+                <h2 class="info-title">상세정보</h2>
+                <h3 id="hospital-name"></h3>
+                <h3 id="hospital-addr"></h3>
+                <h3 id="hospital-operate-time"></h3>
+                <h3 id="hospital-intro"></h3>
+            </div>
+
+            <div class="doctor-info">
+                <div class="doctor-card">
+                    <p>&#127976; &#128138;</p>
+                    <p id="doctor-no"></p>
+                    <p id="doctor-name"></p>
+                    <p id="doctor-offDay"></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="wrap2">
             <table class="Calendar">
                 <thead>
                 <tr>
@@ -65,9 +69,9 @@
                     </div>
                 </c:forEach>
             </div>
-
-            <button id="booking-btn" data-ykiho="${hospital.ykiho}">예약하기</button>
         </div>
+
+        <button id="booking-btn" data-ykiho="${hospital.ykiho}">예약하기</button>
     </section>
 </div>
 <script src="/script/hospital-detail.js"></script>

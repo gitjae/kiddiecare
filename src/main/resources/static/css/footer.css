@@ -32,4 +32,5 @@ div.addr p{
 /* 저작권 */
 div.attribute>a{
     color: #3C5A91;
+    font-size: small;
 }
