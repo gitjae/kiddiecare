@@ -18,7 +18,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AppoView {
-    private int no;
+    private String no;
     private String hospital;
     private Date date;
     private Time time;
