@@ -79,6 +79,4 @@ public class HospDetailItem {
     private String plcDist; // 병원 지역
     @XmlElement(name = "parkQty")
     private String parkQty; // 주차장 정보
-    private List<HospSubItem> subItems; // 진료 과목 정보
-    private HospBasisItem BasisItem;
 }

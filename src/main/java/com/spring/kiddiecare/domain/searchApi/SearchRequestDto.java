@@ -17,6 +17,7 @@ public class SearchRequestDto {
     private String xPos;
     private String yPos;
     private String radius;
+    private String dgsbjtCd;
     public Map<String, Object> toParameterMap() {
         Map<String, Object> parameterMap = new HashMap<>();
 
@@ -30,17 +31,30 @@ public class SearchRequestDto {
             parameterMap.put("keyword", keyword);
         }
 
-
         if (xPos != null && !xPos.isEmpty()) {
-            parameterMap.put("xPos", xPos);
+            try{
+                Double.parseDouble(xPos);
+                parameterMap.put("xPos", xPos);
+            }catch (Exception e){
+                System.out.println(e);
+            }
         }
 
         if (yPos != null && !yPos.isEmpty()) {
-            parameterMap.put("yPos", yPos);
+            try{
+                Double.parseDouble(yPos);
+                parameterMap.put("yPos", yPos);
+            }catch (Exception e){
+                System.out.println(e);
+            }
         }
 
         if (radius != null && !radius.isEmpty()) {
             parameterMap.put("radius", radius);
+        }
+
+        if(dgsbjtCd != null && dgsbjtCd.isEmpty()){
+            parameterMap.put("dgsbjtCd", dgsbjtCd);
         }
 
         return parameterMap;
