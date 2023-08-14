@@ -143,6 +143,19 @@ function updateCancel(btn){
         method:'GET',
         url:`api/v1/children/child/${no}`
     }).done(res => {
+        const child = res.child;
         $(div).empty();
+        $(div).append(`
+            <div class="div-child">
+                <p class="child-name" child-no="${child.id}">${child.name}</p>
+                <p class="child-gender">${child.gender % 2 == 0 ? "여아" : "남아"}</p>
+                <p class="child-birth">${child.birth}</p>
+                <p class="child-info">${child.info}</p>
+                <div class="child-btn">
+                    <button onclick="updateForm(this)">정보 수정</button>
+                    <button onclick="delChildInfo(this)">자녀 정보 지우기</button>
+                </div>
+            </div>
+        `)
     })
 }
