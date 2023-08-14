@@ -2,14 +2,19 @@ package com.spring.kiddiecare.controller;
 
 import com.spring.kiddiecare.domain.doctor.Doctor;
 import com.spring.kiddiecare.domain.doctor.DoctorRepository;
+import com.spring.kiddiecare.domain.hospital.AppoRepository;
+import com.spring.kiddiecare.domain.hospital.AppoRequestDto;
+import com.spring.kiddiecare.domain.hospital.Appointment;
 import com.spring.kiddiecare.domain.timeSlotsLimit.TimeSlotsLimit;
 import com.spring.kiddiecare.domain.timeSlotsLimit.TimeSlotsLimitRepository;
 import com.spring.kiddiecare.domain.timeSlotsLimit.TimeSlotsLimitRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.json.JSONObject;
+import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -19,9 +24,10 @@ import java.util.Map;
 @RequestMapping("api/v1/admin/appo")
 public class AppointmentController {
 
-//    private final AppoRepository appoRepository;
+    private final AppoRepository appoRepository;
     private final TimeSlotsLimitRepository timeSlotsLimitRepository;
     private final DoctorRepository doctorRepository;
+
     @Transactional
     @PostMapping(value="timeset-add", consumes = {"application/json"})
     public Map timeset_add(@RequestBody List<TimeSlotsLimitRequestDto> list) {
@@ -91,6 +97,23 @@ public class AppointmentController {
 //
 //        return json.toMap();
 //    }
+
+    @PostMapping(consumes = {"application/json"})
+    public ResponseEntity<Map<String, Boolean>> bookAppointment(@RequestBody AppoRequestDto appoDto) {
+        HashMap<String, Boolean> response = new HashMap<>();
+        // 난수 생성
+        // setter로 난수만 appoDto에 추가
+        try {
+            Appointment appointment = new Appointment(appoDto);
+            appoRepository.save(appointment);
+            response.put("success", true);
+            return ResponseEntity.ok(response);
+        } catch(Exception e) {
+            response.put("success", false);
+            e.printStackTrace();
+            return ResponseEntity.status(500).body(response);  // 500 Internal Server Error 반환
+        }
+    }
 
 
 }

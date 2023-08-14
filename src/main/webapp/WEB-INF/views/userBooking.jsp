@@ -4,48 +4,7 @@
 <html>
 <head>
     <title>사용자 예약 페이지</title>
-    <style>
-        .term-title {
-            cursor: pointer;
-            /*background-color: #f5f5f5;*/
-            /*padding: 10px;*/
-            border: 1px solid #e5e5e5;
-            margin: 0;
-        }
-
-        .term-content {
-            border: 1px solid #e5e5e5;
-            /*padding: 10px;*/
-            margin-top: -1px;
-        }
-
-        .children-card {
-            border: 1px solid #ccc;
-            padding: 10px;
-            margin: 10px;
-            border-radius: 5px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            display: inline-block;
-        }
-
-        .children-card h4 {
-            margin-top: 0;
-        }
-
-        .children-card p {
-            margin-bottom: 10px;
-        }
-
-        .children-card .select-children {
-            background-color: #007BFF;
-            color: white;
-            border: none;
-            padding: 5px 10px;
-            border-radius: 3px;
-            cursor: pointer;
-        }
-
-    </style>
+    <link href="/css/user-booking-css.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="/script/user-booking.js"></script>
 </head>
@@ -57,16 +16,19 @@
     <p>병원명</p>
     <input type="text" id="hospitalName" value="${hospitalName}" readonly>
     <p>진료날짜</p>
-    <input type="text" id="treatmentDate" value="${param.treatmentDate}" readonly>
+    <input type="text" id="treatmentDate" value="${treatmentDate}" readonly>
     <p>진료일</p>
-    <input type="text" id="treatmentDay" value="${param.treatmentDay}" readonly>
+    <input type="text" id="treatmentDay" value="${treatmentDay}" readonly>
     <p>진료시간</p>
-    <input type="text" id="treatmentTime" value="${param.slotTime}" readonly>
+    <input type="text" id="treatmentTime" value="${slotTime}" readonly>
+    <input type="hidden" id="timeSlotNo" value="${timeSlotNo}" />
     <p>보호자명</p>
     <input type="text" id="guardian" value=${userName} readonly>
     <input type="hidden" id="parentId" value="${parentId}" />
+    <input type="hidden" id="log" value="${log}" />
     <p>자녀정보</p>
     <div id="childrenContainer"></div>
+    <input type="hidden" id="selectedChildNo" />
     <p>증상</p>
     <input type="text" id="symptom" value="symptom">
     <p>참고사항</p>

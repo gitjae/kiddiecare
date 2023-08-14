@@ -4,7 +4,6 @@ import com.spring.kiddiecare.domain.hospital.Hospital;
 import com.spring.kiddiecare.domain.hospital.HospitalRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
@@ -24,14 +23,19 @@ public class HospitalService {
 
     // 코드로 병원 이름 찾기
     public String findHospitalNameByYkiho(String ykiho) {
-        String hospitalName = hospitalRepository.findNameByYkiho(ykiho);
-        System.out.println("Hospital Name: " + hospitalName);
-        return hospitalName;
+        Hospital hospital = hospitalRepository.findByYkiho(ykiho);
+        return hospital != null ? hospital.getHospitalName() : null;
     }
 
     // 병원 이름으로 병원 찾기
     public Hospital findHospitalByHospitalName(String hospitalName) {
         return hospitalRepository.findByHospitalName(hospitalName);
+    }
+
+    // hospitalName 사용해서 Hospital 객체를 찾고 ykiho 추출
+    public String findYkihoByHospitalName(String hospitalName) {
+        Hospital hospital = hospitalRepository.findYkihoByHospitalName(hospitalName);
+        return hospital != null ? hospital.getYkiho() : null;
     }
 
 //    public Hospital findHospitalFromAPI(String hospitalName) {
@@ -46,7 +50,4 @@ public class HospitalService {
 //
 //        return hospital;
 //    }
-
-
-
 }

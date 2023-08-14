@@ -64,4 +64,9 @@ public class ChildrenController {
         jsonObject.put("register","fail");
         return jsonObject.toMap();
     }
+
+    @GetMapping("/getChildrenByParentId")
+    public List<Children> getChildrenByParentId(@RequestParam("parentId") int parentId) {
+        return childrenRepository.findByParentNo(parentId);
+    }
 }

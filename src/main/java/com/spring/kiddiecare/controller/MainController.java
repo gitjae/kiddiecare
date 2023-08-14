@@ -11,6 +11,7 @@ import com.spring.kiddiecare.domain.timeSlotsLimit.TimeSlotsLimitRepository;
 import com.spring.kiddiecare.domain.user.User;
 import com.spring.kiddiecare.domain.user.UserRepository;
 import com.spring.kiddiecare.domain.user.UserResponseDto;
+import com.spring.kiddiecare.service.ChildrenService;
 import com.spring.kiddiecare.service.DoctorService;
 import com.spring.kiddiecare.service.HospitalService;
 import com.spring.kiddiecare.service.TimeSlotsLimitService;
@@ -41,6 +42,7 @@ public class MainController {
     private final DoctorRepository doctorRepository;
     private final HospitalService hospitalService;
     private final DoctorService doctorService;
+    private final ChildrenService childrenService;
 
     @GetMapping("/")
     public String index(){
@@ -83,6 +85,11 @@ public class MainController {
     public String hospitalInfo(Model model) {
         model.addAttribute("hospitals", hospitalService.findAllHospitals());
         return "hospitalInfo";
+    }
+
+    @GetMapping("bookingComplete")
+    public String bookingComplete() {
+        return "bookingComplete";
     }
 
     @GetMapping("mypage")
@@ -136,22 +143,26 @@ public class MainController {
 
     @GetMapping("appointment/booking")
     public String showBookingPage(
-            @RequestParam("ykiho") String ykiho,        // -> hospital name 으로 변경해야됨
+            @RequestParam("hospitalName") String hospitalName,
             @RequestParam("treatmentDate") String treatmentDate,
             @RequestParam("treatmentDay") String treatmentDay,
             @RequestParam("doctorNo") String doctorNo,
             @RequestParam("slotTime") String slotTime,
             @RequestParam("slotWeekday") String slotWeekday,
+            @RequestParam("timeSlotNo") int timeSlotNo,
             @ModelAttribute("log") String userId,
             Model model) {
+
+        // 병원 이름을 사용하여 ykiho 값을 조회
+        String ykiho = hospitalService.findYkihoByHospitalName(hospitalName);
 
         // 병원 정보
         Hospital hospital = hospitalService.findHospitalByYkiho(ykiho);
         model.addAttribute("hospital", hospital);
 
         // 병원 이름
-        String hospitalName = hospitalService.findHospitalNameByYkiho(ykiho);
-        model.addAttribute("hospitalName", hospitalName);
+        String hospitalNameFromService = hospitalService.findHospitalNameByYkiho(ykiho); // 변수명 변경하여 중복을 피합니다.
+        model.addAttribute("hospitalName", hospitalNameFromService);
 
         // 해당 병원의 의사 정보
         List<Doctor> doctors = doctorService.findDoctorsByYkiho(ykiho);
@@ -165,6 +176,7 @@ public class MainController {
         model.addAttribute("doctorNo", doctorNo);
         model.addAttribute("slotTime", slotTime);
         model.addAttribute("slotWeekday", slotWeekday);
+        model.addAttribute("timeSlotNo", timeSlotNo);
 
         // 사용자 아이디로 사용자 이름 찾기
         User user = userRepository.findUserById(userId).orElse(null);
@@ -172,10 +184,9 @@ public class MainController {
             model.addAttribute("userName", user.getName());
             model.addAttribute("parentId", user.getNo());
 
-            // 해당 사용자의 자녀 정보 ---> 수정필요
-//            List<Children> childrenList = childrenRepository.findByParentNo(user.getNo());
-//            model.addAttribute("children", childrenList);
-//            List<Children> children = childrenRepository.findByParentNo(user.getNo());
+            // 해당 사용자의 자녀 정보 가져오기
+            List<Children> childrenList = childrenService.getChildrenByParentNo(user.getNo());
+            model.addAttribute("childrenList", childrenList);
         }
 
         return "userBooking";
