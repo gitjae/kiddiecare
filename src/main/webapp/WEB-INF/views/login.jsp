@@ -9,12 +9,13 @@
 <html>
 <head>
     <title>Title</title>
+    <link href="/css/common.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/login.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
     <script src="/script/login-api.js"></script>
 </head>
 <body>
-<div id="root">
+<div class="container">
     <section id="main-section">
         <div id="form">
             <div>log : ${log}</div>

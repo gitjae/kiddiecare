@@ -10,11 +10,12 @@
 <html>
 <head>
     <title>Title</title>
+    <link href="/css/common.css" rel="stylesheet">
     <script src="/script/childRegister.js"></script>
 </head>
 <c:import url="header.jsp"/>
 <body>
-<div id="root">
+<div class="container">
     <section id="main-section">
         <div id="form">
             <div id="div-name">
@@ -44,4 +45,5 @@
     </section>
 </div>
 </body>
+<c:import url="footer.jsp"></c:import>
 </html>
