@@ -8,6 +8,7 @@
 let finalList = [];
 let setWeekdayArr = [];
 
+
 $(function () {
     let today = new Date();
     today.setDate(today.getDate());
@@ -218,14 +219,32 @@ function saveTimes() {
             const dayIndex = setWeekdayArr.indexOf(weekDay);
             const startHour = parseInt(document.getElementById(`start-hour-${dayIndex}`).value, 10);
             const endHour = parseInt(document.getElementById(`end-hour-${dayIndex}`).value, 10);
+            // 제외할 시간(점심시간)
+            let lunchCheck = document.getElementById('no-lunch').checked;
+            const lStartHour = parseInt(document.getElementById('l-start-hour').value, 10);
+            const lEndHour = parseInt(document.getElementById('l-end-hour').value, 10);
+            // 제외할 시간(저녁시간)
+            let dinnerCheck = document.getElementById('no-dinner').checked;
+            const dStartHour = parseInt(document.getElementById('d-start-hour').value, 10);
+            const dEndHour = parseInt(document.getElementById('d-end-hour').value, 10);
             const maxNum = document.getElementById(`max-num-${dayIndex}`).value;
 
             // 시간 범위 내의 값들을 데이터 배열에 추가
             for (let hour = startHour; hour < endHour; hour++) {
+                // 식사시간 제외 조건
+                // - 점심시간 없음에 체크 해제돼있으면 조건 실행
+                if(!lunchCheck && hour >= lStartHour && hour < lEndHour) {
+                    continue;
+                }
+                // - 저녁시간 없음에 체크 해제돼있으면 조건 실행
+                if(!dinnerCheck && hour >= dStartHour && hour < dEndHour) {
+                    continue;
+                }
+
                 data.push({
                     date: dateFormat(day), // 날짜 문자열
                     weekday: weekdays[weekDay], // 요일 문자열
-                    time: `${("0" + hour).slice(-2)}:00`, // 시간 문자열
+                    time: hour, // 시간 문자열
                     max: maxNum, // 총 인원
                 });
             }

@@ -10,7 +10,8 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AppointmentResponseDto {
-    private int no;
+
+    private String no;
 
     // children
     private int patientId;

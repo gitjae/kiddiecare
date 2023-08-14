@@ -4,9 +4,10 @@ import java.security.SecureRandom;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+// 난수5자리 생성 yymmdd12345 -> ex) 23081454751
 public class RandomUtil {
 //    private static final int STRING_LENGTH = 8;
-    private static final int STRING_LENGTH = 2;
+    private static final int STRING_LENGTH = 5;
 
     public static String createRanNum() {
         SecureRandom random = new SecureRandom();

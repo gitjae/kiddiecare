@@ -33,6 +33,7 @@ public class TimeSlotsLimit {
         this.weekday = timeSlotsDto.getWeekday();
         this.date = DateParsor.parse(timeSlotsDto.getDate());
         this.time = DateParsor.convertHourToTime(timeSlotsDto.getTime());
+//        this.time = timeSlotsDto.getTime();
         this.count = timeSlotsDto.getCount();
         this.max = timeSlotsDto.getMax();
         this.block = timeSlotsDto.getBlock();
@@ -43,5 +44,21 @@ public class TimeSlotsLimit {
     public void setCount(int count) {
         this.count = count;
         this.enable = (this.max - count) < 0 ? 0 : (this.max - count);
+    }
+
+    @Override
+    public String toString() {
+        return "TimeSlotsLimit{" +
+                "no=" + no +
+                ", doctorNo=" + doctorNo +
+                ", weekday='" + weekday + '\'' +
+                ", date=" + date +
+                ", time=" + time +
+                ", count=" + count +
+                ", max=" + max +
+                ", block=" + block +
+                ", enable=" + enable +
+                ", ykiho='" + ykiho + '\'' +
+                '}';
     }
 }

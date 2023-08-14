@@ -6,7 +6,8 @@ import lombok.Setter;
 @Getter
 @Setter
 public class AppoRequestDto {
-    private int no;
+
+    private String no;
 
     // children
     private int patientId;
