@@ -1,11 +1,15 @@
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
+@font-face {
+    font-family: 'ONE-Mobile-POP';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/ONE-Mobile-POP.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
 }
 
-#root {
-    max-width: 50%;
-    margin: 50px auto;
+.loginTitle {
+    font-family: 'ONE-Mobile-POP', sans-serif;
+    font-size: 40px;
+    color: #74aedb !important;
+    text-align: center;
 }
 
 #main-section {
@@ -34,6 +38,7 @@ label{
     display: inline-block;
     width: 100px;
     margin-right: 20px;
+    text-align: center;
 }
 input{
     display: inline-block;
@@ -54,6 +59,7 @@ input{
     margin: 30px auto;
     width: 80px;
     background-color: inherit;
+    color: #000000;
 }
 
 #submit:hover{

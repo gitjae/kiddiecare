@@ -17,21 +17,24 @@
 <body>
 <div class="container">
     <section id="main-section">
+        <a href="/">
+            <h2 class="loginTitle">우리동네소아과</h2>
+        </a>
         <div id="form">
             <div>log : ${log}</div>
             <div id="div-id">
-                <label for="id">아이디</label>
+                <label for="id">ID</label>
                 <input type="text" id="id" name="id">
             </div>
             <div id="div-pw">
-                <label for="password">비밀번호</label>
+                <label for="password">PASSWORD</label>
                 <input type="password" id="password" name="password">
             </div>
             <div id="div-btn">
-                <button id="submit" onclick="login()">로그인</button>
+                <button id="submit" onclick="login()">LOGIN</button>
             </div>
             <div id="div-kakao">
-                <button onclick=""><a href="#">카카오 로그인</a></button>
+                <button onclick=""><a href="#">KAKAO LOGIN</a></button>
             </div>
             <div id="div-find">
                 <a href="#">아이디/비밀번호 찾기</a>
