@@ -28,7 +28,7 @@ public class OpenApiDataUtil {
     private final RestTemplate restTemplate;
     private final RedisTemplate redisTemplate;
     private ValueOperations<String, HospBasisBody> valueOps;
-    private ValueOperations<String, HospDetailItem> valueOpsDetail;
+    private ValueOperations<String, HospBasisItem> valueOpsDetail;
     private ValueOperations<String, HospSubBody> valueOpsSub;
     private Duration cacheTtl = Duration.ofMinutes(3);
 
@@ -43,21 +43,24 @@ public class OpenApiDataUtil {
     }
 
     public HospBasisBody getHospList(String url, String query) {
+
+        HospBasisBody resultBody = null;
+
         // 캐시 데이터 확인하기
         HospBasisBody cachedData = valueOps.get(query);
         if (cachedData != null) {
             return cachedData;
         }
 
-        HospBasisBody resultBody = null;
         try {
             URI reqeustUrl = new URI(url);
             HospBasisResponse data = restTemplate.getForObject(reqeustUrl, HospBasisResponse.class);
             resultBody = data.getBody();
-            System.out.println(resultBody);
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        System.out.println("resultBody 확인 "+resultBody);
 
         if (resultBody != null) {
             valueOps.set(query, resultBody, cacheTtl);
@@ -67,68 +70,78 @@ public class OpenApiDataUtil {
         return null;
     }
 
-    public HospDetailItem getHospData(String url, HospBasisItem item) {
+    public HospBasisItem getHospData(String url, HospBasisItem item) {
+
         // 캐시 데이터 확인하기
-        HospDetailItem cachedData = valueOpsDetail.get(item.getYadmNm());
+        HospBasisItem cachedData = valueOpsDetail.get(item.getYadmNm());
         if (cachedData != null) {
             return cachedData;
         }
 
         HospDetailItem resultBody = null;
         try {
-            URI reqeusturl = new URI(url);
-            HospDetailResponse data = restTemplate.getForObject(reqeusturl, HospDetailResponse.class);
-            System.out.println("data"+data);
-            if(data.getBody() != null){
-                data.getBody().getItems().getItem().setBasisItem(item);
+            URI reqeustUrl = new URI(url);
+            HospDetailResponse data = restTemplate.getForObject(reqeustUrl, HospDetailResponse.class);
+            System.out.println("상세정보 불러오기 "+data);
+            HospDetailItem dataItem = data.getBody().getItems().getItem();
+            if(dataItem != null){
+                item.setHospDetail(dataItem);
             }
-            resultBody = data.getBody().getItems().getItem();
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        if (resultBody != null) {
-            valueOpsDetail.set(item.getYadmNm(), resultBody, cacheTtl);
-            return resultBody;
+
+        if (item != null) {
+            valueOpsDetail.set(item.getYadmNm(), item, cacheTtl);
+            return item;
         }
 
         return null;
     }
 
-    public List<HospSubItem> getHospSubData(String url, String ykiho){
-        Optional<HospDetailItem> cachedData = Optional.ofNullable(valueOpsDetail.get(ykiho));
-        List<HospSubItem> responseDataList = null;
+    public HospBasisItem getHospSubData(String url, String yadmNm){
+        boolean isChangedData = false;
+        Optional<HospBasisItem> cachedData = Optional.ofNullable(valueOpsDetail.get(yadmNm));
         if(cachedData.isPresent()){
-            System.out.println(cachedData.get());
-            responseDataList = cachedData.get().getSubItems();
-            if (responseDataList != null){
-                return responseDataList;
+            if (cachedData.get().getSubItems() != null){
+                return cachedData.get();
             }
+            try {
+                URI reqeustUrl = new URI(url);
+                System.out.println("보낼 URL 확인"+reqeustUrl);
+                Optional<HospSubResponse> data = Optional.ofNullable(
+                        restTemplate.getForObject(reqeustUrl, HospSubResponse.class));
+                if(data.isPresent()){
+                    int totalCount = data.get().getBody().getTotalCount();
+                    if (totalCount > 10) {
+                        url += "&numOfRows="+totalCount;
+                        data = Optional.ofNullable(restTemplate.getForObject(new URI(url), HospSubResponse.class));
+                    }
+                    List<HospSubItem> subItems = data.get().getBody().getItems();
+                    if(subItems != null){
+                        cachedData.get().setSubItems(subItems);
+                        isChangedData = true;
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }else{
+
         }
 
-        try {
-            URI reqeustUrl = new URI(url);
-            HospSubResponse data = restTemplate.getForObject(reqeustUrl, HospSubResponse.class);
-            int totalCount = data.getBody().getTotalCount();
-            if (totalCount > 10){
-                url += "&numOfRows="+totalCount;
-                data = restTemplate.getForObject(new URI(url), HospSubResponse.class);
-            }
-            responseDataList = data.getBody().getItems();
-            if(responseDataList == null){
-                return null;
-            }
-            cachedData.get().setSubItems(responseDataList);
-        } catch (Exception e) {
-            e.printStackTrace();
+        // cached 데이터는 있지만 서브는 없는 데이터
+        // cached 데이터는 없는 데이터
+
+
+
+        if (isChangedData) {
+            valueOpsDetail.set(yadmNm, cachedData.get());
+            return cachedData.get();
         }
 
-        if (cachedData.isPresent() && responseDataList != null) {
-            valueOpsDetail.set(ykiho, cachedData.get());
-            return responseDataList;
-        }
-
-        return null;
+        return cachedData.get();
     }
 
 }

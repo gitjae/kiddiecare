@@ -2,9 +2,11 @@ package com.spring.kiddiecare.util.hospbasis;
 
 import com.spring.kiddiecare.util.hospInfo.HospDetailItem;
 import com.spring.kiddiecare.util.hospInfo.HospDetailItems;
+import com.spring.kiddiecare.util.hospSubInfo.HospSubItem;
 import lombok.*;
 
 import javax.xml.bind.annotation.*;
+import java.util.List;
 
 @ToString
 @Setter
@@ -107,4 +109,6 @@ public class HospBasisItem {
 
     @XmlElement(name = "ykiho")
     private String ykiho; // 암호화된 요양기호
+    private HospDetailItem hospDetail; // 병원 상세 정보
+    private List<HospSubItem> subItems; // 진료 과목 정보
 }
