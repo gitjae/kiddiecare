@@ -137,7 +137,6 @@ public class HospitalInfoController {
                 query += userXpos+userYpos;
             }
         }
-        System.out.println(query);
 
         String url = baseUrl + hospInfoService + HospList + encodeServiceKey + query;
         Optional<HospBasisBody> hospListData = Optional.ofNullable(openApiDataUtil.getHospList(url, query));

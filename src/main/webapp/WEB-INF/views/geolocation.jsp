@@ -17,8 +17,12 @@
 <body>
 <div class="container">
     <section>
-        <div id="map" style="width:500px;height:400px;"></div>
-        <button onclick="getUserLocation()">내 주변 병원 찾기</button>
+        <div id="map" style="width:500px;height:400px;">
+            <button style="position: absolute; z-index: 2;" onclick="getUserLocation()">내 주변 병원 찾기</button>
+        </div>
+        <div id="hospital-list">
+
+        </div>
     </section>
 </div>
 </body>

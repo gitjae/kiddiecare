@@ -25,6 +25,15 @@ $(function (){
 
             var positions = []
             res.data.list.forEach(hosp => {
+                $('#hospital-list').append(`
+                    <div class="hospital">
+                        <div class="hospital-name" ykiho="${hosp.ykiho}">${hosp.hospitalName}</div>
+                        <div>${hosp.addr}</div>
+                        <div>${hosp.telno}</div>
+                        <div>${hosp.weekday}</div>
+                    </div>
+                `);
+
                 var position = {
                     content : `<div class="hospital-name" ykiho="${hosp.ykiho}">${hosp.hospitalName}</div>
                                 <div>${hosp.addr}</div>
