@@ -26,7 +26,7 @@
         </div>
 
         <div class="attribute">
-            <a href="https://www.flaticon.com/free-icons/hospital" title="hospital icons">Hospital icons created by surang - Flaticon</a>
+            <a href="https://www.flaticon.com/free-icons/hospital" title="hospital icons">Hospital icons created by surang - Flaticon</a><a href="https://www.flaticon.com/free-icons/medical-doctor" title="medical doctor icons">Medical doctor icons created by kerismaker - Flaticon</a><a href="https://www.flaticon.com/free-icons/star" title="star icons">Star icons created by Freepik - Flaticon</a><a href="https://www.flaticon.com/free-icons/user-guide" title="user guide icons">User guide icons created by Freepik - Flaticon</a><a href="https://www.flaticon.com/free-icons/modify" title="modify icons">Modify icons created by Saepul Nahwan - Flaticon</a>
         </div>
     </footer>
 </body>
