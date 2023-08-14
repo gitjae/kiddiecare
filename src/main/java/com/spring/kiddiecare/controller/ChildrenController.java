@@ -5,6 +5,7 @@ import com.spring.kiddiecare.domain.children.ChildrenRepository;
 import com.spring.kiddiecare.domain.children.ChildrenRequestDto;
 import com.spring.kiddiecare.domain.user.User;
 import com.spring.kiddiecare.domain.user.UserRepository;
+import com.spring.kiddiecare.service.ChildrenService;
 import lombok.RequiredArgsConstructor;
 import org.json.JSONObject;
 import org.springframework.data.domain.Pageable;
@@ -22,6 +23,7 @@ import java.util.Optional;
 public class ChildrenController {
     private final UserRepository userRepository;
     private final ChildrenRepository childrenRepository;
+    private final ChildrenService childrenService;
     @GetMapping("list/{page}")
     public Map childrenPage(WebRequest request, @PageableDefault(size = 2) Pageable pageable, @PathVariable int page){
         String log = (String) request.getAttribute("log", WebRequest.SCOPE_SESSION);
@@ -65,8 +67,32 @@ public class ChildrenController {
         return jsonObject.toMap();
     }
 
+    @DeleteMapping("child/{no}")
+    public Map deleteChild(@PathVariable(name = "no") int id){
+        JSONObject jsonObject = new JSONObject();
+        boolean delete = childrenService.deleteChildById(id);
+
+        if(delete){
+            jsonObject.put("delete","success");
+            return jsonObject.toMap();
+        }
+        jsonObject.put("delete","fail");
+        return jsonObject.toMap();
+    }
+
     @GetMapping("/getChildrenByParentId")
     public List<Children> getChildrenByParentId(@RequestParam("parentId") int parentId) {
         return childrenRepository.findByParentNo(parentId);
+    }
+
+    @GetMapping("child/{no}")
+    public Map getChildById(@PathVariable(name = "no") int id){
+        JSONObject jsonObject = new JSONObject();
+        Optional<Children> foundChild = childrenRepository.findById(id);
+        if(foundChild.isPresent()){
+            Children child = foundChild.get();
+            jsonObject.put("child", child);
+        }
+        return jsonObject.toMap();
     }
 }

@@ -50,6 +50,7 @@ public class HospitalInfoController {
 
     private Map getHospDetailByYadmNm(HospBasisBody hospListData){
         JSONObject result = new JSONObject();
+        ArrayList<JSONObject> list = new ArrayList<>();
         for(HospBasisItem item : hospListData.getItems()){
             JSONObject dataSet = new JSONObject();
             String hospInfoUrl = baseUrl + admDtlInfoService + getDtlInfo + encodeServiceKey + "&ykiho=" + item.getYkiho() ;
@@ -66,8 +67,10 @@ public class HospitalInfoController {
                 dataSet.put("noTrmtSun",hospInfoData.getNoTrmtSun());
                 dataSet.put("weekday",calenderAndGetTrmtUtil.getStartByWeekday(hospInfoData));
             }
-            result.put(item.getYadmNm(),dataSet);
+            list.add(dataSet);
+            //result.put(item.getYadmNm(),dataSet);
         }
+        result.put("list",list);
         return result.toMap();
     }
 

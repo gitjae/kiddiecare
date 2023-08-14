@@ -36,7 +36,12 @@
                 <div id="user">
                     <p>${user.name}</p>
                     <p>${user.birth}</p>
-                    <p>${user.gender}</p>
+                    <p>
+                        <c:choose>
+                            <c:when test="${user.gender}">남성</c:when>
+                            <c:otherwise>여성</c:otherwise>
+                        </c:choose>
+                    </p>
                     <p>${user.phone}</p>
                     <p>${user.email}</p>
                     <p>${user.addr}</p>
