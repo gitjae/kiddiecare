@@ -1,4 +1,3 @@
-var appoPage = 1;
 var childrenPage = 1;
 
 function sectionChange(nav){
@@ -19,15 +18,7 @@ function nextChildren(){
     getChildren(childrenPage + 1);
 }
 
-function prevAppo(){
-    let page = appoPage - 1;
-    if(page < 1) {page = 1}
-    getAppo(page);
-}
 
-function nextAppo(){
-    getAppo(appoPage + 1);
-}
 
 
 function getChildren(page){
@@ -48,7 +39,7 @@ function getChildren(page){
                         <p class="child-birth">${child.birth}</p>
                         <p class="child-info">${child.info}</p>
                         <div class="child-btn">
-                            <button onclick="updateForm(this)">정보 수정</button>
+                            <button onclick="updateChildForm(this)">정보 수정</button>
                             <button onclick="delChildInfo(this)">자녀 정보 지우기</button>
                         </div>
                     </div>
@@ -57,31 +48,7 @@ function getChildren(page){
     })
 }
 
-function getAppo(page){
-    var appoPage = 1;
-    $.ajax({
-        method: 'GET',
-        url:`/api/v1/appo/list/${page}`
-    }).done(res => {
-        if(res.appointments.length == 0){
-            return;
-        }
-        appoPage = page
-        $('#appo').empty();
-        res.appointments.forEach(appo => {
-            $('#appo').append(`<div class="appo">
-                        <p>예약번호 : ${appo.no}</p>
-                        <p>병원이름 : ${appo.hospital}</p>
-                        <p>예약일정 : ${appo.date} ${appo.time}</p>
-                        <p>담당의 : ${appo.doctor}</p>
-                        <p>예약상태 : ${appo.appoStatus}</p>
-                        <p>환자이름 : ${appo.name}</p>
-                        <p>증상 : ${appo.symptom}</p>
-                        <p>참고사항 : ${appo.note}</p>
-                    </div>`);
-        })
-    })
-}
+
 
 
 function delChildInfo(btn){
@@ -100,7 +67,7 @@ function delChildInfo(btn){
     }
 }
 
-function updateForm(btn){
+function updateChildForm(btn){
     const div = $(btn).closest('.div-child');
     const no = $(div).find('.child-name').attr('child-no');
     const name = $(div).find('.child-name').text();
@@ -117,26 +84,58 @@ function updateForm(btn){
             </div>
             <div id="div-birth">
                 <label for="birth">생년월일</label>
-                <input type="text" id="birth" name="birth" value="${birth}">
+                <input type="text" id="birth" class="birth" name="birth" value="${birth}">
             </div>
             <div id="div-gender">
                 <label id="label-gender">성별</label>
                 <label for="gender-m">남</label>
-                <input type="radio" id="gender-m" name="gender" value="m" ${gender ? 'checked' : ''}>
+                <input type="radio" id="gender-m" class="gender" name="gender-${no}" value="m" ${gender ? 'checked' : ''}>
                 <label for="gender-f">여</label>
-                <input type="radio" id="gender-f" name="gender" value="f" ${!gender ? 'checked' : ''}>
+                <input type="radio" id="gender-f" class="gender" name="gender-${no}" value="f" ${!gender ? 'checked' : ''}>
             </div>
             <div id="div-info">
                 <label for="info">참고사항</label>
-                <input type="text" id="info" name="info" value="${info}">
+                <input type="text" id="info" class="info" name="info" value="${info}">
             </div>
-            <button id="submit" onclick="update(this)">수정하기</button>
-            <button onclick="updateCancel(this)">취소하기</button>
+            <button id="submit" onclick="updateChild(this)">수정하기</button>
+            <button onclick="updateChildCancel(this)">취소하기</button>
         </div>
     `)
 }
 
-function updateCancel(btn){
+function updateChildCancel(btn){
+    cancelChildAjax(btn);
+}
+
+function updateChild(btn){
+    const div = $(btn).closest('.div-child');
+    const no = $(div).find('.name').attr('child-no');
+    const name = $(div).find('.name').val();
+    const birth = $(div).find('.birth').val();
+    const info = $(div).find('.info').val();
+    const gender = $(div).find('.gender:checked').val() == 'm' ? 1 : 0
+    const data = {
+        name:name,
+        birth:birth,
+        info:info,
+        gender:gender
+    }
+
+    $.ajax({
+        method:'PUT',
+        url:`api/v1/children/child/${no}`,
+        data:JSON.stringify(data),
+        contentType:'application/json; charset=utf-8'
+    }).done(res => {
+        if(res.update === 'success'){
+            cancelChildAjax(btn);
+        } else {
+            alert("자녀정보 수정에 실패했습니다.");
+        }
+    })
+}
+
+function cancelChildAjax(btn){
     const div = $(btn).closest('.div-child');
     const no = $(div).find('.name').attr('child-no');
     $.ajax({
@@ -146,15 +145,13 @@ function updateCancel(btn){
         const child = res.child;
         $(div).empty();
         $(div).append(`
-            <div class="div-child">
-                <p class="child-name" child-no="${child.id}">${child.name}</p>
-                <p class="child-gender">${child.gender % 2 == 0 ? "여아" : "남아"}</p>
-                <p class="child-birth">${child.birth}</p>
-                <p class="child-info">${child.info}</p>
-                <div class="child-btn">
-                    <button onclick="updateForm(this)">정보 수정</button>
-                    <button onclick="delChildInfo(this)">자녀 정보 지우기</button>
-                </div>
+            <p class="child-name" child-no="${child.id}">${child.name}</p>
+            <p class="child-gender">${child.gender % 2 == 0 ? "여아" : "남아"}</p>
+            <p class="child-birth">${child.birth}</p>
+            <p class="child-info">${child.info}</p>
+            <div class="child-btn">
+                <button onclick="updateChildForm(this)">정보 수정</button>
+                <button onclick="delChildInfo(this)">자녀 정보 지우기</button>
             </div>
         `)
     })

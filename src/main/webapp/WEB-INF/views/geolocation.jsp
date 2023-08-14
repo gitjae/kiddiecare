@@ -15,9 +15,11 @@
     <script src="/script/geolocation.js"></script>
 </head>
 <body>
-    <h1>User's Location</h1>
-    <button onclick="getUserLocation()">Get Location</button>
-    <p id="locationInfo"></p>
-    <div id="map" style="width:500px;height:400px;"></div>
+<div class="container">
+    <section>
+        <div id="map" style="width:500px;height:400px;"></div>
+        <button onclick="getUserLocation()">내 주변 병원 찾기</button>
+    </section>
+</div>
 </body>
 </html>

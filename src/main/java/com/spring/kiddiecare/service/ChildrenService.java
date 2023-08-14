@@ -2,6 +2,7 @@ package com.spring.kiddiecare.service;
 
 import com.spring.kiddiecare.domain.children.Children;
 import com.spring.kiddiecare.domain.children.ChildrenRepository;
+import com.spring.kiddiecare.domain.children.ChildrenRequestDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +17,17 @@ public class ChildrenService {
 
     public List<Children> getChildrenByParentNo(int parentNo) {
         return childrenRepository.findByParentNo(parentNo);
+    }
+
+    @Transactional
+    public boolean updateChild(ChildrenRequestDto childDto, int id){
+        Optional<Children> foundChild = childrenRepository.findById(id);
+        if(foundChild.isPresent()){
+            Children child = foundChild.get();
+            child.update(childDto);
+            return true;
+        }
+        return false;
     }
 
     @Transactional

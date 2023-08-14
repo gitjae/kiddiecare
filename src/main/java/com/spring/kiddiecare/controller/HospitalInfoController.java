@@ -107,13 +107,16 @@ public class HospitalInfoController {
         JSONObject result = new JSONObject();
         // queryParam 받아오기
         String query = getQueryParamBySearchDto(searchDto);
+        System.out.println(query);
         // hospList 불러오기
         String url = baseUrl + hospInfoService + HospList + encodeServiceKey + query;
         // openAPI 요청
         Optional<HospBasisBody> hospListData = Optional.ofNullable(openApiDataUtil.getHospList(url, query));
+        System.out.println(hospListData);
         if(hospListData.isPresent()){
             result.put("result","success");
             result.put("data",getHospDetailByHospBasis(hospListData.get()));
+            return result.toMap();
         }
         return result.put("result","fail").toMap();
     }
@@ -129,15 +132,19 @@ public class HospitalInfoController {
             if(userInfo.isPresent()){
                 String userXpos = "&xPos="+userInfo.get().getXpos();
                 String userYpos = "&yPos="+userInfo.get().getYpos();
+                result.put("centerX", userInfo.get().getXpos());
+                result.put("centerY", userInfo.get().getYpos());
                 query += userXpos+userYpos;
             }
         }
+        System.out.println(query);
 
         String url = baseUrl + hospInfoService + HospList + encodeServiceKey + query;
         Optional<HospBasisBody> hospListData = Optional.ofNullable(openApiDataUtil.getHospList(url, query));
         if(hospListData.isPresent()){
             result.put("result","success");
             result.put("data",getHospDetailByHospBasis(hospListData.get()));
+            return result.toMap();
         }
         return result.put("result","fail").toMap();
     }

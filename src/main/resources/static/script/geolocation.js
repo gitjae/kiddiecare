@@ -1,15 +1,21 @@
 var xPos = 127.0291236;
 var yPos = 37.5001387;
+var radius = 500;
 var map;
 var bounds;
 var marker;
 var infowindow;
 
-/*$(function (){
+$(function (){
     //makeMap();
+    //radius = $('#').val();
+    const param = {
+        radius:radius
+    }
     $.ajax({
-        method:'GET',
-        url:`/search/hospList`,
+        method:'POST',
+        url:`/search/hospList/addr`,
+        data:param
     }).done(res => {
         console.log(res);
         if(res.result === 'success'){
@@ -18,7 +24,7 @@ var infowindow;
             makeMap();
 
             var positions = []
-            res.list.forEach(hosp => {
+            res.data.list.forEach(hosp => {
                 var position = {
                     content : `<div class="hospital-name" ykiho="${hosp.ykiho}">${hosp.hospitalName}</div>
                                 <div>${hosp.addr}</div>
@@ -58,7 +64,7 @@ var infowindow;
             alert(res.result);
         }
     })
-})*/
+})
 
 // 인포윈도우를 표시하는 클로저를 만드는 함수입니다
 function makeOverListener(map, marker, infowindow) {

@@ -12,7 +12,8 @@
     <title>Title</title>
     <link href="/css/common.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/mypage.css">
-    <script src="/script/mypage.js"></script>
+    <script src="/script/mypage-children.js"></script>
+    <script src="/script/mypage-appo.js"></script>
 </head>
 <c:import url="header.jsp"/>
 <body>
@@ -60,7 +61,7 @@
                 <button onclick="nextChildren()">next</button>
             </div>
             <div class="main-div" id="div-appo">
-                <div id="appo">
+                <div id="appointments">
 
                 </div>
                 <button onclick="prevAppo()">prev</button>

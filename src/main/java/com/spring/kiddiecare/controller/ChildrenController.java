@@ -80,6 +80,19 @@ public class ChildrenController {
         return jsonObject.toMap();
     }
 
+    @PutMapping("child/{no}")
+    public Map updateChild(@PathVariable(name = "no") int id, @RequestBody ChildrenRequestDto childDto){
+        JSONObject jsonObject = new JSONObject();
+        System.out.println("childDto:" + childDto);
+        boolean update = childrenService.updateChild(childDto, id);
+        if(update){
+            jsonObject.put("update", "success");
+            return jsonObject.toMap();
+        }
+        jsonObject.put("update", "fail");
+        return jsonObject.toMap();
+    }
+
     @GetMapping("/getChildrenByParentId")
     public List<Children> getChildrenByParentId(@RequestParam("parentId") int parentId) {
         return childrenRepository.findByParentNo(parentId);

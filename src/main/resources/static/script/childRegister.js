@@ -17,8 +17,8 @@ function register(){
         data:JSON.stringify(data),
         contentType:'application/json; charset=utf-8'
     }).done(res => {
-        if(res.resister === 'success'){
-            location.href = "/mypage.js"
+        if(res.register === 'success'){
+            location.href = "/mypage"
         } else {
             alert("등록 실패")
         }
