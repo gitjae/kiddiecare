@@ -81,7 +81,8 @@ public class AppointmentController {
     @PostMapping(consumes = {"application/json"})
     public ResponseEntity<Map<String, Boolean>> bookAppointment(@RequestBody AppoRequestDto appoDto) {
         HashMap<String, Boolean> response = new HashMap<>();
-
+        // 난수 생성
+        // setter로 난수만 appoDto에 추가
         try {
             Appointment appointment = new Appointment(appoDto);
             appoRepository.save(appointment);
