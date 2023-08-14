@@ -10,12 +10,14 @@
 <html>
 <head>
     <title>Title</title>
+    <link href="/css/common.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/mypage.css">
     <script src="/script/mypage.js"></script>
 </head>
 <c:import url="header.jsp"/>
 <body>
-    <div id="root">
+<div class="container">
+    <section>
         <aside id="sidebar">
             <div id="bar-header">
                 <h2 id="h2-header">헤더</h2>
@@ -30,7 +32,7 @@
                 </ul>
             </div>
         </aside>
-        <section id="main-section">
+        <div id="main-section">
             <div class="main-div" id="div-user">
                 <p>유저</p>
                 <div id="user">
@@ -70,7 +72,9 @@
             <div class="main-div" id="div-favor">
                 <p>찜</p>
             </div>
-        </section>
-    </div>
+        </div>
+    </section>
+</div>
 </body>
+<c:import url="footer.jsp"></c:import>
 </html>

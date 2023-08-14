@@ -73,7 +73,7 @@ $(document).ready(function () {
                                 renderChildCard(child);
                             });
                         } else {
-                            $("#childrenContainer").append("<p>정보가 없습니다.</p>");
+                            $("#childrenContainer").append("<p>정보가 없습니다.</p><button id='GoChildRegisterBtn'>자녀 등록하기</button>");
                         }
                     },
                 });
@@ -85,6 +85,11 @@ $(document).ready(function () {
     } else {
         console.error('log value is missing or invalid.');
     }
+
+    // 자녀 등록하기 이동
+    $(document).on('click', '#GoChildRegisterBtn', function() {
+        window.location.href = "/childRegister";
+    });
 
     // "결제하기 패스하고 예약꽂기" 버튼 클릭 이벤트
     $("#payBtn").on('click', function (e) {

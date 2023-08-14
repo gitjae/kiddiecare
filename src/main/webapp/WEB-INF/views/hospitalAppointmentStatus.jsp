@@ -9,8 +9,11 @@
 <html>
 <head>
     <title>Title</title>
+    <link href="/css/common.css" rel="stylesheet">
 </head>
+<c:import url="header.jsp"></c:import>
 <body>
+<div class="container">
     <section>
         <div class="time-bar-area">
             <button>9:00</button>
@@ -22,5 +25,7 @@
             <button></button>
         </div>
     </section>
+</div>
 </body>
+<c:import url="footer.jsp"></c:import>
 </html>

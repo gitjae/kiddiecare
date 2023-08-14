@@ -1,15 +1,51 @@
-button{
-    height: 35px;
-    background: #3E85EF;
-    color: #FFFFFF;
-    border: none;
-    border-radius: 5px;
-    padding: 10px;
+#header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100px;
 }
 
-input{
-    outline: none;
-    border: none;
-    border-bottom: 1px solid #bebebe;
+#header a, #header span, #header p {
+    color: #a6a6a6;
 }
 
+#header a:hover, #header span:hover, #header p:hover {
+    color: #74aedb;
+}
+
+.logoWrap {
+    display: flex;
+    align-items: center;
+}
+
+.topNav {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.logoImg {
+    display: flex;
+    align-items: center;
+    margin-left: 20px;
+}
+
+.logoImg > img {
+    margin-right: 10px;
+    width: 70px;
+    height: 70px;
+}
+
+@font-face {
+    font-family: 'ONE-Mobile-POP';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/ONE-Mobile-POP.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.logoTitle {
+    font-family: 'ONE-Mobile-POP', sans-serif;
+    font-size: xxx-large;
+    /*font-size: 40px;*/
+    color: #74aedb !important;
+}

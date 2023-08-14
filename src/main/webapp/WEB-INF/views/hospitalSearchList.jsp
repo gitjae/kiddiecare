@@ -10,7 +10,9 @@
 <html>
 <head>
     <title>List</title>
+    <link href="/css/common.css" rel="stylesheet">
 </head>
+<c:import url="header.jsp"></c:import>
 <body>
     <section>
         <c:when test="${empty response}">
@@ -33,4 +35,5 @@
         </c:otherwise>
     </section>
 </body>
+<c:import url="footer.jsp"></c:import>
 </html>

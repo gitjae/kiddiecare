@@ -81,6 +81,18 @@ public class MainController {
     @GetMapping("childRegister")
     public String childResister(){return "childRegister";}
 
+    @GetMapping("locationTerm")
+    public String locationTerm(){return "locationTerm";}
+
+    @GetMapping("privacyTerm")
+    public String privacyTerm(){return "privacyTerm";}
+
+    @GetMapping("userTerm")
+    public String userTerm(){return "userTerm";}
+
+    @GetMapping("memberProfile")
+    public String memberProfile(){return "memberProfile";}
+
     @GetMapping("/hospitalInfo")
     public String hospitalInfo(Model model) {
         model.addAttribute("hospitals", hospitalService.findAllHospitals());

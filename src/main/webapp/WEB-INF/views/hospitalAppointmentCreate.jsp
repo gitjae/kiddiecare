@@ -10,11 +10,12 @@
 <html>
 <head>
     <title>AppointmentCreate</title>
-
+    <link href="/css/common.css" rel="stylesheet">
     <link href="/css/hospital_appo_create.css" rel="stylesheet">
 </head>
 <c:import url="header.jsp"></c:import>
 <body>
+<div class="container">
     <section>
         <div class="menu-bar-area">
             <div id="hospital-name">
@@ -101,9 +102,10 @@
                 <button onclick="saveTimes()">예약 생성하기</button>
             </div>
         </div>
-
     </section>
+</div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
     <script src="/script/hospital_appo_create.js"></script>
 </body>
+<c:import url="footer.jsp"></c:import>
 </html>
