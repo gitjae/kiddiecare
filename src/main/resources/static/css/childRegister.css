@@ -1,0 +1,82 @@
+/* 공통 스타일 */
+@font-face {
+    font-family: 'omyu_pretty';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-01@1.0/omyu_pretty.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+#main-section {
+    /*padding: 50px;*/
+    width: 80%;
+}
+
+/* 자녀 등록페이지 스타일 */
+.addChild-div{
+    padding: 70px;
+    background: #ffffff;
+    border-radius: 5px;
+}
+
+.addChild-title{
+    font-size: xxx-large;
+    font-weight: 500;
+    margin-bottom: 10px;
+    font-family: 'omyu_pretty';
+}
+
+.addChild-sub-title{
+    font-size: x-large;
+    margin-bottom: 50px;
+    font-family: 'omyu_pretty';
+}
+
+#form{
+    text-align: center;
+    width: 80%;
+    margin: 50px auto;
+    background: #74aedb;
+    padding: 30px;
+    border-radius: 5px;
+}
+
+label {
+    display: inline-block;
+    width: 100px;
+    margin-right: 20px;
+    text-align: center;
+}
+
+input[type="text"] {
+    display: inline-block;
+    width: 70%;
+    height: 40px;
+    outline: none;
+    border: none;
+    border-bottom: 1px solid #bebebe;
+    margin-bottom: 30px;
+}
+
+#div-gender {
+    margin-bottom: 30px;
+}
+
+input[type="radio"] {
+    margin-left: 10px;
+    margin-right: 5px;
+}
+
+#submit {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}

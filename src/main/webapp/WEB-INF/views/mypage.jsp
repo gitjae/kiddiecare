@@ -40,57 +40,40 @@
                 </div>
             </aside>
             <div id="main-section">
-                <%--                <div class="main-div" id="div-user">--%>
-                <%--                    <div id="user">--%>
-                <%--                        <p>${user.name}</p>--%>
-                <%--                        <p>${user.birth}</p>--%>
-                <%--                        <p>--%>
-                <%--                            <c:choose>--%>
-                <%--                                <c:when test="${user.gender}">남성</c:when>--%>
-                <%--                                <c:otherwise>여성</c:otherwise>--%>
-                <%--                            </c:choose>--%>
-                <%--                        </p>--%>
-                <%--                        <p>${user.phone}</p>--%>
-                <%--                        <p>${user.email}</p>--%>
-                <%--                        <p>${user.addr}</p>--%>
-                <%--                        <p>${user.addr_detail}</p>--%>
-                <%--                    </div>--%>
-                <%--                    <button id="user-update">수정</button>--%>
-                <%--                </div>--%>
                 <div class="main-div" id="div-user">
                     <div id="user">
                         <div class="info-item">
                             <span class="info-title">이름</span>
-                            <span class="info-content">${user.name}</span>
+                            <span>${user.name}</span>
                         </div>
                         <div class="info-item">
                             <span class="info-title">생년월일</span>
-                            <span class="info-content">${user.birth}</span>
+                            <span>${user.birth}</span>
                         </div>
                         <div class="info-item">
                             <span class="info-title">성별</span>
-                            <span class="info-content">
-                <c:choose>
-                    <c:when test="${user.gender}">남성</c:when>
-                    <c:otherwise>여성</c:otherwise>
-                </c:choose>
-            </span>
+                            <span>
+                                                <c:choose>
+                                                    <c:when test="${user.gender}">남성</c:when>
+                                                    <c:otherwise>여성</c:otherwise>
+                                                </c:choose>
+                                            </span>
                         </div>
                         <div class="info-item">
                             <span class="info-title">전화번호</span>
-                            <span class="info-content">${user.phone}</span>
+                            <span>${user.phone}</span>
                         </div>
                         <div class="info-item">
                             <span class="info-title">이메일</span>
-                            <span class="info-content">${user.email}</span>
+                            <span>${user.email}</span>
                         </div>
                         <div class="info-item">
                             <span class="info-title">주소</span>
-                            <span class="info-content">${user.addr}</span>
+                            <span>${user.addr}</span>
                         </div>
                         <div class="info-item">
                             <span class="info-title">상세주소</span>
-                            <span class="info-content">${user.addr_detail}</span>
+                            <span>${user.addr_detail}</span>
                         </div>
                     </div>
                     <button id="user-update">수정</button>
