@@ -208,4 +208,8 @@ public class MainController {
     public String showReservePage(@RequestParam("hospitalName") String hospitalName, Model model) {       // -> hospitalName 으로 변경하고 내용 삭제하고 ajax(api->HospitalInfoController의 getHospitalInfo, 우리DB)로 요청보낸 후 나머지는 js에서 처리
         return "hospitalDetail";
     }
+
+    // 병원 예약 관리
+    @GetMapping("admin/appointment/management")
+    public String hospitalAppointmentManagement() {return  "hospitalAppointmentManagement";}
 }

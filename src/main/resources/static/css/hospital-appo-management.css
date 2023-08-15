@@ -1,0 +1,62 @@
+/* === hospital appointment Management === */
+
+head,body{
+    width: 100%;
+    height: 100%;
+}
+
+section{
+    display: flex;
+    flex-direction: row;
+    flex: 1 1 100%;
+    margin-top: 20px;
+}
+
+.menu-bar-area{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    min-width: 200px;
+}
+
+#menu-bar{
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    padding: 10px;
+    border-right: 1px solid black;
+    gap: 15px;
+}
+
+.select-area{
+    width: 100%;
+    padding-top: 30px;
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+
+#time-bar-area {
+    /*display: flex;*/
+    /*flex-direction: column;*/
+}
+
+#time-bar-area>ul{
+    border: 2px solid black;
+}
+
+#time-bar-area li{
+    padding: 10px;
+    text-align: center;
+    height: 30px;
+    /*background: #66B2FF;*/
+    border-bottom: 2px solid black;
+}
+
+#time-bar-area li:last-child {
+    border: none;
+}
+
+.detail-area {
+
+}
