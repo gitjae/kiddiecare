@@ -1,3 +1,31 @@
+.user-appo-title{
+    font-size: xx-large;
+    font-weight: bold;
+    margin-bottom: 30px;
+}
+
+.info-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 30px;
+
+}
+
+.info-title {
+    font-weight: bold;
+    margin-right: 10px;
+    width: 100px;
+}
+
+#note, #symptom{
+    width: 200px;
+    /*color: #a6a6a6;*/
+}
+
+.term-section{
+    margin-bottom: 10px;
+}
+
 .term-title {
     cursor: pointer;
     /*background-color: #f5f5f5;*/
@@ -23,6 +51,7 @@
 
 .children-card h4 {
     margin-top: 0;
+    margin-bottom: 10px;
 }
 
 .children-card p {
@@ -40,4 +69,28 @@
 
 .selected-card {
     background-color: #e6e6e6;
+}
+
+#payBtn{
+    height: 35px;
+    background: #007BFF;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    margin-top: 30px;
+}
+
+#payBtn:hover{
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+    cursor: pointer;
+}
+.view-btn{
+    border: none;
+    background: none;
+    color: black;
+}
+
+.view-btn:hover{
+    box-shadow: 0 0px 0px rgba(0, 0, 0, 0);
 }

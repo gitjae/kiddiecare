@@ -13,52 +13,69 @@
 <body>
 <div class="container">
     <section>
-        <h3>진료예약</h3>
+        <p class="user-appo-title">진료예약</p>
 
         <form action="/reserve" method="post">
-            <p>병원명</p>
-            <input type="text" id="hospitalName" value="${hospitalName}" readonly>
-            <p>진료날짜</p>
-            <input type="text" id="treatmentDate" value="${treatmentDate}" readonly>
-            <p>진료일</p>
-            <input type="text" id="treatmentDay" value="${treatmentDay}" readonly>
-            <p>진료시간</p>
-            <input type="text" id="treatmentTime" value="${slotTime}" readonly>
-            <input type="hidden" id="timeSlotNo" value="${timeSlotNo}" />
-            <p>보호자명</p>
-            <input type="text" id="guardian" value=${userName} readonly>
-            <input type="hidden" id="parentId" value="${parentId}" />
-            <input type="hidden" id="log" value="${log}" />
-            <p>자녀정보</p>
-            <div id="childrenContainer"></div>
-            <input type="hidden" id="selectedChildNo" />
-            <p>증상</p>
-            <input type="text" id="symptom" value="symptom">
-            <p>참고사항</p>
-            <input type="text" id="note" value="note"><br/>
+            <div class="info-item">
+                <span class="info-title">병원명</span>
+                <span><input type="text" id="hospitalName" value="${hospitalName}" readonly></span>
+            </div>
+            <div class="info-item">
+                <span class="info-title">진료날짜</span>
+                <span><input type="text" id="treatmentDate" value="${treatmentDate}" readonly></span>
+            </div>
+            <div class="info-item">
+                <span class="info-title">진료일</span>
+                <span><input type="text" id="treatmentDay" value="${treatmentDay}" readonly></span>
+            </div>
+            <div class="info-item">
+                <span class="info-title">진료시간</span>
+                <span><input type="text" id="treatmentTime" value="${slotTime}" readonly></span>
+                <input type="hidden" id="timeSlotNo" value="${timeSlotNo}" />
+            </div>
+            <div class="info-item">
+                <span class="info-title">보호자명</span>
+                <span><input type="text" id="guardian" value=${userName} readonly></span>
+                <input type="hidden" id="parentId" value="${parentId}" />
+                <input type="hidden" id="log" value="${log}" />
+            </div>
+            <div class="info-item">
+                <span class="info-title">자녀정보</span>
+                <div id="childrenContainer">
 
+                </div>
+                <input type="hidden" id="selectedChildNo" />
+            </div>
+            <div class="info-item">
+                <span class="info-title">증상</span>
+                <span><input type="text" id="symptom" placeholder="아픈곳을 적어주세요."></span>
+            </div>
+            <div class="info-item">
+                <span class="info-title">참고사항</span>
+                <span><input type="text" id="note" placeholder="병원에서 참고할 부분을 알려주세요."><br/></span>
+            </div>
             <div class="form-area">
                 <h4>약관동의</h4>
                 <div class="term-section">
-                    <h5 class="term-title">(필수) 이용약관 <button class="view-btn">보기</button></h5>
+                    <h5 class="term-title"> * 이용약관 <button class="view-btn">(펼치기)</button></h5>
                     <div class="term-content">
                         <c:import url="userTerm.jsp"></c:import>
                     </div>
-                    <input type="checkbox" id="userTerm" required> 동의
+                    <input type="checkbox" id="userTerm" required> 동의합니다.
                 </div>
                 <div class="term-section">
-                    <h5 class="term-title">(필수) 개인정보처리방침 <button class="view-btn">보기</button></h5>
+                    <h5 class="term-title"> * 개인정보처리방침 <button class="view-btn">(펼치기)</button></h5>
                     <div class="term-content">
                         <c:import url="privacyTerm.jsp"></c:import>
                     </div>
-                    <input type="checkbox" id="privacyTerm" required> 동의
+                    <input type="checkbox" id="privacyTerm" required> 동의합니다.
                 </div>
                 <div class="term-section">
-                    <h5 class="term-title">(필수) 위치기반서비스 이용약관 <button class="view-btn">보기</button></h5>
+                    <h5 class="term-title"> * 위치기반서비스 이용약관 <button class="view-btn">(펼치기)</button></h5>
                     <div class="term-content">
                         <c:import url="locationTerm.jsp"></c:import>
                     </div>
-                    <input type="checkbox" id="locationTerm" required> 동의
+                    <input type="checkbox" id="locationTerm" required> 동의합니다.
                 </div>
             </div>
 

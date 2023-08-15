@@ -18,9 +18,12 @@
         <div class="hospital-detail-info">
             <h2 class="info-title">상세정보</h2>
             <h3 id="hospital-name"></h3>
-            <h3 id="hospital-addr"></h3>
-            <h3 id="hospital-operate-time"></h3>
-            <h3 id="hospital-intro"></h3>
+            <p id="hospital-intro"></p><br>
+            <p id="hospital-addr">api - 주소주소주소</p>
+            <p id="hospital-operate-time">api - 오늘 기준 운영 시간</p>
+            <p>api - 운영 시간</p>
+            <p>api - 주차 정보</p>
+            <p>api - 좌표 hidden</p>
 
             <div class="doctor-info">
                 <div class="doctor-card">
