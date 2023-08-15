@@ -28,7 +28,7 @@ public class SearchRequestDto {
         }
 
         if (keyword != null && !keyword.isEmpty()) {
-            parameterMap.put("keyword", keyword);
+            parameterMap.put("yadmNm", keyword);
         }
 
         if (xPos != null && !xPos.isEmpty()) {

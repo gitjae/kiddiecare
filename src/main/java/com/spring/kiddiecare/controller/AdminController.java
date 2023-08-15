@@ -30,6 +30,13 @@ public class AdminController {
         return result.toMap();
     }
 
+    @PostMapping("email/check")
+    public Map sendAuthToken(@RequestBody AdminRequestDto adminDto){
+        JSONObject result = new JSONObject();
+        return result.toMap();
+    }
+
+
     @PostMapping("join")
     public Map adminJoin(@RequestBody AdminRequestDto adminDto){
         JSONObject result = new JSONObject();
