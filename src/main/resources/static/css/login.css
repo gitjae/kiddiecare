@@ -5,6 +5,18 @@
     font-style: normal;
 }
 
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+#main-section {
+    padding: 50px;
+    width: 1024px;
+}
+
 .loginTitle {
     font-family: 'ONE-Mobile-POP', sans-serif;
     font-size: 40px;
@@ -14,6 +26,7 @@
 
 #main-section {
     padding: 50px;
+    width: 80%;
 }
 
 .wrapper{
@@ -60,4 +73,8 @@ input{
 
 #submit:hover{
     cursor: pointer;
+}
+
+#submit, #findIdAndPw {
+    margin: 0 10px;
 }

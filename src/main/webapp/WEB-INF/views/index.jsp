@@ -32,7 +32,8 @@
             </div>
             <div class="index-search">
                 <input type="text" class="search-input" placeholder="병원명 또는 지역으로 검색할 수 있어요." name="searchText" maxlength="100">
-                <button type="submit" class="search-btn">검색</button>
+<%--                <button type="submit" class="search-btn">검색</button>--%>
+                <img src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png" onclick="">
             </div>
         </div>
 
