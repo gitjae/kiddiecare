@@ -1,10 +1,8 @@
-package com.spring.kiddiecare.util.hospSubInfo;
+package com.spring.kiddiecare.openApi.hospInfo;
 
-import com.spring.kiddiecare.util.hospbasis.HospBasisItem;
 import lombok.*;
 
 import javax.xml.bind.annotation.*;
-import java.util.List;
 
 @ToString
 @Setter
@@ -13,10 +11,10 @@ import java.util.List;
 @NoArgsConstructor
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "body")
-public class HospSubBody {
-    @XmlElementWrapper(name = "items")
-    @XmlElement(name = "item")
-    private List<HospSubItem> items;
+public class HospDetailBody {
+
+    @XmlElement(name = "items")
+    private HospDetailItems items;
 
     @XmlElement(name = "numOfRows")
     private int numOfRows;

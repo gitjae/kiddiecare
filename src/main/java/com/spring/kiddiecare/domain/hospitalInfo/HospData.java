@@ -1,8 +1,8 @@
 package com.spring.kiddiecare.domain.hospitalInfo;
 
-import com.spring.kiddiecare.util.hospInfo.HospDetailItem;
-import com.spring.kiddiecare.util.hospSubInfo.HospSubItem;
-import com.spring.kiddiecare.util.hospbasis.HospBasisItem;
+import com.spring.kiddiecare.openApi.hospInfo.HospDetailItem;
+import com.spring.kiddiecare.openApi.hospSubInfo.HospSubItem;
+import com.spring.kiddiecare.openApi.hospbasis.HospBasisItem;
 import lombok.*;
 
 import java.util.List;

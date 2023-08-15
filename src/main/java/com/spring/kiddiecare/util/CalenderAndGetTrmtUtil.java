@@ -2,7 +2,7 @@ package com.spring.kiddiecare.util;
 
 import java.util.Calendar;
 
-import com.spring.kiddiecare.util.hospInfo.HospDetailItem;
+import com.spring.kiddiecare.openApi.hospInfo.HospDetailItem;
 import org.springframework.stereotype.Component;
 
 @Component

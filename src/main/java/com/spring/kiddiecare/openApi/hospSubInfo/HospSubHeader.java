@@ -1,4 +1,4 @@
-package com.spring.kiddiecare.util.hospSubInfo;
+package com.spring.kiddiecare.openApi.hospSubInfo;
 
 import lombok.*;
 

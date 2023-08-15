@@ -2,13 +2,11 @@ package com.spring.kiddiecare.util;
 
 
 import com.spring.kiddiecare.domain.hospitalInfo.HospData;
-import com.spring.kiddiecare.util.hospInfo.HospDetailItem;
-import com.spring.kiddiecare.util.hospInfo.HospDetailResponse;
-import com.spring.kiddiecare.util.hospSubInfo.HospSubItem;
-import com.spring.kiddiecare.util.hospSubInfo.HospSubResponse;
-import com.spring.kiddiecare.util.hospbasis.HospBasisBody;
-import com.spring.kiddiecare.util.hospbasis.HospBasisItem;
-import com.spring.kiddiecare.util.hospbasis.HospBasisResponse;
+import com.spring.kiddiecare.openApi.hospInfo.HospDetailItem;
+import com.spring.kiddiecare.openApi.hospInfo.HospDetailResponse;
+import com.spring.kiddiecare.openApi.hospSubInfo.HospSubItem;
+import com.spring.kiddiecare.openApi.hospSubInfo.HospSubResponse;
+import com.spring.kiddiecare.openApi.hospbasis.HospBasisResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
@@ -36,9 +34,9 @@ public class OpenApiDataUtil {
     }
 
     public HospData getHospList(String url, String query) {
-        Optional<HospData> cacheData = Optional.ofNullable(valueOps.get(query));
 
         // 캐시 데이터 확인하기
+        Optional<HospData> cacheData = Optional.ofNullable(valueOps.get(query));
         if (cacheData.isPresent()) {
             return cacheData.get();
         }
@@ -80,47 +78,47 @@ public class OpenApiDataUtil {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        System.out.println("hospData 확인 " + HospData);
         return HospData;
     }
 
     public HospData getHospSubData(String url, String yadmNm){
-        boolean isChangedData = false;
+        // 캐시 데이터 확인
         Optional<HospData> cachedData = Optional.ofNullable(valueOps.get(yadmNm));
+        System.out.println("cache"+cachedData);
         if(cachedData.isPresent()){
             List<HospSubItem> hospSubData = cachedData.get().getHospSubData();
-            if (hospSubData != null){
+            if(hospSubData != null){
                 return cachedData.get();
             }
             try {
                 URI reqeustUrl = new URI(url);
-                System.out.println("보낼 URL 확인"+reqeustUrl);
                 Optional<HospSubResponse> data = Optional.ofNullable(
                         restTemplate.getForObject(reqeustUrl, HospSubResponse.class));
+                System.out.println("진료데이터 확인 "+data);
+                // 진료 과목 데이터를 확인
                 if(data.isPresent()){
                     int totalCount = data.get().getBody().getTotalCount();
+                    // 진료과목 데이터에서 과목이 10개 이상이라면 다시요청
                     if (totalCount > 10) {
                         url += "&numOfRows="+totalCount;
                         data = Optional.ofNullable(restTemplate.getForObject(new URI(url), HospSubResponse.class));
+                        System.out.println("정보다시 불러옴");
                     }
-                    List<HospSubItem> subItems = cachedData.get().getHospSubData();
-                    if(subItems != null){
-                        cachedData.get().setHospSubData(subItems);
-                        isChangedData = true;
-                    }
+                    // data가 있다면
+                    data.ifPresent(hospSubResponse -> cachedData.get().setHospSubData(hospSubResponse.getBody().getItems()));
                 }
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        }else{
-            return null;
-        }
+            // 캐시 데이터 안에 진료과목이 없으면 url로 요청
 
-        if (isChangedData) {
             valueOps.set(yadmNm, cachedData.get());
-            return cachedData.get();
+            return valueOps.get(yadmNm);
         }
 
-        return cachedData.get();
+        return null;
     }
 
 }
