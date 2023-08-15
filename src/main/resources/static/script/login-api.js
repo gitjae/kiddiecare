@@ -19,3 +19,7 @@ function login(){
         }
     })
 }
+
+function gotofind(){
+    location.href = '/find/user';
+}

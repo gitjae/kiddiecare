@@ -92,7 +92,7 @@ public class UserController {
         return json.toMap();
     }
 
-    @PostMapping("sendcode")
+    @PostMapping("sendcode/join")
     public Map SmsSend(@RequestParam String number, HttpSession session){
         JSONObject jsonObject = new JSONObject();
 
@@ -143,6 +143,57 @@ public class UserController {
         return jsonObject.toMap();
     }
 
+    @PostMapping("sendcode/find")
+    public Map SmsSendFind(@RequestBody UserRequestDto userDto, HttpSession session){
+        JSONObject jsonObject = new JSONObject();
+
+        int phone = userDto.getPhone();
+        String name = userDto.getName();
+        String id = userDto.getId();
+        Optional<User> foundUser = userRepository.findUserByIdAndNameAndPhone(id, name, phone);
+        if (foundUser.isPresent()){
+            SMSSender smsSender = new SMSSender();
+            RandomUtil randomUtil = new RandomUtil();
+            String code = randomUtil.makeRandomCode();
+
+            String message = "[우리동네소아과] 인증번호 [" + code + "]를 입력해주세요.";
+
+            // 임시 문자 발송 제한
+            session.setAttribute("code", code);
+            session.setAttribute("time", LocalDateTime.now());
+            System.out.println(code);
+            System.out.println(LocalDateTime.now());
+            jsonObject.put("send","success");
+            jsonObject.put("code",code);
+
+            // 문자발송 코드
+            /*Map responseBody = null;
+            try {
+                responseBody = smsSender.sendSms(number, message);
+                if(responseBody != null){
+                    String statusCode = (String) responseBody.get("statusCode");
+                    if(statusCode.equals("202")){
+                        session.setAttribute("code", code);
+                        session.setAttribute("time", LocalDateTime.now());
+                        System.out.println(LocalDateTime.now());
+                        jsonObject.put("send","success");
+                        jsonObject.put("dupl","false");
+                        jsonObject.put("code",code);
+                        return jsonObject.toMap();
+                    }
+                }
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+
+            jsonObject.put("send","fail");*/
+            return jsonObject.toMap();
+        }
+
+        jsonObject.put("send","fail");
+        return jsonObject.toMap();
+    }
+
     @GetMapping("verify")
     public Map verifyCode(@RequestParam(name = "code") String code, HttpSession session){
         JSONObject jsonObject = new JSONObject();
@@ -175,6 +226,24 @@ public class UserController {
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("제공된 ID로 사용자를 찾을 수 없음");
         }
+    }
+
+    @GetMapping("findid")
+    public Map findId(@RequestParam String name, @RequestParam int phone){
+        JSONObject jsonObject = new JSONObject();
+        System.out.println("name:"+name+"/phone:"+phone);
+        Optional<User> foundUser = userRepository.findUserByNameAndPhone(name, phone);
+
+        if(foundUser.isPresent()){
+            User user = foundUser.get();
+            UserResponseDto userDto = new UserResponseDto();
+            userDto.setId(user.getId());
+            jsonObject.put("find","success");
+            jsonObject.put("user",userDto);
+            return jsonObject.toMap();
+        }
+        jsonObject.put("find","fail");
+        return jsonObject.toMap();
     }
 }
 

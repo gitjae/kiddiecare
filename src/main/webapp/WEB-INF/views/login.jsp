@@ -36,7 +36,7 @@
 
                     <div id="div-btn">
                         <button id="submit" onclick="login()">로그인</button>
-                        <button id="findIdAndPw" onclick="">아이디/비밀번호 찾기</button>
+                        <button id="findIdAndPw" onclick="gotofind()">아이디/비밀번호 찾기</button>
                     </div>
 
                     <div id="div-kakao">

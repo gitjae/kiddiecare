@@ -9,6 +9,7 @@
 <html>
 <head>
     <title>Title</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
     <script src="/script/find-user.js"></script>
 </head>
 <body>
@@ -19,6 +20,10 @@
                 <input id="find-id-name">
                 <label for="find-id-phone">전화번호</label>
                 <input id="find-id-phone">
+                <button id="find-id-btn" onclick="findId()">아이디 찾기</button>
+                <div id="find-id-result">
+                    <p id="response-id"></p>
+                </div>
             </div>
             <div id="find-password">
                 <label for="find-password-id">아이디</label>
@@ -27,11 +32,15 @@
                 <input id="find-password-name">
                 <label for="find-password-phone">전화번호</label>
                 <input id="find-password-phone">
-                <button onclick="sendCode()">인증번호 발송</button>
+                <button id="send" onclick="sendCode()">인증번호 발송</button>
                 <div id="div-verify">
                     <label for="verify-code">인증번호</label>
                     <input id="verify-code">
-                    <button onclick="verify()">인증하기</button>
+                    <button id="verify-btn" onclick="verify()">인증하기</button>
+                </div>
+                <button id="find-password-btn" onclick="findPassword()">비밀번호 찾기</button>
+                <div id="find-password-result">
+                    <p id="response-password"></p>
                 </div>
             </div>
         </section>

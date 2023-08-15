@@ -194,7 +194,7 @@ function sendCode(){
 
     $.ajax({
         method:'POST',
-        url:'api/v1/users/sendcode',
+        url:'api/v1/users/sendcode/join',
         data:{number:phone}
     }).done(res => {
         if(res.send === 'success'){
