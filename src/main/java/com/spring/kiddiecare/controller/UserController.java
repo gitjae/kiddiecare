@@ -245,5 +245,10 @@ public class UserController {
         jsonObject.put("find","fail");
         return jsonObject.toMap();
     }
+
+    @GetMapping("getUser")
+    public User getUser(@RequestParam int no) {
+        return userRepository.findUserByNo(no);
+    }
 }
 

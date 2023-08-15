@@ -131,5 +131,9 @@ public class AppointmentController {
         }
     }
 
+    @GetMapping("/getAppoDetails")
+    public List<Appointment> getAppoDetails(@RequestParam int timeSlotNo) {
+        return appoRepository.findAllByTimeSlotNo(timeSlotNo);
+    }
 
 }

@@ -28,6 +28,7 @@
             </div>
 
             <h1>날짜 설정</h1>
+            <p id="date-status"></p>
             <input type="date" id="confirm-date">
 
             <div id="time-bar-area">
@@ -42,8 +43,9 @@
 
             <div class="detail-area">
                 <h1>디테일</h1>
+                <p id="detail-status"></p>
                 <table>
-                    <thead class="thead">
+                    <thead id="thead">
                         <tr>
                             <th>No.</th>
                             <th>예약상태</th>
@@ -53,10 +55,10 @@
                             <th>참고사항</th>
                         </tr>
                     </thead>
-                    <tbody class="tbody">
-                        <tr>
-                            <td></td>
-                        </tr>
+                    <tbody id="table-body">
+<%--                        <tr id="detail-tr">--%>
+
+<%--                        </tr>--%>
                     </tbody>
 
                 </table>
