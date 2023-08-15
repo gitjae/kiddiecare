@@ -10,12 +10,15 @@
 <html>
 <head>
     <title>Title</title>
+    <link href="/css/common.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/mypage.css">
-    <script src="/script/mypage.js"></script>
+    <script src="/script/mypage-children.js"></script>
+    <script src="/script/mypage-appo.js"></script>
 </head>
 <c:import url="header.jsp"/>
 <body>
-    <div id="root">
+<div class="container">
+    <section>
         <aside id="sidebar">
             <div id="bar-header">
                 <h2 id="h2-header">헤더</h2>
@@ -30,13 +33,18 @@
                 </ul>
             </div>
         </aside>
-        <section id="main-section">
+        <div id="main-section">
             <div class="main-div" id="div-user">
                 <p>유저</p>
                 <div id="user">
                     <p>${user.name}</p>
                     <p>${user.birth}</p>
-                    <p>${user.gender}</p>
+                    <p>
+                        <c:choose>
+                            <c:when test="${user.gender}">남성</c:when>
+                            <c:otherwise>여성</c:otherwise>
+                        </c:choose>
+                    </p>
                     <p>${user.phone}</p>
                     <p>${user.email}</p>
                     <p>${user.addr}</p>
@@ -53,7 +61,7 @@
                 <button onclick="nextChildren()">next</button>
             </div>
             <div class="main-div" id="div-appo">
-                <div id="appo">
+                <div id="appointments">
 
                 </div>
                 <button onclick="prevAppo()">prev</button>
@@ -65,7 +73,9 @@
             <div class="main-div" id="div-favor">
                 <p>찜</p>
             </div>
-        </section>
-    </div>
+        </div>
+    </section>
+</div>
 </body>
+<c:import url="footer.jsp"></c:import>
 </html>

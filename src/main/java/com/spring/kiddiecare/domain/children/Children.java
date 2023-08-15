@@ -30,4 +30,11 @@ public class Children {
         this.gender = childDto.getGender();
         this.info = childDto.getInfo();
     }
+
+    public void update(ChildrenRequestDto childDto){
+        this.name = childDto.getName();
+        this.birth = childDto.getBirth();
+        this.gender = childDto.getGender();
+        this.info = childDto.getInfo();
+    }
 }

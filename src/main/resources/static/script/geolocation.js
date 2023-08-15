@@ -1,5 +1,6 @@
-var xPos = 33.450701;
-var yPos = 126.570667;
+var xPos = 127.0291236;
+var yPos = 37.5001387;
+var radius = 500;
 var map;
 var bounds;
 var marker;
@@ -7,9 +8,14 @@ var infowindow;
 
 $(function (){
     //makeMap();
+    //radius = $('#').val();
+    const param = {
+        radius:radius
+    }
     $.ajax({
-        method:'GET',
-        url:`/home`,
+        method:'POST',
+        url:`/search/hospList/addr`,
+        data:param
     }).done(res => {
         console.log(res);
         if(res.result === 'success'){
@@ -18,7 +24,16 @@ $(function (){
             makeMap();
 
             var positions = []
-            res.list.forEach(hosp => {
+            res.data.list.forEach(hosp => {
+                $('#hospital-list').append(`
+                    <div class="hospital">
+                        <div class="hospital-name" ykiho="${hosp.ykiho}">${hosp.hospitalName}</div>
+                        <div>${hosp.addr}</div>
+                        <div>${hosp.telno}</div>
+                        <div>${hosp.weekday}</div>
+                    </div>
+                `);
+
                 var position = {
                     content : `<div class="hospital-name" ykiho="${hosp.ykiho}">${hosp.hospitalName}</div>
                                 <div>${hosp.addr}</div>
@@ -77,11 +92,10 @@ function makeClickListener(map, marker, infowindow) {
         const contentHTML = parser.parseFromString(infowindow.getContent(), 'text/html');
 
         // 변환된 HTML에서 클래스가 'hospital-name'인 요소의 ykiho 값을 가져옵니다.
-        const hospitalName = contentHTML.querySelector('.hospital-name');
-        const ykiho = hospitalName.getAttribute('ykiho');
-
+        const hospitalNameElement = contentHTML.querySelector('.hospital-name');
+        const hospitalName = hospitalNameElement.innerText;
         // 콘솔에 ykiho 값을 출력합니다.
-        location.href = `/appointment/hospitalDetail?ykiho=${ykiho}`
+        location.href = `/appointment/hospitalDetail?hospitalName=${hospitalName}`
     };
 }
 
@@ -122,10 +136,11 @@ function setPosition(position) {
 
     $.ajax({
         method:'GET',
-        url:`/location`,
+        url:`/search/hospList`,
         data:{
-            x:xPos,
-            y:yPos
+            xPos:xPos,
+            yPos:yPos,
+            radius:'500'
         }
     }).done(res => {
         console.log(res);
@@ -133,7 +148,7 @@ function setPosition(position) {
             makeMap();
 
             var positions = []
-            res.list.forEach(hosp => {
+            res.data.list.forEach(hosp => {
                 var position = {
                     content : `<div class="hospital-name" ykiho="${hosp.ykiho}">${hosp.hospitalName}</div>
                                 <div>${hosp.addr}</div>

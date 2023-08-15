@@ -1,36 +1,74 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%--
-  Created by IntelliJ IDEA.
-  User: regul
-  Date: 2023-08-08
-  Time: 오후 3:59
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
     <title>우리동네소아과</title>
+    <link href="/css/common.css" rel="stylesheet">
+    <link href="/css/index.css" rel="stylesheet">
+    <script>
+        window.onload = function() {
+            document.getElementById('one-hospitalPage').addEventListener('click', e => {
+                window.location = '/appointment/hospitalDetail?hospitalName=가톨릭대학교인천성모병원'; // 기능 테스트를 위한 예시(수정 필요)
+            });
+
+            document.getElementById('admin-appo').addEventListener('click', e => {
+                window.location = '/admin/appointment';
+            });
+
+            document.getElementById('user-myPage').addEventListener('click', e => {
+                window.location = '/mypage';
+            });
+        }
+    </script>
 </head>
 <c:import url="header.jsp"></c:import>
 <body>
-    <h1>우리동네소아과 Index</h1>
+<div class="container">
+    <section>
+        <div class="index-session">
+            <div class="session-title">
+                <p class="top-title">주변에 예약 가능한 병원이 어디지?</p>
+                <p class="bottom-title">이제 한 눈에 주변 병원을 확인하고 실시간으로 예약해보세요!</p>
+            </div>
+            <div class="index-search">
+                <input type="text" class="search-input" placeholder="병원명 또는 지역으로 검색할 수 있어요." name="searchText" maxlength="100">
+                <button type="submit" class="search-btn">검색</button>
+            </div>
+        </div>
 
-    <button id="one-hospitalPage">병원상세페이지(단일)</button>
-    <script>
-        document.getElementById('one-hospitalPage').addEventListener('click',e=>{
-            window.location = '/appointment/hospitalDetail?hospitalName=가톨릭대학교인천성모병원';
-            // window.location = 'api/appointment/hospitalDetail?hospitalName=가톨릭대학교인천성모병원';
-        });
-    </script>
+        <div class="shortCut-area">
+            <div class="find-nearby-hospital-div">
+                <h2>주변 병원 찾기</h2>
+                <p>위치 기반으로 내 주변에 있는 병원 검색 가능합니다.<br>병원 예약은 로그인 후에 가능해요!</p>
+                <button id="one-hospitalPage">주변 병원 찾기(지금은 병원 상세페이지)</button>
+                <img src="/image/medical-team.png">
+            </div>
 
-    <button id="two-hospitalPage">병원상세페이지(여러개/개발 전)</button>
+            <div class="shortCut-area2">
+            <div class="favorite-hospital-div">
+                <h2>찜한 병원</h2>
+                <p>자주 가는 병원을 등록하면 검색할 필요없이 원하는 병원만 검색할 수 있어요.</p>
+                <button id="two-hospitalPage">찜한 병원(개발 전)</button>
+                <img src="/image/favorite.png">
+            </div>
 
-    <button id="admin-appo">어드민 예약 페이지</button>
-    <script>
-        document.getElementById('admin-appo').addEventListener('click',e=>{
-            window.location = '/admin/appointment';
-        });
-    </script>
+            <div class="admin-myPage">
+                <h2>병원 마이페이지(사이트 도움말로 변경)</h2>
+                <p>병원 관계자는 병원 정보 수정과 환자 예약관리를 할 수 있어요.</p>
+                <button id="admin-appo">병원 마이페이지</button>
+                <img src="/image/userGuide.png">
+            </div>
+            </div>
 
+            <div class="user-myPage">
+                <h2>회원 마이페이지</h2>
+                <p>회원은 예약정보 수정과 자녀 관리가 가능해요.</p>
+                <button id="user-myPage">회원 마이페이지</button>
+                <img src="/image/edit.png">
+            </div>
+        </div>
+    </section>
+</div>
 </body>
+<c:import url="footer.jsp"></c:import>
 </html>

@@ -1,9 +1,28 @@
+/* 본문 flex */
+.wrap1, .wrap2 {
+    display: flex;
+    justify-content: space-around;
+}
+
+.wrap1{
+    margin-bottom: 20px;
+}
+
 /* 카카오맵 영역 */
 .kakaoMap-area{
-    width: 80%;
+    width: 50%;
     height: 300px;
     border: 1px solid black;
     border-radius: 10px;
+    margin-right: 50px;
+}
+
+.hospital-detail-info{
+    width: 20%;
+}
+
+.doctor-info{
+    width: 30%;
 }
 
 /* 예약 캘린더 */

@@ -1,0 +1,36 @@
+/* footer style */
+footer{
+    background: #00008C;
+    padding: 20px;
+}
+
+/* 약관 */
+div.term{
+    margin-bottom: 20px;
+    white-space: nowrap; /* width 줄여도 줄바꿈 안되게*/
+}
+div.term li{
+    display: inline-block;
+    padding: 0 5px;
+}
+div.term li>a, div.addr>p, div.addr>li, div.term li{
+    color: #fff;
+    font-size: 0.8rem;
+}
+div.term li>a:hover{
+    color: #66B2FF;
+}
+/* 주소 */
+div.addr{
+    font-size: 0.5rem;
+}
+
+div.addr p{
+    line-height: 20px;
+}
+
+/* 저작권 */
+div.attribute>a{
+    color: #3C5A91;
+    font-size: small;
+}

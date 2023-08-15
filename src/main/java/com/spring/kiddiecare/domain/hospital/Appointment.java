@@ -10,8 +10,9 @@ import javax.persistence.*;
 @Entity
 @Table(name="hospital_appointment")
 public class Appointment extends Timestamp {
+
     @Id
-    private int no;
+    private String no;
 
     // children
     private int patientId;
@@ -24,17 +25,7 @@ public class Appointment extends Timestamp {
     private String symptom;
     private String note;
     private int appoStatus;
-    
 
-    public Appointment(int no, int patientId, int guardian, int timeSlotNo, String symptom, String note, int appoStatus) {
-        this.no = no;
-        this.patientId = patientId;
-        this.guardian = guardian;
-        this.timeSlotNo = timeSlotNo;
-        this.symptom = symptom;
-        this.note = note;
-        this.appoStatus = appoStatus;
-    }
 
     public Appointment(AppoRequestDto appoDto) {
         this.no = appoDto.getNo();

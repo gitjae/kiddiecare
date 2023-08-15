@@ -1,0 +1,43 @@
+.term-title {
+    cursor: pointer;
+    /*background-color: #f5f5f5;*/
+    /*padding: 10px;*/
+    border: 1px solid #e5e5e5;
+    margin: 0;
+}
+
+.term-content {
+    border: 1px solid #e5e5e5;
+    /*padding: 10px;*/
+    margin-top: -1px;
+}
+
+.children-card {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: inline-block;
+}
+
+.children-card h4 {
+    margin-top: 0;
+}
+
+.children-card p {
+    margin-bottom: 10px;
+}
+
+.children-card .select-children {
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.selected-card {
+    background-color: #e6e6e6;
+}

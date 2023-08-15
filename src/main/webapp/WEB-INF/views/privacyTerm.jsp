@@ -3,8 +3,8 @@
 <html>
 <head>
     <title>개인정보처리방침</title>
+    <link href="/css/common.css" rel="stylesheet">
 </head>
-<c:import url="header.jsp"></c:import>
 <body>
 <div class="div-userTerm">
     <div class="text_title">

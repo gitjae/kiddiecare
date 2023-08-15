@@ -10,18 +10,12 @@
 <html>
 <head>
     <title>AppointmentCreate</title>
-
-    <!-- jQuery UI -->
-    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
-    <script src="/script/hospital_appo_create.js"></script>
-
+    <link href="/css/common.css" rel="stylesheet">
     <link href="/css/hospital_appo_create.css" rel="stylesheet">
 </head>
 <c:import url="header.jsp"></c:import>
 <body>
+<div class="container">
     <section>
         <div class="menu-bar-area">
             <div id="hospital-name">
@@ -39,16 +33,9 @@
         <div class="select-area">
             <h1>스케줄 생성</h1>
             <h1>의사 선택</h1>
+            <div id="selectedDoctor"></div>
             <div class="select-option">
-                <div class="doctor-area">
 
-                </div>
-                <div class="doctor-area">
-
-                </div>
-                <div class="doctor-area">
-
-                </div>
             </div>
 
             <div class="date-set-area">
@@ -90,7 +77,7 @@
                     <input type="number" id="l-start-hour" min="1" max="12" value="12"/>
                     <input type="number" id="l-start-minute" value="00" readonly/>
                     부터
-                    <input type="number" id="l-end-hour" value="01"/>
+                    <input type="number" id="l-end-hour" value="1"/>
                     <input type="number" id="l-end-minute" value="00" readonly/>
                 </div>
 
@@ -105,11 +92,13 @@
                     <input type="number" id="d-end-minute" value="00" readonly/>
                 </div>
 
-                <button>예약 생성하기</button>
+                <button onclick="saveTimes()">예약 생성하기</button>
             </div>
         </div>
-
     </section>
+</div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
     <script src="/script/hospital_appo_create.js"></script>
 </body>
+<c:import url="footer.jsp"></c:import>
 </html>
