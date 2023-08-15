@@ -57,7 +57,7 @@
         </div>
     </section>
 </div>
-    <script src="/script/hospital_appo.js"></script>
+    <script src="/script/hospital-appo.js"></script>
 </body>
 <c:import url="footer.jsp"></c:import>
 </html>

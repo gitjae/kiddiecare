@@ -11,25 +11,14 @@
 <head>
     <title>AppointmentCreate</title>
     <link href="/css/common.css" rel="stylesheet">
-    <link href="/css/hospital_appo_create.css" rel="stylesheet">
+    <link href="/css/hospital-appo-create.css" rel="stylesheet">
 </head>
 <c:import url="header.jsp"></c:import>
 <body>
 <div class="container">
     <section>
-        <div class="menu-bar-area">
-            <div id="hospital-name">
-                <input type="text" id="ykiho" name="ykiho" placeholder="병원코드" value="${Ykiho}" style="display: none">
-                <span><span id="hospital_name"></span>병원</span>
-                <span>${log}님</span>
-            </div>
-            <div id="menu-bar">
-                <a><span>스케줄 생성</span></a>
-                <a><span>예약자 현황</span></a>
-                <a><span>공지사항 설정</span></a>
-                <a><span>회원정보 변경</span></a>
-            </div>
-        </div>
+        <c:import url="menu-bar.jsp"></c:import>
+        
         <div class="select-area">
             <h1>스케줄 생성</h1>
             <h1>의사 선택</h1>
@@ -97,8 +86,8 @@
         </div>
     </section>
 </div>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
-    <script src="/script/hospital_appo_create.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+<script src="/script/hospital-appo-create.js"></script>
 </body>
 <c:import url="footer.jsp"></c:import>
 </html>

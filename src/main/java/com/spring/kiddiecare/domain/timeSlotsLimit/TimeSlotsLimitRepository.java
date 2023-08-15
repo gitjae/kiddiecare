@@ -10,4 +10,5 @@ import java.util.List;
 public interface TimeSlotsLimitRepository extends JpaRepository<TimeSlotsLimit, Integer> {
     List<TimeSlotsLimit> findTimeSlotsLimitByYkihoAndDate(String ykiho, Date date);
 
+    List<TimeSlotsLimit> findTimeSlotsLimitByYkihoAndDateAndDoctorNo(String ykiho, Date date, Long doctorNo);
 }

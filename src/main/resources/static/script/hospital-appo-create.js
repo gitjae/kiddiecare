@@ -26,74 +26,18 @@ $(function () {
 
     eDay.min = todayDate;
     eDay.max = lastDate;
-    console.log("today: "+todayDate);
-    console.log("lastday: "+lastDate);
+    console.log("today: " + todayDate);
+    console.log("lastday: " + lastDate);
 
-    get_hospital_name();
-    get_doctor_list();
 });
 
-// 병원명 설정
-    function get_hospital_name() {
-    let ykiho = $('#ykiho').val();
-
-    $.ajax({
-        url: `/hospitalName/${ykiho}`,
-        method: 'GET',
-        timeout: 0
-    }).done(function (response) {
-        console.log(response);
-        $('#hospital_name').text(response.hospitalName);
-    }).fail(function (error) {
-        console.log(error);
-    });
-}
-
-function get_doctor_list() {
-    let ykiho = document.getElementById('ykiho').value;
-    let num = 1;
-    const element = document.getElementsByClassName('select-option')[0];
-
-    $.ajax({
-        url: `/api/v1/admin/appo/${ykiho}`,
-        method: 'GET',
-        timeout: 0
-    }).done(function (doctorList) {
-        doctorList.forEach(doctor => {
-            const option = document.createElement("div");
-            option.className = "option";
-            // option.id = doctor.no;
-            // option.innerText = doctor.doctorName;
-            option.innerText = doctor.no;
-            num += 1;
-            element.appendChild(option);
-        });
-    }).fail(function (error) {
-        console.log(error);
-    });
-
-    element.addEventListener('click', function (e) {
-        if (e.target.classList.contains('option')) {
-            const prevSelectedItem = document.querySelector('.selected');
-            if (prevSelectedItem) {
-                prevSelectedItem.classList.remove('selected');
-            }
-            e.target.classList.add('selected');
-
-            // 선택된 의사 이름 표시
-            const selectedDoctor = document.getElementById('selectedDoctor');
-            selectedDoctor.textContent = e.target.textContent;
-            console.log(selectedDoctor.textContent);
-        }
-    });
-}
 
 // <제외날짜> 날짜 클릭 시 클릭한 날짜 삭제 가능
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const buttonDaysArea = document.getElementById('except-days-area');
 
     if (buttonDaysArea) {
-        buttonDaysArea.addEventListener('click', function(event) {
+        buttonDaysArea.addEventListener('click', function (event) {
             if (event.target.tagName === 'BUTTON') {
                 event.target.remove();
             }
@@ -112,15 +56,15 @@ function exceptAdd() {
     const exceptDaysButtons = document.querySelectorAll("#except-days-area .remove");
 
     let dupl = false;
-    for(const button of exceptDaysButtons) {
-        if(button.textContent === day) {
+    for (const button of exceptDaysButtons) {
+        if (button.textContent === day) {
             alert("이미 존재하는 날짜");
             dupl = true;
             break;
         }
     }
 
-    if(!dupl) {
+    if (!dupl) {
         content += `
                 <button id="btn_${day}" class="remove">${day}</button>
         `
@@ -136,7 +80,7 @@ function dayWeekExtrc(date, setWeekdayArr) {
     // return `${year}년 ${month}월 ${day}일 (${dayOfWeek}요일)`;
     const duplWeek = setWeekdayArr.includes(date.getDay());
     console.log(duplWeek);
-    if(!duplWeek) {
+    if (!duplWeek) {
         setWeekdayArr.push(date.getDay());
     }
 }
@@ -172,16 +116,16 @@ function timeSetBtn() {
 
     // 날짜정보 다 담기
     // 일요일제외 체크했을 시
-    if(sundayCheck) {
+    if (sundayCheck) {
         for (let date = startDate; date <= endDate; date.setDate(date.getDate() + 1)) {
-            if(date.getDay() !== 0) {
+            if (date.getDay() !== 0) {
                 setDateArr.push(date.toISOString().split('T')[0]);
                 // 일요일 담기
             } else {
                 sundayArr.push(date.toISOString().split('T')[0]);
             }
         }
-    }else {
+    } else {
         for (let date = startDate; date <= endDate; date.setDate(date.getDate() + 1)) {
             setDateArr.push(date.toISOString().split('T')[0]);
         }
@@ -195,7 +139,7 @@ function timeSetBtn() {
     }
 
     // 담은날짜->제외날짜 필터링
-    finalList = setDateArr.filter(function(item) {
+    finalList = setDateArr.filter(function (item) {
         return !exceptDaysArr.includes(item);
     });
 
@@ -217,10 +161,10 @@ function timeSetBtn() {
     // 받아온 요일 정보 배열
     console.log(setWeekdayArr);
     const setWeekday = document.getElementById('set-weekday');
-    let weekday = ["일","월","화","수","목","금","토"];
+    let weekday = ["일", "월", "화", "수", "목", "금", "토"];
     let output = "";
 
-    for(let i=0; i<setWeekdayArr.length; i++) {
+    for (let i = 0; i < setWeekdayArr.length; i++) {
         output += `
             <div class="week-area">
                 <p class="week-title">${weekday[setWeekdayArr[i]]}</p>
@@ -239,7 +183,7 @@ function timeSetBtn() {
 
 function saveTimes() {
     const dateList = [];
-    let weekdays = ["일","월","화","수","목","금","토"];
+    let weekdays = ["일", "월", "화", "수", "목", "금", "토"];
     let groupedData = {};
     let hospitalCode = document.getElementById('ykiho').value;
     // 선택한 의사명
@@ -265,7 +209,7 @@ function saveTimes() {
         const weekDay = day.getDay();
         let data = [];
 
-        if(setWeekdayArr.includes(weekDay)) {
+        if (setWeekdayArr.includes(weekDay)) {
             // 현재 요일 인덱스
             const dayIndex = setWeekdayArr.indexOf(weekDay);
             const startHour = parseInt(document.getElementById(`start-hour-${dayIndex}`).value, 10);
@@ -277,11 +221,11 @@ function saveTimes() {
             for (let hour = startHour; hour < endHour; hour++) {
                 // 식사시간 제외 조건
                 // - 점심시간 없음에 체크 해제돼있으면 조건 실행
-                if(!lunchCheck && hour >= lStartHour && hour < lEndHour) {
+                if (!lunchCheck && hour >= lStartHour && hour < lEndHour) {
                     continue;
                 }
                 // - 저녁시간 없음에 체크 해제돼있으면 조건 실행
-                if(!dinnerCheck && hour >= dStartHour && hour < dEndHour) {
+                if (!dinnerCheck && hour >= dStartHour && hour < dEndHour) {
                     continue;
                 }
 
@@ -294,10 +238,10 @@ function saveTimes() {
                     max: maxNum, // 총 인원
                 });
             }
-            
+
             // 전체적으로 크게 날짜별로 그룹 묶어주기
             data.forEach(item => {
-                if(!groupedData[item.date]) {
+                if (!groupedData[item.date]) {
                     groupedData[item.date] = []; // 해당 날짜의 키가 없으면 빈 배열 추가
                 }
                 groupedData[item.date].push(item); // 날짜별 배열에 데이터 추가

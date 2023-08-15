@@ -34,12 +34,12 @@ section{
 
 .select-area{
     padding-top: 30px;
-    padding-left: 10px;
-}
-
-.select-area > h1{
     padding-left: 30px;
 }
+
+/*.select-area > h1{*/
+/*    padding-left: 30px;*/
+/*}*/
 
 .select-option{
     display: grid;
@@ -81,3 +81,4 @@ section{
     background: blanchedalmond;
     width: 80%;
 }
+
