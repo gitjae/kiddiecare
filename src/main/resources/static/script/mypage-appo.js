@@ -43,15 +43,42 @@ function getAppo(page){
 
             $('#appointments').append(`
             <div class="div-appo">
-                <p class="appo-no">${appo.no}</p>
-                <p class="appo-hospital">${appo.hospital}</p>
-                <p class="appo-date">${appo.date}</>
-                <p class="appo-time">${appo.time}</p>
-                <p class="appo-doctor">${appo.doctor}</p>
-                <p class="appo-status">${status}</p>
-                <p class="appo-name">${appo.name}</p>
-                <p class="appo-symptom">${appo.symptom}</p>
-                <p class="appo-note">${appo.note}</p>
+                <div class="info-item">
+                    <span class="info-title">예약번호</span>
+                    <span class="appo-no">${appo.no}</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-title">예약병원</span>
+                    <span class="appo-hospital">${appo.hospital}</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-title">예약날짜</span>
+                    <span class="appo-date">${appo.date}</>
+                </div>
+                <div class="info-item">
+                    <span class="info-title">예약시간</span>
+                    <span class="appo-time">${appo.time}</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-title">담당의사</span>
+                    <span class="appo-doctor">${appo.doctor}</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-title">예약상태</span>
+                    <span class="appo-status">${status}</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-title">자녀이름</span>
+                    <span class="appo-name">${appo.name}</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-title">증상</span>
+                    <span class="appo-symptom">${appo.symptom}</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-title">참고사항</span>
+                    <span class="appo-note">${appo.note}</span>
+                </div>
                 <div class="appo-btn">
                     <button>수정</button>
                     <button>취소</button>

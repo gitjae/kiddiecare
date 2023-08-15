@@ -34,10 +34,22 @@ function getChildren(page){
         res.children.forEach(child => {
             $('#children').append(`
                     <div class="div-child">
-                        <p class="child-name" child-no="${child.id}">${child.name}</p>
-                        <p class="child-gender">${child.gender % 2 == 0 ? "여아" : "남아"}</p>
-                        <p class="child-birth">${child.birth}</p>
-                        <p class="child-info">${child.info}</p>
+                        <div class="info-item">
+                            <span class="info-title">자녀이름</span>
+                            <span class="child-name" child-no="${child.id}">${child.name}</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-title">성별</span>
+                            <span class="child-gender">${child.gender % 2 == 0 ? "여아" : "남아"}</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-title">생년월일</span>
+                            <span class="child-birth">${child.birth}</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-title">참고사항</span>
+                            <span class="child-info">${child.info}</span>
+                        </div>
                         <div class="child-btn">
                             <button onclick="updateChildForm(this)">정보 수정</button>
                             <button onclick="delChildInfo(this)">자녀 정보 지우기</button>
