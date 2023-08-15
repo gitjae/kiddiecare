@@ -1,31 +1,60 @@
-/* 본문 flex */
-.wrap1, .wrap2 {
-    display: flex;
-    justify-content: space-around;
-}
-
-.wrap1{
-    margin-bottom: 20px;
-}
-
 /* 카카오맵 영역 */
 .kakaoMap-area{
-    width: 50%;
+    width: 100%;
     height: 300px;
     border: 1px solid black;
     border-radius: 10px;
-    margin-right: 50px;
 }
 
+/* 병원 및 의사 정보*/
 .hospital-detail-info{
-    width: 20%;
+    margin-top: 50px;
+}
+
+h3{
+    margin-bottom: 10px;
+}
+.info-title{
+    margin-bottom: 20px;
 }
 
 .doctor-info{
-    width: 30%;
+    display: flex;
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.doctor-card{
+    display: flex;
+    padding: 20px;
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    width: 400px;
+    flex-direction: row;
+}
+
+.doctor-text {
+    display: flex;
+    flex-direction: column;
+    margin-left: 15px;
+}
+
+.doctor-card img{
+    width: 70px;
+    height: 70px;
+}
+
+#doctor-no{
+    display: none;
 }
 
 /* 예약 캘린더 */
+.appo-table{
+    display: flex;
+    margin-top: 30px;
+}
+
 td {
     width: 50px;
     height: 50px;
@@ -33,7 +62,7 @@ td {
 
 .Calendar {
     text-align: center;
-    margin: 0 auto;
+    width: 600px;
 }
 
 .Calendar > thead > tr:first-child > td {
@@ -68,6 +97,8 @@ td {
 /* 타임 테이블 */
 .time-slots-table {
     display: none;
+    margin-left: 40px;
+    margin-top: 40px;
 }
 
 .time-slot-card {
@@ -96,4 +127,3 @@ td {
     cursor: not-allowed;  /* 커서 모양 변경 */
     opacity: 0.5;
 }
-

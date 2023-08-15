@@ -2,7 +2,22 @@
 footer{
     background: #00008C;
     padding: 20px;
-    height: auto;
+    height: 160px;
+}
+
+html, body {
+    height: 100%;
+}
+
+.container {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+section {
+    flex: 1;
 }
 
 /* 약관 */
