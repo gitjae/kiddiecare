@@ -40,18 +40,21 @@ public class HospitalInfoController {
 
 
     private Optional<HospData> getHospSubByYkiho(String ykiho){
-        String hospInfoUrl = baseUrl + admDtlInfoService + getDgsbjtInfo + encodeServiceKey + "&ykiho=" + ykiho;
-        return Optional.ofNullable(openApiDataUtil.getHospSubData(hospInfoUrl, ykiho));
+        String hospSubUrl = baseUrl + admDtlInfoService + getDgsbjtInfo + encodeServiceKey + "&ykiho=" + ykiho;
+        System.out.println("hospSubUrl "+hospSubUrl);
+        return Optional.ofNullable(openApiDataUtil.getHospSubData(hospSubUrl, ykiho));
     }
 
     private Optional<HospData> getHospDetailByHospData(String ykiho, String yadmNm){
-        String hospInfoUrl = baseUrl + admDtlInfoService + getDtlInfo + encodeServiceKey + "&ykiho=" + ykiho;
-        return Optional.ofNullable(openApiDataUtil.getHospData(hospInfoUrl, yadmNm));
+        String hospDetailUrl = baseUrl + admDtlInfoService + getDtlInfo + encodeServiceKey + "&ykiho=" + ykiho;
+        System.out.println("hospDetailUrl "+hospDetailUrl);
+        return Optional.ofNullable(openApiDataUtil.getHospData(hospDetailUrl, yadmNm));
     }
 
     private Optional<HospData> getHospListByKeyword(String query){
-        String url = baseUrl + hospInfoService + HospList + encodeServiceKey + query;
-        return Optional.ofNullable(openApiDataUtil.getHospList(url, query));
+        String hospListUrl = baseUrl + hospInfoService + HospList + encodeServiceKey + query;
+        System.out.println("HospList "+hospListUrl);
+        return Optional.ofNullable(openApiDataUtil.getHospList(hospListUrl, query));
     }
 
     private Map getHospDetailByHospBasis(List<HospBasisItem> items){
@@ -84,7 +87,7 @@ public class HospitalInfoController {
         for (String key : keys) {
             String getValue = searchDto.toParameterMap().get(key).toString();
             String paramName = "&"+key+"=";
-            if(key.equals("keyword")){
+            if(key.equals("yadmNm")){
                 getValue = getEncodeString(getValue);
             }
             param += paramName + getValue;
@@ -117,6 +120,24 @@ public class HospitalInfoController {
             result.put("result","success");
             result.put("data",getHospDetailByHospBasis(hospData.get().getHospListData()));
         }else{
+            result.put("result","fail");
+        }
+        return result.toMap();
+    }
+
+    @GetMapping("search/hospList/check")
+    public Map getCheckHospList(@ModelAttribute SearchRequestDto searchDto){
+        JSONObject result = new JSONObject();
+        // queryParam 받아오기
+        String query = getQueryParamBySearchDto(searchDto);
+        System.out.println("query"+query);
+        // openAPI 요청
+        Optional<HospData> hospData = getHospListByKeyword(query);
+        if(hospData.isPresent()){
+            result.put("result","success");
+            result.put("data",hospData.get().getHospListData());
+        }else{
+            System.out.println("f");
             result.put("result","fail");
         }
         return result.toMap();
