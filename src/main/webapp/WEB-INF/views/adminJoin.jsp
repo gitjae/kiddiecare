@@ -29,14 +29,17 @@
         </div>
         <div id="myModal" class="modal">
             <div class="modal-content">
-                <span class="close" onclick="closeModal()">&times;</span>
                 <div class="text-area">
                     <input type="text" id="hosp-search" name="hosp-search" placeholder="병원명을 입력해주세요"/>
                     <input type="button" id="hosp-search-btn" name="hosp-search-btn" value="병원 확인" onclick="searchHospName()" />
+                    <span class="close" onclick="closeModal()">&times;</span>
                 </div>
                 <div class="hosp-list-area">
                     <div class="spinner-border" role="status">
                         <span class="sr-only">Loading...</span>
+                    </div>
+                    <div class="hosp-list">
+
                     </div>
                 </div>
             </div>
@@ -63,7 +66,7 @@
         <div class="input-box">
             <input type="password" id="admin-pw-ch" name="admin-pw" placeholder="비밀번호 확인" />
             <div class="err-box">
-                <span class="err" id="chk-admin-pw-again">비밀번호 확인을 해주세요.</span>
+                <span class="err" id="chk-admin-pw-again">비밀번호 확인을 입력 해주세요.</span>
                 <span class="err" id="chk-admin-pw-same">비밀번호가 같지 않습니다.</span>
                 <span class="err" id="not-pw-again-format">*특수문자는 '! @ # $ % ^ & +='만 사용 가능합니다.</span>
             </div>
@@ -88,6 +91,14 @@
             <input type="text" id="admin-name" name="admin-name" placeholder="이름" />
             <div class="err-box">
                 <span class="err" id="admin-name-null">이름을 입력해주세요.</span>
+                <span class="err" id="chk-admin-name">3자 이상 영어,한글로 작성해주세요.</span>
+            </div>
+        </div>
+        <div class="input-box">
+            <label for="docter-name">원장의사님</label>
+            <input type="text" id="docter-name" name="admin-attach" />
+            <div class="err-box">
+                <span class="err" id="docter-name-null">증빙자료를 제공해주세요.</span>
             </div>
         </div>
         <div class="input-box">
@@ -97,14 +108,9 @@
                 <span class="err" id="admin-file-null">증빙자료를 제공해주세요.</span>
             </div>
         </div>
-        <div class="remember-forget">
-            <label><input type="checkbox"> 로그인 정보 기억하기</label>
-            <a href="#">비밀번호를 잃어버리셨나요?</a>
-        </div>
-        <input type="button" id="join-btn" onclick="checkValue(form)" >회원 가입</input>
+        <input type="button" id="join-btn" value="회원 가입" onclick="checkValue(form)" />
     </form>
 </section>
 <script src="/script/admin-join.js"></script>
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </body>
 </html>

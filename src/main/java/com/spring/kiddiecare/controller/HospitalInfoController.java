@@ -137,7 +137,6 @@ public class HospitalInfoController {
             result.put("result","success");
             result.put("data",hospData.get().getHospListData());
         }else{
-            System.out.println("f");
             result.put("result","fail");
         }
         return result.toMap();

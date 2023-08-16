@@ -22,8 +22,9 @@ public class AdminController {
     private final PasswordEncoder passwordEncoder;
 
     @PostMapping("id/check")
-    public Map adminIdDuplCheck(@RequestBody AdminRequestDto adminDto){
+    public Map adminIdDuplCheck(@ModelAttribute AdminRequestDto adminDto){
         JSONObject result = new JSONObject();
+        System.out.println(adminDto);
         Admin admin = adminRepository.findByAdminId(adminDto.getAdminId());
         String message = admin == null ? "Not a duplicate value." : "duplicate value";
         result.put("response", message);
@@ -31,7 +32,7 @@ public class AdminController {
     }
 
     @PostMapping("email/check")
-    public Map sendAuthToken(@RequestBody AdminRequestDto adminDto){
+    public Map sendAuthToken(@ModelAttribute AdminRequestDto adminDto){
         JSONObject result = new JSONObject();
         return result.toMap();
     }
