@@ -2,7 +2,7 @@ $(function () {
 
 })
 
-let timeNo;
+let selectedUser;
 
 // 날짜 선택 시 로그인한 병원의 timeslot불러옴
 document.getElementById('confirm-date').addEventListener('change', function (event) {
@@ -12,6 +12,7 @@ document.getElementById('confirm-date').addEventListener('change', function (eve
     const selectedDoctor = document.getElementById('selectedDoctor').textContent;
     const timeList = document.getElementById('time-list');
     const dateStatusText = document.getElementById('date-status');
+    const tableBody = document.getElementById('table-body');
 
     $.ajax({
         url: '/getTimeSlots',
@@ -40,6 +41,7 @@ document.getElementById('confirm-date').addEventListener('change', function (eve
                 timeList.appendChild(li);
             });
         } else {
+            tableBody.innerHTML = '';
             dateStatusText.innerText = "선택한 날짜에 예약을 생성하지 않았습니다.";
         }
 
@@ -52,6 +54,14 @@ document.getElementById('confirm-date').addEventListener('change', function (eve
 // 시간 클릭 시 디테일 정보 표시
 document.getElementById('time-list').addEventListener("click", (event) => {
     const tableBody = document.getElementById('table-body');
+    const timeList = document.getElementById('time-list');
+    // 기존 선택 삭제
+    for (const child of timeList.children) {
+        child.classList.remove('selected');
+    }
+
+    // 선택 요소에 selected 클래스 추가
+    event.target.classList.add('selected');
 
     if (event.target && event.target.nodeName === "LI") {
         // 선택한 timeNo
@@ -67,55 +77,97 @@ document.getElementById('time-list').addEventListener("click", (event) => {
             data: {timeSlotNo: timeNo},
         }).done(function (list) {
             // 예약이 있을 때만 반복문 실행
-            if(Array.isArray(list) && list.length > 0) {
+            if (Array.isArray(list) && list.length > 0) {
                 list.forEach((detail) => {
-                    // 보호자명, 환자명 동시에 받아오기
-                    Promise.all([
-                        $.ajax({ // 보호자명
-                            url: '/api/v1/users/getUser',
+                    console.log(detail);
+                    const tr = document.createElement('tr');
+
+                    tr.innerHTML = `
+                        <td>${detail.appoNo}</td>
+                        <td>${detail.appoStatus}</td>
+                        <td>${detail.guardianName}</td>
+                        <td>${detail.patientName}</td>
+                        <td>${detail.symptom}</td>
+                        <td>${detail.note}</td>
+                        <td>${detail.slotNo}</td>
+                    `;
+
+                    tr.dataset.appoNo = detail.appoNo;
+
+                    // getAppoUserDetail
+                    tr.addEventListener("click", () => {
+                        let selectedAppoNo = tr.dataset.appoNo;
+                        console.log(selectedAppoNo);
+
+                        $.ajax({
+                            url: '/api/v1/admin/appo/getAppoUserDetail',
                             method: 'GET',
-                            data: {no: detail.guardian}
-                        }),
-                        $.ajax({ // 환자명
-                            url: `/api/v1/children/child/${detail.patientId}`,
-                            method: 'GET'
+                            data: {hospAppoNo: selectedAppoNo}
+                        }).done (function (detail) {
+                            showModal();
+                            console.log(detail.childrenName);
+
+                            let content = document.getElementById('text-area');
+                            // 전역변수로 저장
+                            selectedUser = detail;
+                            content.innerHTML = `
+                                <h3>[ 어린이 정보 ]</h3>
+                                <b>어린이 이름: </b> <p>${detail.childrenName}</p>
+                                <b>어린이 생년월일: </b> <p>${detail.childrenBirth}</p>
+                                <b>어린이 성별: </b> <p>${detail.childrenGender}</p>
+                                <b>어린이 참고사항: </b> <p>${detail.childrenInfo}</p>
+                                <hr>
+                                <h3>[ 보호자 정보 ]</h3>
+                                <b>보호자명: </b><p>${detail.usersName}</p>
+                                <b>보호자 생년월일: </b><p>${detail.usersBirth}</p>
+                                <b>보호자 주소: </b><p>${detail.usersAddr}</p>
+                                <button id="change-info" onclick="changeDate()">예약정보 변경하기</button>
+                            `;
+                        }).fail(function (error) {
+                            console.log(error);
                         })
-                    ]).then(function (results) {
-                        const guardianName = results[0].name;
-                        const patientName = results[1].child.name;
-
-                        // 새로운 행 생성
-                        const tr = document.createElement('tr');
-
-                        tr.innerHTML = `
-                            <td>${detail.no}</td>
-                            <td>${detail.appoStatus}</td>
-    <!--                        <td><input type="text" value="detail.appoStatus"></td>-->
-                            <td>${guardianName}</td>
-                            <td>${patientName}</td>
-                            <td>${detail.symptom}</td>
-                            <td>${detail.note}</td>
-                            <td>${detail.timeSlotNo}</td>
-                        `;
-
-                        // tr 요소를 table body에 추가
-                        tableBody.appendChild(tr);
-                    }).catch(function (error) {
-                        console.log(error);
                     });
+
+                    // tr 요소를 table body에 추가
+                    tableBody.appendChild(tr);
                 });
             } else {
                 console.log("예약 없음");
             }
-        }).fail(function (error){
+        }).fail(function (error) {
             console.log(error);
-        })
+        });
     }
 });
 
 
+
+
 // 모달 창을 표시하는 함수
 function showModal() {
-    let modal = document.getElementById("modal");
+    let modal = document.getElementById("my-modal");
     modal.style.display = "block";
 }
+
+// 모달 창을 닫는 함수
+function closeModal() {
+    let modal = document.getElementById("my-modal");
+    modal.style.display = "none";
+}
+
+
+// 유저 상세정보에서 -> 정보 변경하기
+function changeDate() {
+    let content = document.getElementById('text-area');
+    content.innerHTML = '';
+
+    // 받아왔던 객체 전달받기
+    // console.log(selectedUser);
+
+    content.innerHTML = `
+        <input type="date" id="modify-date">
+    `;
+}
+
+
+

@@ -245,4 +245,7 @@ public class MainController {
     // 병원 예약 관리
     @GetMapping("admin/appointment/management")
     public String hospitalAppointmentManagement() {return  "hospitalAppointmentManagement";}
+
+//    @GetMapping("admin/appointment/modify")
+//    public String appoAdminModify() { return "appoAdminModify";}
 }

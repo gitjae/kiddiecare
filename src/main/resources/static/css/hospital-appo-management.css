@@ -5,6 +5,10 @@ head,body{
     height: 100%;
 }
 
+.selected{
+    background: #66B2FF;
+}
+
 section{
     display: flex;
     flex-direction: row;
@@ -71,4 +75,14 @@ section{
     /* 스크롤 가능하도록 함 */
     background-color: rgba(0, 0, 0, 0.4);
     /* 배경에 반투명한 색상 적용 */
+}
+
+/* 모달 창 내용을 위한 스타일 */
+.modal-content {
+    /*display: flex;*/
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 70%;
 }

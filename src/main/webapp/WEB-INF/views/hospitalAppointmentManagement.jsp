@@ -34,10 +34,6 @@
             <div id="time-bar-area">
                 <ul id="time-list">
 <%--                    <li>9:00~10:00</li>--%>
-<%--                    <li>10:00~11:00</li>--%>
-<%--                    <li>13:00~14:00</li>--%>
-<%--                    <li>14:00~15:00</li>--%>
-<%--                    <li>15:00~16:00</li>--%>
                 </ul>
             </div>
 
@@ -65,6 +61,15 @@
             </div>
         </div>
 
+        <div id="my-modal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal()">&times;</span>
+                <div id="text-area">
+
+                </div>
+            </div>
+
+        </div>
 
     </section>
 </div>
