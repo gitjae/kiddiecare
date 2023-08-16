@@ -1,10 +1,7 @@
 package com.spring.kiddiecare.controller;
 
-import com.spring.kiddiecare.domain.doctor.Doctor;
 import com.spring.kiddiecare.domain.doctor.DoctorRepository;
-import com.spring.kiddiecare.domain.hospital.AppoRepository;
-import com.spring.kiddiecare.domain.hospital.AppoRequestDto;
-import com.spring.kiddiecare.domain.hospital.Appointment;
+import com.spring.kiddiecare.domain.hospital.*;
 import com.spring.kiddiecare.domain.timeSlotsLimit.TimeSlotsLimit;
 import com.spring.kiddiecare.domain.timeSlotsLimit.TimeSlotsLimitRepository;
 import com.spring.kiddiecare.domain.timeSlotsLimit.TimeSlotsLimitRequestDto;
@@ -15,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.Time;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,6 +26,8 @@ public class AppointmentController {
     private final TimeSlotsLimitRepository timeSlotsLimitRepository;
     private final DoctorRepository doctorRepository;
     private final HospitalAppointmentService hospitalAppointmentService;
+    private final AppoResponseRepository appoResponseRepository;
+    private final AppoAdminDetailRepository appoAdminDetailRepository;
 
     @Transactional
     @PostMapping(value="timeset-add", consumes = {"application/json"})
@@ -131,9 +129,25 @@ public class AppointmentController {
         }
     }
 
+//    @GetMapping("/getAppoDetails")
+//    public List<Appointment> getAppoDetails(@RequestParam int timeSlotNo) {
+//        return appoRepository.findAllByTimeSlotNo(timeSlotNo);
+//    }
+
+//    @GetMapping("/getAppoDetails")
+//    public List<AppoResponseDto> getAppoDetails(@RequestParam int timeSlotNo) {
+//        return appoResponseRepository.findAllByTimeSlotNo(timeSlotNo);
+//    }
+
     @GetMapping("/getAppoDetails")
-    public List<Appointment> getAppoDetails(@RequestParam int timeSlotNo) {
-        return appoRepository.findAllByTimeSlotNo(timeSlotNo);
+    public List<AppoResponseDto> getAppoDetails(@RequestParam int timeSlotNo){
+        System.out.println(timeSlotNo);
+        System.out.println(appoResponseRepository.findAllBySlotNo(timeSlotNo));
+        return appoResponseRepository.findAllBySlotNo(timeSlotNo);
     }
 
+    @GetMapping("/getAppoUserDetail")
+    public AppoAdminDetailDto getAppoAdminDetail(@RequestParam String hospAppoNo) {
+        return appoAdminDetailRepository.findByHospAppoNo(hospAppoNo);
+    }
 }
