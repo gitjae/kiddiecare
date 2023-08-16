@@ -1,67 +1,98 @@
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
+@font-face {
+    font-family: 'ONE-Mobile-POP';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/ONE-Mobile-POP.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
 }
 
-#root {
-    max-width: 50%;
-    margin: 50px auto;
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /*height: 100vh;*/
 }
 
 #main-section {
-    background-color: #ffffff;
-    margin: 0;
     padding: 50px;
-    box-shadow: 0 3px 16px -2px rgba(0, 0, 0, 0.3);
-    border-radius: 8px;
+    width: 1024px;
 }
 
-#form {
-    display: flex;
-    flex-direction: column;
+.loginTitle {
+    font-family: 'ONE-Mobile-POP', sans-serif;
+    font-size: 40px;
+    color: #74aedb !important;
+    text-align: center;
 }
 
-#form div {
-    margin-bottom: 15px;
+#main-section {
+    padding: 50px;
+    width: 80%;
+}
+
+.wrapper{
+    background: #74aedb;
+    padding: 30px;
+    border-radius: 5px;
+}
+
+.join-div{
+    padding: 70px;
+    background: #ffffff;
+    border-radius: 5px;
+}
+
+#form{
+    text-align: center;
+    width: 80%;
+    margin: 100px auto;
+}
+
+label{
+    display: inline-block;
+    width: 100px;
+    margin-right: 20px;
+    text-align: center;
+}
+
+input{
+    display: inline-block;
+    width: 70%;
+    height: 40px;
+    outline: none;
+    border: none;
+    border-bottom: 1px solid #bebebe;
+}
+
+/* 가로 정렬 관련 스타일 */
+#div-id, #div-pw, #div-pwChk, #div-name, #div-birth, #div-gender, #div-phone, #div-code, #div-email, .form-group {
     display: flex;
     align-items: center;
+    justify-content: start;
+    margin-bottom: 20px;
 }
 
 label {
+    margin-right: 20px;
+    text-align: left;
     font-weight: bold;
-    margin-right: 15px;
-    min-width: 100px;
-}
-
-label[for="gender-f"],
-label[for="gender-m"]{
-    min-width: 0px;
-    margin-right: 5px;
-}
-
-input[type="text"],
-input[type="password"],
-input[type="email"],
-input[type="button"] {
-    flex-grow: 1;
 }
 
 input[type="radio"] {
-    margin-right: 30px;
+    transform: scale(0.8);
 }
 
-button {
-    font-weight: bold;
-    background-color: #4CAF50;
-    color: white;
-    padding: 10px 15px;
-    border: none;
-    cursor: pointer;
-    border-radius: 4px;
-    opacity: 0.9;
-    width: 100%;
+#label-gender {
+    margin-right: 40px;
 }
 
-button:hover {
-    opacity: 1;
+#send{
+    width: 135px;
+}
+
+#duplChk{
+    width: 100px;
+}
+
+#submit{
+    margin-top: 30px;
 }
