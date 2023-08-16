@@ -28,6 +28,31 @@ function renderChildCard(child) {
     $("#childrenContainer").append(card);
 }
 
+// 타임슬롯 갱신
+function updateTimeSlotCount(slotNo) {
+    $.ajax({
+        url: `/updateCount`,
+        type: "POST",
+        dataType: 'json',
+        contentType: "application/json",
+        data: JSON.stringify({
+            slotNo: slotNo
+        }),
+        success: function (response) {
+            if (response.success) {
+                window.location.href = `/bookingComplete`;
+            } else {
+                alert("슬롯 count 갱신 중 오류 발생");
+            }
+        },
+        error: function (err) {
+            console.error('Error during time slot count update:', err.responseText);
+            alert("예약은 성공했지만, 타임슬롯 count 갱신 중 오류 발생");
+        }
+    });
+}
+
+
 // 예약번호용 난수 생성
 function generateEightDigitRandom() {
     return Math.floor(10000000 + Math.random() * 90000000);
@@ -126,6 +151,7 @@ $(document).ready(function () {
             }),
             success: function (response) {
                 if (response.success) {
+                    updateTimeSlotCount(timeSlotNo);
                     window.location.href = `/bookingComplete`;
                 } else {
                     alert("예약 실패");
