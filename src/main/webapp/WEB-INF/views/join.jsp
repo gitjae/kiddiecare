@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="/css/join.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
     <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+    <script src="/script/postcode.js"></script>
     <script src="/script/join-api.js"></script>
 </head>
 <body>

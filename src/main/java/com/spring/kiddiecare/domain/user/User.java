@@ -53,15 +53,22 @@ public class User {
     }
 
     public void update(UserRequestDto userDto){
-        this.password = userDto.getPassword();
-        this.phone = userDto.getPhone();
-        this.email = userDto.getEmail();
-        this.postcode = userDto.getPostcode();
-        this.addr = userDto.getAddr();
+        if(userDto.getPassword() != null)
+            this.password = userDto.getPassword();
+        if(userDto.getPhone() != 0)
+            this.phone = userDto.getPhone();
+        if(userDto.getEmail() != null)
+            this.email = userDto.getEmail();
+        if(userDto.getPostcode() != null)
+            this.postcode = userDto.getPostcode();
+        if(userDto.getAddr() != null){
+            this.addr = userDto.getAddr();
 
-        setCoord(this.addr);
+            setCoord(this.addr);
+        }
 
-        this.addr_detail = userDto.getAddr_detail();
+        if(userDto.getAddr_detail() != null)
+            this.addr_detail = userDto.getAddr_detail();
     }
 
     private void setCoord(String addr){

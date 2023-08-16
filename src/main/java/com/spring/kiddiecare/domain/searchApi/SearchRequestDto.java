@@ -12,7 +12,7 @@ import java.util.Map;
 @ToString
 @NoArgsConstructor
 public class SearchRequestDto {
-    private String PageNo;
+    private String pageNo;
     private String keyword;
     private String xPos;
     private String yPos;
@@ -22,9 +22,9 @@ public class SearchRequestDto {
         Map<String, Object> parameterMap = new HashMap<>();
 
         try{
-            parameterMap.put("PageNo", Integer.parseInt(PageNo));
+            parameterMap.put("pageNo", Integer.parseInt(pageNo));
         }catch (Exception e){
-            parameterMap.put("PageNo", 1);
+            parameterMap.put("pageNo", 1);
         }
 
         if (keyword != null && !keyword.isEmpty()) {
@@ -53,7 +53,7 @@ public class SearchRequestDto {
             parameterMap.put("radius", radius);
         }
 
-        if(dgsbjtCd != null && dgsbjtCd.isEmpty()){
+        if(dgsbjtCd != null && !dgsbjtCd.isEmpty()){
             parameterMap.put("dgsbjtCd", dgsbjtCd);
         }
 

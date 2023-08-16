@@ -221,15 +221,20 @@ public class MainController {
             userDto.setId(user.getId());
             userDto.setName(user.getName());
             userDto.setBirth(user.getBirth());
+            userDto.setPostcode(user.getPostcode());
             userDto.setAddr(user.getAddr());
             userDto.setAddr_detail(user.getAddr_detail());
             userDto.setPhone(user.getPhone());
             userDto.setEmail(user.getEmail());
-            userDto.setPostcode(user.getPostcode());
         }
         model.addAttribute("user", userDto);
 
         return "userUpdate";
+    }
+
+    @GetMapping("find/user")
+    public String findUser(){
+        return "findUser";
     }
 
     @GetMapping("appointment/hospitalDetail")

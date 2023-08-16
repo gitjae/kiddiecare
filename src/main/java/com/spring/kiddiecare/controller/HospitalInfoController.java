@@ -143,11 +143,15 @@ public class HospitalInfoController {
         return result.toMap();
     }
 
-    @PostMapping("search/hospList/addr")
+    @GetMapping("search/hospList/addr")
     public Map getHospListByMyLoc(@ModelAttribute SearchRequestDto searchDto, WebRequest request){
+
         JSONObject result = new JSONObject();
         String query = getQueryParamBySearchDto(searchDto);
-        Optional<String> session = Optional.ofNullable(request.getAttribute("log", WebRequest.SCOPE_SESSION).toString());
+        String log = (String) request.getAttribute("log", WebRequest.SCOPE_SESSION);
+
+        Optional<String> session = Optional.ofNullable(log);
+        System.out.println("session" + session);
         if(session.isPresent()){
             Optional<User> userInfo = userRepository.findUserById(session.get());
             if(userInfo.isPresent()){
@@ -155,7 +159,12 @@ public class HospitalInfoController {
                 String userYpos = "&yPos="+userInfo.get().getYpos();
                 query += userXpos+userYpos;
             }
+        } else {
+            String userXpos = "&xPos=126.97691582974053";
+            String userYpos = "&yPos=37.57260376169445";
+            query += userXpos+userYpos;
         }
+        System.out.println("query:"+query);
 
         Optional<HospData> hospListData = getHospListByKeyword(query);
         if(hospListData.isPresent()){
@@ -176,6 +185,7 @@ public class HospitalInfoController {
     @GetMapping("/search/detail")
     public Map getHospDetail(@RequestParam(defaultValue="")String yadmNm){
         JSONObject result = new JSONObject();
+        System.out.println("yadmNm:"+yadmNm);
         if(yadmNm.isEmpty()){
             return result.put("result","fail").toMap();
         }
@@ -187,6 +197,7 @@ public class HospitalInfoController {
         String query = "&yadmNm=" + encodeYadmNm;
         Optional<HospData> hospListData = getHospListByKeyword(query);
 
+        System.out.println("hospListData:"+hospListData);
         if(hospListData.isPresent()){
             List<HospBasisItem> HospList = hospListData.get().getHospListData();
             String ykiho = "";

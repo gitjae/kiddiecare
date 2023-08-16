@@ -5,6 +5,7 @@
     <title>Title</title>
     <link href="/css/common.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/mypage.css">
+    <script src="/script/mypage-user.js"></script>
     <script src="/script/mypage-children.js"></script>
     <script src="/script/mypage-appo.js"></script>
 </head>
@@ -53,11 +54,11 @@
                         <div class="info-item">
                             <span class="info-title">성별</span>
                             <span>
-                                                <c:choose>
-                                                    <c:when test="${user.gender}">남성</c:when>
-                                                    <c:otherwise>여성</c:otherwise>
-                                                </c:choose>
-                                            </span>
+                                <c:choose>
+                                    <c:when test="${user.gender}">남성</c:when>
+                                    <c:otherwise>여성</c:otherwise>
+                                </c:choose>
+                            </span>
                         </div>
                         <div class="info-item">
                             <span class="info-title">전화번호</span>
@@ -76,7 +77,7 @@
                             <span>${user.addr_detail}</span>
                         </div>
                     </div>
-                    <button id="user-update">수정</button>
+                    <button id="user-update" onclick="gotoUpdate()">수정</button>
                 </div>
 
                 <div class="main-div" id="div-children">

@@ -1,6 +1,7 @@
 window.onload = function () {
     getHospInfoDetail();
     buildCalendar();
+    getTotalInfo();
 }
 
 let nowMonth = new Date();
@@ -227,4 +228,48 @@ function getHospInfoDetail() {
         .fail(err => {
             console.error("Error:", err);
         });
+}
+
+function getTotalInfo(){
+    const hospitalName = getHospitalNameFromUrl();
+
+    $.ajax({
+        method:'GET',
+        url:'/search/detail',
+        data:{
+            yadmNm:hospitalName
+        }
+    }).done(res => {
+        console.log(res);
+        const BD = res.data.hospBasisData;
+        const DD = res.data.hospDetailData;
+        const LD = res.data.hospListData;
+        const SD = res.data.hospSubData;
+        if(res.result == 'success'){
+            // 카카오 맵
+            xPos = BD.xpos;
+            yPos = BD.ypos;
+            makeMap();
+            makeMarker();
+
+            //
+            $('#hospital-name').text(BD.yadmNm);
+            $('#hospital-addr').text(BD.addr);
+            $('#hospital-tell').text(BD.telno);
+            $('#workhour-mon').text(timeFormat(DD.trmtMonStart) + " - " + timeFormat(DD.trmtMonEnd));
+            $('#workhour-tue').text(timeFormat(DD.trmtTueStart) + " - " + timeFormat(DD.trmtTueEnd));
+            $('#workhour-wed').text(timeFormat(DD.trmtWedStart) + " - " + timeFormat(DD.trmtWedEnd));
+            $('#workhour-thu').text(timeFormat(DD.trmtThuStart) + " - " + timeFormat(DD.trmtThuEnd));
+            $('#workhour-fri').text(timeFormat(DD.trmtFriStart) + " - " + timeFormat(DD.trmtFriEnd));
+            $('#workhour-sat').text(timeFormat(DD.trmtSatStart) + " - " + timeFormat(DD.trmtSatEnd));
+            $('#workhour-sun').text(timeFormat(DD.trmtSunStart) + " - " + timeFormat(DD.trmtSunEnd));
+
+        } else {
+            alert('병원정보를 불러오지 못했습니다. \n잠시 후 다시 시도해주세요.')
+        }
+    })
+}
+
+function timeFormat(time){
+    return time.slice(0,2) + ":" + time.slice(2,4);
 }

@@ -246,6 +246,29 @@ public class UserController {
         return jsonObject.toMap();
     }
 
+    @PostMapping("findpw")
+    public Map findPw(@RequestBody UserRequestDto userDto){
+        JSONObject jsonObject = new JSONObject();
+
+        String id = userDto.getId();
+        String name = userDto.getName();
+        int phone = userDto.getPhone();
+
+        Optional<User> foundUser = userRepository.findUserByIdAndNameAndPhone(id, name, phone);
+
+        if(foundUser.isPresent()){
+            User user = foundUser.get();
+            UserResponseDto userResponseDto = new UserResponseDto();
+            userResponseDto.setPassword(user.getPassword());
+
+            jsonObject.put("find", "success");
+            jsonObject.put("user", userResponseDto);
+            return jsonObject.toMap();
+        }
+        jsonObject.put("find", "fail");
+        return jsonObject.toMap();
+    }
+
     @GetMapping("getUser")
     public User getUser(@RequestParam int no) {
         return userRepository.findUserByNo(no);

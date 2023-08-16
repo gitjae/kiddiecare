@@ -1,13 +1,5 @@
 var childrenPage = 1;
 
-function sectionChange(nav){
-    const name = $(nav).attr("name");
-    $('.main-div').css("display", "none");
-    $(`#${name}`).css("display", "block");
-}
-
-
-
 function prevChildren(){
     let page = childrenPage - 1;
     if(page < 1) {page = 1}
@@ -168,3 +160,4 @@ function cancelChildAjax(btn){
         `)
     })
 }
+

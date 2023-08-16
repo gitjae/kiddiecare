@@ -69,3 +69,15 @@
     margin-bottom: 20px;
 }
 
+
+
+
+
+/* 초기 설정 */
+.main-div{
+    display: none;
+}
+
+#div-user{
+    display: block;
+}
