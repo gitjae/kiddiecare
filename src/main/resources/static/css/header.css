@@ -50,3 +50,18 @@
     /*font-size: 40px;*/
     color: #74aedb !important;
 }
+
+html, body {
+    height: 100%;
+}
+
+.container {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+section {
+    flex: 1;
+}

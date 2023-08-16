@@ -103,7 +103,7 @@ function choiceDate(nowColumn) {
 // 타임 슬롯 화면에 나타내기
 function showTimeSlots(slots) {
     const timeSlotsTable = document.querySelector('.time-slots-table');
-    let timeSlotsContent = '<h2 class="time-slots-info">예약 가능 시간</h2>';
+    let timeSlotsContent = '<p class="time-slots-info"></p>';
 
     slots.forEach(slot => {
         // 예약 풀부킹 확인
@@ -213,10 +213,12 @@ function getHospInfoDetail() {
                     let doctorCard = document.createElement('div');
                     doctorCard.classList.add('doctor-card');
                     doctorCard.innerHTML = `
-                    <p>&#127976; &#128138;</p>
+                    <img src="/image/doctor_icon.png">
+                    <div class="doctor-text">
                     <p id="doctor-no">의사 번호 : ${doctor.no}</p>
-                    <p id="doctor-name">의사 이름 : ${doctor.doctorName}</p>
-                    <p id="doctor-offDay">의사DB) 휴진일</p>`;
+                    <p id="doctor-name">${doctor.doctorName}</p>
+                    <p id="doctor-offDay">휴진일</p>
+                    </div>`;
 
                     doctorContainer.appendChild(doctorCard);
                 });

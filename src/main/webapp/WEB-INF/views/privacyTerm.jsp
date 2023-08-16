@@ -4,6 +4,12 @@
 <head>
     <title>개인정보처리방침</title>
     <link href="/css/common.css" rel="stylesheet">
+    <style>
+        .div-userTerm{
+            padding: 20px;
+            font-size: small;
+        }
+    </style>
 </head>
 <body>
 <div class="div-userTerm">

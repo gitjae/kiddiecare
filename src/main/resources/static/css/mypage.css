@@ -10,7 +10,7 @@
 
 .content-wrapper {
     display: flex;
-    height: 90%;
+    height: 1024px;
 }
 
 #sidebar {
@@ -54,14 +54,15 @@
 .info-title {
     font-weight: bold;
     margin-right: 10px;
-    width: 100px;  /* 이 값은 타이틀의 길이에 따라 조절할 수 있습니다. */
+    width: 100px;
 }
 
-.info-content {
+.info-content, .appo-no, .div-appo, .appo-hospital, .appo-date, .appo-time, .appo-doctor, .appo-status, .appo-name, .appo-symptomm, .appo-note,
+.child-name, .child-gender, .child-birth, .child-info{
     flex-grow: 1;
 }
 
-.main-div {
+#div-user, .div-child, .div-appo {
     padding: 20px;
     border: 1px solid #e0e0e0;
     border-radius: 5px;
