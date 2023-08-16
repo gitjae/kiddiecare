@@ -25,16 +25,16 @@ function getAppo(page){
 
             let status = "";
             switch (appo.appoStatus) {
-                case 0:
+                case 1:
                     status = "예약완료";
                     break;
-                case 1:
+                case 2:
                     status = "예약취소";
                     break;
-                case 2:
+                case 3:
                     status = "예약보류";
                     break;
-                case 3:
+                case 4:
                     status = "이용완료";
                     break;
                 default:

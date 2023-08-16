@@ -204,6 +204,34 @@ public class MainController {
         return "userBooking";
     }
 
+    @GetMapping("user/update")
+    public String userUpdate(WebRequest request, Model model){
+        String log = (String) request.getAttribute("log", WebRequest.SCOPE_SESSION);
+
+        if(log == null){
+            return "login";
+        }
+
+        UserResponseDto userDto = new UserResponseDto();
+        Optional<User> foundUser = userRepository.findUserById(log);
+
+        if(foundUser.isPresent()) {
+            User user = foundUser.get();
+
+            userDto.setId(user.getId());
+            userDto.setName(user.getName());
+            userDto.setBirth(user.getBirth());
+            userDto.setAddr(user.getAddr());
+            userDto.setAddr_detail(user.getAddr_detail());
+            userDto.setPhone(user.getPhone());
+            userDto.setEmail(user.getEmail());
+            userDto.setPostcode(user.getPostcode());
+        }
+        model.addAttribute("user", userDto);
+
+        return "userUpdate";
+    }
+
     @GetMapping("appointment/hospitalDetail")
     public String showReservePage(@RequestParam("hospitalName") String hospitalName, Model model) {       // -> hospitalName 으로 변경하고 내용 삭제하고 ajax(api->HospitalInfoController의 getHospitalInfo, 우리DB)로 요청보낸 후 나머지는 js에서 처리
         return "hospitalDetail";
