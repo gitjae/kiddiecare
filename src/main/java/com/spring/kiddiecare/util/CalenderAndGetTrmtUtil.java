@@ -1,5 +1,7 @@
 package com.spring.kiddiecare.util;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 
 import com.spring.kiddiecare.openApi.hospInfo.HospDetailItem;
@@ -7,11 +9,12 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class CalenderAndGetTrmtUtil {
+    private final Calendar calendar = Calendar.getInstance();
+
     public int printToday() {
         // 현재 시간 가져오기
-        Calendar now = Calendar.getInstance();
         // 요일 구하기
-        int dayOfWeek = now.get(Calendar.DAY_OF_WEEK);
+        int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
         // 요일 이름 구하기
         String[] dayNames = {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
         String displayName = dayNames[dayOfWeek - 1];
@@ -20,9 +23,7 @@ public class CalenderAndGetTrmtUtil {
 
         return dayOfWeek;
     }
-//    public static String getLunch(){
-//
-//    }
+
     public String getStartByWeekday(HospDetailItem item) {
         System.out.println(item);
         String start = "";

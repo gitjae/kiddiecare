@@ -40,14 +40,16 @@ section{
 }
 
 .modal-content > .close{
-    text-align: right;
+    width: 20px;
+    margin-left: 98%;
+    margin-bottom: 10px;
 }
 
 /* 닫기 버튼을 위한 스타일 */
 .close {
     color: #aaa;
     float: right;
-    font-size: 28px;
+    font-size: 40px;
     font-weight: bold;
 }
 
@@ -71,7 +73,7 @@ section{
     flex-direction: row;
 }
 
-.hosp-list-area{
+.hosp-list{
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -81,6 +83,7 @@ section{
 
 .hosp-list-area > .spinner-border{
     display: none;
+    margin: 0 auto;
 }
 
 #hosp-search{
@@ -91,4 +94,9 @@ section{
 #hosp-search-btn{
     width: 13%;
     height: 32px;
+}
+/* ================================================ */
+
+.err{
+    display: none;
 }

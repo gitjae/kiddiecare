@@ -28,6 +28,7 @@ public class AdminLogController {
     @PostMapping(value = "login/check")
     public Map login(@RequestBody AdminRequestDto adminDto, HttpSession session) {
         System.out.println(adminDto);
+        Object a = new Object();
         JSONObject response = new JSONObject();
 //        boolean sessionIsNull = Optional.ofNullable(request.getAttribute("log", WebRequest.SCOPE_SESSION)).isEmpty();
         Optional<String> adminId = Optional.ofNullable(adminDto.getAdminId());

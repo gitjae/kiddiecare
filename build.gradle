@@ -69,6 +69,9 @@ dependencies {
 
     // AWS S3
     implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
+
+    // mail
+    implementation 'javax.mail:mail:1.4.7'
 }
 
 tasks.named('test') {
