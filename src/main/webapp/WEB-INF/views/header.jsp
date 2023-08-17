@@ -24,6 +24,7 @@
             <a class="login-a" href="/login">로그인</a>                                        <%-- 로그인 X --%>
             <a class="join-a" href="/join">회원가입</a>                                       <%-- 로그인 X --%>
             <a class="searchHos" href="/hospital/Search">동네병원</a>                              <%-- 로그인 O --%>
+            <a class="mypage-a" href="/mypage">마이페이지</a>                              <%-- 로그인 O --%>
             <a class="logout-a" href="#" onclick="logout()">로그아웃</a>                          <%-- 로그인 X --%>
         </div>
     </header>
@@ -41,11 +42,13 @@
         $('.bell').hide();
         $('.searchHos').hide();
         $('.logout-a').hide();
+        $('.mypage-a').hide();
     } else {
         // 로그인 상태일 때 보여야 하는 요소들 표시
         $('.bell').show();
         $('.searchHos').show();
         $('.logout-a').show();
+        $('.mypage-a').show();
 
         // 로그인 상태일 때 숨겨야 하는 요소들 숨기기
         $('.login-a').hide();

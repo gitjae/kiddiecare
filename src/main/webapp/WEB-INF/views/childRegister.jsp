@@ -2,7 +2,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>자녀등록</title>
     <link href="/css/childRegister.css" rel="stylesheet">
     <script src="/script/childRegister.js"></script>
 </head>

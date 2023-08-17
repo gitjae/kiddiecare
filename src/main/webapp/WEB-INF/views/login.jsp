@@ -14,7 +14,7 @@
             <h2 class="loginTitle">우리동네소아과</h2>
         </a>
         <div id="form">
-            <div>log : ${log}</div>
+<%--            <div>log : ${log}</div>--%>
             <div class="wrapper">
                 <div class="login-div">
                     <div id="div-id">

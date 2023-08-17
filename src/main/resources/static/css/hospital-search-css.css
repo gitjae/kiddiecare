@@ -20,6 +20,11 @@ section{
     margin-bottom: 20px;
 }
 
+.hospital-li:hover{
+    cursor: pointer;
+    border: #74aedb 2px solid;
+}
+
 #hospital-list{
     margin-right: 20px;
 }
