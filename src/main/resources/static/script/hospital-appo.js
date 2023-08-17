@@ -64,6 +64,7 @@ function set_date(){
     console.log('시작날짜 : ',minStr);
     console.log('종료날짜 : ',maxStr);
 
+    $("#except-area").css("display", "block");
     document.getElementById('date').value = new Date().toISOString().substring(0, 10);
 
 }
@@ -135,13 +136,11 @@ function apply_event(){
     }
 }
 
-// updateTable();
+
 
 function appo_create(){
     convertInputsToJson();
 }
-
-
 
 function getInputValue(id) {
     return document.getElementById(id).value;

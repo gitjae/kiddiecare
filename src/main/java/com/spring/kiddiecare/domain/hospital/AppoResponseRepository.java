@@ -1,5 +1,6 @@
 package com.spring.kiddiecare.domain.hospital;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -11,6 +12,9 @@ public interface AppoResponseRepository extends JpaRepository<AppoResponseDto,In
 
     @Query(nativeQuery = true, value = "SELECT * FROM appoView WHERE slot_no=?1")
     public List<AppoResponseDto> findAllBySlotNo(int slotNo);
+
+    @Query(nativeQuery = true, value = "SELECT * FROM appoView WHERE slot_no=?1")
+    public List<AppoResponseDto> findAllBySlotNoAndPage(int slotNo, Pageable pageable);
 
 
 }

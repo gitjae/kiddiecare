@@ -9,10 +9,13 @@ import com.spring.kiddiecare.service.HospitalAppointmentService;
 import com.spring.kiddiecare.service.TimeSlotsLimitService;
 import lombok.RequiredArgsConstructor;
 import org.json.JSONObject;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -141,11 +144,21 @@ public class AppointmentController {
 //        return appoResponseRepository.findAllByTimeSlotNo(timeSlotNo);
 //    }
 
-    @GetMapping("/getAppoDetails")
-    public List<AppoResponseDto> getAppoDetails(@RequestParam int timeSlotNo){
-        System.out.println(timeSlotNo);
-        System.out.println(appoResponseRepository.findAllBySlotNo(timeSlotNo));
-        return appoResponseRepository.findAllBySlotNo(timeSlotNo);
+    // 수정
+    @GetMapping("/getAppoDetails/{page}")
+    public List<AppoResponseDto> getAppoDetails(@RequestParam int timeSlotNo, @PathVariable int page, @PageableDefault(size=10) Pageable pageable){
+        List<AppoResponseDto> appoList = appoResponseRepository.findAllBySlotNoAndPage(timeSlotNo, pageable.withPage(page-1));
+        List<AppoResponseDto> noDeleteList = new ArrayList<>();
+
+        for(AppoResponseDto data : appoList) {
+           // status가 삭제가 아닌 리스트만 가져오기
+            if(data.getAppoStatus() != 2) {
+                noDeleteList.add(data);
+            }
+        }
+        return noDeleteList;
+//        System.out.println(appoResponseRepository.findAllBySlotNoAndPage(timeSlotNo, pageable.withPage(page-1)));
+//        return appoResponseRepository.findAllBySlotNoAndPage(timeSlotNo, pageable.withPage(page-1));
     }
 
     @GetMapping("/getAppoUserDetail")
@@ -186,5 +199,11 @@ public class AppointmentController {
         }
 
         return json.toMap();
+    }
+
+    // 병원 기준으로 전체 예약정보 받아오기
+    @GetMapping("/getAllAppo")
+    public List<Appointment> getAllAppo(String hospAppoNo) {
+        return appoRepository.findAll();
     }
 }

@@ -32,9 +32,9 @@ function get_doctor_list() {
         doctorList.forEach(doctor => {
             const option = document.createElement("div");
             option.className = "option";
-            // option.id = doctor.no;
-            // option.innerText = doctor.doctorName;
-            option.innerText = doctor.no;
+            option.id = doctor.no;
+            // option.innerText = doctor.no;
+            option.innerText = doctor.doctorName;
             element.appendChild(option);
         });
     }).fail(function (error) {
@@ -51,7 +51,8 @@ function get_doctor_list() {
 
             // 선택된 의사 이름 표시
             const selectedDoctor = document.getElementById('selectedDoctor');
-            selectedDoctor.textContent = e.target.textContent;
+            // 지정된 id 명 선택
+            selectedDoctor.textContent = e.target.id;
             console.log(selectedDoctor.textContent);
         }
     });
