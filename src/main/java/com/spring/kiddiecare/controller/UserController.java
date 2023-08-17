@@ -274,17 +274,7 @@ public class UserController {
         return userRepository.findUserByNo(no);
     }
 
-    @GetMapping("/username")
-    public ResponseEntity<String> getUserName(@RequestParam String id) {
-        String name = userService.findNameById(id);
-        if (name != null) {
-            return new ResponseEntity<>(name, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-    }
-
-    @GetMapping("/userno")
+    @GetMapping("/userno")      // 수정 필요
     public ResponseEntity<User> getUserNo(@RequestParam String name) {
         User user = userService.findByUserName(name);
         if (user != null) {
