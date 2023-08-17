@@ -184,6 +184,12 @@ function getHospitalNameFromUrl() {
     return hospitalName;
 }
 
+function getSgguCdFromUrl() {
+    const currentUrl = new URL(window.location.href);
+    const sgguCd = currentUrl.searchParams.get('sgguCd');
+    return sgguCd;
+}
+
 // 예약하기 버튼 액션
 document.getElementById("booking-btn").onclick = function () {
     let hospitalName = encodeURIComponent(getHospitalNameFromUrl().trim());
@@ -232,12 +238,14 @@ function getHospInfoDetail() {
 
 function getTotalInfo(){
     const hospitalName = getHospitalNameFromUrl();
+    const sgguCd = getSgguCdFromUrl();
 
     $.ajax({
         method:'GET',
         url:'/search/detail',
         data:{
-            yadmNm:hospitalName
+            yadmNm:hospitalName,
+            sgguCd:sgguCd
         }
     }).done(res => {
         console.log(res);

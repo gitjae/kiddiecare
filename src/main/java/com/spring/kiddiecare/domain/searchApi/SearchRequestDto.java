@@ -14,6 +14,8 @@ import java.util.Map;
 public class SearchRequestDto {
     private String pageNo;
     private String keyword;
+    private String sidoCd;
+    private String sgguCd;
     private String xPos;
     private String yPos;
     private String radius;
@@ -29,6 +31,14 @@ public class SearchRequestDto {
 
         if (keyword != null && !keyword.isEmpty()) {
             parameterMap.put("yadmNm", keyword);
+        }
+
+        if (sidoCd != null && !sidoCd.isEmpty()) {
+            parameterMap.put("sidoCd", sidoCd);
+        }
+
+        if (sgguCd != null && !sgguCd.isEmpty()) {
+            parameterMap.put("sgguCd", sgguCd);
         }
 
         if (xPos != null && !xPos.isEmpty()) {

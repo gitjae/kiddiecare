@@ -66,9 +66,12 @@ public class HospitalInfoController {
                 dataSet.put("ykiho",item.getYkiho());
                 dataSet.put("telno",item.getTelno());
                 dataSet.put("addr",item.getAddr());
+                dataSet.put("sidoCd",item.getSidoCd());
+                dataSet.put("sgguCd",item.getSgguCd());
                 dataSet.put("hospitalName",item.getYadmNm());
                 dataSet.put("xPos",item.getXPos());
                 dataSet.put("yPos",item.getYPos());
+                dataSet.put("distance",item.getDistance());
                 if(hospDetail.get().getHospDetailData() !=null){
                     dataSet.put("noTrmtHoli",hospDetail.get().getHospDetailData().getNoTrmtHoli());
                     dataSet.put("noTrmtSun",hospDetail.get().getHospDetailData().getNoTrmtHoli());
@@ -182,18 +185,19 @@ public class HospitalInfoController {
      @return Map 템플릿을 렌더링한 결과
      */
     @GetMapping("/search/detail")
-    public Map getHospDetail(@RequestParam(defaultValue="")String yadmNm){
+    public Map getHospDetail(@RequestParam(defaultValue="")String yadmNm, @RequestParam(defaultValue = "")String sgguCd){
         JSONObject result = new JSONObject();
-        System.out.println("yadmNm:"+yadmNm);
-        if(yadmNm.isEmpty()){
+        System.out.println("yadmNm:"+yadmNm+"/sgguCd:"+sgguCd);
+        if(yadmNm.isEmpty() || sgguCd.isEmpty()){
             return result.put("result","fail").toMap();
         }
 
         HospData total = new HospData();
         String encodeYadmNm = getEncodeString(yadmNm);
 
+
         // openAPI HospList 요청
-        String query = "&yadmNm=" + encodeYadmNm;
+        String query = "&yadmNm=" + encodeYadmNm + "&sgguCd=" + sgguCd; // + sgguCd
         Optional<HospData> hospListData = getHospListByKeyword(query);
 
         System.out.println("hospListData:"+hospListData);

@@ -5,21 +5,7 @@
     <title>우리동네소아과</title>
     <link href="/css/common.css" rel="stylesheet">
     <link href="/css/index.css" rel="stylesheet">
-    <script>
-        window.onload = function() {
-            document.getElementById('one-hospitalPage').addEventListener('click', e => {
-                window.location = '/appointment/hospitalDetail?hospitalName=가톨릭대학교인천성모병원'; // 기능 테스트를 위한 예시(수정 필요)
-            });
-
-            document.getElementById('admin-appo').addEventListener('click', e => {
-                window.location = '/admin/appointment';
-            });
-
-            document.getElementById('user-myPage').addEventListener('click', e => {
-                window.location = '/mypage';
-            });
-        }
-    </script>
+    <script src="/script/index.js"></script>
 </head>
 <c:import url="header.jsp"></c:import>
 <body>
@@ -31,9 +17,10 @@
                 <p class="bottom-title">이제 한 눈에 주변 병원을 확인하고 실시간으로 예약해보세요!</p>
             </div>
             <div class="index-search">
-                <input type="text" class="search-input" placeholder="병원명 또는 지역으로 검색할 수 있어요." name="searchText" maxlength="100">
-<%--                <button type="submit" class="search-btn">검색</button>--%>
-                <img src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png" onclick="">
+                <input type="text" id="search-input" class="search-input" placeholder="병원명 또는 지역으로 검색할 수 있어요." name="searchText" maxlength="100">
+                <button type="submit" class="search-btn" onclick="search()">
+                    <img src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png" onclick="">
+                </button>
             </div>
         </div>
 
@@ -68,6 +55,7 @@
                 <img src="/image/edit.png">
             </div>
         </div>
+        <a href="/appointment/hospitalDetail?hospitalName=가톨릭대학교인천성모병원&sgguCd=220003">가톨릭대학교인천성모병원 숏컷</a>
     </section>
 </div>
 </body>

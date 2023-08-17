@@ -39,11 +39,13 @@ function makeClickListener(map, marker, infowindow) {
         const parser = new DOMParser();
         const contentHTML = parser.parseFromString(infowindow.getContent(), 'text/html');
 
-        // 변환된 HTML에서 클래스가 'hospital-name'인 요소의 ykiho 값을 가져옵니다.
+        // 변환된 HTML에서 원하는 요소 찾기
         const hospitalNameElement = contentHTML.querySelector('.hospital-name');
+        const addrElement = contentHTML.querySelector('.hospital-addr');
         const hospitalName = hospitalNameElement.innerText;
-        // 콘솔에 ykiho 값을 출력합니다.
-        location.href = `/appointment/hospitalDetail?hospitalName=${hospitalName}`
+        const sgguCd = addrElement.getAttribute("sgguCd");
+
+        location.href = `/appointment/hospitalDetail?hospitalName=${hospitalName}&sgguCd=${sgguCd}`
     };
 }
 
@@ -65,7 +67,7 @@ function getUserLocation() {
 function setPosition(position) {
     xPos = position.coords.longitude;
     yPos = position.coords.latitude;
-
+    console.log("x:"+xPos+"y:"+yPos);
     data = {
         xPos:xPos,
         yPos:yPos,
@@ -102,14 +104,18 @@ function setMarkers(res){
         makeMap();
 
         var positions = [];
+        $('#hospital-list-ul').empty();
         //res.data.list.forEach(hosp => {
         for(const key in res.data){
             const hosp = res.data[key];
-            const hospInfo = `<a href="/appointment/hospitalDetail?hospitalName=${hosp.hospitalName}">
+            const hospInfo = `<a href="/appointment/hospitalDetail?hospitalName=${hosp.hospitalName}&sgguCd=${hosp.sgguCd}">
                                 <div class="hospital-name" ykiho="${hosp.ykiho}">${hosp.hospitalName}</div>
-                                <div>${hosp.addr}</div>
-                                <div>${hosp.telno}</div>
-                                <div>${hosp.weekday}</div>
+                                <div class="hospital-addr" sidoCd="${hosp.sidoCd}" sgguCd="${hosp.sgguCd}">${hosp.addr}</div>
+                                <div class="hospital-tel">${hosp.telno}</div>
+                                <div class="hospital-weekday">${hosp.weekday == null ? "" : hosp.weekday}</div>
+                                <div class="hospital-holiday">${hosp.noTrmtHoli == null ? "" : "공휴일"}</div>
+                                <div class="hospital-sunday">${hosp.noTrmtSun == null ? "" : "일요일"}</div>
+                                <div class="blank">&nbsp;</div>
                             </a>`;
 
             var position = {
@@ -118,7 +124,7 @@ function setMarkers(res){
             }
             positions.push(position);
 
-            $('#hospital-list-ul').append(hospInfo);
+            $('#hospital-list-ul').append(`<li class="hospital-li">`+hospInfo+`</li>`);
         }//)
 
         bounds = new kakao.maps.LatLngBounds();
@@ -129,7 +135,7 @@ function setMarkers(res){
                 map: map, // 마커를 표시할 지도
                 position: positions[i].latlng // 마커의 위치
             });
-            console.log(marker);
+            //console.log(marker);
 
             bounds.extend(positions[i].latlng);
 
