@@ -21,6 +21,9 @@
         <c:import url="menu-bar.jsp"></c:import>
         <div class="select-area">
             <h1>[ 예약자 현황 ]</h1>
+            <button>전체 예약자 불러오기</button>
+            <button>날짜별 예약자 불러오기</button>
+
             <h1>의사 선택</h1>
             <div id="selectedDoctor"></div>
             <div class="select-option">
@@ -52,11 +55,11 @@
                         </tr>
                     </thead>
                     <tbody id="table-body">
-<%--                        <tr id="detail-tr">--%>
-
-<%--                        </tr>--%>
                     </tbody>
 
+                    <button onclick="pageMinus()"> < </button>
+                    <p id="page">1</p>
+                    <button onclick="pagePlus()"> > </button>
                 </table>
             </div>
         </div>

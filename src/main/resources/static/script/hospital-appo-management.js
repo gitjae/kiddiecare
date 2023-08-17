@@ -55,12 +55,15 @@ document.getElementById('confirm-date').addEventListener('change', function (eve
 document.getElementById('time-list').addEventListener("click", (event) => {
     const tableBody = document.getElementById('table-body');
     const timeList = document.getElementById('time-list');
+    // 페이징처리
+    let nowPage = document.getElementById('page').textContent;
+
     // 기존 선택 삭제
     for (const child of timeList.children) {
         child.classList.remove('selected');
     }
 
-    // 선택 요소에 selected 클래스 추가
+    // 선택 요소에 selected 클래스 추가 (선택 표시)
     event.target.classList.add('selected');
 
     if (event.target && event.target.nodeName === "LI") {
@@ -72,7 +75,7 @@ document.getElementById('time-list').addEventListener("click", (event) => {
 
         // timeNo를 가지고 ajax -> appointment table 전송
         $.ajax({
-            url: '/api/v1/admin/appo/getAppoDetails',
+            url: `/api/v1/admin/appo/getAppoDetails/${nowPage}`,
             method: 'GET',
             data: {timeSlotNo: timeNo},
         }).done(function (list) {
@@ -108,6 +111,8 @@ document.getElementById('time-list').addEventListener("click", (event) => {
                         <td>${detail.note}</td>
                         <td><button class="detail-button">자세히보기</button></td>
                     `;
+
+
 
                     tr.dataset.appoNo = detail.appoNo;
 
@@ -180,8 +185,6 @@ document.getElementById('time-list').addEventListener("click", (event) => {
         });
     }
 });
-
-
 
 
 // 모달 창을 표시하는 함수
@@ -307,5 +310,24 @@ function clickListener(event) {
     }
 }
 
+// 페이징 처리
+function pageMinus() {
+    let page = document.getElementById('page');
+    let nowPage = parseInt(page.textContent);
+    // let nowPage = parseInt(document.getElementById('page').textContent);
+    if(nowPage > 1) {
+        nowPage -= 1;
+        page.innerText = String(nowPage);
+    }
+}
 
+function pagePlus() {
+    let page = document.getElementById('page');
+    let nowPage = parseInt(page.textContent);
+
+    nowPage += 1;
+    page.innerText = String(nowPage);
+}
+
+/* 전체 예약자 불러오기 */
 

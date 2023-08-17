@@ -33,7 +33,7 @@
                 부터 <input type="date" id="end-date">
                 <button id="set-date" onclick="setDate()">날짜 범위 설정</button>
 
-                <div>
+                <div id="except-area">
                     <h3>제외날짜</h3>
                     <input type="date" id="except-day">
                     <input type="button" id="except-add" onclick="exceptAdd()" value="추가">

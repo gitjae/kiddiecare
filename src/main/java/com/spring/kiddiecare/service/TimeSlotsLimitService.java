@@ -38,5 +38,10 @@ public class TimeSlotsLimitService {
 
         timeSlotsLimitRepository.save(timeSlotsLimit);
     }
+
+//    @Transactional
+//    public void blockAppo(int timeSlotNo) {
+//
+//    }
 }
 

@@ -51,6 +51,18 @@ section{
     margin: 0 auto;
 }
 
+.option {
+    background: #E4F3FF;
+    border-radius: 20px;
+    text-align: center;
+    line-height: 250px;
+    font-size: 20px;
+}
+
+.selected {
+    background: #74aedb;
+}
+
 .doctor-area{
     display: flex;
     overflow: hidden;
@@ -62,6 +74,17 @@ section{
     width: 300px;
     height: 300px;
 }
+
+/* 제외 area */
+/*#time-set-area {*/
+/*    display: none;*/
+/*}*/
+
+
+
+/*#except-area {*/
+/*    display: none;*/
+/*}*/
 
 
 #except-days-area {
