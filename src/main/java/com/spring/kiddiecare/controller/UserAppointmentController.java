@@ -85,4 +85,18 @@ public class UserAppointmentController {
 
         return jsonObject.toMap();
     }
+
+    @PutMapping("cancel")
+    public Map appoCancel(@RequestParam String appoNo, WebRequest request){
+        JSONObject jsonObject = userAppointmentService.appoCancel(appoNo, request);
+
+        return jsonObject.toMap();
+    }
+
+    @DeleteMapping("delete")
+    public Map appoDelete(@RequestParam String appoNo, WebRequest request){
+        JSONObject jsonObject = userAppointmentService.appoDelete(appoNo, request);
+
+        return jsonObject.toMap();
+    }
 }

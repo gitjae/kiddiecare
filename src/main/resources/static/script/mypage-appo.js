@@ -11,7 +11,6 @@ function nextAppo(){
 }
 
 function getAppo(page){
-    var appoPage = 1;
     $.ajax({
         method: 'GET',
         url:`/api/v1/appo/list/${page}`
@@ -24,15 +23,20 @@ function getAppo(page){
         res.appointments.forEach(appo => {
 
             let status = "";
+            let button = ``;
             switch (appo.appoStatus) {
                 case 1:
                     status = "예약완료";
+                    button = `<button onclick="gotoUpdate(this)">수정</button>
+                    <button onclick="cancelAppo(this)">취소</button>`
                     break;
                 case 2:
                     status = "예약취소";
                     break;
                 case 3:
                     status = "예약보류";
+                    button = `<button onclick="gotoUpdate(this)">수정</button>
+                    <button onclick="cancelAppo(this)">취소</button>`
                     break;
                 case 4:
                     status = "이용완료";
@@ -80,8 +84,7 @@ function getAppo(page){
                     <span class="appo-note">${appo.note}</span>
                 </div>
                 <div class="appo-btn">
-                    <button onclick="gotoUpdate(this)">수정</button>
-                    <button>취소</button>
+                    ${button}
                 </div>
             </div>`);
         })
@@ -92,4 +95,40 @@ function gotoUpdate(btn){
     const no = $(btn).closest('.div-appo').find('.appo-no').text();
 
     location.href = `/appointment/update?no=${no}`;
+}
+
+function cancelAppo(btn){
+    if(confirm('정말로 취소하시겠습니까?')){
+        const appoNo = $(btn).closest('.div-appo').find('.appo-no').text();
+
+        $.ajax({
+            method: 'PUT',
+            url:'/api/v1/appo/cancel',
+            data:{appoNo:appoNo}
+        }).done(res => {
+            if(res.cancel == 'success'){
+                getAppo(appoPage);
+            } else {
+                alert('예약을 취소하지 못했습니다.')
+            }
+        })
+    }
+}
+
+function deleteAppo(btn){
+    if(confirm('정말로 삭제하시겠습니까?')){
+        const appoNo = $(btn).closest('.div-appo').find('.appo-no').text();
+
+        $.ajax({
+            method: 'DELETE',
+            url:'/api/v1/appo/delete',
+            data:{appoNo:appoNo}
+        }).done(res => {
+            if(res.delete == 'success'){
+                getAppo(1);
+            } else {
+                alert('예약을 삭제하지 못했습니다.')
+            }
+        })
+    }
 }

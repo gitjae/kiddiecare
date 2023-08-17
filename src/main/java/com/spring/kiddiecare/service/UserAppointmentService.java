@@ -51,4 +51,49 @@ public class UserAppointmentService {
 
         return jsonObject.put("update", "success");
     }
+
+    @Transactional
+    public JSONObject appoCancel(String appoNo, WebRequest request){
+        JSONObject jsonObject = new JSONObject();
+        String log = (String) request.getAttribute("log", WebRequest.SCOPE_SESSION);
+
+        Optional<User> foundUser = userRepository.findUserById(log);
+        if(foundUser.isEmpty()){ return jsonObject.put("cancel", "fail");}
+        User user = foundUser.get();
+
+        // 로그인 유저와 예약자 일치 확인
+        Optional<Appointment> foundAppo = appoRepository.findAppointmentByNo(appoNo);
+        if(foundAppo.isEmpty()){return jsonObject.put("cancel", "fail");}
+        Appointment appo = foundAppo.get();
+
+        if(user.getNo() != appo.getGuardian()){return jsonObject.put("cancel", "fail");}
+
+        // 예약 취소
+        appo.setAppoStatus(2);
+        timeSlotsLimitService.plusEnable(appo.getTimeSlotNo());
+        return jsonObject.put("cancel", "success");
+    }
+
+
+    @Transactional
+    public JSONObject appoDelete(String appoNo, WebRequest request){
+        JSONObject jsonObject = new JSONObject();
+        String log = (String) request.getAttribute("log", WebRequest.SCOPE_SESSION);
+
+        Optional<User> foundUser = userRepository.findUserById(log);
+        if(foundUser.isEmpty()){ return jsonObject.put("delete", "fail");}
+        User user = foundUser.get();
+
+        // 로그인 유저와 예약자 일치 확인
+        Optional<Appointment> foundAppo = appoRepository.findAppointmentByNo(appoNo);
+        if(foundAppo.isEmpty()){return jsonObject.put("delete", "fail");}
+        Appointment appo = foundAppo.get();
+
+        if(user.getNo() != appo.getGuardian()){return jsonObject.put("delete", "fail");}
+
+        // 예약 삭제
+        timeSlotsLimitService.plusEnable(appo.getTimeSlotNo());
+        appoRepository.deleteAppointmentByNo(appoNo);
+        return jsonObject.put("delete", "success");
+    }
 }

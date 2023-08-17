@@ -1,9 +1,9 @@
-window.onload = function () {
-    //getHospInfoDetail();
-    buildCalendar();
-    //getTotalInfo();
-    $('#booking-btn').prop("disabled", true);
-}
+// window.onload = function () {
+//     //getHospInfoDetail();
+//     buildCalendar();
+//     //getTotalInfo();
+//     $('#booking-btn').prop("disabled", true);
+// }
 
 let nowMonth = new Date();
 let today = new Date();
@@ -13,12 +13,13 @@ let selectedSlotInfo = {
     doctorNo: null, date: null, time: null, weekday: null, ykiho: null, timeSlotNo: null
 };
 
+// 달력 생성 : 해당 달에 맞춰 테이블을 만들고, 날짜를 채워 넣기
 function buildCalendar() {
     let firstDate = new Date(nowMonth.getFullYear(), nowMonth.getMonth(), 1);
     let lastDate = new Date(nowMonth.getFullYear(), nowMonth.getMonth() + 1, 0);
 
     let tbody_Calendar = document.querySelector(".Calendar > tbody");
-    console.log("nowMonth : " + nowMonth.getFullYear());
+    // console.log("nowMonth : " + nowMonth.getFullYear());
 
     document.getElementById("calYear").innerText = nowMonth.getFullYear();
     document.getElementById("calMonth").innerText = leftPad(nowMonth.getMonth() + 1);
@@ -79,8 +80,8 @@ function choiceDate(nowColumn) {
     selectDay = dayNames[selectDate.getDay()]; // 선택된 요일 저장
     formattedDate = selectDate.getFullYear() + "-" + leftPad(selectDate.getMonth() + 1) + "-" + leftPad(selectDate.getDate());  // --> 선택된 날짜: Thu Aug 17 2023 00:00:00 GMT+0900 (한국 표준시) 값 변경
 
-    console.log("선택된 날짜:", formattedDate);  // String
-    console.log("선택된 요일:", selectDay);
+    //console.log("선택된 날짜:", formattedDate);  // String
+    //console.log("선택된 요일:", selectDay);
 
     document.querySelector('.time-slots-table').style.display = 'block';        // css
 

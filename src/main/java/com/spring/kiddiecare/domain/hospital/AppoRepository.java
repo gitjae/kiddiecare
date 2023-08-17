@@ -20,5 +20,5 @@ public interface AppoRepository extends JpaRepository<Appointment, Integer> {
     public Optional<Appointment> findAppointmentByNo(String no);
 
 
-
+    public void deleteAppointmentByNo(String no);
 }
