@@ -28,7 +28,7 @@
             <div class="find-nearby-hospital-div">
                 <h2>주변 병원 찾기</h2>
                 <p>위치 기반으로 내 주변에 있는 병원 검색 가능합니다.<br>병원 예약은 로그인 후에 가능해요!</p>
-                <button id="one-hospitalPage">주변 병원 찾기(지금은 병원 상세페이지)</button>
+                <button id="one-hospitalPage">주변 병원 찾기</button>
                 <img src="/image/medical-team.png">
             </div>
 

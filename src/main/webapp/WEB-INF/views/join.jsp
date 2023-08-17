@@ -21,13 +21,13 @@
                 <div class="join-div">
                     <div id="div-id">
                         <label for="id">아이디</label>
-                        <input type="text" id="id" name="id" placeholder="아이디 정책 규재 확인">
+                        <input type="text" id="id" name="id" placeholder="영어 소문자, 숫자 [4~20자리 까지 입력 가능]">
 <%--                        <input type="button" id="duplChk" value="중복확인" onclick="idDuplChk()">--%>
                         <button id="duplChk"onclick="idDuplChk()">중복확인</button>
                     </div>
                     <div id="div-pw">
                         <label for="password">비밀번호</label>
-                        <input type="password" id="password" name="password" placeholder="유효성검사 정책 규재 확인">
+                        <input type="password" id="password" name="password" placeholder="한글, 영어 대소문자 [2~8자리 까지 입력 가능]">
                     </div>
                     <div id="div-pwChk">
                         <label for="passwordChk">비밀번호확인</label>
@@ -52,7 +52,7 @@
                     </div>
                     <div id="div-phone">
                         <label for="phone">전화번호</label>
-                        <input type="text" id="phone" name="phone">
+                        <input type="text" id="phone" name="phone" placeholder="전화번호를 입력해주세요. (01012345678)">
                         <button id="send" onclick="sendCode()">인증번호발송</button>
                     </div>
                     <div id="div-code">

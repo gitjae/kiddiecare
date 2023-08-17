@@ -1,0 +1,75 @@
+@font-face {
+    font-family: 'omyu_pretty';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-01@1.0/omyu_pretty.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+*{
+    box-sizing: revert;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+#main-section {
+    /*padding: 50px;*/
+    width: 80%;
+}
+
+.updateUser-title{
+    font-size: xxx-large;
+    font-weight: 500;
+    margin-bottom: 10px;
+    font-family: 'omyu_pretty';
+}
+
+.updateUser-sub-title{
+    font-size: x-large;
+    margin-bottom: 50px;
+    font-family: 'omyu_pretty';
+}
+
+.updateUser-div{
+    padding: 70px;
+    background: #ffffff;
+    border-radius: 5px;
+}
+
+#form{
+    text-align: center;
+    width: 80%;
+    margin: 50px auto;
+    background: #74aedb;
+    padding: 30px;
+    border-radius: 5px;
+}
+
+label {
+    display: inline-block;
+    width: 100px;
+    margin-right: 20px;
+    text-align: left;
+}
+
+input[type="text"] {
+    display: inline-block;
+    width: 70%;
+    height: 40px;
+    outline: none;
+    border: none;
+    border-bottom: 1px solid #bebebe;
+    margin-bottom: 30px;
+}
+
+#submit {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}

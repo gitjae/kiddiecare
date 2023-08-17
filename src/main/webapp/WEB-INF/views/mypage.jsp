@@ -93,8 +93,8 @@
                     <div id="appointments">
 
                     </div>
-                    <button onclick="prevAppo()">prev</button>
-                    <button onclick="nextAppo()">next</button>
+                    <button onclick="prevAppo()">&#128281;</button>
+                    <button onclick="nextAppo()">&#128284;</button>
                 </div>
 
                 <div class="main-div" id="div-review">
