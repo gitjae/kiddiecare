@@ -13,6 +13,13 @@
 <body>
 <div class="container">
     <section>
+        <input type="hidden" id="loggedInUser" value="${log}">
+
+        <div class="likeHospital-area">
+            <img class="noLike" src="/image/like_empty.png" onclick="likeHospital(USER_NO, YKIHO)">
+            <img class="yesLike" src="/image/like_full.png" onclick="unlikeHospital(USER_NO, YKIHO)">
+        </div>
+
         <div class="kakaoMap-area">
             <div id="map" style="width:100%;height:100%;">
 

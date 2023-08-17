@@ -101,6 +101,10 @@
         .info-row a {
             color: black;
         }
+
+        .info-row a:hover {
+            color: #3E85EF;
+        }
     </style>
 </head>
 <c:import url="header.jsp"/>
@@ -111,7 +115,7 @@
             <div class="profile-row">
                 <div class="profile-box">
                     <div class="profile">
-                        <img src="/image/logo_hospital_512.png" alt="My Image">
+                        <img src="/image/gyujae.jpeg" alt="My Image">
                         <ul>
                             <li><strong>이규재(Gyujae Lee)</strong></li>
                             <div class="info-row">

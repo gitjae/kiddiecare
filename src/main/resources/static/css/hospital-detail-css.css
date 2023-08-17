@@ -1,3 +1,16 @@
+/* 찜 영역 */
+.likeHospital-area{
+    display: flex;
+    gap: 10px;
+    justify-content: end;
+    margin-bottom: 10px;
+}
+
+.likeHospital-area img{
+    width: 25px;
+    height: 25px;
+}
+
 /* 카카오맵 영역 */
 .kakaoMap-area{
     width: 100%;

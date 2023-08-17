@@ -273,5 +273,15 @@ public class UserController {
     public User getUser(@RequestParam int no) {
         return userRepository.findUserByNo(no);
     }
+
+    @GetMapping("/userno")      // 수정 필요
+    public ResponseEntity<User> getUserNo(@RequestParam String name) {
+        User user = userService.findByUserName(name);
+        if (user != null) {
+            return new ResponseEntity<>(user, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
 }
 
