@@ -6,6 +6,7 @@ import com.spring.kiddiecare.domain.timeSlotsLimit.TimeSlotsLimit;
 import com.spring.kiddiecare.domain.timeSlotsLimit.TimeSlotsLimitRepository;
 import com.spring.kiddiecare.domain.timeSlotsLimit.TimeSlotsLimitRequestDto;
 import com.spring.kiddiecare.service.HospitalAppointmentService;
+import com.spring.kiddiecare.service.TimeSlotsLimitService;
 import lombok.RequiredArgsConstructor;
 import org.json.JSONObject;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +29,7 @@ public class AppointmentController {
     private final HospitalAppointmentService hospitalAppointmentService;
     private final AppoResponseRepository appoResponseRepository;
     private final AppoAdminDetailRepository appoAdminDetailRepository;
+    private final TimeSlotsLimitService timeSlotsLimitService;
 
     @Transactional
     @PostMapping(value="timeset-add", consumes = {"application/json"})
@@ -149,5 +151,40 @@ public class AppointmentController {
     @GetMapping("/getAppoUserDetail")
     public AppoAdminDetailDto getAppoAdminDetail(@RequestParam String hospAppoNo) {
         return appoAdminDetailRepository.findByHospAppoNo(hospAppoNo);
+    }
+
+    // 유저 예약상태 변경
+    @PutMapping("/modifyAdminAppo/appoStatusChange")
+    public Map updateStatus(@RequestParam String appoNo, int status) {
+//        Appointment appo = appoRepository.findByNo(appoNo);
+        JSONObject json = new JSONObject();
+
+        hospitalAppointmentService.updateStatus(appoNo, status);
+        json.put("status","update");
+
+        return json.toMap();
+    }
+
+    // enable 자동 변경
+    // int status => 1: 추가, 2: 삭제, 3: 변경, 4: 보류
+    @PutMapping("/modifyAdminAppo/{status}")
+    public Map updateAppo(@RequestParam String hospAppoNo, int hour, int timeSlotNo,@PathVariable int status) {
+        JSONObject json = new JSONObject();
+
+        if(status == 3) {
+            int lastTimeSlotNo;
+            // 기존 timeSlot테이블 변경
+            lastTimeSlotNo = appoRepository.findByNo(hospAppoNo).getTimeSlotNo();
+            timeSlotsLimitService.plusEnable(lastTimeSlotNo);
+
+            // 현재(변경한) timeSlot테이블 변경
+            timeSlotsLimitService.minusEnable(timeSlotNo);
+
+            // appointment 테이블 변경
+            hospitalAppointmentService.changeTimeSlot(hospAppoNo, timeSlotNo);
+            json.put("update", "success");
+        }
+
+        return json.toMap();
     }
 }

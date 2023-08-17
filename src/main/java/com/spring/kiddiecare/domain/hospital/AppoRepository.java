@@ -12,6 +12,7 @@ public interface AppoRepository extends JpaRepository<Appointment, Integer> {
 //    public Appointment findByNo(Integer no);
     public Appointment findByNo(String no);
 
+
     public List<Appointment> findAllByGuardian(int userNo);
 
     public List<Appointment> findAllByGuardian(Pageable pageable, int userNo);

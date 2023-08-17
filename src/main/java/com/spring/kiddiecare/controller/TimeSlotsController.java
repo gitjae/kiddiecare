@@ -55,5 +55,11 @@ public class TimeSlotsController {
 
     }
 
+    @GetMapping("/getTimeSlotsForEnable")
+    public List<TimeSlotsLimit> getTimeSlotsByEnable(@RequestParam String ykiho, String date, Long doctorNo) {
+        Date parseDate = DateParsor.parse(date);
+        return timeSlotsLimitRepository.findByYkihoAndDateAndDoctorNoAndEnableGreaterThanEqual(ykiho, parseDate, doctorNo,1);
+    }
+
 }
 

@@ -46,6 +46,13 @@ public class TimeSlotsLimit {
         this.enable = (this.max - count) < 0 ? 0 : (this.max - count);
     }
 
+//    public void updateEnable(TimeSlotsLimitRequestDto timeSlotsDto) {
+//        this.max = timeSlotsDto.getMax();
+//        this.enable = timeSlotsDto.getEnable();
+//        this.block = timeSlotsDto.getBlock();
+//        this.count = timeSlotsDto.getCount();
+//    }
+
     @Override
     public String toString() {
         return "TimeSlotsLimit{" +

@@ -3,12 +3,12 @@ $(function () {
 })
 
 let selectedUser;
+const ykiho = document.getElementById('ykiho').value;
 
 // 날짜 선택 시 로그인한 병원의 timeslot불러옴
 document.getElementById('confirm-date').addEventListener('change', function (event) {
     const selectedDate = new Date(event.target.value);
     const formattedDate = selectedDate.toISOString().slice(0, 10);
-    const ykiho = document.getElementById('ykiho').value;
     const selectedDoctor = document.getElementById('selectedDoctor').textContent;
     const timeList = document.getElementById('time-list');
     const dateStatusText = document.getElementById('date-status');
@@ -79,23 +79,64 @@ document.getElementById('time-list').addEventListener("click", (event) => {
             // 예약이 있을 때만 반복문 실행
             if (Array.isArray(list) && list.length > 0) {
                 list.forEach((detail) => {
-                    console.log(detail);
+                    const createStatusDropdown = (appoStatus) => {
+                        const statusOptions = [
+                            { value: 1, text: "예약완료" },
+                            { value: 2, text: "예약취소" },
+                            { value: 3, text: "예약보류" },
+                            { value: 4, text: "이용완료" }
+                        ];
+
+                        return statusOptions.reduce((acc, option) => {
+                            const selected = appoStatus === option.value ? "selected" : "";
+                            return acc + `<option value="${option.value}" ${selected}>${option.text}</option>`;
+                        }, "");
+                    };
+
                     const tr = document.createElement('tr');
 
                     tr.innerHTML = `
                         <td>${detail.appoNo}</td>
-                        <td>${detail.appoStatus}</td>
+                        <td>
+                            <select>
+                                ${createStatusDropdown(detail.appoStatus)}
+                            </select>
+                        </td>
                         <td>${detail.guardianName}</td>
                         <td>${detail.patientName}</td>
                         <td>${detail.symptom}</td>
                         <td>${detail.note}</td>
-                        <td>${detail.slotNo}</td>
+                        <td><button class="detail-button">자세히보기</button></td>
                     `;
 
                     tr.dataset.appoNo = detail.appoNo;
 
-                    // getAppoUserDetail
-                    tr.addEventListener("click", () => {
+                    const statusDropdown = tr.querySelector('select');
+                    statusDropdown.addEventListener('change', (event) => {
+                        const selectedValue = event.target.value;
+                        console.log(`Selected value:  ${selectedValue}`);
+                        let selectedAppoNo = tr.dataset.appoNo;
+                        console.log(selectedAppoNo);
+
+                        $.ajax({
+                            url: '/api/v1/admin/appo/modifyAdminAppo/appoStatusChange',
+                            method: 'PUT',
+                            data:{
+                                appoNo: selectedAppoNo,
+                                status: selectedValue
+                            }
+                        }).done(function (result) {
+                            console.log(result.status)
+                        }).fail(function (error) {
+                            console.log(error);
+                        })
+                    })
+
+
+                    // 자세히보기 버튼 클릭 시 상세정보 표시
+                    const detailButton = tr.querySelector('.detail-button');
+                    detailButton.addEventListener("click", () => {
+                        event.stopPropagation(); // tr의 클릭 이벤트 동작을 막음
                         let selectedAppoNo = tr.dataset.appoNo;
                         console.log(selectedAppoNo);
 
@@ -153,6 +194,7 @@ function showModal() {
 function closeModal() {
     let modal = document.getElementById("my-modal");
     modal.style.display = "none";
+    selectedUser = "";
 }
 
 
@@ -165,8 +207,104 @@ function changeDate() {
     // console.log(selectedUser);
 
     content.innerHTML = `
-        <input type="date" id="modify-date">
+        <div>
+            <h1>예약정보 수정하기</h1>
+            <h2>날짜 설정</h2>
+            <input type="date" id="modify-date">
+                <div id="mo-time-bar-area">
+                    <ul id="mo-time-list">
+                    </ul>
+                </div>
+        </div>
     `;
+
+    document.getElementById('modify-date').addEventListener("change", (event) => {
+        const selectedDate = new Date(event.target.value);
+        const formattedDate = selectedDate.toISOString().slice(0, 10);
+        console.log(formattedDate);
+        const selectedDoctor = document.getElementById('selectedDoctor').textContent;
+        const timeList = document.getElementById('mo-time-list');
+        $.ajax({
+            url: '/getTimeSlotsForEnable',
+            method: 'GET',
+            data: {
+                ykiho: ykiho,
+                date: formattedDate,
+                doctorNo: selectedDoctor
+            },
+        }).done(function (list) {
+            console.log(list);
+            // 기존 요소 삭제
+            timeList.innerHTML = "";
+            // dateStatusText.innerText ="";
+
+            if(Array.isArray(list) && list.length > 0) {
+                list.forEach((detail) => {
+                    let hour = detail.time;
+                    const no = detail.no;
+                    const enable = detail.enable;
+                    let li = document.createElement('li');
+
+                    // mo-time-list 안에 li로 value=시간, text=표시될시간 (ex)9:00~10:00 시간 담기
+                    li.setAttribute('id', no);
+                    li.setAttribute('value', hour);
+                    hour = parseInt(hour.split(':')[0]);
+                    li.innerText = `${hour}:00 ~ ${hour + 1}:00 (예약가능수: ${enable})`;
+
+                    li.addEventListener("click", clickListener);
+                    timeList.appendChild(li);
+                });
+            } else {
+                // tableBody.innerHTML = '';
+                // dateStatusText.innerText = "선택한 날짜에 예약을 생성하지 않았습니다.";
+            }
+
+        }).fail(function (error) {
+            console.log(error);
+        });
+    });
+}
+
+// 최종 클릭 이벤트 함수
+function clickListener(event) {
+    const date = document.getElementById('modify-date').value;
+    // 변경할 hour
+    const hour = event.target.value;
+    // time_slots_no
+    const id = event.target.id;
+    // int status => 1: 추가, 2: 삭제, 3: 변경
+    let status;
+    console.log(hour);
+    console.log(date);
+    console.log(id);
+
+    let result = confirm(`
+    * 선택한 예약자
+    (${selectedUser.hospAppoNo}) 보호자명: ${selectedUser.usersName}, 환자명: ${selectedUser.childrenName}
+    ${date}, ${event.target.value}시로 예약을 수정하시겠습니까?
+    `)
+
+    // 확인버튼 눌렀을 때
+    if(result === true) {
+        status = 3;
+        $.ajax({
+            url: `/api/v1/admin/appo/modifyAdminAppo/${status}`,
+            method: 'PUT',
+            data: {
+                hospAppoNo: selectedUser.hospAppoNo,
+                hour: hour,
+                timeSlotNo: id,
+            },
+        }).done(function (result) {
+            alert(result.update);
+        }).fail(function (error) {
+            alert(error);
+        })
+
+        // 취소버튼
+    } else if(result === false) {
+        alert("취소누름");
+    }
 }
 
 

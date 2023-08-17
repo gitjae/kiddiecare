@@ -3,8 +3,11 @@ package com.spring.kiddiecare.domain.hospital;
 import com.spring.kiddiecare.util.Timestamp;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.*;
 
+@Setter
 @Getter
 @NoArgsConstructor
 @Entity
@@ -36,5 +39,7 @@ public class Appointment extends Timestamp {
         this.note = appoDto.getNote();
         this.appoStatus = appoDto.getAppoStatus();
     }
+
+
 
 }

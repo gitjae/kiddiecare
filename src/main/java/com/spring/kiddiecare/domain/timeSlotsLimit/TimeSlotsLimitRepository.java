@@ -11,4 +11,9 @@ public interface TimeSlotsLimitRepository extends JpaRepository<TimeSlotsLimit, 
     List<TimeSlotsLimit> findTimeSlotsLimitByYkihoAndDate(String ykiho, Date date);
 
     List<TimeSlotsLimit> findTimeSlotsLimitByYkihoAndDateAndDoctorNo(String ykiho, Date date, Long doctorNo);
+
+    // enable이 0보다 큰 TimeSlotsLimit 정보들
+    List<TimeSlotsLimit> findByYkihoAndDateAndDoctorNoAndEnableGreaterThanEqual(String ykiho, Date date, Long doctorNo, int enable);
+
+    // hospitalAppoint no, time_slots_limit를 통해 해당 값 받아옴
 }
