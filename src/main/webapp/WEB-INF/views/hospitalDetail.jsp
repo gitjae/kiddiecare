@@ -13,6 +13,11 @@
 <body>
 <div class="container">
     <section>
+        <div class="like-area">
+            <img class="noLike" src="/image/like_empty.png" onclick="">
+            <img class="yesLike" src="/image/like_full.png" onclick="">
+        </div>
+
         <div class="kakaoMap-area">
             <div id="map" style="width:100%;height:100%;">
 
