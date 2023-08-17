@@ -4,10 +4,7 @@ import com.spring.kiddiecare.domain.children.Children;
 import com.spring.kiddiecare.domain.children.ChildrenRepository;
 import com.spring.kiddiecare.domain.doctor.Doctor;
 import com.spring.kiddiecare.domain.doctor.DoctorRepository;
-import com.spring.kiddiecare.domain.hospital.AppoRepository;
-import com.spring.kiddiecare.domain.hospital.Appointment;
-import com.spring.kiddiecare.domain.hospital.Hospital;
-import com.spring.kiddiecare.domain.hospital.HospitalRepository;
+import com.spring.kiddiecare.domain.hospital.*;
 import com.spring.kiddiecare.domain.timeSlotsLimit.TimeSlotsLimit;
 import com.spring.kiddiecare.domain.timeSlotsLimit.TimeSlotsLimitRepository;
 import com.spring.kiddiecare.domain.user.User;
@@ -77,6 +74,19 @@ public class UserAppointmentController {
             jsonObject.put("appointments", appoDtos);
         }
 
+        return jsonObject.toMap();
+    }
+
+    @PutMapping("update")
+    public Map appoUpdate(@RequestBody AppoRequestDto appoDto, WebRequest request){
+        JSONObject jsonObject = new JSONObject();
+        String log = (String) request.getAttribute("log", WebRequest.SCOPE_SESSION);
+
+        Optional<User> foundUser = userRepository.findUserById(log);
+        if(foundUser.isEmpty()){ return jsonObject.put("update", "fail").toMap();}
+        User user = foundUser.get();
+
+        // 로그인 유저와 예약자 일치 확인
         return jsonObject.toMap();
     }
 }

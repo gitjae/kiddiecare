@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface AppoRepository extends JpaRepository<Appointment, Integer> {
@@ -14,5 +15,7 @@ public interface AppoRepository extends JpaRepository<Appointment, Integer> {
     public List<Appointment> findAllByGuardian(int userNo);
 
     public List<Appointment> findAllByGuardian(Pageable pageable, int userNo);
+
+    public Optional<Appointment> findAppointmentByNo(String no);
 
 }

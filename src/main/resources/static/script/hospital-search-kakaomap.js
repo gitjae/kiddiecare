@@ -111,7 +111,7 @@ function setMarkers(res){
             const hospInfo = `<a href="/appointment/hospitalDetail?hospitalName=${hosp.hospitalName}&sgguCd=${hosp.sgguCd}">
                                 <div class="hospital-name" ykiho="${hosp.ykiho}">${hosp.hospitalName}</div>
                                 <div class="hospital-addr" sidoCd="${hosp.sidoCd}" sgguCd="${hosp.sgguCd}">${hosp.addr}</div>
-                                <div class="hospital-tel">${hosp.telno}</div>
+                                <div class="hospital-tel">${hosp.telno == null ? "" : hosp.telno}</div>
                                 <div class="hospital-weekday">${hosp.weekday == null ? "" : hosp.weekday}</div>
                                 <div class="hospital-holiday">${hosp.noTrmtHoli == null ? "" : "공휴일"}</div>
                                 <div class="hospital-sunday">${hosp.noTrmtSun == null ? "" : "일요일"}</div>

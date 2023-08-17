@@ -35,36 +35,36 @@
                         </li>
                         <li id="time-table-mon">
                             <div id="weekday-mon">월요일</div>
-                            <div id="workhour-mon">데이터 없음</div>
+                            <div id="workhour-mon">병원 문의</div>
                         </li>
                         <li id="time-table-tue">
                             <div id="weekday-tue">화요일</div>
-                            <div id="workhour-tue">데이터 없음</div>
+                            <div id="workhour-tue">병원 문의</div>
                         </li>
                         <li id="time-table-wed">
                             <div id="weekday-wed">수요일</div>
-                            <div id="workhour-wed">데이터 없음</div>
+                            <div id="workhour-wed">병원 문의</div>
                         </li>
                         <li id="time-table-thu">
                             <div id="weekday-thu">목요일</div>
-                            <div id="workhour-thu">데이터 없음</div>
+                            <div id="workhour-thu">병원 문의</div>
                         </li>
                         <li id="time-table-fri">
                             <div id="weekday-fri">금요일</div>
-                            <div id="workhour-fri">데이터 없음</div>
+                            <div id="workhour-fri">병원 문의</div>
                         </li>
                         <li id="time-table-sat">
                             <div id="weekday-sat">토요일</div>
-                            <div id="workhour-sat">데이터 없음</div>
+                            <div id="workhour-sat">병원 문의</div>
                         </li>
                         <li id="time-table-sun">
                             <div id="weekday-sun">일요일</div>
-                            <div id="workhour-sun">데이터 없음</div>
+                            <div id="workhour-sun">병원 문의</div>
                         </li>
                     </ul>
                 </div>
             </div>
-            <p id="hospital-park">주차 정보 : 데이터 없음</p>
+            <p id="hospital-park">주차 정보 : 병원 문의</p>
             <div id="hospital-subjects">
                 <p id="subject-list">진료과목 : </p>
             </div>

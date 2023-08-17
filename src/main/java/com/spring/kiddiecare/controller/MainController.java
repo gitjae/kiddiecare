@@ -5,9 +5,11 @@ import com.spring.kiddiecare.domain.children.ChildrenRepository;
 import com.spring.kiddiecare.domain.children.ChildrenResponseDto;
 import com.spring.kiddiecare.domain.doctor.Doctor;
 import com.spring.kiddiecare.domain.doctor.DoctorRepository;
+import com.spring.kiddiecare.domain.doctor.DoctorResponseDto;
 import com.spring.kiddiecare.domain.hospital.*;
 import com.spring.kiddiecare.domain.timeSlotsLimit.TimeSlotsLimit;
 import com.spring.kiddiecare.domain.timeSlotsLimit.TimeSlotsLimitRepository;
+import com.spring.kiddiecare.domain.timeSlotsLimit.TimeSlotsLimitResponseDto;
 import com.spring.kiddiecare.domain.user.User;
 import com.spring.kiddiecare.domain.user.UserRepository;
 import com.spring.kiddiecare.domain.user.UserResponseDto;
@@ -240,6 +242,62 @@ public class MainController {
     @GetMapping("appointment/hospitalDetail")
     public String showReservePage(@RequestParam("hospitalName") String hospitalName, Model model) {       // -> hospitalName 으로 변경하고 내용 삭제하고 ajax(api->HospitalInfoController의 getHospitalInfo, 우리DB)로 요청보낸 후 나머지는 js에서 처리
         return "hospitalDetail";
+    }
+
+    @GetMapping("appointment/update")
+    public String appoUpdate(@RequestParam String no, Model model, WebRequest request){
+        String log = (String) request.getAttribute("log", WebRequest.SCOPE_SESSION);
+
+        Optional<User> foundUser = userRepository.findUserById(log);
+        Optional<Appointment> foundAppo = appoRepository.findAppointmentByNo(no);
+        if(foundUser.isPresent() && foundAppo.isPresent()){
+            User user = foundUser.get();
+            Appointment appo = foundAppo.get();
+            if(user.getNo() == appo.getGuardian()){
+                Optional<TimeSlotsLimit> foundSlot = timeSlotsLimitRepository.findById(appo.getTimeSlotNo());
+                if(foundSlot.isPresent()){
+                    TimeSlotsLimit slot = foundSlot.get();
+                    Hospital hospital = hospitalRepository.findByYkiho(slot.getYkiho());
+                    Optional<Doctor> foundDoctor = doctorRepository.findById(slot.getDoctorNo());
+
+                    if(foundDoctor.isPresent()){
+                        Doctor doctor = foundDoctor.get();
+                        Optional<Children> foundChild = childrenRepository.findById(appo.getPatientId());
+                        if(foundChild.isPresent()){
+                            Children child = foundChild.get();
+                            ChildrenResponseDto childDto = new ChildrenResponseDto();
+                            childDto.setName(child.getName());
+
+                            TimeSlotsLimitResponseDto timeSlotsDto = new TimeSlotsLimitResponseDto();
+                            timeSlotsDto.setNo(slot.getNo());
+                            timeSlotsDto.setDate(slot.getDate());
+                            timeSlotsDto.setTime(slot.getTime());
+
+                            HospitalResponseDto hospDto = new HospitalResponseDto();
+                            hospDto.setHospitalName(hospital.getHospitalName());
+                            hospDto.setYkiho(hospital.getYkiho());
+
+                            DoctorResponseDto doctorDto = new DoctorResponseDto();
+                            doctorDto.setNo(doctor.getNo());
+                            doctorDto.setDoctorName(doctor.getDoctorName());
+
+                            AppointmentResponseDto appoDto = new AppointmentResponseDto();
+                            appoDto.setNo(appo.getNo());
+                            appoDto.setNote(appoDto.getNote());
+                            appoDto.setSymptom(appoDto.getSymptom());
+
+                            model.addAttribute("child", childDto);
+                            model.addAttribute("time", timeSlotsDto);
+                            model.addAttribute("hosp", hospDto);
+                            model.addAttribute("doc", doctorDto);
+                            model.addAttribute("appo", appoDto);
+                        }
+                    }
+                }
+            }
+        }
+
+        return "appoUpdate";
     }
 
     // 병원 예약 관리
