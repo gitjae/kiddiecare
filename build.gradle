@@ -72,6 +72,11 @@ dependencies {
 
     // mail
     implementation 'javax.mail:mail:1.4.7'
+
+    //websocket
+     implementation 'org.springframework:spring-websocket:5.3.9'
+//    implementation 'org.springframework.boot:spring-boot-starter-websocket'
+
 }
 
 tasks.named('test') {

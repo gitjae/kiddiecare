@@ -8,7 +8,6 @@ section{
     display: flex;
     justify-items: center;
     min-height: 100vh;
-    background: #3E85EF;
     margin: 0 auto;
 }
 
@@ -78,7 +77,6 @@ section{
     flex-direction: column;
     gap: 10px;
     margin-top: 20px;
-    color: #3E85EF;
 }
 
 .hosp-list-area > .spinner-border{
