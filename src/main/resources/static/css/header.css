@@ -95,6 +95,11 @@ section {
     color: #fff;
     vertical-align: top;
     margin-left: -13px;
+    width: 15px;
+    height: 15px;
+    line-height: 15px;
+    text-align: center;
+    font-size: 10px;
 }
 
 .notifi-box {
