@@ -64,16 +64,6 @@ public class MainController {
     @GetMapping("/admin/join")
     public String adminJoin(){return "adminJoin";}
 
-    /* ========================================== */
-    @GetMapping("/ws/test1")
-    public String webSocket(){return "webSocket";}
-
-    @GetMapping("/ws/test2")
-    public String webSockResponse(){return "webSocketResponse";}
-
-    /* ========================================== */
-
-
     @GetMapping("/hospital/Search")
     public String hospitalSearch(){return "hospitalSearchList";}
 

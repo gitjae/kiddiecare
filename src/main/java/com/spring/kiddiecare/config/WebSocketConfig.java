@@ -17,9 +17,22 @@ public class WebSocketConfig implements WebSocketConfigurer {
         return new EchoHandler();
     }
 
+//    @Override
+//    public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
+//        registry.addHandler(echoHandler(), "/echo-ws").addInterceptors(new HttpSessionHandshakeInterceptor());
+//        registry.addHandler(echoHandler(), "/echo-ws").withSockJS();
+//    }
+
+//    @Override
+//    public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
+//        registry.addHandler(echoHandler(), "/echo-ws")
+//                .setAllowedOrigins("http://localhost:8082")
+//                .withSockJS();
+//    }
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-        registry.addHandler(echoHandler(), "/echo").addInterceptors(new HttpSessionHandshakeInterceptor());
-        registry.addHandler(echoHandler(), "/echo").withSockJS();
+        registry.addHandler(echoHandler(), "/echo-ws")
+                .addInterceptors(new HttpSessionHandshakeInterceptor()) // 세션 정보 전달
+                .withSockJS();
     }
 }

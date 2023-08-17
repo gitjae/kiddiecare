@@ -1,5 +1,7 @@
 package com.spring.kiddiecare.controller;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
@@ -12,9 +14,9 @@ import java.util.*;
 public class EchoHandler extends TextWebSocketHandler {
 
     //로그인 한 전체
-    List<WebSocketSession> sessions = new ArrayList<WebSocketSession>();
+    List<WebSocketSession> sessions = new ArrayList<>();
     // 로그인중인 개별유저
-    Map<String, WebSocketSession> users = new HashMap<String, WebSocketSession>();
+    private Map<String, WebSocketSession> users = new HashMap<>();
 
 
     // 클라이언트가 서버로 연결시
@@ -25,6 +27,8 @@ public class EchoHandler extends TextWebSocketHandler {
             log(senderId + " 연결 됨");
             users.put(senderId, session);   // 로그인중 개별유저 저장
         }
+//        String userId = (String) session.getAttributes().get("userId");
+//        users.put(userId, session);
     }
     // 클라이언트가 Data 전송 시
     @Override
@@ -75,7 +79,7 @@ public class EchoHandler extends TextWebSocketHandler {
     // 접속한 유저의 http세션을 조회하여 id를 얻는 함수
     private String getMemberId(WebSocketSession session) {
         Map<String, Object> httpSession = session.getAttributes();
-        String m_id = (String) httpSession.get("m_id"); // 세션에 저장된 m_id 기준 조회
-        return m_id==null? null: m_id;
+        String m_id = (String) httpSession.get("log"); // 세션에 저장된 m_id 기준 조회
+        return m_id == null? null: m_id;
     }
 }
