@@ -130,6 +130,7 @@ function showTimeSlots(slots) {
     // 선택한 타임 슬롯
     let currentSelectedCard = null;
 
+
     // 각 타임 슬롯 클릭 이벤트
     document.querySelectorAll('.time-slot-card').forEach(card => {
         card.addEventListener('click', function () {
@@ -192,8 +193,12 @@ function getSgguCdFromUrl() {
 
 // 예약하기 버튼 액션
 document.getElementById("booking-btn").onclick = function () {
-    let hospitalName = encodeURIComponent(getHospitalNameFromUrl().trim());
-    location.href = `/appointment/booking?hospitalName=${hospitalName}&treatmentDate=${formattedDate}&treatmentDay=${selectDay}&doctorNo=${selectedSlotInfo.doctorNo}&slotTime=${selectedSlotInfo.time}&slotWeekday=${selectedSlotInfo.weekday}&timeSlotNo=${selectedSlotInfo.timeSlotNo}`;
+    if (selectedSlotInfo.timeSlotNo == null) {
+        alert("예약 시간을 선택해주세요.");
+    } else {
+        let hospitalName = encodeURIComponent(getHospitalNameFromUrl().trim());
+        location.href = `/appointment/booking?hospitalName=${hospitalName}&treatmentDate=${formattedDate}&treatmentDay=${selectDay}&doctorNo=${selectedSlotInfo.doctorNo}&slotTime=${selectedSlotInfo.time}&slotWeekday=${selectedSlotInfo.weekday}&timeSlotNo=${selectedSlotInfo.timeSlotNo}`;
+    }
 }
 
 // 정보 뿌리기
