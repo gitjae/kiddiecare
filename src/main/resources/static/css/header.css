@@ -87,3 +87,143 @@ section {
 .search-btn{
     background: none;
 }
+
+.icon #alarm {
+    display: none;
+    background: #f00;
+    border-radius: 50%;
+    color: #fff;
+    vertical-align: top;
+    margin-left: -13px;
+}
+
+.notifi-box {
+    display: none;
+    width: 300px;
+    position: absolute;
+    top: 63px;
+    right: 35px;
+    z-index: 9999;
+    background-color: white;
+    transition: 1s opacity, 250ms height;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.notifi-box h2 {
+    font-size: 14px;
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+    color: #999;
+    margin-bottom: 0px;
+}
+.notifi-box #count {
+    color: #f00;
+}
+.notifi-item {
+    display: flex;
+    border-bottom: 1px solid #eee;
+    padding: 15px 5px;
+    margin-bottom: 15px;
+    cursor: pointer;
+}
+.notifi-item:hover {
+    background-color: #eee;
+}
+.notifi-item img {
+    display: block;
+    width: 50px;
+    margin-right: 10px;
+    border-radius: 50%;
+}
+.text{
+    padding: 20px;
+}
+.notifi-item .text p{
+    color: #aaa;
+    font-size: 12px;
+}
+
+/* ============================== */
+.toast{
+    position: fixed;
+    bottom: 25px;
+    right: 30px;
+    border-radius: 12px;
+    background: #fff;
+    padding: 0px 0px 0px 5px;
+    box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+    overflow: hidden;
+    z-index: 9999;
+    transform: translateX(calc(100% + 30px));
+    transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.35);
+}
+.toast.active{
+    transform: translateX(0%);
+}
+.toast .toast-content{
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+}
+.toast-content .check{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 35px;
+    width: 35px;
+    background-color: #4070f4;
+    color: #fff;
+    font-size: 20px;
+    border-radius: 50%;
+}
+.toast-content .message{
+    display: flex;
+    flex-direction: column;
+}
+.message .text-1{
+    font-size: 20px;
+    font-weight: 400;;
+    color: #666666;
+    padding: 10px;
+}
+.message .text-2{
+    padding: 10px;
+    font-weight: 600;
+    color: #333;
+}
+.toast .close{
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    padding: 5px;
+    cursor: pointer;
+    opacity: 0.7;
+}
+.toast .close:hover{
+    opacity: 1;
+}
+.toast .progress{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 3px;
+    width: 100%;
+    background: #ddd;
+}
+.toast .progress:before{
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
+    background-color: #4070f4;
+}
+.progress.active:before{
+    animation: progress 5s linear forwards;
+}
+@keyframes progress {
+    100%{
+        right: 100%;
+    }
+}
+
