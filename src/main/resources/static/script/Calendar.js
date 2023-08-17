@@ -122,7 +122,7 @@ function showTimeSlots(slots) {
                  data-ykiho="${slot.ykiho}"
                  data-timeSlotNo="${slot.no}">
                 <div class="time-slot-content">
-                    ${slot.time.slice(0,-3)}<br>(${slot.count}/${slot.max})
+                    ${slot.time.slice(0,-3)}<br>(${slot.enable}/${slot.max})
                 </div>
             </div>
         `;
@@ -175,7 +175,7 @@ function showTimeSlots(slots) {
                     var card = `<div class="doctor-card" onclick="selectDoctor(this)">
                         <div>이미지</div>
                         <div class="doctorName" no="${res.doctors[i].no}">${res.doctors[i].doctorName}</div>
-                        <div class="timeSlot" slot="${res.slots[i].no}">(${res.slots[i].count}/${res.slots[i].enable})</div>
+                        <div class="timeSlot" slot="${res.slots[i].no}">(${res.slots[i].enable}/${res.slots[i].max})</div>
                     </div>`
 
                     $('#doctor-cards').append(card);

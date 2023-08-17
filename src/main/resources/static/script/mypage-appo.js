@@ -80,10 +80,16 @@ function getAppo(page){
                     <span class="appo-note">${appo.note}</span>
                 </div>
                 <div class="appo-btn">
-                    <button>수정</button>
+                    <button onclick="gotoUpdate(this)">수정</button>
                     <button>취소</button>
                 </div>
             </div>`);
         })
     })
+}
+
+function gotoUpdate(btn){
+    const no = $(btn).closest('.div-appo').find('.appo-no').text();
+
+    location.href = `/appointment/update?no=${no}`;
 }
