@@ -84,7 +84,12 @@
                 </div>
             </c:forEach>
         </div>
+        <div id="doctor-cards">
+
+        </div>
     </div>
+    <button id="booking-btn" data-ykiho="${hospital.ykiho}" onclick="appoUpdate()">예약하기</button>
 </body>
 <script src="/script/Calendar.js"></script>
+<script src="/script/appo-update.js"></script>
 </html>

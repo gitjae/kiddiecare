@@ -1,5 +1,6 @@
 package com.spring.kiddiecare.controller;
 
+import com.spring.kiddiecare.domain.timeSlotsLimit.TimeSlotSum;
 import com.spring.kiddiecare.domain.timeSlotsLimit.TimeSlotsLimit;
 import com.spring.kiddiecare.domain.timeSlotsLimit.TimeSlotsLimitRepository;
 import com.spring.kiddiecare.util.DateParsor;
@@ -10,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.w3c.dom.ls.LSInput;
 
+import java.sql.Time;
 import java.util.*;
 
 @RestController
@@ -23,7 +25,25 @@ public class TimeSlotsController {
     public Map timeSlotsDateGetByYkiho(@RequestParam String ykiho, @RequestParam Date date){
         JSONObject jsonObject = new JSONObject();
         List<TimeSlotsLimit> slots = timeSlotsLimitRepository.findTimeSlotsLimitByYkihoAndDate(ykiho, date);
-        jsonObject.put("slots", slots);
+
+        ArrayList<TimeSlotSum> timeSlotSums = new ArrayList<>();
+        ArrayList<Time> dupl = new ArrayList<>();
+        for(TimeSlotsLimit slot1 : slots){
+            if(dupl.contains(slot1.getTime())){
+                continue;
+            }
+            TimeSlotSum sum = new TimeSlotSum(slot1);
+            //sum.add(slot1);
+            for(TimeSlotsLimit slot2 : slots){
+                if(slot1.getTime().equals(slot2.getTime()) && slot1.getDoctorNo() != slot2.getDoctorNo()){
+                    sum.add(slot2);
+                    dupl.add(slot2.getTime());
+                }
+            }
+            timeSlotSums.add(sum);
+        }
+        // 원래대로 돌리려면 timeSlotSums 대신 slots 넣기
+        jsonObject.put("slots", timeSlotSums);
         return jsonObject.toMap();
     }
 

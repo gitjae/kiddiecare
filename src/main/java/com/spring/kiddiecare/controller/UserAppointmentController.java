@@ -12,6 +12,7 @@ import com.spring.kiddiecare.domain.user.UserRepository;
 import com.spring.kiddiecare.service.DoctorService;
 import com.spring.kiddiecare.service.HospitalService;
 import com.spring.kiddiecare.service.TimeSlotsLimitService;
+import com.spring.kiddiecare.service.UserAppointmentService;
 import com.spring.kiddiecare.util.AppoView;
 import lombok.RequiredArgsConstructor;
 import org.json.JSONObject;
@@ -39,6 +40,7 @@ public class UserAppointmentController {
     private final HospitalRepository hospitalRepository;
     private final DoctorRepository doctorRepository;
     private final ChildrenRepository childrenRepository;
+    private final UserAppointmentService userAppointmentService;
 
     @GetMapping("list/{page}")
     public Map appoPage(WebRequest request, @PageableDefault(size = 2) Pageable pageable, @PathVariable int page){
@@ -79,14 +81,8 @@ public class UserAppointmentController {
 
     @PutMapping("update")
     public Map appoUpdate(@RequestBody AppoRequestDto appoDto, WebRequest request){
-        JSONObject jsonObject = new JSONObject();
-        String log = (String) request.getAttribute("log", WebRequest.SCOPE_SESSION);
+        JSONObject jsonObject = userAppointmentService.updateAppo(request, appoDto);
 
-        Optional<User> foundUser = userRepository.findUserById(log);
-        if(foundUser.isEmpty()){ return jsonObject.put("update", "fail").toMap();}
-        User user = foundUser.get();
-
-        // 로그인 유저와 예약자 일치 확인
         return jsonObject.toMap();
     }
 }

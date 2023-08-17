@@ -2,6 +2,7 @@ window.onload = function () {
     //getHospInfoDetail();
     buildCalendar();
     //getTotalInfo();
+    $('#booking-btn').prop("disabled", true);
 }
 
 let nowMonth = new Date();
@@ -65,6 +66,9 @@ let selectDay = null;   // 요일 저장 (String 타입)
 let formattedDate = null;
 
 function choiceDate(nowColumn) {
+    // 의사 카드 초기화
+    $('#doctor-cards').empty();
+
     if (document.getElementsByClassName("choiceDay")[0]) {                              // 기존에 선택한 날짜가 있으면
         document.getElementsByClassName("choiceDay")[0].classList.remove("choiceDay");  // 해당 날짜의 "choiceDay" class 제거
     }
@@ -152,9 +156,46 @@ function showTimeSlots(slots) {
             selectedSlotInfo.timeSlotNo = this.getAttribute('data-timeSlotNo');
 
             console.log(selectedSlotInfo);
+
+            $.ajax({
+                method: 'GET',
+                url: '/api/v1/doctor/schedule',
+                data:{
+                    ykiho:selectedSlotInfo.ykiho,
+                    date:selectedSlotInfo.date,
+                    time:selectedSlotInfo.time
+                }
+            }).done(res => {
+                console.log("<doctors>")
+                console.log(res);
+
+                $('#doctor-cards').empty();
+                // 닥터 카드 만들기
+                for(let i=0; i<res.doctors.length; i++){
+                    var card = `<div class="doctor-card" onclick="selectDoctor(this)">
+                        <div>이미지</div>
+                        <div class="doctorName" no="${res.doctors[i].no}">${res.doctors[i].doctorName}</div>
+                        <div class="timeSlot" slot="${res.slots[i].no}">(${res.slots[i].count}/${res.slots[i].enable})</div>
+                    </div>`
+
+                    $('#doctor-cards').append(card);
+                }
+
+                // 닥터 카드 클릭시 selectedSlotInfo.doctorNo 바꿔주기
+
+            })
         });
     });
+}
 
+function selectDoctor(card){
+    const doctorNo = $(card).find('.doctorName').attr('no');
+    const slotNo = $(card).find('.timeSlot').attr('slot');
+
+    selectedSlotInfo.doctorNo = doctorNo;
+    selectedSlotInfo.timeSlotNo = slotNo;
+
+    $('#booking-btn').prop("disabled", false);
 }
 
 // 이전달 버튼 클릭

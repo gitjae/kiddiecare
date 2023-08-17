@@ -41,5 +41,21 @@ public class Appointment extends Timestamp {
     }
 
 
+    public void update(AppoRequestDto appoDto){
+        if(appoDto.getTimeSlotNo() != 0){
+            this.timeSlotNo = appoDto.getTimeSlotNo();
+        }
 
+        if(appoDto.getAppoStatus() != 0){
+            this.appoStatus = appoDto.getAppoStatus();
+        }
+
+        if(appoDto.getSymptom() != null){
+            this.symptom = appoDto.getSymptom();
+        }
+
+        if(appoDto.getNote() != null){
+            this.note = appoDto.getNote();
+        }
+    }
 }

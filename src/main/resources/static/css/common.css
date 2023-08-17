@@ -52,6 +52,11 @@ button:hover {
     cursor: pointer;
 }
 
+button:disabled{
+    color: white;
+    background-color: gray;
+}
+
 input{
     outline: none;
     border: none;
