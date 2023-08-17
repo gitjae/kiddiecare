@@ -11,7 +11,8 @@ $('#admin-email').on('change', e => {
             $('#not-email-format').show().css('color', 'red');
             $('#admin-email').parent().css('border-color', 'red');
         } else {
-            $('#error-email').hide();
+            $('#admin-email-null').hide();
+            $('#not-email-format').hide();
             $('#admin-email').parent().css('border-color', 'lightgrey');
         }
     }
