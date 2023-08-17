@@ -273,5 +273,25 @@ public class UserController {
     public User getUser(@RequestParam int no) {
         return userRepository.findUserByNo(no);
     }
+
+    @GetMapping("/username")
+    public ResponseEntity<String> getUserName(@RequestParam String id) {
+        String name = userService.findNameById(id);
+        if (name != null) {
+            return new ResponseEntity<>(name, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping("/userno")
+    public ResponseEntity<User> getUserNo(@RequestParam String name) {
+        User user = userService.findByUserName(name);
+        if (user != null) {
+            return new ResponseEntity<>(user, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
 }
 

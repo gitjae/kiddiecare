@@ -1,4 +1,4 @@
-package com.spring.kiddiecare.domain.like;
+package com.spring.kiddiecare.domain.likeHospital;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -7,8 +7,8 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class LikeRequestDto {
+public class LikeHospitalRequestDto {
     private int no;
-    private int user_no;
+    private int userNo;
     private String ykiho;
 }

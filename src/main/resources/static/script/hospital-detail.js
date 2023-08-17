@@ -18,7 +18,7 @@ function buildCalendar() {
     let lastDate = new Date(nowMonth.getFullYear(), nowMonth.getMonth() + 1, 0);
 
     let tbody_Calendar = document.querySelector(".Calendar > tbody");
-    console.log("nowMonth : " + nowMonth.getFullYear());
+    // console.log("nowMonth : " + nowMonth.getFullYear());
 
     document.getElementById("calYear").innerText = nowMonth.getFullYear();
     document.getElementById("calMonth").innerText = leftPad(nowMonth.getMonth() + 1);
@@ -76,8 +76,8 @@ function choiceDate(nowColumn) {
     selectDay = dayNames[selectDate.getDay()]; // 선택된 요일 저장
     formattedDate = selectDate.getFullYear() + "-" + leftPad(selectDate.getMonth() + 1) + "-" + leftPad(selectDate.getDate());  // --> 선택된 날짜: Thu Aug 17 2023 00:00:00 GMT+0900 (한국 표준시) 값 변경
 
-    console.log("선택된 날짜:", formattedDate);  // String
-    console.log("선택된 요일:", selectDay);
+    // console.log("선택된 날짜:", formattedDate);  // String
+    // console.log("선택된 요일:", selectDay);
 
     document.querySelector('.time-slots-table').style.display = 'block';        // css
 
@@ -178,7 +178,7 @@ function leftPad(value) {
     }
     return value;
 }
-
+// ----------------------------------------------
 function getHospitalNameFromUrl() {
     const currentUrl = new URL(window.location.href);
     const hospitalName = currentUrl.searchParams.get('hospitalName');
@@ -204,7 +204,7 @@ document.getElementById("booking-btn").onclick = function () {
 // 정보 뿌리기
 function getHospInfoDetail() {
     const hospitalName = getHospitalNameFromUrl();
-    console.log("hospitalName : ", hospitalName);
+    // console.log("hospitalName : ", hospitalName);
 
     $.ajax({
         method: 'GET',
@@ -234,6 +234,8 @@ function getHospInfoDetail() {
 
                     doctorContainer.appendChild(doctorCard);
                 });
+                // 찜 기능 수정중 -- 희수
+                handleLikeFeature(res.dbHospitalData.ykiho);
             }
         })
         .fail(err => {
@@ -241,16 +243,44 @@ function getHospInfoDetail() {
         });
 }
 
-function getTotalInfo(){
+// 찜
+function handleLikeFeature(ykiho) {
+    let userName = document.getElementById('loggedInUser').value;
+    console.log("*** userName : ", userName)
+    console.log("*** ykiho : ", ykiho);
+
+    let userNo = getUserNoByName(userName);
+    console.log("*** userNo : ", userNo);       // 안ㄴㅏ옴!!
+    // 찜 기능 나머지
+}
+
+// 회원 아이디로 no 찾기
+function getUserNoByName(userName) {
+    let userNo;
+    $.ajax({
+        method: 'GET',
+        url: `/api/v1/users/userno?name=${userName}`,
+        async: false
+    })
+        .done(res => {
+            userNo = res.no;
+        })
+        .fail(err => {
+            console.error("Error:", err);
+        });
+    return userNo;
+}
+
+function getTotalInfo() {
     const hospitalName = getHospitalNameFromUrl();
     const sgguCd = getSgguCdFromUrl();
 
     $.ajax({
-        method:'GET',
-        url:'/search/detail',
-        data:{
-            yadmNm:hospitalName,
-            sgguCd:sgguCd
+        method: 'GET',
+        url: '/search/detail',
+        data: {
+            yadmNm: hospitalName,
+            sgguCd: sgguCd
         }
     }).done(res => {
         console.log(res);
@@ -258,7 +288,7 @@ function getTotalInfo(){
         const DD = res.data.hospDetailData;
         const LD = res.data.hospListData;
         const SD = res.data.hospSubData;
-        if(res.result == 'success'){
+        if (res.result == 'success') {
             // 카카오 맵
             xPos = BD.xpos;
             yPos = BD.ypos;
@@ -283,6 +313,6 @@ function getTotalInfo(){
     })
 }
 
-function timeFormat(time){
-    return time.slice(0,2) + ":" + time.slice(2,4);
+function timeFormat(time) {
+    return time.slice(0, 2) + ":" + time.slice(2, 4);
 }

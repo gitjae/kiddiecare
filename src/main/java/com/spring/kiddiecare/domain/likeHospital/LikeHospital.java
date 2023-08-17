@@ -1,4 +1,4 @@
-package com.spring.kiddiecare.domain.like;
+package com.spring.kiddiecare.domain.likeHospital;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,15 +13,15 @@ import javax.persistence.Table;
 @AllArgsConstructor
 @Table(name = "like")
 @Entity
-public class Like {
+public class LikeHospital {
     @Id
     private int no;
-    private int user_no;
+    private int userNo;
     private String ykiho;
 
-    public Like(LikeRequestDto likeRequestDto) {
+    public LikeHospital(LikeHospitalRequestDto likeRequestDto) {
         this.no = likeRequestDto.getNo();
-        this.user_no = likeRequestDto.getUser_no();
+        this.userNo = likeRequestDto.getUserNo();
         this.ykiho = likeRequestDto.getYkiho();
     }
 }
