@@ -1,0 +1,43 @@
+section{
+    display: flex;
+}
+
+.flex-area{
+    display: flex;
+    justify-content: space-between;
+}
+.list-title{
+    font-size: x-large;
+    padding: 10px;
+    font-weight: 500;
+    color: #4C85D0;
+}
+
+.hospital-li{
+    padding: 20px;
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+#hospital-list{
+    margin-right: 20px;
+}
+
+#hospital-list-ul{
+    margin-right: 20px;
+    /*overflow: hidden;*/
+    height: 800px;
+    overflow: auto;
+}
+
+#hospital-list-btn{
+    margin-right: 20px;
+}
+
+#prev, #next{
+    /*color: black;*/
+    background: #ffffff;
+    /*border: 0.8px solid #bebebe;*/
+    /*border-radius: 28px;*/
+}

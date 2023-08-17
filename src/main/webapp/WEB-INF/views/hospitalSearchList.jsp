@@ -11,6 +11,7 @@
 <head>
     <title>List</title>
     <link href="/css/common.css" rel="stylesheet">
+    <link href="/css/hospital-search-css.css" rel="stylesheet">
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=89098ae2758f1c766fe8ab93b869f264"></script>
     <script src="/script/hospital-search-list.js"></script>
     <script src="/script/hospital-search-kakaomap.js"></script>
@@ -38,18 +39,25 @@
 <%--        </c:otherwise>--%>
 
         <div id="hospital-list">
+            <div class="flex-area">
+                <p class="list-title">병원 목록</p>
+                <div id="hospital-list-btn">
+                    <button id="prev" onclick="prev()">&#128281;</button>
+                    <button id="next" onclick="next()">&#128284;</button>
+                </div>
+            </div>
             <ul id="hospital-list-ul">
 
             </ul>
-            <div id="hospital-list-btn">
-                <button id="prev" onclick="prev()">이전</button>
-                <button id="next" onclick="next()">다음</button>
-            </div>
+<%--            <div id="hospital-list-btn">--%>
+<%--                <button id="prev" onclick="prev()">이전</button>--%>
+<%--                <button id="next" onclick="next()">다음</button>--%>
+<%--            </div>--%>
         </div>
 
-        <div class="kakaoMap-area" style="width:100%;height: 400px;">
-            <div id="map" style="width:100%;height:100%;">
-                <button style="position: absolute; z-index: 2;" onclick="getUserLocation()">내 주변 병원 찾기</button>
+        <div class="kakaoMap-area" style="width:100%;height: 700px;">  <!-- height: 400px; -->
+            <div id="map" style="width:100%;height:100%; margin-top: 50px;">
+                <button style="position: absolute; z-index: 2; margin: 20px;" onclick="getUserLocation()">내 주변 병원 찾기</button>
             </div>
         </div>
     </section>
