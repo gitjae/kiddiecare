@@ -37,6 +37,9 @@
                         <div class="notifi-area"></div>
                     </div>
                 </div>
+                <c:if test="${!empty Ykiho}">
+                    <a class="admin-a" href="/adminIndex">병원관리</a>
+                </c:if>
                 <a class="searchHos" href="/hospital/Search">동네병원</a>
                 <a class="mypage-a" href="/mypage">마이페이지</a>
                 <a class="logout-a" href="" onclick="logout()">로그아웃</a>
