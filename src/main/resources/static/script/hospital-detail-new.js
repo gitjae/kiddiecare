@@ -2,6 +2,9 @@
 //     getHospInfoDetail();
 //     getTotalInfo();
 // }
+let ykihoD = null;
+// ykiho = document.getElementById('hospital-name').getAttribute('ykiho');
+// console.log("ykiho : ", ykiho);
 
 function getSgguCdFromUrl() {
     const currentUrl = new URL(window.location.href);
@@ -33,6 +36,7 @@ function getHospInfoDetail() {
             if (res.dbHospitalData) {
                 document.getElementById('hospital-name').textContent = res.dbHospitalData.hospitalName;
                 document.getElementById('hospital-name').setAttribute('ykiho', res.dbHospitalData.ykiho);
+                ykihoD = res.dbHospitalData.ykiho;
                 document.getElementById('hospital-intro').textContent = res.dbHospitalData.hospitalIntro;
 
                 // 의사 정보 처리
@@ -52,8 +56,6 @@ function getHospInfoDetail() {
 
                     doctorContainer.appendChild(doctorCard);
                 });
-                // 찜 기능 수정중 -- 희수
-                // handleLikeFeature(res.dbHospitalData.ykiho);
             }
         })
         .fail(err => {
@@ -61,32 +63,59 @@ function getHospInfoDetail() {
         });
 }
 
-// 찜
-function handleLikeFeature(ykiho) {
-    let userName = document.getElementById('loggedInUser').value;
-    console.log("*** userName : ", userName)
-    console.log("*** ykiho : ", ykiho);
-
-    let userNo = getUserNoByName(userName);
-    console.log("*** userNo : ", userNo);       // 안ㄴㅏ옴!!
-    // 찜 기능 나머지
+// 찜 (좋아요)
+function likeHospital() {
+    $.ajax({
+        method: 'POST',
+        url: `/api/like/${ykihoD}`
+    })
+        .done(function () {
+            console.log("Liked the hospital successfully!");
+            updateLikeButtons(true);
+        })
+        .fail(function (err) {
+            console.error("Error while liking the hospital:", err.responseText);
+        });
 }
 
-// 회원 아이디로 no 찾기
-function getUserNoByName(userName) {
-    let userNo;
+function unlikeHospital() {
+    $.ajax({
+        method: 'DELETE',
+        url: `/api/like/userNo/${ykihoD}`
+    })
+        .done(function () {
+            console.log("Unliked the hospital successfully!");
+            updateLikeButtons(false);
+        })
+        .fail(function (err) {
+            console.error("Error while unliking the hospital:", err.responseText);
+        });
+}
+
+function updateLikeButtons(isLiked) {
+    const noLikes = document.querySelectorAll('.noLike');
+    const yesLikes = document.querySelectorAll('.yesLike');
+
+    noLikes.forEach(noLike => {
+        noLike.style.display = isLiked ? "none" : "block";
+    });
+
+    yesLikes.forEach(yesLike => {
+        yesLike.style.display = isLiked ? "block" : "none";
+    });
+}
+
+function checkLikeStatus(userNo, ykiho) {
     $.ajax({
         method: 'GET',
-        url: `/api/v1/users/userno?name=${userName}`,
-        async: false
+        url: `/api/like/existence?userNo=${userNo}&ykiho=${ykiho}`
     })
-        .done(res => {
-            userNo = res.no;
+        .done(function (isLiked) {
+            updateLikeButtons(isLiked);
         })
-        .fail(err => {
-            console.error("Error:", err);
+        .fail(function (err) {
+            console.error("Error while checking like status:", err.responseText);
         });
-    return userNo;
 }
 
 function getTotalInfo() {

@@ -2,30 +2,56 @@ package com.spring.kiddiecare.controller;
 
 import com.spring.kiddiecare.domain.likeHospital.LikeHospital;
 import com.spring.kiddiecare.domain.likeHospital.LikeHospitalRepository;
-import com.spring.kiddiecare.domain.likeHospital.LikeHospitalRequestDto;
+import com.spring.kiddiecare.domain.user.User;
+import com.spring.kiddiecare.domain.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpSession;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @RestController
 public class LikeController {
     private final LikeHospitalRepository likeHospitalRepository;
+    private final UserRepository userRepository;
 
+    @PostMapping("/api/like/{ykiho}")
+    public void likeHospital(HttpSession session, @PathVariable String ykiho) {
+        String id = (String) session.getAttribute("log");
+        Optional<User> foundUser = userRepository.findUserById(id);
 
-    @PostMapping("/api/like")
-    public void likeHospital(@RequestBody LikeHospitalRequestDto requestDto) {
-        LikeHospital likeHospital = new LikeHospital(requestDto);
-        likeHospitalRepository.save(likeHospital);
+        if(foundUser.isPresent()) {
+            User user = foundUser.get();
+            LikeHospital likeHospital = new LikeHospital();
+
+            likeHospital.setYkiho(ykiho);
+            likeHospital.setUserNo(user.getNo());
+
+            likeHospitalRepository.save(likeHospital);
+        }
     }
 
     @DeleteMapping("/api/like/{userNo}/{ykiho}")
-    public void unlikeHospital(@PathVariable int userNo, @PathVariable String ykiho) {
-        LikeHospital existingLikeHospital = likeHospitalRepository.findByUserNoAndYkiho(userNo, ykiho);
-        likeHospitalRepository.delete(existingLikeHospital);
+    public void unlikeHospital(HttpSession session,@PathVariable String ykiho) {
+        String id = (String) session.getAttribute("log");
+        Optional<User> foundUser = userRepository.findUserById(id);
+        if(foundUser.isPresent()) {
+            User user = foundUser.get();
+            LikeHospital existingLikeHospital = likeHospitalRepository.findByUserNoAndYkiho(user.getNo(), ykiho);
+            likeHospitalRepository.delete(existingLikeHospital);
+        }
     }
 
     @GetMapping("/api/like/existence")
-    public boolean isLiked(@RequestParam int userNo, @RequestParam String ykiho) {
-        return likeHospitalRepository.existsByUserNoAndYkiho(userNo, ykiho);
+    public boolean isLiked(HttpSession session, @RequestParam String ykiho) {
+        String id = (String) session.getAttribute("log");
+        Optional<User> foundUser = userRepository.findUserById(id);
+
+        if (foundUser.isPresent()) {
+            User user = foundUser.get();
+            return likeHospitalRepository.existsByUserNoAndYkiho(user.getNo(), ykiho);
+        }
+        return false;
     }
 }

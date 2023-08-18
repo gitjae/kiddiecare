@@ -3,6 +3,8 @@ window.onload = function () {
     buildCalendar();
     getTotalInfo();
     handleLikeFeature(ykiho);
+    console.log(userNo);
+    console.log(ykiho);
 }
 
 let ykiho = null;
