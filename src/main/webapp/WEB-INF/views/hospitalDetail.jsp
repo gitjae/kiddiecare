@@ -7,7 +7,7 @@
     <link href="/css/common.css" rel="stylesheet">
     <link href="/css/hospital-detail-css.css" rel="stylesheet">
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=89098ae2758f1c766fe8ab93b869f264"></script>
-    <script src="/script/hospital-detail-kakaomap.js"></script>
+
 </head>
 <c:import url="header.jsp"></c:import>
 <body>
@@ -118,12 +118,19 @@
                     </c:forEach>
                 </div>
             </div>
+            <div id="doctor-cards">
+
+            </div>
 
             <button id="booking-btn" data-ykiho="${hospital.ykiho}">예약하기</button>
         </div>
     </section>
 </div>
-<script src="/script/hospital-detail.js"></script>
+<%--<script src="/script/hospital-detail.js"></script>--%>
+<script src="/script/hospital-detail-kakaomap.js"></script>
+<script src="/script/Calendar.js"></script>
+<script src="/script/hospital-detail-new.js"></script>
+<script src="/script/hospital-detail-onload.js"></script>
 </body>
 <c:import url="footer.jsp"></c:import>
 </html>

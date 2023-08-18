@@ -40,7 +40,7 @@ function passwordUpdate(){
         return false;
     }
 
-    if(passwordNew != pwChk){
+    if(passwordNew != passwordChk){
         $("#passwordChk").val("");
         alert("비밀번호확인");
         return false;

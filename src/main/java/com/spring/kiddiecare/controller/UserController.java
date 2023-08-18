@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.json.JSONObject;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.context.request.WebRequest;
@@ -27,6 +28,7 @@ import java.util.Optional;
 public class UserController {
     private final UserService userService;
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @PostMapping("join")
     public Map join(@RequestBody UserRequestDto userDto){
@@ -40,7 +42,9 @@ public class UserController {
             return jsonObject.toMap();
         }
 
+        String encodedPassword = passwordEncoder.encode(userDto.getPassword());
         User user = new User(userDto);
+        user.setPassword(encodedPassword);
 
         userRepository.save(user);
 
@@ -60,8 +64,11 @@ public class UserController {
     }
 
     @PutMapping("user/{id}/update")
-    public Map updateUser(@PathVariable String id, @RequestBody UserRequestDto userDto){
+    public Map updateUser(@PathVariable String id, @RequestBody UserRequestDto userDto, WebRequest request){
         JSONObject json = new JSONObject();
+        String log = (String) request.getAttribute("log", WebRequest.SCOPE_SESSION);
+
+        if(!log.equals(id)){return json.put("update", "fail").toMap();}
 
         boolean check = userService.updateUser(id, userDto);
 
@@ -76,6 +83,9 @@ public class UserController {
     @DeleteMapping("user/{id}/delete")
     public Map deleteUser(@PathVariable String id, WebRequest request, SessionStatus status){
         JSONObject json = new JSONObject();
+        String log = (String) request.getAttribute("log", WebRequest.SCOPE_SESSION);
+
+        if(!log.equals(id)){return json.put("delete", "fail").toMap();}
 
         boolean check = userService.deleteUser(id);
 
@@ -274,14 +284,22 @@ public class UserController {
         return userRepository.findUserByNo(no);
     }
 
-    @GetMapping("/userno")      // 수정 필요
-    public ResponseEntity<User> getUserNo(@RequestParam String name) {
-        User user = userService.findByUserName(name);
-        if (user != null) {
-            return new ResponseEntity<>(user, HttpStatus.OK);
+    @GetMapping("/getUserNoBySession")
+    public ResponseEntity<Integer> getUserNoBySession(HttpSession session) {
+        String loggedInUserName = (String) session.getAttribute("log");
+
+        if (loggedInUserName == null) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED); // 로그인되지 않은 사용자
+        }
+
+        Integer userNo = userService.findNoById(loggedInUserName);
+        if (userNo != null) {
+            return new ResponseEntity<>(userNo, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+
+
 }
 

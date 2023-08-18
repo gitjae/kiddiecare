@@ -53,14 +53,31 @@ $(document).ready(function() {
             $(".notifi-area").append(alarm);
         }
 
+        // function countAdd() {
+        //     let cnt = Number($('#count').text() === "" ? 0 : $('#count').text());
+        //     $('#count').text(cnt + 1);
+        //
+        // }
+
         function countAdd() {
             let cnt = Number($('#count').text() === "" ? 0 : $('#count').text());
+            if (cnt === 0) { // 알림이 없을 때 새 알림 도착하면 display 속성변경
+                $('#count').css('display', 'inline-block').show();
+            }
             $('#count').text(cnt + 1);
         }
 
+        // function alarmAdd() {
+        //     let cnt = Number($('#alarm').text() === "" ? 0 : $('#alarm').text());
+        //     $('#alarm').text(cnt + 1).show();
+        // }
+
         function alarmAdd() {
             let cnt = Number($('#alarm').text() === "" ? 0 : $('#alarm').text());
-            $('#alarm').text(cnt + 1).show();
+            if (cnt === 0) { // 알림이 없을 때 새 알림 도착하면 display 속성변경
+                $('#alarm').css('display', 'inline-block').show();
+            }
+            $('#alarm').text(cnt + 1);
         }
     }
 

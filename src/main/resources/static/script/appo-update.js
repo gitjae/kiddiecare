@@ -18,7 +18,8 @@ function appoUpdate(){
         contentType:'application/json; charset=utf-8'
     }).done(res => {
         if(res.update == 'success'){
-            alert('수정 성공');
+            alert('예약을 수정했습니다.');
+            location.href = '/mypage';
         } else {
             alert('예약 수정에 실패했습니다.');
         }
