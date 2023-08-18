@@ -11,7 +11,7 @@ import javax.persistence.Table;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "like")
+@Table(name = "likeHospital")
 @Entity
 public class LikeHospital {
     @Id

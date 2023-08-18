@@ -51,11 +51,9 @@ public class UserService {
     }
 
     // 아이디로 유저 이름 찾기 -> 병원 찜
-    public String findNameById(String id) {
-        return userRepository.findNameById(id).orElse(null);
+    public Integer findNoById(String id) {
+        Optional<User> user = userRepository.findUserById(id);
+        return user.map(User::getNo).orElse(null);
     }
 
-    public User findByUserName(String name) {
-        return userRepository.findByName(name).orElse(null);
-    }
 }

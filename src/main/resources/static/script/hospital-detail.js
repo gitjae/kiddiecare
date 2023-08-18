@@ -2,8 +2,10 @@ window.onload = function () {
     getHospInfoDetail();
     buildCalendar();
     getTotalInfo();
+    handleLikeFeature(ykiho);
 }
 
+let ykiho = null;
 let nowMonth = new Date();
 let today = new Date();
 today.setHours(0, 0, 0, 0);
@@ -178,6 +180,7 @@ function leftPad(value) {
     }
     return value;
 }
+
 // ----------------------------------------------
 function getHospitalNameFromUrl() {
     const currentUrl = new URL(window.location.href);
@@ -211,7 +214,7 @@ function getHospInfoDetail() {
         url: `/api/appointment/hospitalDetail?hospitalName=${hospitalName}`,
     })
         .done(res => {
-            console.log(res);
+            // console.log(res);
             if (res.dbHospitalData) {
                 document.getElementById('hospital-name').textContent = res.dbHospitalData.hospitalName;
                 document.getElementById('hospital-name').setAttribute('ykiho', res.dbHospitalData.ykiho);
@@ -243,33 +246,103 @@ function getHospInfoDetail() {
         });
 }
 
-// 찜
+
+// 찜 (좋아요)
+let userName = null;
 function handleLikeFeature(ykiho) {
-    let userName = document.getElementById('loggedInUser').value;
-    console.log("*** userName : ", userName)
+    userName = document.getElementById('loggedInUser').value;
+    console.log("*** userName : ", userName);
     console.log("*** ykiho : ", ykiho);
 
-    let userNo = getUserNoByName(userName);
-    console.log("*** userNo : ", userNo);       // 안ㄴㅏ옴!!
-    // 찜 기능 나머지
+    getUserNoBySession()
+        .then(userNo => {
+            console.log("*** userNo : ", userNo);
+            checkLikeStatus(userNo, ykiho);
+            // 찜 기능 나머지
+        })
+        .catch(err => {
+            console.error("Error while getting userNo:", err.responseText);
+        });
 }
 
-// 회원 아이디로 no 찾기
-function getUserNoByName(userName) {
-    let userNo;
+function getUserNoBySession() {
+    return new Promise((resolve, reject) => {
+        $.ajax({
+            method: 'GET',
+            url: `/api/v1/users/getUserNoBySession`,
+        })
+            .done(res => {
+                resolve(res);
+            })
+            .fail(err => {
+                console.error("Error:", err.responseText);
+                reject(err);
+            });
+    });
+}
+
+// 실제 좋아요 기능
+function likeHospital(userNo, ykiho) {
+    $.ajax({
+        method: 'POST',
+        url: `/api/like`,
+        contentType: "application/json",
+        data: JSON.stringify({
+            userNo: userNo,
+            ykiho: ykiho
+        })
+    })
+        .done(function() {
+            console.log("Liked the hospital successfully!");
+            updateLikeButtons(true);
+        })
+        .fail(function(err) {
+            console.error("Error while liking the hospital:", err.responseText);
+        });
+}
+
+function unlikeHospital(userNo, ykiho) {
+    $.ajax({
+        method: 'DELETE',
+        url: `/api/like/${userNo}/${ykiho}`
+    })
+        .done(function() {
+            console.log("Unliked the hospital successfully!");
+            updateLikeButtons(false);
+        })
+        .fail(function(err) {
+            console.error("Error while unliking the hospital:", err.responseText);
+        });
+}
+
+function updateLikeButtons(isLiked) {
+    const noLikes = document.querySelectorAll('.noLike');
+    const yesLikes = document.querySelectorAll('.yesLike');
+
+    noLikes.forEach(noLike => {
+        noLike.style.display = isLiked ? "none" : "block";
+    });
+
+    yesLikes.forEach(yesLike => {
+        yesLike.style.display = isLiked ? "block" : "none";
+    });
+}
+
+// 페이지 로딩 시 좋아요 유무 체크
+function checkLikeStatus(userNo, ykiho) {
     $.ajax({
         method: 'GET',
-        url: `/api/v1/users/userno?name=${userName}`,
-        async: false
+        url: `/api/like/existence?userNo=${userNo}&ykiho=${ykiho}`
     })
-        .done(res => {
-            userNo = res.no;
+        .done(function(isLiked) {
+            updateLikeButtons(isLiked);
         })
-        .fail(err => {
-            console.error("Error:", err);
+        .fail(function(err) {
+            console.error("Error while checking like status:", err.responseText);
         });
-    return userNo;
 }
+
+
 
 function getTotalInfo() {
     const hospitalName = getHospitalNameFromUrl();
@@ -283,7 +356,7 @@ function getTotalInfo() {
             sgguCd: sgguCd
         }
     }).done(res => {
-        console.log(res);
+        // console.log(res);
         const BD = res.data.hospBasisData;
         const DD = res.data.hospDetailData;
         const LD = res.data.hospListData;
