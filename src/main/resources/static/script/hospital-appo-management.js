@@ -117,23 +117,34 @@ document.getElementById('time-list').addEventListener("click", (event) => {
 
                     const statusDropdown = tr.querySelector('select');
                     statusDropdown.addEventListener('change', (event) => {
-                        const selectedValue = event.target.value;
-                        console.log(`Selected value:  ${selectedValue}`);
-                        let selectedAppoNo = tr.dataset.appoNo;
-                        console.log(selectedAppoNo);
 
-                        $.ajax({
-                            url: '/api/v1/admin/appo/modifyAdminAppo/appoStatusChange',
-                            method: 'PUT',
-                            data:{
-                                appoNo: selectedAppoNo,
-                                status: selectedValue
-                            }
-                        }).done(function (result) {
-                            console.log(result.status)
-                        }).fail(function (error) {
-                            console.log(error);
-                        })
+                        let result = confirm(`
+                            * 예약상태 변경
+                            ${parseInt(event.target.value)}상태로 수정하시겠습니까?
+                        `)
+
+                        if(result){
+                            const selectedValue = event.target.value;
+                            console.log(`Selected value:  ${selectedValue}`);
+                            let selectedAppoNo = tr.dataset.appoNo;
+                            console.log(selectedAppoNo);
+
+                            $.ajax({
+                                url: '/api/v1/admin/appo/modifyAdminAppo/appoStatusChange',
+                                method: 'PUT',
+                                data:{
+                                    appoNo: selectedAppoNo,
+                                    status: selectedValue
+                                }
+                            }).done(function (result) {
+                                console.log(result.status)
+                                alert('상태변경 성공');
+                            }).fail(function (error) {
+                                console.log(error);
+                                alert('상태변경 실패');
+                            })
+                        }
+
                     })
 
 

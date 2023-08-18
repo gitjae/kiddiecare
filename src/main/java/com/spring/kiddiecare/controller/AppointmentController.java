@@ -88,36 +88,8 @@ public class AppointmentController {
         return json.toMap();
     }
 
-    @Transactional
-    @PostMapping("timeset-create")
-    public void timeset_create(@RequestBody Map<String, List<TimeSlotsLimitRequestDto>> data) {
-        for (String key : data.keySet()) {
-            List<TimeSlotsLimitRequestDto> dataList = data.get(key);
-            for (TimeSlotsLimitRequestDto rowData : dataList) {
-                String date = rowData.getDate();
-                String weekday = rowData.getWeekday();
-                int time = rowData.getTime();
-                int max = rowData.getMax();
-                // max랑 동일하게
-                int enable = rowData.getMax();
-                rowData.setEnable(enable);
-                // 임시
-//                rowData.setDoctorNo(2);
-//                rowData.setYkiho("JDQ4MTYyMiM1MSMkMSMkMCMkODkkMzgxMzUxIzExIyQxIyQzIyQ3OSQyNjE4MzIjNDEjJDEjJDgjJDgz");
 
-                // 잘 들어와졌는지 테스트
-//                System.out.println("date " + date);
-//                System.out.println("weekday " + weekday);
-//                System.out.println("time " + time);
-//                System.out.println("max " + max);
-//                System.out.println("enable " + enable);
 
-                TimeSlotsLimit timeSlotsLimit = new TimeSlotsLimit(rowData);
-                System.out.println(timeSlotsLimit);
-                timeSlotsLimitRepository.save(timeSlotsLimit);
-            }
-        }
-    }
 
 
     // 충돌나서 주석처리.
