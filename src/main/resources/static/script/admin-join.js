@@ -1,3 +1,6 @@
+/* 병원 요양 정보 */
+var selectYkiho = {};
+
 /* 이메일 + 병원명 + ID 중복값 체크 */
 let chkAdminEmail = false;
 let chkAdminHospName = false;
@@ -16,6 +19,7 @@ $(document).on('click', '.hosp-data', function() {
     const selectedAddress = $(this).find('span:last-child').text().substring(3);
     $('#hosp-name').val(selectedHosp);
     $('#hosp-address').val(selectedAddress);
+    $('#hosp-ykiho').val(selectYkiho[selectedHosp]);
     if($('#hosp-name').val() !== "" && $('#hosp-address').val() !== ""){
         $('#hosp-name-null').hide();
         $('#hosp-name').parent().css('border-color', 'lightgrey');
@@ -212,6 +216,9 @@ function searchHospName() {
                                 <span>주소:${hospData.addr}</span>
                             </a>
                         </div> `;
+                        let hospName = item.yadmNm;
+                        let hospYkiho = hospData.ykiho;
+                        selectYkiho[hospName] = hospYkiho;
                         $('.hosp-list').append(html); //병원 리스트
                     });
                 }else{
@@ -233,7 +240,7 @@ function sendAuthToken() {
     if (!regExp.test(email)) {
         alert("이메일 형식이 맞지 않습니다.");
     } else {
-        $('#admin-email').prop('disabled', true);
+        $('#admin-email-btn').prop('disabled', true);
         $.ajax({
             type: "POST",
             url: "/email/create",
@@ -244,6 +251,7 @@ function sendAuthToken() {
                     // 인증코드 입력란 활성화 등 필요한 코드 작성
                     console.log(response.verification_duration);
                     console.log(response.verification_code);
+                    $('#admin-email-btn').prop('disabled', false);
                 } else {
                     console.log(response.result === "FAIL");
                     alert("인증번호 전송에 실패하였습니다. 잠시 후 다시 시도해주세요.");
@@ -300,8 +308,8 @@ function checkValue(htmlForm) {
     }
 
     /* 아이디 유효성 검사 */
-    let adminId = $('#admin-id').val();
-    if (adminId === "") {
+    let id = $('#admin-id').val();
+    if (id === "") {
         $('#admin-id-null').show().css('color', 'red');
         $('#admin-id').parent().css('border-color', 'red').focus();
         check = false;
@@ -349,7 +357,7 @@ function checkValue(htmlForm) {
         $('#admin-name-null').show().css('color','red');
         check = false;
     }
-    if(nameChk.test(name)){
+    if(!nameChk.test(name)){
         $('#chk-admin-name').show().css('color','red');
         check = false;
     }
@@ -382,19 +390,19 @@ function checkValue(htmlForm) {
     //     check = false;
     // }
 
-    if(!chkAdminHospName){
-        alert("병원 정보를 입력 해주세요.");
-        check = false;
-    }
-
-    if(!chkAdminIdValue){
-        alert("아이디 중복확인을 해주세요.")
-        check = false;
-    }
+    // if(!chkAdminHospName){
+    //     alert("병원 정보를 입력 해주세요.");
+    //     check = false;
+    // }
+    //
+    // if(!chkAdminIdValue){
+    //     alert("아이디 중복확인을 해주세요.")
+    //     check = false;
+    // }
 
     /* 서버 검증 결과 확인 */
     if (check) {
-        console.log("dd 됨")
         htmlForm.submit();
+        location.href = "/login";
     }
 }

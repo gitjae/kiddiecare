@@ -21,7 +21,7 @@
     <div id="background-area">
         <div id="main-section">
 
-            <form method="POST" action="/admin/info/join">
+            <form method="POST" action="/admin/info/join" enctype="multipart/form-data">
                 <h1 id="title">병원 관계자 회원가입</h1>
 
                 <div class="input-box">
@@ -52,10 +52,11 @@
                 <div class="input-box">
                     <label for="hosp-address">병원주소 </label>
                     <input type="text" id="hosp-address" name="hosp-address" placeholder="병원 주소가 표시됩니다." readonly />
+                    <input type="hidden" id="hosp-ykiho" name="ykiho">
                 </div>
                 <div class="input-box">
                     <label for="admin-id">아이디 </label>
-                    <input type="text" id="admin-id" name="admin-id" placeholder="아이디를 입력해주세요." />
+                    <input type="text" id="admin-id" name="adminId" placeholder="아이디를 입력해주세요." />
                     <input type="button" id="admin-id-btn" class="button-style" name="admin-id-btn" value="중복 확인" onclick="chkAdminId()" />
                     <div class="err-box">
                         <span class="err" id="admin-id-err"></span>
@@ -66,7 +67,7 @@
                 </div>
                 <div class="input-box">
                     <label for="admin-pw">비밀번호 </label>
-                    <input type="password" id="admin-pw" name="admin-pw" placeholder="비밀번호를 입력해주세요." />
+                    <input type="password" id="admin-pw" name="adminPw" placeholder="비밀번호를 입력해주세요." />
                     <div class="err-box">
                         <p class="err">*특수문자는 '! @ # $ % ^ & +='만 사용 가능합니다.<br></p>
                         <span class="err" id="chk-admin-pw">비밀번호를 입력해주세요.<br></span>
@@ -84,7 +85,7 @@
                 </div>
                 <div class="input-box">
                     <label for="admin-email">이메일 </label>
-                    <input type="email" id="admin-email" name="admin-email" placeholder="이메일을 입력해주세요." />
+                    <input type="text" id="admin-email" name="adminEmail" placeholder="이메일을 입력해주세요." />
                     <input type="button" id="admin-email-btn" class="button-style" name="admin-email-btn" value="이메일 인증" onclick="sendAuthToken()" />
                     <div class="err-box">
                         <span class="err" id="admin-email-null"> 이메일을 입력해주세요.<br></span>
@@ -93,7 +94,7 @@
                 </div>
                 <div class="input-box">
                     <label for="auth-code">이메일 인증번호 </label>
-                    <input type="email" id="auth-code" name="admin-email" placeholder="이메일 인증번호를 입력해주세요." />
+                    <input type="email" id="auth-code" name="auth-code" placeholder="이메일 인증번호를 입력해주세요." />
                     <input type="button" id="chk-auth-code-btn" class="button-style" name="admin-email-btn" value="인증번호 확인" onclick="checkAuthToken()" />
                     <div class="err-box">
                         <span class="err" id="chk-email"> 이메일 인증을 해주세요.<br></span>
@@ -101,7 +102,7 @@
                 </div>
                 <div class="input-box">
                     <label for="admin-name">관리자 이름</label>
-                    <input type="text" id="admin-name" name="admin-name" placeholder="병원 관계자 이름을 입력해주세요." />
+                    <input type="text" id="admin-name" name="adminName" placeholder="병원 관계자 이름을 입력해주세요." />
                     <div class="err-box">
                         <span class="err" id="admin-name-null">이름을 입력해주세요.<br></span>
                         <span class="err" id="chkNotice3"></span>
@@ -109,7 +110,7 @@
                 </div>
                 <div class="input-box">
                     <label for="doctor-name">원장의사 이름</label>
-                    <input type="text" id="doctor-name" name="admin-attach" placeholder="원장의사 이름을 입력해주세요." />
+                    <input type="text" id="doctor-name" name="doctorName" placeholder="원장의사 이름을 입력해주세요." />
                     <div class="err-box">
                         <span class="err" id="doctor-name-null">의사정보를 제공해주세요.<br></span>
                         <span class="err" id="chkNotice4"></span>
@@ -117,7 +118,7 @@
                 </div>
                 <div class="input-box">
                     <label for="admin-attach">의료기관 개설 허가증/의사 면허/사업자 등록증 첨부</label>
-                    <input type="file" id="admin-attach" name="admin-attach" accept=".png,.jpg" size="10000000"/>
+                    <input type="file" id="admin-attach" name="file" accept=".png,.jpg" size="10000000"/>
                     <div class="err-box">
                         <span class="err" id="admin-file-null">증빙자료를 제공해주세요.</span>
                     </div>

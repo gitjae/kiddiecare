@@ -5,6 +5,7 @@ import com.spring.kiddiecare.domain.hospitalAdmin.AdminRepository;
 import com.spring.kiddiecare.domain.hospitalAdmin.AdminRequestDto;
 import com.spring.kiddiecare.service.AdminService;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.event.spi.SaveOrUpdateEvent;
 import org.json.JSONObject;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
@@ -40,8 +41,8 @@ public class AdminController {
     }
 
 
-    @PostMapping("join")
-    public Map adminJoin(@RequestBody AdminRequestDto adminDto){
+    @PostMapping(value ="join", consumes = {"multipart/form-data"})
+    public Map adminJoin(@ModelAttribute AdminRequestDto adminDto){
         JSONObject result = new JSONObject();
 
         System.out.println("adminDto값 확인"+adminDto);
@@ -59,6 +60,8 @@ public class AdminController {
             // DB에 넣을 데이터 생성
             Admin admin = new Admin(adminDto);
 
+            System.out.println("처음 어드민"+admin);
+
             // 사진 파일 올리기
             String saveFile = imageUploadController.uploadFile(adminDto.getFile(),adminDto.getAdminId());
             if(saveFile == null){
@@ -70,16 +73,18 @@ public class AdminController {
             String encodedPassword = passwordEncoder.encode(adminDto.getAdminPw());
             admin.setAdminPw(encodedPassword);
 
+            System.out.println("나중 어드민"+admin);
             // DB에 저장
             try {
                 adminService.joinAdminUserByAdmin(admin);
+                result.put("response","success");
             }catch (Exception e){
+                System.out.println(e);
                 result.put("response","fail cause db error");
             }
         }else{
             result.put("response","fail cause user that already exists");
         }
-
         return result.toMap();
     }
 
