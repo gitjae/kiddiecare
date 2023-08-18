@@ -8,10 +8,10 @@ function getSgguCdFromUrl() {
 
 // 예약하기 버튼 액션
 document.getElementById("booking-btn").onclick = function () {
-    if (!sessionStorage.getItem('log')) {
-        alert("병원 예약은 로그인 후 이용 가능합니다.");
-        return;
-    }
+    // if (!sessionStorage.getItem('log') === null) {
+    //     alert("병원 예약은 로그인 후 이용 가능합니다.");
+    //     return;
+    // } sessionStorage 사용하지 말고 ajax로 세션에 저장된 log 찾아서
     let hospitalName = encodeURIComponent(getHospitalNameFromUrl().trim());
     location.href = `/appointment/booking?hospitalName=${hospitalName}&treatmentDate=${formattedDate}&treatmentDay=${selectDay}&doctorNo=${selectedSlotInfo.doctorNo}&slotTime=${selectedSlotInfo.time}&slotWeekday=${selectedSlotInfo.weekday}&timeSlotNo=${selectedSlotInfo.timeSlotNo}`;
 }

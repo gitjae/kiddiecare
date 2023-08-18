@@ -4,7 +4,7 @@ window.onload = function() {
     });
 
     document.getElementById('admin-appo').addEventListener('click', e => {
-        window.location = '/admin/appointment';
+        window.location = '/adminIndex';
     });
 
     document.getElementById('user-myPage').addEventListener('click', e => {
