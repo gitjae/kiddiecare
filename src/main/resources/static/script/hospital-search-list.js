@@ -65,3 +65,10 @@ function ajaxRequest(data, url){
         }
     })
 }
+
+
+function search(){
+    const keyword = $('#search-input').val();
+
+    location.href = `/hospital/Search?keyword=${keyword}`;
+}

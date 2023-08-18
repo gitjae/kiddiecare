@@ -23,8 +23,10 @@ public class UserService {
         Optional<User> foundUser = userRepository.findUserById(id);
 
         if(!foundUser.isEmpty()){
-            String encodedPassword = passwordEncoder.encode(userDto.getPassword());
-            userDto.setPassword(encodedPassword);
+            if(userDto.getPassword() != null){
+                String encodedPassword = passwordEncoder.encode(userDto.getPassword());
+                userDto.setPassword(encodedPassword);
+            }
             User user = foundUser.get();
             user.update(userDto);
 

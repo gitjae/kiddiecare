@@ -32,7 +32,7 @@ public class LikeController {
         }
     }
 
-    @DeleteMapping("/api/like/{userNo}/{ykiho}")
+    @DeleteMapping("/api/like/{ykiho}")
     public void unlikeHospital(HttpSession session,@PathVariable String ykiho) {
         String id = (String) session.getAttribute("log");
         Optional<User> foundUser = userRepository.findUserById(id);
@@ -43,15 +43,20 @@ public class LikeController {
         }
     }
 
-    @GetMapping("/api/like/existence/{ykiho}")
+    @GetMapping("/api/like/{ykiho}")
     public boolean isLiked(HttpSession session, @PathVariable String ykiho) {
         String id = (String) session.getAttribute("log");
         Optional<User> foundUser = userRepository.findUserById(id);
+        boolean check = false;
         if (foundUser.isPresent()) {
             User user = foundUser.get();
-            return likeHospitalRepository.existsByUserNoAndYkiho(user.getNo(), ykiho);
+            // check = likeHospitalRepository.existsByUserNoAndYkiho(user.getNo(), ykiho);
+            Optional<LikeHospital> found = likeHospitalRepository.findLikeHospitalByUserNoAndYkiho(user.getNo(), ykiho);
+            if(found.isPresent()){
+                check = true;
+            }
         }
-        return false;
+        return check;
     }
 
 }

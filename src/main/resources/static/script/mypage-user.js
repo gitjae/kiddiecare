@@ -7,7 +7,7 @@ function sectionChange(nav){
 }
 
 function gotoQuit(){
-    location.href = '/quitUser';
+    location.href = '/user/quit';
 }
 
 function gotoUpdate(){

@@ -120,17 +120,17 @@ public class UserController {
 
         String message = "[우리동네소아과] 인증번호 [" + code + "]를 입력해주세요.";
 
-        // 임시 문자 발송 제한
+        /*// 임시 문자 발송 제한
         session.setAttribute("code", code);
         session.setAttribute("time", LocalDateTime.now());
         System.out.println(code);
         System.out.println(LocalDateTime.now());
         jsonObject.put("send","success");
         jsonObject.put("dupl","false");
-        jsonObject.put("code",code);
+        jsonObject.put("code",code);*/
 
         // 문자발송 코드
-        /*Map responseBody = null;
+        Map responseBody = null;
         try {
             responseBody = smsSender.sendSms(number, message);
             if(responseBody != null){
@@ -149,7 +149,7 @@ public class UserController {
             throw new RuntimeException(e);
         }
 
-        jsonObject.put("send","fail");*/
+        jsonObject.put("send","fail");
         return jsonObject.toMap();
     }
 
@@ -158,6 +158,7 @@ public class UserController {
         JSONObject jsonObject = new JSONObject();
 
         int phone = userDto.getPhone();
+        String number = String.valueOf(phone);
         String name = userDto.getName();
         String id = userDto.getId();
         Optional<User> foundUser = userRepository.findUserByIdAndNameAndPhone(id, name, phone);
@@ -168,16 +169,16 @@ public class UserController {
 
             String message = "[우리동네소아과] 인증번호 [" + code + "]를 입력해주세요.";
 
-            // 임시 문자 발송 제한
+            /*// 임시 문자 발송 제한
             session.setAttribute("code", code);
             session.setAttribute("time", LocalDateTime.now());
             System.out.println(code);
             System.out.println(LocalDateTime.now());
             jsonObject.put("send","success");
-            jsonObject.put("code",code);
+            jsonObject.put("code",code);*/
 
             // 문자발송 코드
-            /*Map responseBody = null;
+            Map responseBody = null;
             try {
                 responseBody = smsSender.sendSms(number, message);
                 if(responseBody != null){
@@ -187,7 +188,7 @@ public class UserController {
                         session.setAttribute("time", LocalDateTime.now());
                         System.out.println(LocalDateTime.now());
                         jsonObject.put("send","success");
-                        jsonObject.put("dupl","false");
+                        //jsonObject.put("dupl","false");
                         jsonObject.put("code",code);
                         return jsonObject.toMap();
                     }
@@ -196,7 +197,7 @@ public class UserController {
                 throw new RuntimeException(e);
             }
 
-            jsonObject.put("send","fail");*/
+            jsonObject.put("send","fail");
             return jsonObject.toMap();
         }
 

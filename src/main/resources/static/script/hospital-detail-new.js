@@ -51,6 +51,8 @@ function getHospInfoDetail() {
                     doctorContainer.appendChild(doctorCard);
                 });
             }
+
+            isLiked();
         })
         .fail(err => {
             console.error("Error:", err);
@@ -84,9 +86,34 @@ function updateButtonBasedOnLikeStatus(isLiked) {
     });
 }
 
-function toggleLike() {
-    const yesLikes = document.querySelector('.yesLike');
-    if (yesLikes.style.display === "block") {
+function isLiked(){
+    const thisYkiho = ykihoD;
+    console.log("y:",thisYkiho);
+    $.ajax({
+        method:'GET',
+        url:`/api/like/${thisYkiho}`
+    }).done(res => {
+        console.log("isLiked:" + res);
+        isLikedHosp = res;
+        displayLikeSymbol();
+    })
+}
+
+function displayLikeSymbol(){
+    $('.likeHospital-area').empty();
+    var img = 'like_empty.png';
+    var className = 'no-like';
+    if(isLikedHosp){
+        img = 'like_full.png';
+        className = 'like';
+    }
+    $('.likeHospital-area').append(`<img className="${className}" src="/image/${img}" onClick="toggleLike(this)">`);
+}
+
+function toggleLike(btn) {
+    //const yesLikes = document.querySelector('.yesLike');
+    const like = $(btn).attr('className') == 'like' ? true : false;
+    if (like) {
         unlikeHospital();
     } else {
         likeHospital();
@@ -100,7 +127,8 @@ function likeHospital() {
     })
         .done(function () {
             console.log("Liked the hospital successfully!");
-            handleLikeStatus(ykihoD);
+            //handleLikeStatus(ykihoD);
+            isLiked();
         })
         .fail(function (err) {
             console.error("Error while liking the hospital:", err.responseText);
@@ -110,11 +138,12 @@ function likeHospital() {
 function unlikeHospital() {
     $.ajax({
         method: 'DELETE',
-        url: `/api/like/userNo/${ykihoD}`
+        url: `/api/like/${ykihoD}`
     })
         .done(function () {
             console.log("Unliked the hospital successfully!");
-            handleLikeStatus(ykihoD);
+            //handleLikeStatus(ykihoD);
+            isLiked();
         })
         .fail(function (err) {
             console.error("Error while unliking the hospital:", err.responseText);

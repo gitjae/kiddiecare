@@ -2,6 +2,20 @@ section{
     display: flex;
 }
 
+.index-search{
+    width: 50%;
+    text-align: end;
+}
+
+.index-search img{
+    width: 17px;
+}
+
+.search-input{
+    width: 50%;
+    margin-right: 10px;
+}
+
 .flex-area{
     display: flex;
     justify-content: space-between;
