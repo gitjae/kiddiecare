@@ -29,9 +29,13 @@
 
             <div class="date-set-area">
                 <h1>날짜 설정</h1>
-                <input type="date" id="start-date">
-                부터 <input type="date" id="end-date">
-                <button id="set-date" onclick="setDate()">날짜 범위 설정</button>
+                <b><p>시작날짜</p></b>
+                <input type="date" id="start-date" class="date-style">
+                부터
+                <b><p>종료날짜</p></b>
+                <input type="date" id="end-date" class="date-style">
+                <button id="set-date">날짜 범위 설정</button>
+<%--                <button id="set-date" onclick="setDate()">날짜 범위 설정</button>--%>
 
                 <div id="except-area">
                     <h3>제외날짜</h3>
@@ -46,12 +50,12 @@
                     <div id="except-days-area">
 
                     </div>
+                    <button id="time-set-btn" onclick="timeSetBtn()">시간 범위 설정하기</button>
                 </div>
-                <button id="time-set-btn" onclick="timeSetBtn()">시간 범위 설정하기</button>
             </div>
 
             <div class="time-set-area">
-                <h1>시간 범위 설정</h1>
+                <h1>요일별 시간 범위 설정</h1>
                 <div id="set-weekday">
 
                 </div>
@@ -63,10 +67,10 @@
                     <h3>점심시간</h3>
                     <input type="checkbox" id="no-lunch">
                     <label for="no-lunch">점심시간 없음</label>
-                    <input type="number" id="l-start-hour" min="1" max="12" value="12"/>
+                    <input type="number" id="l-start-hour" min="1" max="12"/>
                     <input type="number" id="l-start-minute" value="00" readonly/>
                     부터
-                    <input type="number" id="l-end-hour" value="1"/>
+                    <input type="number" id="l-end-hour"/>
                     <input type="number" id="l-end-minute" value="00" readonly/>
                 </div>
 
@@ -74,14 +78,15 @@
                     <h3>저녁시간</h3>
                     <input type="checkbox" id="no-dinner">
                     <label for="no-dinner">저녁시간 없음</label>
-                    <input type="number" id="d-start-hour" min="1" max="12" value="6"/>
+                    <input type="number" id="d-start-hour" min="1" max="12"/>
                     <input type="number" id="d-start-minute" value="00" readonly/>
                     부터
-                    <input type="number" id="d-end-hour" min="1" max="12" value="7"/>
+                    <input type="number" id="d-end-hour" min="1" max="12"/>
                     <input type="number" id="d-end-minute" value="00" readonly/>
                 </div>
 
-                <button onclick="saveTimes()">예약 생성하기</button>
+<%--                <button id="appo-create-btn" onclick="saveTimes()">예약 생성하기</button>--%>
+                <button id="appo-create-btn">예약 생성하기</button>
             </div>
         </div>
     </section>

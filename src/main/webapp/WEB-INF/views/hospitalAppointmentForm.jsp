@@ -1,9 +1,5 @@
 <%--
-  Created by IntelliJ IDEA.
-  User: dldbs
-  Date: 2023-08-08
-  Time: 오후 12:59
-  To change this template use File | Settings | File Templates.
+  ******  안씀  *****
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>

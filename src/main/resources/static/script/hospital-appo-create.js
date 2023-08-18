@@ -7,7 +7,30 @@
 
 let finalList = [];
 let setWeekdayArr = [];
+let doctorAppoDate = [];
 
+// 하루하루 지정하는건 따로 js로 달력을 만들어 줘야해서
+// 컨펌받아야함 날짜 갖고 오는건 되니깐 범위를 일주일 단위로 금지시키면 될듯
+function getDoctorAppoDate(){
+    let adminYkiho = $('#ykiho').val();
+    let no = $('.selected').attr('id');
+    $.ajax({
+        type: "GET",
+        url: "/api/v1/admin/appo/date-list",
+        data: {
+            "ykiho" : adminYkiho ,
+            "no" : no
+        },
+        contentType: "application/json; charset=utf-8",
+        success: function (response) {
+            doctorAppoDate = response.data;
+            console.log(doctorAppoDate);
+        },
+        error: function (error) {
+            console.log("의사 예약 데이터 불러오기 실패");
+        }
+    });
+}
 $(function () {
     let today = new Date();
     today.setDate(today.getDate());
@@ -20,6 +43,7 @@ $(function () {
     const sDay = document.getElementById('start-date');
     const eDay = document.getElementById('end-date');
 
+
     sDay.min = todayDate;
     sDay.max = lastDate;
     sDay.value = todayDate;
@@ -31,19 +55,53 @@ $(function () {
 
 });
 
+// 날짜범위설정 버튼 클릭 시 제외날짜 설정부분 show
+$("#set-date").click(function() {
+    // 의사 선택 확인
+    if (!$('.select-option .option').hasClass('selected')) {
+        alert('의사를 선택해주세요.');
+        return;
+    }
+
+    const startDate = $('#start-date').val();
+    const endDate = $('#end-date').val();
+
+    // 날짜 범위 확인
+    if (startDate === '' || endDate === '') {
+        alert('날짜 범위를 지정해주세요.');
+        return;
+    }
+
+    // 올바른 날짜 범위 확인
+    if (startDate > endDate) {
+        alert('잘못된 날짜 범위입니다. 날짜 범위를 다시 지정해주세요.');
+        return;
+    }
+
+    // 모든 검사를 통과한 경우 except-area 표시해주고 setDate메소드실행
+    $('#except-area').show();
+    setDate();
+});
+
+// time-set-btn 클릭 시 time-set-area 영역 표시
+$('#time-set-btn').click(function (){
+    $('.time-set-area').show();
+    $('.meal-time-set-area').show();
+})
+
 
 // <제외날짜> 날짜 클릭 시 클릭한 날짜 삭제 가능
-document.addEventListener('DOMContentLoaded', function () {
-    const buttonDaysArea = document.getElementById('except-days-area');
+$(document).ready(function() {
+    const buttonDaysArea = $('#except-days-area');
 
-    if (buttonDaysArea) {
-        buttonDaysArea.addEventListener('click', function (event) {
+    if (buttonDaysArea.length > 0) {
+        buttonDaysArea.on('click', function(event) {
             if (event.target.tagName === 'BUTTON') {
-                event.target.remove();
+                $(event.target).remove();
             }
         });
     } else {
-        console.error('except-days-area element not found');
+        console.error('except-days-area 요소 못찾음');
     }
 });
 
@@ -98,7 +156,7 @@ function setDate() {
 // 날짜 범위 설정 끝났을 시 시간 범위 설정하기
 function timeSetBtn() {
     let setDateArr = [];
-    // let setWeekdayArr = [];
+    setWeekdayArr = [];
     let sundayArr = [];
     let exceptDaysArr = [];
 
@@ -174,12 +232,47 @@ function timeSetBtn() {
                 <input type="number" id="end-hour-${i}" min="0" max="24" placeholder="0~24"/>
                 <input type="number" id="end-minute-${i}" value="00" readonly/>
 
-                <input type="text" id="max-num-${i}" placeholder="예약가능인원수 설정">
+                <input type="text" id="max-num-${i}" class="max-num" placeholder="예약가능인원수 설정">
             </div>
         `;
     }
     setWeekday.innerHTML = output;
 }
+
+// 예약 생성하기 버튼 클릭 시 입력되지 않은 영역 예외처리
+$('#appo-create-btn').click(function() {
+    for (let i = 0; i < setWeekdayArr.length; i++) {
+        // 내용이 없으면 alert 표시하고 focus
+        if ($('#start-hour-' + i).val() === "") {
+            alert('시작 시간을 입력해주세요.');
+            $('#start-hour-' + i).focus();
+            return;
+        } else if ($('#end-hour-' + i).val() === "") {
+            alert('끝나는 시간을 입력해주세요.');
+            $('#end-hour-' + i).focus();
+            return;
+        }
+
+        console.log($('#start-hour-' + i).val());
+        console.log($('#end-hour-' + i).val());
+
+        // 시작시간 < 끝시간 예외처리
+        if ($('#start-hour-' + i).val() >= $('#end-hour-' + i).val()) {
+            alert('시간 범위를 확인해주세요.');
+            $('#start-hour-' + i).focus();
+            return;
+        }
+
+        // 예약가능한 인원수 입력 안한 부분 예외처리
+        if($('#max-num-'+ i).val() === ""){
+            alert('예약가능한 인원수를 입력해주세요.');
+            $('#max-num-'+ i).focus();
+        }
+    }
+
+    // 예외 처리를 통과한 경우 saveTimes() 호출
+    saveTimes();
+});
 
 function saveTimes() {
     const dateList = [];

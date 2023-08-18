@@ -1,7 +1,11 @@
 package com.spring.kiddiecare.controller;
 
 import com.spring.kiddiecare.domain.doctor.DoctorRepository;
+import com.spring.kiddiecare.domain.doctor.DoctorResponseDto;
 import com.spring.kiddiecare.domain.hospital.*;
+import com.spring.kiddiecare.domain.hospitalAdmin.Admin;
+import com.spring.kiddiecare.domain.hospitalAdmin.AdminRepository;
+import com.spring.kiddiecare.domain.hospitalAdmin.AdminRequestDto;
 import com.spring.kiddiecare.domain.timeSlotsLimit.TimeSlotsLimit;
 import com.spring.kiddiecare.domain.timeSlotsLimit.TimeSlotsLimitRepository;
 import com.spring.kiddiecare.domain.timeSlotsLimit.TimeSlotsLimitRequestDto;
@@ -14,11 +18,10 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.WebRequest;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.sql.Date;
+import java.util.*;
 
 
 @RestController
@@ -28,12 +31,44 @@ public class AppointmentController {
 
     private final AppoRepository appoRepository;
     private final TimeSlotsLimitRepository timeSlotsLimitRepository;
-    private final DoctorRepository doctorRepository;
+    private final AdminRepository adminRepository;
     private final HospitalAppointmentService hospitalAppointmentService;
     private final AppoResponseRepository appoResponseRepository;
     private final AppoAdminDetailRepository appoAdminDetailRepository;
     private final TimeSlotsLimitService timeSlotsLimitService;
 
+
+    /**
+     * 의사의 ykiho,no를 받아 해당 의사의 근무 일을 반환 해준다.
+     * @param doctorDto ykiho,no
+     * @param request 세션 확인
+     * @return dateList 해당 의사가 예약된
+     */
+    @GetMapping("date-list")
+    public Map getAlreadyDateList(@RequestParam String ykiho, @RequestParam long no, WebRequest request){
+        JSONObject json = new JSONObject();
+
+        String log = (String) request.getAttribute("log",WebRequest.SCOPE_SESSION);
+        if(log == null){
+            return json.put("result","fail no session").toMap();
+        }
+
+        Optional<Admin> user = Optional.ofNullable(adminRepository.findByAdminId(log));
+
+        if(user.isPresent()) {
+            List<TimeSlotsLimit> list = timeSlotsLimitRepository.findDateByYkihoAndDoctorNo(ykiho, no);
+            HashMap<Date, Integer> map = new HashMap<>();
+            for (TimeSlotsLimit slot : list) {
+                map.put(slot.getDate(), map.getOrDefault(slot.getDate(), 0) + 1);
+            }
+            json.put("result", "success");
+            json.put("data", map.keySet().stream().sorted());
+        }
+
+        return json.toMap();
+    }
+
+    // 최종추가 되는거? 예약 생성됨
     @Transactional
     @PostMapping(value="timeset-add", consumes = {"application/json"})
     public Map timeset_add(@RequestBody List<TimeSlotsLimitRequestDto> list) {

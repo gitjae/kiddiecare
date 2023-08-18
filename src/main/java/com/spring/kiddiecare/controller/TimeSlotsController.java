@@ -70,6 +70,7 @@ public class TimeSlotsController {
 
     @GetMapping("/getTimeSlots")
     public List<TimeSlotsLimit> getTimeSlots(@RequestParam String ykiho, String date, Long doctorNo) {
+
         Date parseDate = DateParsor.parse(date);
         return timeSlotsLimitRepository.findTimeSlotsLimitByYkihoAndDateAndDoctorNo(ykiho, parseDate, doctorNo);
 
