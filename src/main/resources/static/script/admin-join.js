@@ -176,7 +176,7 @@ function searchHospName() {
     $.ajax({
         type: "GET",
         url: "/search/hospList/check",
-        data: { "keyword": hospName },
+        data: { keyword: hospName },
         success: function(response) {
             if (response.result === "success") {
                 $(".spinner-border").hide();

@@ -1,3 +1,4 @@
+// *** 안씀 ***
 // 페이지 시작 시 바로 실행
 $(function() {
     updateTable();

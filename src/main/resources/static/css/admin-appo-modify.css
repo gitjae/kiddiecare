@@ -1,0 +1,20 @@
+.select-area{
+    width: 100%;
+}
+
+.detail-area>table{
+    text-align: center;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.detail-area>table td{
+    height: 40px;
+}
+
+.detail-area input{
+    text-align: center;
+    width: 30px;
+    border-bottom: none;
+    box-shadow: #737373 ;
+}

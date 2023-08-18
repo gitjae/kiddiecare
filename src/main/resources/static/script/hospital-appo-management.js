@@ -1,7 +1,6 @@
 $(function () {
 
 })
-
 let selectedUser;
 const ykiho = document.getElementById('ykiho').value;
 

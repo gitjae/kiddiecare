@@ -3,6 +3,7 @@ head,body{
     height: 100%;
 }
 
+
 section{
     display: flex;
     flex-direction: row;
@@ -53,14 +54,22 @@ section{
 
 .option {
     background: #E4F3FF;
+    width: 200px;
+    height: 200px;
     border-radius: 20px;
     text-align: center;
-    line-height: 250px;
+    line-height: 200px;
     font-size: 20px;
 }
 
 .selected {
     background: #74aedb;
+}
+
+.date-style{
+    width: 150px;
+    font-size: 15px;
+    font-family: emoji;
 }
 
 .doctor-area{
@@ -81,11 +90,18 @@ section{
 /*}*/
 
 
+/* hide 처리 */
+#except-area {
+    display: none;
+}
 
-/*#except-area {*/
-/*    display: none;*/
-/*}*/
+.time-set-area{
+    display: none;
+}
 
+.meal-time-set-area{
+    display: none;
+}
 
 #except-days-area {
     margin-top: 20px;

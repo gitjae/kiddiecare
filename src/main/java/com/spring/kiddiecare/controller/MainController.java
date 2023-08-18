@@ -16,7 +16,6 @@ import com.spring.kiddiecare.domain.user.UserResponseDto;
 import com.spring.kiddiecare.service.ChildrenService;
 import com.spring.kiddiecare.service.DoctorService;
 import com.spring.kiddiecare.service.HospitalService;
-import com.spring.kiddiecare.service.TimeSlotsLimitService;
 import com.spring.kiddiecare.util.AppoView;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -27,6 +26,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
 
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -74,8 +74,14 @@ public class MainController {
         return "hospitalAppointmentForm";
     }
 
+    //TODO 나중에 세션 주는거 수정 해야함
     @GetMapping("admin/appointment/create")
-    public String hospitalReservationCreate() {return  "hospitalAppointmentCreate";}
+    public String hospitalReservationCreate(HttpSession session) {
+        String userId = "admin"; // 세션에서 가져온 사용자 ID, 실제 사용자 ID로 대체할 수 있습니다.
+        session.setAttribute("log", userId);
+        session.setAttribute("Ykiho","JDQ4MTYyMiM1MSMkMSMkMCMkODkkMzgxMzUxIzExIyQxIyQzIyQ3OSQyNjE4MzIjNDEjJDEjJDgjJDgz");
+        return  "hospitalAppointmentCreate";
+    }
 
     @GetMapping("/geolocation")
     public String geolocation() { return "geolocation"; }
@@ -300,10 +306,11 @@ public class MainController {
         return "appoUpdate";
     }
 
-    // 병원 예약 관리
+    // 어드민 병원 예약 관리 (유저예약내역관리)
     @GetMapping("admin/appointment/management")
     public String hospitalAppointmentManagement() {return  "hospitalAppointmentManagement";}
 
-//    @GetMapping("admin/appointment/modify")
-//    public String appoAdminModify() { return "appoAdminModify";}
+    // 어드민 병원 예약정보 수정 (설정해둔예약관리)
+    @GetMapping("admin/appointment/modify")
+    public String hospitalAdminAppoModify() { return "hospitalAdminAppoModify";}
 }
