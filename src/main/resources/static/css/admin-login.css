@@ -10,6 +10,86 @@
     font-weight: 700;
 }
 
+.icon-area span{
+    font-weight: bold;
+    font-size: 30px;
+    color: white;
+}
+
+.login-area{
+    min-width: 500px;
+    height: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    position: relative;
+    max-width: 80%;
+    margin: 0px auto;
+    box-shadow: rgba(0, 0, 0, 0.12) 0px 3px 6px -4px, rgba(0, 0, 0, 0.08) 0px 6px 16px 0px, rgba(0, 0, 0, 0.05) 0px 9px 28px 8px;
+    border-radius: 8px;
+    overflow: hidden;
+    gap: 30px;
+
+    background-color: #394c9a;
+}
+
+.input-setting{
+    /*border: 1px solid rgb(228, 229, 237);*/
+    /*border-radius: 4px;*/
+    height: 30px;
+    font-size: 15px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    color: white;
+}
+
+#label-id{
+    margin-right: 20px;
+}
+
+.input-setting>input{
+    background: transparent;
+    color: white;
+}
+
+.input-setting>input::placeholder{
+    color: white;
+}
+
+#label-pw{
+    margin-right: 15px;
+}
+
+
+#submit-btn-area{
+    text-align: center;
+}
+
+#submit-btn{
+    width: 100%;
+    padding: 10px;
+    border-radius: 10px;
+    color: white;
+    background-color: #5ea5ec;
+    border: none;
+}
+
+#submit-btn:hover{
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.50);
+}
+
+.current-id,.current-password {
+    font-size: 15px;
+    border-bottom: 1px solid #dce1e5;
+    padding-bottom: 10px;
+}
+
+.sign-up-area>a{
+    color:white;
+}
+
+/*
 html, body{
     min-height: 100%;
     display: flex;
@@ -21,21 +101,7 @@ input:focus {
     outline: none;
 }
 
-.login-area{
-    min-width: 500px;
-    height: 400px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    position: relative;
-    max-width: 376px;
-    margin: 0px auto;
-    box-shadow: rgba(0, 0, 0, 0.12) 0px 3px 6px -4px, rgba(0, 0, 0, 0.08) 0px 6px 16px 0px, rgba(0, 0, 0, 0.05) 0px 9px 28px 8px;
-    border-radius: 8px;
-    overflow: hidden;
-    gap: 30px;
-}
+
 
 .icon-area{
     margin: 20px;
@@ -113,3 +179,5 @@ span,a,h1,h4{
 input::placeholder {
     font-family: 'nanum';
 }
+
+*/

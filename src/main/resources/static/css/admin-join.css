@@ -93,6 +93,92 @@ section{
     width: 13%;
     height: 32px;
 }
+
+/* 공통 css - 버튼 */
+.button-style{
+    background: #5ea5ec;
+    padding: 5px;
+}
+
+.input-box>input[type=text]{
+    width: 300px;
+}
+
+
+/* 메인 영역 */
+#background-area{
+    position: relative;
+    background: #66B2FF;
+    width: 80%;
+    left: 10%;
+
+}
+
+#main-section{
+
+    width: 80%;
+    top: 10%;
+    left: 10%;
+    position: absolute;
+    background: white;
+    /*text-align: center;*/
+}
+
+#title{
+    margin-bottom: 40px;
+    /*margin-left: 35%;*/
+    text-align: center;
+}
+
+/* join input 영역 */
+form{
+    margin: 0 auto;
+
+    padding: 60px;
+}
+
+.input-box{
+    margin-bottom: 10px;
+}
+
+#hosp-name{
+    height: 20px;
+}
+
+.input-box>label{
+    font-size: 13px;
+    font-weight: bold;
+    margin-right: 5px;
+}
+
+.input-box>input{
+    font-size: 13px;
+    margin-right: 20px;
+
+}
+
+/* 병원찾기 부분 */
+#hosp-name{
+    width: 250px;
+}
+
+#admin-pw, #admin-pw-ch, #auth-code, #admin-email{
+    width: 250px;
+}
+
+
+/* 회원가입 버튼 */
+#join-btn{
+    margin-left: 30%;
+    width: 150px;
+}
+
+.select-area{
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    gap: 10px;
+}
 /* ================================================ */
 
 .err{
