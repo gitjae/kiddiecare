@@ -51,6 +51,11 @@ public class MainController {
         return "index";
     }
 
+    @GetMapping("adminIndex")
+    public String adminIndex(){
+        return "adminIndex";
+    }
+
     @GetMapping("join")
     public String join(){
         return "join";
@@ -130,33 +135,8 @@ public class MainController {
             List<Appointment> appointments = appoRepository.findAllByGuardian(pageable, user.getNo());
 
             UserResponseDto userDto = new UserResponseDto(user);
-            List<ChildrenResponseDto> childrendDtos = new ArrayList<>();
-            List<AppoView> appoDtos = new ArrayList<>();
-            for(Children child : children){
-                ChildrenResponseDto childDto = new ChildrenResponseDto(child);
-                childrendDtos.add(childDto);
-            }
-            for(Appointment appo : appointments){
-                // time
-                Optional<TimeSlotsLimit> timeSlotsLimitOptional = timeSlotsLimitRepository.findById(appo.getTimeSlotNo());
-                TimeSlotsLimit timeSlotsLimit = timeSlotsLimitOptional.get();
-                // hosp
-                Hospital hospital = hospitalRepository.findByYkiho(timeSlotsLimit.getYkiho());
-                // doc
-                Optional<Doctor> doctorOptional = doctorRepository.findById(new Long(timeSlotsLimit.getDoctorNo()));
-                Doctor doctor = doctorOptional.get();
-                // child
-                Optional<Children> childrenOptional = childrenRepository.findById(appo.getPatientId());
-                Children child = childrenOptional.get();
-
-
-                AppoView appoView = new AppoView(appo, hospital, timeSlotsLimit, doctor, child);
-                appoDtos.add(appoView);
-            }
 
             model.addAttribute("user", userDto);
-//            model.addAttribute("children", childrendDtos);
-//            model.addAttribute("appointments", appoDtos);
         }
         return "mypage";
     }

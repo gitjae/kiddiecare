@@ -16,6 +16,8 @@ function login(){
         console.log(res)
         if(res.login == 'success'){
             location.href = '/';
+        } else {
+            alert('일치하는 정보가 없습니다.');
         }
     })
 }

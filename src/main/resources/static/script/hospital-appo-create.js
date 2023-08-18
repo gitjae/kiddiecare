@@ -346,14 +346,16 @@ function saveTimes() {
 
     $.ajax({
         type: "POST",
-        url: "/api/v1/admin/appo/timeset-create",
+        url: "/timesetCreate",
         data: JSON.stringify(groupedData),
         contentType: "application/json; charset=utf-8",
         success: function (response) {
             console.log("저장 성공!");
+            console.log(response);
         },
         error: function (error) {
             console.log("저장 실패...ㅠ");
+            console.log(error);
         }
     });
 }

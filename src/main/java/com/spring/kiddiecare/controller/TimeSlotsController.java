@@ -3,7 +3,10 @@ package com.spring.kiddiecare.controller;
 import com.spring.kiddiecare.domain.timeSlotsLimit.TimeSlotSum;
 import com.spring.kiddiecare.domain.timeSlotsLimit.TimeSlotsLimit;
 import com.spring.kiddiecare.domain.timeSlotsLimit.TimeSlotsLimitRepository;
+import com.spring.kiddiecare.domain.timeSlotsLimit.TimeSlotsLimitRequestDto;
+import com.spring.kiddiecare.service.TimeSlotsLimitService;
 import com.spring.kiddiecare.util.DateParsor;
+import lombok.RequiredArgsConstructor;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,12 +16,16 @@ import org.w3c.dom.ls.LSInput;
 
 import java.sql.Time;
 import java.util.*;
-
+// 어노테이션 service 사용 위해 추가
+@RequiredArgsConstructor
 @RestController
 @SessionAttributes({"log"})
 public class TimeSlotsController {
+
     @Autowired
     private TimeSlotsLimitRepository timeSlotsLimitRepository;
+
+    private final TimeSlotsLimitService timeSlotsLimitService;
 
     // 상세페이지에서 타임슬롯 가져오기용
     @GetMapping("/timeSlotsDateGetByYkiho")
@@ -82,5 +89,13 @@ public class TimeSlotsController {
         return timeSlotsLimitRepository.findByYkihoAndDateAndDoctorNoAndEnableGreaterThanEqual(ykiho, parseDate, doctorNo,1);
     }
 
+
+    // timeslot 첫 생성
+    @PostMapping("timesetCreate")
+    public void timeset_create(@RequestBody Map<String, List<TimeSlotsLimitRequestDto>> data) {
+
+        timeSlotsLimitService.timeSlotsCreate(data);
+
+    }
 }
 

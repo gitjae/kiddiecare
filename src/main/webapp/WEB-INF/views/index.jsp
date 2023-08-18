@@ -17,7 +17,7 @@
                 <p class="bottom-title">이제 한 눈에 주변 병원을 확인하고 실시간으로 예약해보세요!</p>
             </div>
             <div class="index-search">
-                <input type="text" id="search-input" class="search-input" placeholder="병원명 또는 지역으로 검색할 수 있어요." name="searchText" maxlength="100">
+                <input type="text" id="search-input" class="search-input" placeholder="병원명으로 검색할 수 있어요." name="searchText" maxlength="100">
                 <button type="submit" class="search-btn" onclick="search()">
                     <img src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png" onclick="">
                 </button>
@@ -41,7 +41,7 @@
             </div>
 
             <div class="admin-myPage">
-                <h2>병원 마이페이지(사이트 도움말로 변경)</h2>
+                <h2>병원 어드민(사이트 도움말로 변경)</h2>
                 <p>병원 관계자는 병원 정보 수정과 환자 예약관리를 할 수 있어요.</p>
                 <button id="admin-appo">병원 마이페이지</button>
                 <img src="/image/userGuide.png">

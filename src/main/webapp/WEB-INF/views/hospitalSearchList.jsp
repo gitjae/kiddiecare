@@ -41,6 +41,12 @@
         <div id="hospital-list">
             <div class="flex-area">
                 <p class="list-title">병원 목록</p>
+                <div class="index-search">
+                    <input type="text" id="search-input" class="search-input" placeholder="병원명으로 검색할 수 있어요." name="searchText" maxlength="100">
+                    <button type="submit" class="search-btn" onclick="search()">
+                        <img src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png" onclick="">
+                    </button>
+                </div>
                 <div id="hospital-list-btn">
                     <button id="prev" onclick="prev()" style="background: none; color: #007BFF; font-size: larger; font-weight: 700;">&#9665;</button>
                     <button id="next" onclick="next()" style="background: none; color: #007BFF; font-size: larger; font-weight: 700;">&#9655;</button>
@@ -50,6 +56,7 @@
 
             </ul>
         </div>
+
 
         <div class="kakaoMap-area" style="width:100%;height: 700px;">  <!-- height: 400px; -->
             <div id="map" style="width:100%;height:100%; margin-top: 50px;">
