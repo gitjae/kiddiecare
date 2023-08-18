@@ -274,14 +274,22 @@ public class UserController {
         return userRepository.findUserByNo(no);
     }
 
-    @GetMapping("/userno")      // 수정 필요
-    public ResponseEntity<User> getUserNo(@RequestParam String name) {
-        User user = userService.findByUserName(name);
-        if (user != null) {
-            return new ResponseEntity<>(user, HttpStatus.OK);
+    @GetMapping("/getUserNoBySession")
+    public ResponseEntity<Integer> getUserNoBySession(HttpSession session) {
+        String loggedInUserName = (String) session.getAttribute("log");
+
+        if (loggedInUserName == null) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED); // 로그인되지 않은 사용자
+        }
+
+        Integer userNo = userService.findNoById(loggedInUserName);
+        if (userNo != null) {
+            return new ResponseEntity<>(userNo, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+
+
 }
 
