@@ -16,8 +16,8 @@
         <input type="hidden" id="loggedInUser" value="${log}">
 
         <div class="likeHospital-area">
-            <img class="noLike" src="/image/like_empty.png" onclick="likeHospital()">
-            <img class="yesLike" src="/image/like_full.png" onclick="unlikeHospital()">
+            <img class="noLike" src="/image/like_empty.png" onclick="toggleLike(ykihoD)">
+            <img class="yesLike" src="/image/like_full.png" onclick="toggleLike(ykihoD)">
         </div>
 
         <div class="kakaoMap-area">

@@ -43,15 +43,15 @@ public class LikeController {
         }
     }
 
-    @GetMapping("/api/like/existence")
-    public boolean isLiked(HttpSession session, @RequestParam String ykiho) {
+    @GetMapping("/api/like/existence/{ykiho}")
+    public boolean isLiked(HttpSession session, @PathVariable String ykiho) {
         String id = (String) session.getAttribute("log");
         Optional<User> foundUser = userRepository.findUserById(id);
-
         if (foundUser.isPresent()) {
             User user = foundUser.get();
             return likeHospitalRepository.existsByUserNoAndYkiho(user.getNo(), ykiho);
         }
         return false;
     }
+
 }

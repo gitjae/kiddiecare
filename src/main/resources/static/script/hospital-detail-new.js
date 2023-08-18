@@ -1,10 +1,4 @@
-// window.onload = function () {
-//     getHospInfoDetail();
-//     getTotalInfo();
-// }
 let ykihoD = null;
-// ykiho = document.getElementById('hospital-name').getAttribute('ykiho');
-// console.log("ykiho : ", ykiho);
 
 function getSgguCdFromUrl() {
     const currentUrl = new URL(window.location.href);
@@ -64,6 +58,41 @@ function getHospInfoDetail() {
 }
 
 // 찜 (좋아요)
+function handleLikeStatus() {
+    $.ajax({
+        method: 'GET',
+        url: `/api/like/existence/${ykihoD}`
+    })
+        .done(function (isLiked) {
+            updateButtonBasedOnLikeStatus(isLiked);
+        })
+        .fail(function (err) {
+            console.error("Error while checking like status:", err.responseText);
+        });
+}
+
+function updateButtonBasedOnLikeStatus(isLiked) {
+    const noLikes = document.querySelectorAll('.noLike');
+    const yesLikes = document.querySelectorAll('.yesLike');
+
+    noLikes.forEach(noLike => {
+        noLike.style.display = isLiked ? "none" : "block";
+    });
+
+    yesLikes.forEach(yesLike => {
+        yesLike.style.display = isLiked ? "block" : "none";
+    });
+}
+
+function toggleLike() {
+    const yesLikes = document.querySelector('.yesLike');
+    if (yesLikes.style.display === "block") {
+        unlikeHospital();
+    } else {
+        likeHospital();
+    }
+}
+
 function likeHospital() {
     $.ajax({
         method: 'POST',
@@ -71,7 +100,7 @@ function likeHospital() {
     })
         .done(function () {
             console.log("Liked the hospital successfully!");
-            updateLikeButtons(true);
+            handleLikeStatus(ykihoD);
         })
         .fail(function (err) {
             console.error("Error while liking the hospital:", err.responseText);
@@ -85,38 +114,13 @@ function unlikeHospital() {
     })
         .done(function () {
             console.log("Unliked the hospital successfully!");
-            updateLikeButtons(false);
+            handleLikeStatus(ykihoD);
         })
         .fail(function (err) {
             console.error("Error while unliking the hospital:", err.responseText);
         });
 }
 
-function updateLikeButtons(isLiked) {
-    const noLikes = document.querySelectorAll('.noLike');
-    const yesLikes = document.querySelectorAll('.yesLike');
-
-    noLikes.forEach(noLike => {
-        noLike.style.display = isLiked ? "none" : "block";
-    });
-
-    yesLikes.forEach(yesLike => {
-        yesLike.style.display = isLiked ? "block" : "none";
-    });
-}
-
-function checkLikeStatus(userNo, ykiho) {
-    $.ajax({
-        method: 'GET',
-        url: `/api/like/existence?userNo=${userNo}&ykiho=${ykiho}`
-    })
-        .done(function (isLiked) {
-            updateLikeButtons(isLiked);
-        })
-        .fail(function (err) {
-            console.error("Error while checking like status:", err.responseText);
-        });
-}
 
 function getTotalInfo() {
     const hospitalName = getHospitalNameFromUrl();
