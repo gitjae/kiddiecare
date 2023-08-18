@@ -1,7 +1,4 @@
-// window.onload = function () {
-//     getHospInfoDetail();
-//     getTotalInfo();
-// }
+let ykihoD = null;
 
 function getSgguCdFromUrl() {
     const currentUrl = new URL(window.location.href);
@@ -11,12 +8,12 @@ function getSgguCdFromUrl() {
 
 // 예약하기 버튼 액션
 document.getElementById("booking-btn").onclick = function () {
-    if (selectedSlotInfo.timeSlotNo == null) {
-        alert("예약 시간을 선택해주세요.");
-    } else {
-        let hospitalName = encodeURIComponent(getHospitalNameFromUrl().trim());
-        location.href = `/appointment/booking?hospitalName=${hospitalName}&treatmentDate=${formattedDate}&treatmentDay=${selectDay}&doctorNo=${selectedSlotInfo.doctorNo}&slotTime=${selectedSlotInfo.time}&slotWeekday=${selectedSlotInfo.weekday}&timeSlotNo=${selectedSlotInfo.timeSlotNo}`;
+    if (!sessionStorage.getItem('log')) {
+        alert("병원 예약은 로그인 후 이용 가능합니다.");
+        return;
     }
+    let hospitalName = encodeURIComponent(getHospitalNameFromUrl().trim());
+    location.href = `/appointment/booking?hospitalName=${hospitalName}&treatmentDate=${formattedDate}&treatmentDay=${selectDay}&doctorNo=${selectedSlotInfo.doctorNo}&slotTime=${selectedSlotInfo.time}&slotWeekday=${selectedSlotInfo.weekday}&timeSlotNo=${selectedSlotInfo.timeSlotNo}`;
 }
 
 // 정보 뿌리기
@@ -33,6 +30,7 @@ function getHospInfoDetail() {
             if (res.dbHospitalData) {
                 document.getElementById('hospital-name').textContent = res.dbHospitalData.hospitalName;
                 document.getElementById('hospital-name').setAttribute('ykiho', res.dbHospitalData.ykiho);
+                ykihoD = res.dbHospitalData.ykiho;
                 document.getElementById('hospital-intro').textContent = res.dbHospitalData.hospitalIntro;
 
                 // 의사 정보 처리
@@ -47,13 +45,11 @@ function getHospInfoDetail() {
                     <div class="doctor-text">
                     <p id="doctor-no">의사 번호 : ${doctor.no}</p>
                     <p id="doctor-name">${doctor.doctorName}</p>
-                    <p id="doctor-offDay">휴진일</p>
+<!--                    <p id="doctor-offDay">휴진일</p>-->
                     </div>`;
 
                     doctorContainer.appendChild(doctorCard);
                 });
-                // 찜 기능 수정중 -- 희수
-                // handleLikeFeature(res.dbHospitalData.ykiho);
             }
         })
         .fail(err => {
@@ -61,33 +57,70 @@ function getHospInfoDetail() {
         });
 }
 
-// 찜
-function handleLikeFeature(ykiho) {
-    let userName = document.getElementById('loggedInUser').value;
-    console.log("*** userName : ", userName)
-    console.log("*** ykiho : ", ykiho);
-
-    let userNo = getUserNoByName(userName);
-    console.log("*** userNo : ", userNo);       // 안ㄴㅏ옴!!
-    // 찜 기능 나머지
-}
-
-// 회원 아이디로 no 찾기
-function getUserNoByName(userName) {
-    let userNo;
+// 찜 (좋아요)
+function handleLikeStatus() {
     $.ajax({
         method: 'GET',
-        url: `/api/v1/users/userno?name=${userName}`,
-        async: false
+        url: `/api/like/existence/${ykihoD}`
     })
-        .done(res => {
-            userNo = res.no;
+        .done(function (isLiked) {
+            updateButtonBasedOnLikeStatus(isLiked);
         })
-        .fail(err => {
-            console.error("Error:", err);
+        .fail(function (err) {
+            console.error("Error while checking like status:", err.responseText);
         });
-    return userNo;
 }
+
+function updateButtonBasedOnLikeStatus(isLiked) {
+    const noLikes = document.querySelectorAll('.noLike');
+    const yesLikes = document.querySelectorAll('.yesLike');
+
+    noLikes.forEach(noLike => {
+        noLike.style.display = isLiked ? "none" : "block";
+    });
+
+    yesLikes.forEach(yesLike => {
+        yesLike.style.display = isLiked ? "block" : "none";
+    });
+}
+
+function toggleLike() {
+    const yesLikes = document.querySelector('.yesLike');
+    if (yesLikes.style.display === "block") {
+        unlikeHospital();
+    } else {
+        likeHospital();
+    }
+}
+
+function likeHospital() {
+    $.ajax({
+        method: 'POST',
+        url: `/api/like/${ykihoD}`
+    })
+        .done(function () {
+            console.log("Liked the hospital successfully!");
+            handleLikeStatus(ykihoD);
+        })
+        .fail(function (err) {
+            console.error("Error while liking the hospital:", err.responseText);
+        });
+}
+
+function unlikeHospital() {
+    $.ajax({
+        method: 'DELETE',
+        url: `/api/like/userNo/${ykihoD}`
+    })
+        .done(function () {
+            console.log("Unliked the hospital successfully!");
+            handleLikeStatus(ykihoD);
+        })
+        .fail(function (err) {
+            console.error("Error while unliking the hospital:", err.responseText);
+        });
+}
+
 
 function getTotalInfo() {
     const hospitalName = getHospitalNameFromUrl();
@@ -124,7 +157,7 @@ function getTotalInfo() {
             $('#workhour-fri').text(timeFormat(DD.trmtFriStart) + " - " + timeFormat(DD.trmtFriEnd));
             $('#workhour-sat').text(timeFormat(DD.trmtSatStart) + " - " + timeFormat(DD.trmtSatEnd));
             $('#workhour-sun').text(timeFormat(DD.trmtSunStart) + " - " + timeFormat(DD.trmtSunEnd));
-            $('#hospital-park').text("주차정보" + DD.parkEtc);
+            $('#hospital-park').text(DD.parkEtc + "주차 가능");
         } else {
             alert('병원정보를 불러오지 못했습니다. \n잠시 후 다시 시도해주세요.')
         }

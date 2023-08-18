@@ -23,3 +23,7 @@ function login(){
 function gotofind(){
     location.href = '/find/user';
 }
+
+function kakaoLogin(){
+    location.href = `https://kauth.kakao.com/oauth/authorize?client_id=${keys.kakaoRestApi}&redirect_uri=http://localhost:8080/login/kakao/callback&response_type=code`
+}

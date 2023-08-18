@@ -4,6 +4,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -18,32 +19,43 @@ public class KakaoLoginManager {
         return KAKAO_REST_API_KEY;
     }
 
-    public String redirect_uri = "http://localhost:8080";
+    public String redirect_uri = "http://localhost:8080/login/kakao/callback";
 
     public String getKakaoAccessToken(String code){
         String access_Token = "";
         String reqURL = "https://kauth.kakao.com/oauth/token";
-
+        System.out.println(code);
         HttpHeaders headers = new HttpHeaders();
-        headers.add("Content-type", "Content-type: application/x-www-form-urlencoded;charset=utf-8");
+        //headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+        headers.add("Accept", "application/json");
+
 
         MultiValueMap<String, Object> parameters = new LinkedMultiValueMap<String, Object>();
-        parameters.set("grant_type", "authorization_code");
-        parameters.set("client_id", KAKAO_REST_API_KEY);
-        parameters.set("redirect_uri", redirect_uri);
-        parameters.set("code", code);
+        parameters.add("grant_type", "authorization_code");
+        parameters.add("client_id", KAKAO_REST_API_KEY);
+        parameters.add("redirect_uri", redirect_uri);
+        parameters.add("code", code);
 
         HttpEntity<MultiValueMap<String, Object>> restRequest = new HttpEntity<>(parameters, headers);
 
-        ResponseEntity<JSONObject> response = restTemplate.postForEntity(reqURL, restRequest, JSONObject.class);
-        JSONObject responseBody = response.getBody();
+        //ResponseEntity<JSONObject> response = restTemplate.postForEntity(reqURL, restRequest, JSONObject.class);
+        ResponseEntity<String> response = restTemplate.postForEntity(reqURL, restRequest, String.class);
+        System.out.println(response);
+        String responseBody = response.getBody();
 
-        access_Token = (String) responseBody.get("access_token");
+        JSONObject jsonObject = new JSONObject(responseBody);
+
+//        JSONObject responseBody = response.getBody();
+//        System.out.println(responseBody);
+//        access_Token = (String) responseBody.get("access_token");
+
+        access_Token = jsonObject.getString("access_token");
 
         return access_Token;
     }
 
-    public JSONObject getKakaoUserInfo(String accessToken){
+    public String getKakaoUserInfo(String accessToken){
         String reqURL = "https://kapi.kakao.com/v2/user/me";
 
         HttpHeaders headers = new HttpHeaders();
@@ -53,15 +65,16 @@ public class KakaoLoginManager {
         MultiValueMap<String, Object> parameters = new LinkedMultiValueMap<String, Object>();
         JSONArray propertyKeys = new JSONArray();
         propertyKeys.put("kakao_account.email");
-        propertyKeys.put("kakao_account.gender");
-        propertyKeys.put("kakao_account.birthday");
 
         parameters.add("property_keys", propertyKeys.toString());
 
         HttpEntity<MultiValueMap<String, Object>> restRequest = new HttpEntity<>(parameters, headers);
-        ResponseEntity<JSONObject> apiResponse = restTemplate.postForEntity(reqURL, restRequest, JSONObject.class);
-        JSONObject responseBody = apiResponse.getBody();
+        ResponseEntity<String> apiResponse = restTemplate.postForEntity(reqURL, restRequest, String.class);
+        String responseBody = apiResponse.getBody();
+        JSONObject jsonBody = new JSONObject(responseBody);
+        JSONObject kakaoAccount = jsonBody.getJSONObject("kakao_account");
+        String email = kakaoAccount.getString("email");
 
-        return responseBody;
+        return email;
     }
 }

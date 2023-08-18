@@ -42,17 +42,13 @@
             <div class="flex-area">
                 <p class="list-title">병원 목록</p>
                 <div id="hospital-list-btn">
-                    <button id="prev" onclick="prev()">&#128281;</button>
-                    <button id="next" onclick="next()">&#128284;</button>
+                    <button id="prev" onclick="prev()" style="background: none; color: #007BFF; font-size: larger; font-weight: 700;">&#9665;</button>
+                    <button id="next" onclick="next()" style="background: none; color: #007BFF; font-size: larger; font-weight: 700;">&#9655;</button>
                 </div>
             </div>
             <ul id="hospital-list-ul">
 
             </ul>
-<%--            <div id="hospital-list-btn">--%>
-<%--                <button id="prev" onclick="prev()">이전</button>--%>
-<%--                <button id="next" onclick="next()">다음</button>--%>
-<%--            </div>--%>
         </div>
 
         <div class="kakaoMap-area" style="width:100%;height: 700px;">  <!-- height: 400px; -->

@@ -250,6 +250,16 @@ public class MainController {
         return "hospitalDetail";
     }
 
+    @GetMapping("/join/kakao")
+    public String kakaoJoin(){
+        return "kakaoJoin";
+    }
+
+    @GetMapping("user/quit")
+    public String quitUser(){
+        return "quitUser";
+    }
+
     @GetMapping("appointment/update")
     public String appoUpdate(@RequestParam String no, Model model, WebRequest request){
         String log = (String) request.getAttribute("log", WebRequest.SCOPE_SESSION);

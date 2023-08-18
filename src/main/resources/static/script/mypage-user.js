@@ -6,6 +6,10 @@ function sectionChange(nav){
     $(`#${name}`).css("display", "block");
 }
 
+function gotoQuit(){
+    location.href = '/quitUser';
+}
+
 function gotoUpdate(){
     location.href = '/user/update';
 }

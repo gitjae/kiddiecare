@@ -16,8 +16,8 @@
         <input type="hidden" id="loggedInUser" value="${log}">
 
         <div class="likeHospital-area">
-            <img class="noLike" src="/image/like_empty.png" onclick="likeHospital(USER_NO, YKIHO)">
-            <img class="yesLike" src="/image/like_full.png" onclick="unlikeHospital(USER_NO, YKIHO)">
+            <img class="noLike" src="/image/like_empty.png" onclick="toggleLike(ykihoD)">
+            <img class="yesLike" src="/image/like_full.png" onclick="toggleLike(ykihoD)">
         </div>
 
         <div class="kakaoMap-area">
@@ -28,53 +28,53 @@
 
         <div class="hospital-detail-info">
             <h2 class="info-title">상세정보</h2>
-            <h3 id="hospital-name"></h3>
+            <h3 id="hospital-name" style="color: #3E85EF"></h3>
             <p id="hospital-intro"></p><br>
-            <p id="hospital-addr">api - 주소주소주소</p>
-            <p id="hospital-tell"></p>
-            <p id="hospital-operate-time">api - 오늘 기준 운영 시간</p>
-            <div id="hospital-time-table">
+            <p id="hospital-addr" style="margin-bottom: 10px;"></p>
+            <p id="hospital-tell" style="margin-bottom: 10px;"></p>
+<%--            <p id="hospital-operate-time">api - 오늘 기준 운영 시간</p>--%>
+            <div id="hospital-time-table" style="margin-bottom: 10px;">
                 <div id="time-table>
-                    <ul id="time-table-ul>
+                    <ul id="time-table-ul style="display: flex">
                         <li id="time-table-title">
-                            <div id="title-weekday">요일</div>
-                            <div id="title-workhour">진료 시간</div>
+                            <div id="title-weekday">요일별 운영시간</div>
+<%--                            <div id="title-workhour">진료 시간</div>--%>
                         </li>
-                        <li id="time-table-mon">
+                        <li id="time-table-mon" style="margin-right: 20px;">
                             <div id="weekday-mon">월요일</div>
                             <div id="workhour-mon">병원 문의</div>
                         </li>
-                        <li id="time-table-tue">
+                        <li id="time-table-tue" style="margin-right: 20px;">
                             <div id="weekday-tue">화요일</div>
                             <div id="workhour-tue">병원 문의</div>
                         </li>
-                        <li id="time-table-wed">
+                        <li id="time-table-wed"style="margin-right: 20px;">
                             <div id="weekday-wed">수요일</div>
                             <div id="workhour-wed">병원 문의</div>
                         </li>
-                        <li id="time-table-thu">
+                        <li id="time-table-thu" style="margin-right: 20px;">
                             <div id="weekday-thu">목요일</div>
                             <div id="workhour-thu">병원 문의</div>
                         </li>
-                        <li id="time-table-fri">
+                        <li id="time-table-fri" style="margin-right: 20px;">
                             <div id="weekday-fri">금요일</div>
                             <div id="workhour-fri">병원 문의</div>
                         </li>
-                        <li id="time-table-sat">
+                        <li id="time-table-sat" style="margin-right: 20px;">
                             <div id="weekday-sat">토요일</div>
                             <div id="workhour-sat">병원 문의</div>
                         </li>
-                        <li id="time-table-sun">
+                        <li id="time-table-sun" style="margin-right: 20px;">
                             <div id="weekday-sun">일요일</div>
                             <div id="workhour-sun">병원 문의</div>
                         </li>
                     </ul>
                 </div>
             </div>
-            <p id="hospital-park">주차 정보 : 병원 문의</p>
-            <div id="hospital-subjects">
-                <p id="subject-list">진료과목 : </p>
-            </div>
+            <p id="hospital-park" style="margin-bottom: 10px;">주차 정보 : 병원 문의</p>
+<%--            <div id="hospital-subjects" style="margin-bottom: 10px;">--%>
+<%--                <p id="subject-list">진료과목 : </p>--%>
+<%--            </div>--%>
 
             <div class="doctor-info">
                 <div class="doctor-card">
@@ -83,6 +83,7 @@
             </div>
 
             <h2 class="info-title">병원예약</h2>
+            <p class="info-sub-title">예약은 <strong>날짜 선택 &#8680; 예약 시간 선택 &#8680; 담당 의사 선택</strong> 순서로 진행해주세요.</p>
             <div class="appo-table">
                 <table class="Calendar">
                     <thead>
@@ -117,10 +118,13 @@
                         </div>
                     </c:forEach>
                 </div>
-            </div>
-            <div id="doctor-cards">
+                <div id="doctor-cards">
 
+                </div>
             </div>
+<%--            <div id="doctor-cards">--%>
+
+<%--            </div>--%>
 
             <button id="booking-btn" data-ykiho="${hospital.ykiho}">예약하기</button>
         </div>

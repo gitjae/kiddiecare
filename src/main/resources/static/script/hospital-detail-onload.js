@@ -4,3 +4,4 @@ window.onload = function (){
     getTotalInfo();
     $('#booking-btn').prop("disabled", true);
 }
+
