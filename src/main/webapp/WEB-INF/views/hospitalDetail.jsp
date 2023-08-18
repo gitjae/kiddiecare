@@ -72,9 +72,9 @@
                 </div>
             </div>
             <p id="hospital-park" style="margin-bottom: 10px;">주차 정보 : 병원 문의</p>
-            <div id="hospital-subjects" style="margin-bottom: 10px;">
-                <p id="subject-list">진료과목 : </p>
-            </div>
+<%--            <div id="hospital-subjects" style="margin-bottom: 10px;">--%>
+<%--                <p id="subject-list">진료과목 : </p>--%>
+<%--            </div>--%>
 
             <div class="doctor-info">
                 <div class="doctor-card">

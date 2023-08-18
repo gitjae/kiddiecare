@@ -234,7 +234,7 @@ function getHospInfoDetail() {
                     <div class="doctor-text">
                     <p id="doctor-no">의사 번호 : ${doctor.no}</p>
                     <p id="doctor-name">${doctor.doctorName}</p>
-                    <p id="doctor-offDay">휴진일</p>
+<!--                    <p id="doctor-offDay">휴진일</p>-->
                     </div>`;
 
                     doctorContainer.appendChild(doctorCard);

@@ -45,7 +45,7 @@ function getHospInfoDetail() {
                     <div class="doctor-text">
                     <p id="doctor-no">의사 번호 : ${doctor.no}</p>
                     <p id="doctor-name">${doctor.doctorName}</p>
-                    <p id="doctor-offDay">휴진일</p>
+<!--                    <p id="doctor-offDay">휴진일</p>-->
                     </div>`;
 
                     doctorContainer.appendChild(doctorCard);
@@ -157,7 +157,7 @@ function getTotalInfo() {
             $('#workhour-fri').text(timeFormat(DD.trmtFriStart) + " - " + timeFormat(DD.trmtFriEnd));
             $('#workhour-sat').text(timeFormat(DD.trmtSatStart) + " - " + timeFormat(DD.trmtSatEnd));
             $('#workhour-sun').text(timeFormat(DD.trmtSunStart) + " - " + timeFormat(DD.trmtSunEnd));
-            $('#hospital-park').text("주차정보" + DD.parkEtc);
+            $('#hospital-park').text(DD.parkEtc + "주차 가능");
         } else {
             alert('병원정보를 불러오지 못했습니다. \n잠시 후 다시 시도해주세요.')
         }
