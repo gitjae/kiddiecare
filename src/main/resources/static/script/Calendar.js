@@ -141,10 +141,12 @@ function showTimeSlots(slots) {
             // 이전에 선택된 카드의 배경색을 원래대로 돌려놓기
             if (currentSelectedCard) {
                 currentSelectedCard.style.backgroundColor = '';
+                currentSelectedCard.style.color = '';
             }
 
             // 클릭된 카드의 배경색 변경
-            this.style.backgroundColor = '#e0e0e0';
+            this.style.backgroundColor = '#3E85EF';
+            this.style.color = '#FFFFFF';
 
             // 현재 선택된 카드 업데이트
             currentSelectedCard = this;
@@ -191,11 +193,13 @@ function showTimeSlots(slots) {
             // 이전에 선택된 doctor-card의 배경색을 원래대로 돌려놓기
             if (currentSelectedDoctorCard) {
                 currentSelectedDoctorCard.style.backgroundColor = '';
+                currentSelectedDoctorCard.style.color = '';
             }
 
             // 클릭된 doctor-card의 배경색 변경
             const doctorCard = event.target.closest('.doctor-card');
-            doctorCard.style.backgroundColor = '#e0e0e0';
+            doctorCard.style.backgroundColor = '#3E85EF';
+            doctorCard.style.color = '#FFFFFF';
 
             // 현재 선택된 doctor-card 업데이트
             currentSelectedDoctorCard = doctorCard;
