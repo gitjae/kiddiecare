@@ -86,16 +86,16 @@
 
                     </div>
                     <a href="childRegister">자녀등록</a>
-                    <button onclick="prevChildren()">prev</button>
-                    <button onclick="nextChildren()">next</button>
+                    <button onclick="prevChildren()" style="background: none; color: #007BFF; font-size: larger; font-weight: 700;">&#9665;</button>
+                    <button onclick="nextChildren()" style="background: none; color: #007BFF; font-size: larger; font-weight: 700;">&#9655;</button>
                 </div>
 
                 <div class="main-div" id="div-appo">
                     <div id="appointments">
 
                     </div>
-                    <button onclick="prevAppo()">&#128281;</button>
-                    <button onclick="nextAppo()">&#128284;</button>
+                    <button onclick="prevAppo()" style="background: none; color: #007BFF; font-size: larger; font-weight: 700;">&#9665;</button>
+                    <button onclick="nextAppo()" style="background: none; color: #007BFF; font-size: larger; font-weight: 700;">&#9655;</button>
                 </div>
 
                 <div class="main-div" id="div-review">

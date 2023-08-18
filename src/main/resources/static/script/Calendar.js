@@ -108,7 +108,7 @@ function choiceDate(nowColumn) {
 // 타임 슬롯 화면에 나타내기
 function showTimeSlots(slots) {
     const timeSlotsTable = document.querySelector('.time-slots-table');
-    let timeSlotsContent = '<p class="time-slots-info"></p>';
+    let timeSlotsContent = '<p class="time-slots-info">(진료 가능 인원 / 최대 인원)</p>';
 
     slots.forEach(slot => {
         // 예약 풀부킹 확인
@@ -141,10 +141,12 @@ function showTimeSlots(slots) {
             // 이전에 선택된 카드의 배경색을 원래대로 돌려놓기
             if (currentSelectedCard) {
                 currentSelectedCard.style.backgroundColor = '';
+                currentSelectedCard.style.color = '';
             }
 
             // 클릭된 카드의 배경색 변경
-            this.style.backgroundColor = '#e0e0e0';
+            this.style.backgroundColor = '#3E85EF';
+            this.style.color = '#FFFFFF';
 
             // 현재 선택된 카드 업데이트
             currentSelectedCard = this;
@@ -181,13 +183,31 @@ function showTimeSlots(slots) {
 
                     $('#doctor-cards').append(card);
                 }
-
-                // 닥터 카드 클릭시 selectedSlotInfo.doctorNo 바꿔주기
-
             })
         });
     });
+
+    let currentSelectedDoctorCard = null;
+    document.addEventListener('click', function(event) {
+        if (event.target.closest('.doctor-card')) {
+            // 이전에 선택된 doctor-card의 배경색을 원래대로 돌려놓기
+            if (currentSelectedDoctorCard) {
+                currentSelectedDoctorCard.style.backgroundColor = '';
+                currentSelectedDoctorCard.style.color = '';
+            }
+
+            // 클릭된 doctor-card의 배경색 변경
+            const doctorCard = event.target.closest('.doctor-card');
+            doctorCard.style.backgroundColor = '#3E85EF';
+            doctorCard.style.color = '#FFFFFF';
+
+            // 현재 선택된 doctor-card 업데이트
+            currentSelectedDoctorCard = doctorCard;
+        }
+    });
+
 }
+
 
 function selectDoctor(card){
     const doctorNo = $(card).find('.doctorName').attr('no');
