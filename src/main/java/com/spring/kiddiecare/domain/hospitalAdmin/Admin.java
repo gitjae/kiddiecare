@@ -28,9 +28,8 @@ public class Admin extends AdminTimestamp{
     private String adminName;
     @Column(nullable = false,length = 320)
     private String adminEmail;
-    @Lob // 라지 오브젝트라는걸 알려줌 Lombok에 있어용
-    @Column(columnDefinition = "BLOB") // Blob이라고 알려줌
-    private byte[] file;
+    @Column(nullable = false,length = 2048)
+    private String file;
 
     public Admin(AdminRequestDto adminDto){
         this.no = 0L;
@@ -39,13 +38,6 @@ public class Admin extends AdminTimestamp{
         this.adminPw = adminDto.getAdminPw();
         this.adminName = adminDto.getAdminName();
         this.adminEmail = adminDto.getAdminEmail();
-        if(adminDto.getFile() != null) {
-            try {
-                this.file = adminDto.getFile().getBytes();
-            }catch (IOException e){
-                e.printStackTrace();
-            }
-        }
     }
     public void Update(AdminRequestDto adminDto){
         this.adminPw = adminDto.getAdminPw();

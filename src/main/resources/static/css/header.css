@@ -101,18 +101,32 @@ section {
     text-align: center;
     font-size: 10px;
 }
+.notifi-box::before{
+    content: "";
+    display: block;
+    position: absolute;
+    top: -13px;
+    background-image: url(https://pm.pstatic.net/resources/asset/sp_main.89f0d213.png);
+    background-size: 434px 422px;
+    background-position: -165px -114px;
+    background-repeat: no-repeat;
+    width: 22px;
+    height: 13px;
+    left: 53px;
+}
 
 .notifi-box {
     display: none;
     width: 300px;
     position: absolute;
-    top: 63px;
+    top: 75px;
     right: 35px;
     z-index: 9999;
     background-color: white;
     transition: 1s opacity, 250ms height;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
+
 .notifi-box h2 {
     font-size: 14px;
     padding: 10px;

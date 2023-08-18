@@ -20,6 +20,7 @@ public class AdminController {
     private final AdminService adminService;
     private final AdminRepository adminRepository;
     private final PasswordEncoder passwordEncoder;
+    private final ImageUploadController imageUploadController;
 
     @PostMapping("id/check")
     public Map adminIdDuplCheck(@ModelAttribute AdminRequestDto adminDto){
@@ -54,10 +55,22 @@ public class AdminController {
         // 데이터베이스에 있는지 확인
         Optional<Admin> userIsNull = Optional.ofNullable(adminRepository.findByAdminId(adminDto.getAdminId()));
         if(userIsNull.isEmpty()){
+
+            // DB에 넣을 데이터 생성
+            Admin admin = new Admin(adminDto);
+
+            // 사진 파일 올리기
+            String saveFile = imageUploadController.uploadFile(adminDto.getFile(),adminDto.getAdminId());
+            if(saveFile == null){
+                return result.put("response","fail").toMap();
+            }
+            admin.setFile(saveFile);
+
             // 비밀번호 encoded
             String encodedPassword = passwordEncoder.encode(adminDto.getAdminPw());
-            adminDto.setAdminPw(encodedPassword);
-            Admin admin = new Admin(adminDto);
+            admin.setAdminPw(encodedPassword);
+
+            // DB에 저장
             try {
                 adminService.joinAdminUserByAdmin(admin);
             }catch (Exception e){
