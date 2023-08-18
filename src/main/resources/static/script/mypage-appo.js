@@ -27,7 +27,7 @@ function getAppo(page){
             switch (appo.appoStatus) {
                 case 1:
                     status = "예약완료";
-                    button = `<button onclick="gotoUpdate(this)">수정</button>
+                    button = `<button onclick="appoModify(this)">수정</button>
                     <button onclick="cancelAppo(this)">취소</button>`
                     break;
                 case 2:
@@ -35,7 +35,7 @@ function getAppo(page){
                     break;
                 case 3:
                     status = "예약보류";
-                    button = `<button onclick="gotoUpdate(this)">수정</button>
+                    button = `<button onclick="appoModify(this)">수정</button>
                     <button onclick="cancelAppo(this)">취소</button>`
                     break;
                 case 4:
@@ -91,7 +91,7 @@ function getAppo(page){
     })
 }
 
-function gotoUpdate(btn){
+function appoModify(btn){
     const no = $(btn).closest('.div-appo').find('.appo-no').text();
 
     location.href = `/appointment/update?no=${no}`;

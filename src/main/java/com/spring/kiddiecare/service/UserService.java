@@ -4,6 +4,7 @@ import com.spring.kiddiecare.domain.user.User;
 import com.spring.kiddiecare.domain.user.UserRepository;
 import com.spring.kiddiecare.domain.user.UserRequestDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -13,6 +14,7 @@ import java.util.Optional;
 @Service
 public class UserService {
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Transactional
     public boolean updateUser(String id, UserRequestDto userDto){
@@ -21,6 +23,8 @@ public class UserService {
         Optional<User> foundUser = userRepository.findUserById(id);
 
         if(!foundUser.isEmpty()){
+            String encodedPassword = passwordEncoder.encode(userDto.getPassword());
+            userDto.setPassword(encodedPassword);
             User user = foundUser.get();
             user.update(userDto);
 
