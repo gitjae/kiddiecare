@@ -24,8 +24,9 @@ public class AdminController {
     @PostMapping("id/check")
     public Map adminIdDuplCheck(@ModelAttribute AdminRequestDto adminDto){
         JSONObject result = new JSONObject();
-        System.out.println(adminDto);
+        System.out.println("adminDto 확인 "+adminDto);
         Admin admin = adminRepository.findByAdminId(adminDto.getAdminId());
+        System.out.println("admin 확인"+admin);
         String message = admin == null ? "Not a duplicate value." : "duplicate value";
         result.put("response", message);
         return result.toMap();
@@ -41,6 +42,9 @@ public class AdminController {
     @PostMapping("join")
     public Map adminJoin(@RequestBody AdminRequestDto adminDto){
         JSONObject result = new JSONObject();
+
+        System.out.println("adminDto값 확인"+adminDto);
+
         // 데이터값 확인
         if(adminDto == null){
             result.put("response","fail cause joinForm data is null");
@@ -145,5 +149,9 @@ public class AdminController {
         }
         return result.toMap();
     }
+
+    // TODO 의사 정보 받아서 저장하는 로직
+    // TODO ADMIN MAIN이 없음
+
 
 }

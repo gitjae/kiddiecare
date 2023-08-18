@@ -1,16 +1,18 @@
 package com.spring.kiddiecare.controller;
 
-import com.spring.kiddiecare.domain.email.EmailDto;
 import com.spring.kiddiecare.domain.hospitalAdmin.AdminRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.json.JSONObject;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.annotation.SessionScope;
 import org.springframework.web.context.request.WebRequest;
 
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.time.LocalDateTime;
@@ -50,12 +52,12 @@ public class EmailVerificationController {
         return current.format(formatter);
     }
 
+    @SessionScope
     @PostMapping("create")
-    public Map sendVerificationEmail(@ModelAttribute AdminRequestDto adminDto) {
+    public Map sendVerificationEmail(@ModelAttribute AdminRequestDto adminDto, Model model) {
         JSONObject resultJson = new JSONObject();
         String verificationCode = getAuthToken();
         String verificationDuration = getVerificationDuration();
-        System.out.println("dd"+adminDto.getAdminEmail());
         try{
             MimeMessage message = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true);
@@ -64,6 +66,9 @@ public class EmailVerificationController {
             helper.setSubject("[kiddiecare] 이메일 확인 코드");
             helper.setText("[kiddiecare] 이메일 확인 코드 : " + verificationCode);
             mailSender.send(message);
+
+            model.addAttribute("verification_code", verificationCode);
+            model.addAttribute("verification_duration", verificationDuration);
 
             resultJson.put("result", "VERIFICATION_SENT");
             resultJson.put("verification_code", verificationCode);
@@ -76,12 +81,13 @@ public class EmailVerificationController {
         return resultJson.toMap();
     }
 
+    //TODO 유효시간 설정 -> redis 사용하지 않는 이유 이미 사용하기 때문이고 ec2때문에
     @PostMapping("validate")
     public Map validateVerificationCode(HttpServletRequest request, String verificationCode) {
         JSONObject resultJson = new JSONObject();
 
         HttpSession session = request.getSession();
-        String savedCode = (String) session.getAttribute("VERIFICATION_CODE");
+        String savedCode = (String) session.getAttribute("verification_code");
         String savedDuration = (String) session.getAttribute("VerificationDuration");
 
         if(savedCode != null || savedDuration != null){
@@ -96,7 +102,13 @@ public class EmailVerificationController {
                 int now = Integer.parseInt(currentTime[1]);
                 int duTime = Integer.parseInt(Duration[1]);
                 String message = now <= duTime ? "VERIFICATION_SUCCEEDED" : "EXPIRED";
-                resultJson.put("result",message);
+                if(verificationCode.equals(savedCode)){
+                    resultJson.put("result",message);
+                    session.removeAttribute("verification_code");
+                    session.removeAttribute("VerificationDuration");
+                }else{
+                    resultJson.put("result","fail");
+                }
             }catch (Exception e){
                 resultJson.put("result", "VERIFICATION_FAILED");
             }
