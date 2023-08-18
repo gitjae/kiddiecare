@@ -8,12 +8,12 @@ function getSgguCdFromUrl() {
 
 // 예약하기 버튼 액션
 document.getElementById("booking-btn").onclick = function () {
-    if (selectedSlotInfo.timeSlotNo == null) {
-        alert("예약 시간을 선택해주세요.");
-    } else {
-        let hospitalName = encodeURIComponent(getHospitalNameFromUrl().trim());
-        location.href = `/appointment/booking?hospitalName=${hospitalName}&treatmentDate=${formattedDate}&treatmentDay=${selectDay}&doctorNo=${selectedSlotInfo.doctorNo}&slotTime=${selectedSlotInfo.time}&slotWeekday=${selectedSlotInfo.weekday}&timeSlotNo=${selectedSlotInfo.timeSlotNo}`;
+    if (!sessionStorage.getItem('log')) {
+        alert("병원 예약은 로그인 후 이용 가능합니다.");
+        return;
     }
+    let hospitalName = encodeURIComponent(getHospitalNameFromUrl().trim());
+    location.href = `/appointment/booking?hospitalName=${hospitalName}&treatmentDate=${formattedDate}&treatmentDay=${selectDay}&doctorNo=${selectedSlotInfo.doctorNo}&slotTime=${selectedSlotInfo.time}&slotWeekday=${selectedSlotInfo.weekday}&timeSlotNo=${selectedSlotInfo.timeSlotNo}`;
 }
 
 // 정보 뿌리기

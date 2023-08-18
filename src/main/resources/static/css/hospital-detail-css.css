@@ -66,6 +66,14 @@ h3{
     display: none;
 }
 
+#title-weekday{
+    margin-right: 30px;
+}
+
+#time-table-mon, #time-table-thu, #time-table-wed, #time-table-thu, #time-table-fri, #time-table-sat, #time-table-sun {
+    margin-right: 20px;
+}
+
 /* 예약 캘린더 */
 .appo-table{
     display: flex;
@@ -80,7 +88,7 @@ td {
 
 .Calendar {
     text-align: center;
-    width: 600px;
+    width: 30%;
     flex-shrink: 0;
 }
 
@@ -145,4 +153,9 @@ td {
     pointer-events: none;  /* 클릭 방지 */
     cursor: not-allowed;  /* 커서 모양 변경 */
     opacity: 0.5;
+}
+
+#doctor-cards{
+    width: 30%;
+    margin-top: 60px;
 }
