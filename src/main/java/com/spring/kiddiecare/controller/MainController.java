@@ -16,7 +16,6 @@ import com.spring.kiddiecare.domain.user.UserResponseDto;
 import com.spring.kiddiecare.service.ChildrenService;
 import com.spring.kiddiecare.service.DoctorService;
 import com.spring.kiddiecare.service.HospitalService;
-import com.spring.kiddiecare.service.TimeSlotsLimitService;
 import com.spring.kiddiecare.util.AppoView;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -242,6 +241,16 @@ public class MainController {
     @GetMapping("appointment/hospitalDetail")
     public String showReservePage(@RequestParam("hospitalName") String hospitalName, Model model) {       // -> hospitalName 으로 변경하고 내용 삭제하고 ajax(api->HospitalInfoController의 getHospitalInfo, 우리DB)로 요청보낸 후 나머지는 js에서 처리
         return "hospitalDetail";
+    }
+
+    @GetMapping("/join/kakao")
+    public String kakaoJoin(){
+        return "kakaoJoin";
+    }
+
+    @GetMapping("user/quit")
+    public String quitUser(){
+        return "quitUser";
     }
 
     @GetMapping("appointment/update")

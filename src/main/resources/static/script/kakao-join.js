@@ -1,4 +1,3 @@
-var getid= RegExp(/^[a-z0-9]{4,20}$/); // 영어 소문자, 숫자 [ 4~20자리 까지 입력가능 ]
 var getName = RegExp(/^[가-힣a-zA-Z]{2,8}$/); // 한글, 영어 대소문자 [ 2~8자리 까지 입력가능 ]
 var getpw= RegExp(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,20}$/); // 문자, 숫자, 특수문자 최소 1개씩 포함시켜야함. [ 최소 8자리이상 입력 ]
 var getMail = RegExp(/^[a-z0-9\.\-_]+@([a-z0-9\-]+\.)+[a-z]{2,6}$/); // 이메일 형식만 입력가능
@@ -6,12 +5,6 @@ var getBirth = RegExp(/^(19[0-9][0-9]|20\d{2})(0[0-9]|1[0-2])(0[1-9]|[1-2][0-9]|
 var getPhone = RegExp(/^[0-9]{10,11}$/);
 var duplChk = false;
 var phoneChk = false;
-
-$(document).ready(function (){
-    $('#id').on("change",function (){
-        duplChk = false;
-    })
-})
 
 
 
@@ -30,12 +23,6 @@ function join(){
 
     if(!duplChk){
         alert("아이디 중복체크");
-        return false;
-    }
-
-    if(!getid.test(id)){
-        $("#id").val("");
-        alert("아이디");
         return false;
     }
 
@@ -121,11 +108,6 @@ function join(){
 function idDuplChk(){
     const id = $('#id').val();
 
-    if(!getid.test(id)){
-        $("#id").val("");
-        alert("아이디");
-        return false;
-    }
 
     $.ajax({
         method: "GET",

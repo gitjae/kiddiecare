@@ -78,6 +78,7 @@
                         </div>
                     </div>
                     <button id="user-update" onclick="gotoUpdate()">수정</button>
+                    <button id="user-quit" onclick="gotoQuit()">탈퇴</button>
                 </div>
 
                 <div class="main-div" id="div-children">
