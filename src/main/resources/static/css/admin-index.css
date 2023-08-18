@@ -1,0 +1,44 @@
+/* header 및 sidebar */
+.mypage-title p{
+    font-size: xx-large;
+    font-weight: bolder;
+    padding: 30px;
+}
+
+.content-wrapper {
+    display: flex;
+    height: 1024px;
+}
+
+#sidebar {
+    height: 100%;
+    width: 220px;
+    border-right: 1px solid #dcdcdc;
+    padding-right: 15px;
+    box-sizing: border-box;
+}
+
+#ul-nav {
+    margin-top: 20px;
+}
+
+#ul-nav li div {
+    padding: 10px;
+    cursor: pointer;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+#ul-nav li div:hover {
+    background-color: #e9e9e9;
+}
+
+/* 본문 */
+#main-section {
+    flex-grow: 1;
+    padding: 20px;
+}
+
+.main-div{
+    display: none;
+}

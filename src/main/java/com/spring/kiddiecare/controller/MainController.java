@@ -51,6 +51,11 @@ public class MainController {
         return "index";
     }
 
+    @GetMapping("adminIndex")
+    public String adminIndex(){
+        return "adminIndex";
+    }
+
     @GetMapping("join")
     public String join(){
         return "join";

@@ -41,7 +41,7 @@
             </div>
 
             <div class="admin-myPage">
-                <h2>병원 마이페이지(사이트 도움말로 변경)</h2>
+                <h2>병원 어드민(사이트 도움말로 변경)</h2>
                 <p>병원 관계자는 병원 정보 수정과 환자 예약관리를 할 수 있어요.</p>
                 <button id="admin-appo">병원 마이페이지</button>
                 <img src="/image/userGuide.png">
