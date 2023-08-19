@@ -14,59 +14,61 @@
     <link href="/css/hospital-appo-create.css" rel="stylesheet">
     <link href="/css/admin-appo-modify.css" rel="stylesheet">
 </head>
-<c:import url="header.jsp"></c:import>
+
 <body>
-    <div class="container">
-        <section>
-            <c:import url="menu-bar.jsp"></c:import>
-            <div class="select-area">
-                <h1>[ 예약 관리 ]</h1>
+    <div id="select-area-modify">
 
-                <h1>의사 선택</h1>
-                <p id="selectedDoctor"></p>
-                <div class="select-option">
+        <h1>[ 예약 관리 ]</h1>
 
-                </div>
+<%--        <h1>의사 선택</h1>--%>
+<%--        <p id="selectedDoctor"></p>--%>
+<%--        <div class="select-option">--%>
 
-                <h1>날짜 설정</h1>
-                <p id="date-status"></p>
-                <input type="date" id="confirm-date">
+<%--        </div>--%>
 
-                <div id="time-bar-area">
-                    <ul id="time-list">
-                        <%--                    <li>9:00~10:00</li>--%>
-                    </ul>
-                </div>
+        <h1>날짜 설정</h1>
+        <p id="date-status"></p>
 
-                <div class="detail-area">
-                    <h1>디테일</h1>
-                    <p id="detail-status"></p>
-                    <table>
-                        <thead id="thead">
-                        <tr>
-                            <th>No.</th>
-                            <th>의사명</th>
-                            <th>요일</th>
-                            <th>날짜</th>
-                            <th>시간</th>
-                            <th>최대 예약자 수</th>
-                            <th>예약자 수</th>
-                            <th>예외설정 수</th>
-                            <th>예약가능 수</th>
-                        </tr>
-                        </thead>
-                        <tbody id="table-body">
-                        </tbody>
+        <div id="detail-area">
+            <input type="date" id="lookup-date">
 
-                        <button onclick="pageMinus()"> < </button>
-                        <p id="page">1</p>
-                        <button onclick="pagePlus()"> > </button>
-                    </table>
-                </div>
+<%--            <div id="time-bar-area">--%>
+<%--                <ul id="time-list">--%>
+<%--                    &lt;%&ndash; <li>9:00~10:00</li>&ndash;%&gt;--%>
+<%--                </ul>--%>
+<%--            </div>--%>
+
+            <div class="detail-change-area">
+                <h1>디테일</h1>
+                <button id="reset" onclick="reset()">RESET</button>
+                <p id="detail-status"></p>
+                <table>
+                    <thead id="thead">
+                    <tr>
+<%--                        <th>No.</th>--%>
+                        <th>의사명</th>
+                        <th>요일</th>
+                        <th>날짜</th>
+                        <th>시간</th>
+                        <th>최대 예약자 수</th>
+                        <th>예외설정 수</th>
+                        <th>현재 예약자 수</th>
+<%--                        <th>예약가능 수</th>--%>
+                        <th>수정하기</th>
+                    </tr>
+                    </thead>
+                    <tbody id="appo-mo-table">
+                    </tbody>
+
+    <%--                <button onclick="pageMinus()"> < </button>--%>
+    <%--                <p id="page">1</p>--%>
+    <%--                <button onclick="pagePlus()"> > </button>--%>
+                </table>
             </div>
 
-        </section>
+        </div>
     </div>
-<script src="/script/hospital-admin-appo-modify.js"></script>
+
+
 </body>
 </html>

@@ -1,15 +1,26 @@
-head,body{
-    width: 100%;
-    height: 100%;
+@font-face {
+    font-family: 'Pretendard-Regular';
+    font-style: normal;
+    font-weight: 400;
+    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
 }
 
-
-section{
-    display: flex;
-    flex-direction: row;
-    flex: 1 1 100%;
-    margin-top: 20px;
+*{
+    font-family: 'Pretendard-Regular';
 }
+
+/*head,body{*/
+/*    width: 100%;*/
+/*    height: 100%;*/
+/*}*/
+
+
+/*section{*/
+/*    display: flex;*/
+/*    flex-direction: row;*/
+/*    flex: 1 1 100%;*/
+/*    margin-top: 20px;*/
+/*}*/
 
 #hospital-name{
     display: flex;
@@ -17,33 +28,38 @@ section{
     padding: 10px;
 }
 
-.menu-bar-area{
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    min-width: 200px;
-}
+/*.menu-bar-area{*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*    gap: 15px;*/
+/*    min-width: 200px;*/
+/*}*/
 
-#menu-bar{
-    display: flex;
-    flex-direction: column;
-    text-align: left;
-    padding: 10px;
-    border-right: 1px solid black;
-    gap: 15px;
-}
+/*#menu-bar{*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*    text-align: left;*/
+/*    padding: 10px;*/
+/*    border-right: 1px solid black;*/
+/*    gap: 15px;*/
+/*}*/
 
-.select-area{
-    padding-top: 30px;
-    padding-left: 30px;
-}
+/*.select-area{*/
+/*    padding-top: 30px;*/
+/*    padding-left: 30px;*/
+/*}*/
 
 /*.select-area > h1{*/
 /*    padding-left: 30px;*/
 /*}*/
 
 .select-option{
-    display: grid;
+    /*display: grid;*/
+    display: flex;
+    flex-wrap: wrap;
+
+    /*height: 300px;*/
+
     gap: 50px;
     padding: 30px;
     grid-template-columns: repeat(3, 1fr);
@@ -54,16 +70,57 @@ section{
 
 .option {
     background: #E4F3FF;
-    width: 200px;
-    height: 200px;
-    border-radius: 20px;
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.05), 0 6px 6px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    width: 150px;
+    height: 150px;
+    border-radius: 5px;
     text-align: center;
-    line-height: 200px;
-    font-size: 20px;
+    line-height: 150px;
+    font-size: 15px;
+    color: #737373;
 }
+
+.option:hover{
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2), 0 6px 4px rgba(0, 0, 0, 0.2);
+    color: black;
+}
+
 
 .selected {
     background: #74aedb;
+    color: black;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2), 0 6px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* 레전드 */
+fieldset {
+    background: white;
+    box-shadow: 0 10px 20px rgb(0 0 0 / 11%), 0 6px 4px rgb(0 0 0 / 0%);
+    border-radius: 20px;
+    border: 2px solid #f4f4f4;
+    color: white;
+}
+
+fieldset legend{
+    border: 4px solid white;
+    border-radius: 15px;
+    margin-left: 20px;
+    background: #74aedb;
+    font-size: 30px;
+    padding: 20px;
+}
+
+
+
+#main-section>h1{
+    padding-left: 30px;
+}
+
+h1{
+    font-size: 30px;
+    margin-bottom: 20px;
+    margin-top: 20px;
 }
 
 .date-style{
@@ -89,14 +146,49 @@ section{
 /*    display: none;*/
 /*}*/
 
+.date-set-area>h1{
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
 
-/* hide 처리 */
+#start-end-date{
+    display: flex;
+}
+
+#start-end-date>div{
+    margin-right: 30px;
+}
+
+#start-end-date>h3{
+    padding-bottom: 10px;
+}
+
+
+/* ====== hide 처리 ===== */
 #except-area {
     display: none;
+    margin-top: 30px;
+}
+
+#except-area>#set-day{
+    display: flex;
+    align-items: center;
+}
+
+
+/* 제외날짜 추가 버튼 */
+#except-add{
+    width: 40px;
+    height: 30px;
+    background: #3e85ef;
+    color: white;
+    border-radius: 5px;
+    margin-left: 10px;
 }
 
 .time-set-area{
     display: none;
+    height: 500px;
 }
 
 .meal-time-set-area{
@@ -105,19 +197,57 @@ section{
 
 #except-days-area {
     margin-top: 20px;
-    background: #f4f4f4;
+    background: #e4f3ff82;
+    border-radius: 10px;
     width: 100%;
     height: 200px;
 }
 
+.remove{
+    margin: 10px 5px 10px 10px;
+}
+
 .week-title {
     font-style: italic;
-    width: 10%;
-    background: #bebebe;
+    width: 10%
 }
 
 .week-area {
-    background: blanchedalmond;
-    width: 80%;
+
+    width: 100%;
+    height: 60px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
 }
 
+.week-area>input{
+    height: 30px;
+    margin-right: 10px;
+    margin-left: 10px;
+    width: 100px;
+}
+
+#time-set-btn{
+    margin-top: 10px;
+}
+
+#set-weekday{
+    background: #e4f3ff82;
+    height: 430px;
+}
+
+#lunch-dinner{
+    background: #e4f3ff82;
+    display: flex;
+    margin-bottom: 20px;
+}
+
+.inp{
+    width: 40px;
+    margin-left: 20px;
+}
+
+h3{
+    margin-bottom: 20px;
+}
