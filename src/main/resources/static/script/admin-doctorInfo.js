@@ -31,6 +31,10 @@ $(document).ready(function() {
         }
     });
 
+    $(document).on('click', '.doctor-area', function() {
+        $('.doctor-info-container').addClass('show');
+    });
+
     const formOpenBtn = document.querySelector(".dotor-add-area");
     const formContainer = document.querySelector(".form_container");
     const formCloseBtn = document.querySelector(".form_close");
