@@ -29,32 +29,32 @@
     width: 80%;
 }
 
-.wrapper{
+.wrapper {
     background: #74aedb;
     padding: 30px;
     border-radius: 5px;
 }
 
-.join-div{
+.join-div, .find-div {
     padding: 70px;
     background: #ffffff;
     border-radius: 5px;
 }
 
-#form{
+#form {
     text-align: center;
     width: 80%;
     margin: 100px auto;
 }
 
-label{
+label {
     display: inline-block;
     width: 100px;
     margin-right: 20px;
     text-align: center;
 }
 
-input{
+input {
     display: inline-block;
     width: 70%;
     height: 40px;
@@ -64,7 +64,8 @@ input{
 }
 
 /* 가로 정렬 관련 스타일 */
-#div-id, #div-pw, #div-pwChk, #div-name, #div-birth, #div-gender, #div-phone, #div-code, #div-email, .form-group {
+#div-id, #div-pw, #div-pwChk, #div-name, #div-birth, #div-gender, #div-phone, #div-code, #div-email, .form-group,
+.name-a, .id-a, .phone-a{
     display: flex;
     align-items: center;
     justify-content: start;
@@ -85,14 +86,27 @@ input[type="radio"] {
     margin-right: 40px;
 }
 
-#send{
+#send {
     width: 135px;
 }
 
-#duplChk{
+#duplChk {
     width: 100px;
 }
 
-#submit{
+#submit {
     margin-top: 30px;
 }
+
+/* 아이디/비밀번호 찾기 */
+.find-div-subTitle {
+    font-size: large;
+    color: #74aedb;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+#find-id {
+    margin-bottom: 50px;
+}
+
