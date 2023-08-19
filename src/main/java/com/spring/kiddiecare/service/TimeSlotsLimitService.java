@@ -3,11 +3,14 @@ package com.spring.kiddiecare.service;
 import com.spring.kiddiecare.domain.timeSlotsLimit.TimeSlotsLimit;
 import com.spring.kiddiecare.domain.timeSlotsLimit.TimeSlotsLimitRepository;
 import com.spring.kiddiecare.domain.timeSlotsLimit.TimeSlotsLimitRequestDto;
+import com.spring.kiddiecare.util.DateParsor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
+import java.sql.Time;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -42,6 +45,32 @@ public class TimeSlotsLimitService {
         timeSlotsLimitRepository.save(timeSlotsLimit);
     }
 
+    @Transactional
+    public boolean setEnable(int timeSlotNo, int max, int block) {
+        TimeSlotsLimit timeSlotsLimit = timeSlotsLimitRepository.findById(timeSlotNo)
+                .orElseThrow(() -> new EntityNotFoundException("Entity not found with id: " + timeSlotNo));
+
+        timeSlotsLimit.setMax(max);
+        timeSlotsLimit.setBlock(block);
+        timeSlotsLimit.setEnable(timeSlotsLimit.getMax() - (timeSlotsLimit.getCount() + timeSlotsLimit.getBlock()));
+
+        int timeMax = timeSlotsLimit.getMax();
+//        int timeCount = timeSlotsLimit.getCount();
+        int timeBlock = timeSlotsLimit.getBlock();
+        int timeEnable = timeSlotsLimit.getEnable();
+
+
+        // 돼야 하는 조건
+        // max >= enable
+        if(timeMax >= timeEnable && timeEnable >= 0 && timeMax >= timeBlock) {
+            timeSlotsLimitRepository.save(timeSlotsLimit);
+            return true;
+        }else {
+            return false;
+        }
+
+    }
+
 //    @Transactional
 //    public void blockAppo(int timeSlotNo) {
 //
@@ -60,22 +89,31 @@ public class TimeSlotsLimitService {
                 // max랑 동일하게
                 int enable = rowData.getMax();
                 rowData.setEnable(enable);
-                // 임시
-//                rowData.setDoctorNo(2);
-//                rowData.setYkiho("JDQ4MTYyMiM1MSMkMSMkMCMkODkkMzgxMzUxIzExIyQxIyQzIyQ3OSQyNjE4MzIjNDEjJDEjJDgjJDgz");
 
                 // 잘 들어와졌는지 테스트
 //                System.out.println("date " + date);
-//                System.out.println("weekday " + weekday);
-//                System.out.println("time " + time);
-//                System.out.println("max " + max);
-//                System.out.println("enable " + enable);
 
                 TimeSlotsLimit timeSlotsLimit = new TimeSlotsLimit(rowData);
-                System.out.println("체크:" +timeSlotsLimit);
-//                timeSlotsLimitRepository.findTimeSlotsLimitsByTimeSlotsLimit(timeSlotsLimit);
 
-//                timeSlotsLimitRepository.save(timeSlotsLimit);
+                String ykiho = timeSlotsLimit.getYkiho();
+                long doctorNo = timeSlotsLimit.getDoctorNo();
+                Date getDate = timeSlotsLimit.getDate();
+                Time getTime = timeSlotsLimit.getTime();
+
+                boolean dupl = timeSlotsLimitRepository.existsByYkihoAndDoctorNoAndDateAndTime(ykiho, doctorNo, getDate, getTime);
+
+
+                System.out.println(dupl);
+
+                // 중복 안될 때 저장
+                if(!dupl) {
+                    timeSlotsLimitRepository.save(timeSlotsLimit);
+
+                    System.out.println("저장됨:" +timeSlotsLimit);
+
+                }else if(dupl){
+                    System.out.println("저장안됨:" +timeSlotsLimit);
+                }
             }
         }
     }

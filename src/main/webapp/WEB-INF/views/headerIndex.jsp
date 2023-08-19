@@ -8,6 +8,7 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/stompjs@2.3.3/lib/stomp.min.js"></script>
+<%--  <script src="/script/admin-header.js"></script>--%>
 </head>
 <body>
 <header id="header">
@@ -22,8 +23,8 @@
   <div class="topNav">
     <c:choose>
       <c:when test="${empty log}">
-        <a class="login-a" href="#">로그인</a>
-        <a class="join-a" href="#">회원가입</a>
+        <a class="login-a" href="/admin/login">로그인</a>
+        <a class="join-a" href="/admin/join">회원가입</a>
       </c:when>
       <c:otherwise>
         <c:set var="sessionValue" value="${sessionScope.log}" />
@@ -36,9 +37,9 @@
             <div class="notifi-area"></div>
           </div>
         </div>
-        <a class="searchHos" href="#">동네병원</a>
+        <a class="searchHos" href="/hospital/Search">동네병원</a>
         <a class="mypage-a" href="#">마이페이지</a>
-        <a class="logout-a" href="#" onclick="logout()">로그아웃</a>
+        <a class="logout-a" href="" onclick="logout()">로그아웃</a>
       </c:otherwise>
     </c:choose>
   </div>

@@ -1,20 +1,24 @@
-.select-area{
-    width: 100%;
-}
+/*.select-area{*/
+/*    width: 100%;*/
+/*}*/
 
-.detail-area>table{
+.detail-change-area>table{
     text-align: center;
     width: 100%;
     margin-top: 20px;
 }
 
-.detail-area>table td{
+.detail-change-area>table td{
     height: 40px;
 }
 
-.detail-area input{
+.detail-change-area input{
     text-align: center;
     width: 30px;
     border-bottom: none;
     box-shadow: #737373 ;
+}
+
+.detail-change-area{
+    display: none;
 }

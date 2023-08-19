@@ -91,11 +91,37 @@ public class TimeSlotsController {
 
 
     // timeslot 첫 생성
-    @PostMapping("timesetCreate")
-    public void timeset_create(@RequestBody Map<String, List<TimeSlotsLimitRequestDto>> data) {
+    @PostMapping("/timesetCreate")
+    public Map timeset_create(@RequestBody Map<String, List<TimeSlotsLimitRequestDto>> data) {
+        JSONObject json = new JSONObject();
 
-        timeSlotsLimitService.timeSlotsCreate(data);
+        try {
+            timeSlotsLimitService.timeSlotsCreate(data);
+            json.put("create", "success");
+        }catch (Exception e){
+            e.printStackTrace();
+            json.put("create","fail");
+        }
 
+
+        return json.toMap();
+    }
+
+    // timeslot 수정
+    @PutMapping("/modifyTimeSlots")
+    public Map modifyTimeSlots(@RequestParam int timeSlotNo, int max, int block){
+        JSONObject json = new JSONObject();
+
+        // max, block 받아서 enable 계산 후 db 저장
+        boolean isSaved = timeSlotsLimitService.setEnable(timeSlotNo, max, block);
+
+        if(isSaved) {
+            json.put("modify", "success");
+        }else{
+            json.put("modify", "fail");
+        }
+
+        return json.toMap();
     }
 }
 

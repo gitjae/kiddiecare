@@ -50,8 +50,12 @@ function getHospInfoDetail() {
 
                     doctorContainer.appendChild(doctorCard);
                 });
+                $('.appo-table').css({display:"flex"});
+            } else {
+                alert('우리동네소아과에 등록되지 않은 병원 입니다.');
+                $('.appo-table').empty();
+                $('#booking-btn').remove();
             }
-
             isLiked();
         })
         .fail(err => {

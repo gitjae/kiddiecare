@@ -146,10 +146,20 @@ public class AppointmentController {
 //        return appoRepository.findAllByTimeSlotNo(timeSlotNo);
 //    }
 
-//    @GetMapping("/getAppoDetails")
-//    public List<AppoResponseDto> getAppoDetails(@RequestParam int timeSlotNo) {
-//        return appoResponseRepository.findAllByTimeSlotNo(timeSlotNo);
-//    }
+    @GetMapping("/getAppoDetails")
+    public List<AppoResponseDto> getAppoDetails(@RequestParam int timeSlotNo) {
+        List<AppoResponseDto> appoList = appoResponseRepository.findAllByTimeSlotNo(timeSlotNo);
+        List<AppoResponseDto> noDeleteList = new ArrayList<>();
+
+        for(AppoResponseDto data : appoList) {
+            // status가 삭제가 아닌 리스트만 가져오기
+            if(data.getAppoStatus() != 2) {
+                noDeleteList.add(data);
+            }
+        }
+
+        return noDeleteList;
+    }
 
     // 수정
     @GetMapping("/getAppoDetails/{page}")

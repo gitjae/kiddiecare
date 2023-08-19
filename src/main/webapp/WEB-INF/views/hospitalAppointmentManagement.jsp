@@ -14,21 +14,17 @@
     <link href="/css/common.css" rel="stylesheet">
     <link href="/css/hospital-appo-management.css" rel="stylesheet">
 </head>
-<c:import url="header.jsp"></c:import>
 <body>
-<div class="container">
-    <section>
-        <c:import url="menu-bar.jsp"></c:import>
         <div class="select-area">
             <h1>[ 예약자 현황 ]</h1>
-            <button>전체 예약자 불러오기</button>
-            <button>날짜별 예약자 불러오기</button>
+<%--            <button>전체 예약자 불러오기</button>--%>
+<%--            <button>날짜별 예약자 불러오기</button>--%>
 
-            <h1>의사 선택</h1>
-            <div id="selectedDoctor"></div>
-            <div class="select-option">
+<%--            <h1>의사 선택</h1>--%>
 
-            </div>
+<%--            <div class="select-option">--%>
+
+<%--            </div>--%>
 
             <h1>날짜 설정</h1>
             <p id="date-status"></p>
@@ -57,9 +53,9 @@
                     <tbody id="table-body">
                     </tbody>
 
-                    <button onclick="pageMinus()"> < </button>
-                    <p id="page">1</p>
-                    <button onclick="pagePlus()"> > </button>
+<%--                    <button onclick="pageMinus()"> < </button>--%>
+<%--                    <p id="page">1</p>--%>
+<%--                    <button onclick="pagePlus()"> > </button>--%>
                 </table>
             </div>
         </div>
@@ -74,9 +70,6 @@
 
         </div>
 
-    </section>
-</div>
-    <script src="/script/hospital-appo-management.js"></script>
+
 </body>
-<c:import url="footer.jsp"></c:import>
 </html>
