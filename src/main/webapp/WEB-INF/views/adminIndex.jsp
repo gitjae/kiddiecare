@@ -41,14 +41,7 @@
                           </div>
                       </li>
                       <li>
-                          <div id="admin-info-change" name="admin-info-change" onclick="sectionChange(this)">
-                              관리자 정보 변경
-                          </div>
-                      </li>
-                      <li>
-                          <div id="hosp-doctor" name="hosp-doctor" onclick="sectionChange(this)">
-                              의사 정보
-                          <div id="" name="div-" onclick="contentChange(this)">
+                          <div id="hosp-doctor" name="div-doctor" onclick="contentChange(this)">
                               의사정보 추가 및 수정
                           </div>
                       </li>
@@ -62,7 +55,7 @@
           </aside>
 
           <div id="main-section">
-              <c:import url="adminDoctorInfo.jsp"></c:import>
+
 
               <%-- 의사 선택 영역--%>
 <%--              <h1>의사 선택</h1>--%>
@@ -89,6 +82,11 @@
               <!-- 예약정보 관리 -->
               <div class="main-div" id="div-appo-modify">
                   <c:import url="hospitalAdminAppoModify.jsp" />
+              </div>
+
+              <!-- 의사정보 추가 및 수정 -->
+              <div class="main-div" id="div-doctor">
+                  <c:import url="adminDoctorInfo.jsp"></c:import>
               </div>
 
           </div>
