@@ -69,6 +69,7 @@ let formattedDate = null;
 function choiceDate(nowColumn) {
     // 의사 카드 초기화
     $('#doctor-cards').empty();
+    $('#booking-btn').prop("disabled", true);
 
     if (document.getElementsByClassName("choiceDay")[0]) {                              // 기존에 선택한 날짜가 있으면
         document.getElementsByClassName("choiceDay")[0].classList.remove("choiceDay");  // 해당 날짜의 "choiceDay" class 제거
@@ -143,7 +144,7 @@ function showTimeSlots(slots) {
                 currentSelectedCard.style.backgroundColor = '';
                 currentSelectedCard.style.color = '';
             }
-
+            $('#booking-btn').prop("disabled", true);
             // 클릭된 카드의 배경색 변경
             this.style.backgroundColor = '#3E85EF';
             this.style.color = '#FFFFFF';

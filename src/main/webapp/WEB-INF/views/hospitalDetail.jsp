@@ -109,13 +109,7 @@
                 </table>
 
                 <div class="time-slots-table">
-                    <c:forEach items="${timeSlotsLimits}" var="timeSlotsLimit">
-                        <div class="time-slot-card">
-                            <div class="time-slot-content">
-                                    ${timeSlotsLimit.time}<br>(${timeSlotsLimit.count}/${timeSlotsLimit.enable})
-                            </div>
-                        </div>
-                    </c:forEach>
+
                 </div>
                 <div id="doctor-cards">
 
