@@ -73,3 +73,22 @@ input[type="text"] {
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
+
+#div-id, #div-pw-new, #div-pwChk, #div-name, #div-birth, #div-phone, #div-code, #div-email, #div-pw, .form-group {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    margin-bottom: 20px;
+}
+
+button {
+    margin-left: 10px;
+}
+
+#send, #verify, #phone-update{
+    width: 120px;
+}
+
+#email{
+    width: 400px;
+}
