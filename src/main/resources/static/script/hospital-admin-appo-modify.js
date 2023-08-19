@@ -53,8 +53,7 @@ $('#lookup-date').on('change', function (){
 });
 
 function modify(btn) {
-    // 제목, 내용, 아이콘
-    swal("good", "wow", "success");
+
     // timeslot no 가져오기
     const timeSlotNo = parseInt(btn.name);
 
@@ -79,7 +78,8 @@ function modify(btn) {
             }
         }).done(function (result){
             if(result.modify === "success") {
-
+                // 제목, 내용, 아이콘
+                swal("정보 수정 성공!", "" ,"success" );
                 alert("수정 성공!");
             }else {
                 alert("수정 실패");
