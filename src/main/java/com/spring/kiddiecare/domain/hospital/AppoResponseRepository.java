@@ -16,5 +16,9 @@ public interface AppoResponseRepository extends JpaRepository<AppoResponseDto,In
     @Query(nativeQuery = true, value = "SELECT * FROM appoView WHERE slot_no=?1")
     public List<AppoResponseDto> findAllBySlotNoAndPage(int slotNo, Pageable pageable);
 
+    @Query(nativeQuery = true, value = "SELECT * FROM appoView WHERE slot_no=?1")
+    public List<AppoResponseDto> findAllByTimeSlotNo(int slotNo);
+
+
 
 }

@@ -1,8 +1,5 @@
-$(function () {
-
-})
 let selectedUser;
-const ykiho = document.getElementById('ykiho').value;
+let ykihoValue = document.getElementById('ykiho').value;
 
 // 날짜 선택 시 로그인한 병원의 timeslot불러옴
 document.getElementById('confirm-date').addEventListener('change', function (event) {
@@ -17,7 +14,7 @@ document.getElementById('confirm-date').addEventListener('change', function (eve
         url: '/getTimeSlots',
         method: 'GET',
         data: {
-            ykiho: ykiho,
+            ykiho: ykihoValue,
             date: formattedDate,
             doctorNo: selectedDoctor
         },
@@ -55,7 +52,7 @@ document.getElementById('time-list').addEventListener("click", (event) => {
     const tableBody = document.getElementById('table-body');
     const timeList = document.getElementById('time-list');
     // 페이징처리
-    let nowPage = document.getElementById('page').textContent;
+    // let nowPage = document.getElementById('page').textContent;
 
     // 기존 선택 삭제
     for (const child of timeList.children) {
@@ -74,7 +71,7 @@ document.getElementById('time-list').addEventListener("click", (event) => {
 
         // timeNo를 가지고 ajax -> appointment table 전송
         $.ajax({
-            url: `/api/v1/admin/appo/getAppoDetails/${nowPage}`,
+            url: `/api/v1/admin/appo/getAppoDetails/`,
             method: 'GET',
             data: {timeSlotNo: timeNo},
         }).done(function (list) {
@@ -241,7 +238,7 @@ function changeDate() {
             url: '/getTimeSlotsForEnable',
             method: 'GET',
             data: {
-                ykiho: ykiho,
+                ykiho: ykihoValue,
                 date: formattedDate,
                 doctorNo: selectedDoctor
             },
