@@ -38,7 +38,7 @@
 }
 
 .doctor-area img{
-    height: 100%;
+    height: 80%;
     width: 100%;
     margin: 0 auto;
     border-radius: 10px 10px 0px 0px;
@@ -94,7 +94,7 @@
     opacity: 0;
     pointer-events: none;
     transition: all 0.4s ease-out;
-rgba(0.5, 0.5, 0.5, 0.5) 4px 4px 16px 0px;
+    box-shadow: rgba(0.5, 0.5, 0.5, 0.5) 4px 4px 16px 0px;
 }
 
 .doctor-info-container img{
@@ -132,6 +132,7 @@ rgba(0.5, 0.5, 0.5, 0.5) 4px 4px 16px 0px;
     color: #0b0217;
     text-align: center;
     font-family: 'ONE-Mobile-POP', sans-serif;
+    margin-bottom: 1rem;
 }
 
 .input_box {
@@ -164,6 +165,7 @@ rgba(0.5, 0.5, 0.5, 0.5) 4px 4px 16px 0px;
     font-size: 20px;
     color: #707070;
 }
+
 .input_box i.uil-clock,
 .input_box i.uil-user,
 .input_box i.uil-user-square {
@@ -199,4 +201,15 @@ rgba(0.5, 0.5, 0.5, 0.5) 4px 4px 16px 0px;
     padding: 10px 0;
     border-radius: 10px;
     font-family: 'ONE-Mobile-POP', sans-serif;
+    color: #fff;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+.doctor-info-container .button:hover,
+.form_container .button:hover {
+    background: #3E85EF;
 }

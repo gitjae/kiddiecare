@@ -8,14 +8,12 @@ $(document).ready(function() {
                 response.data.forEach(item => {
                     let html = `
                         <div class="doctor-area">
-                            <a href="#" class="doctor-link">
-                                <img src="https://d338jhig5816rv.cloudfront.net/admin1">
-                                <div class="text-area">
-                                    <span class="name">의사이름: ${item.doctorName}</span>
-                                    <span class="average-time-of-care">평균 진료 시간: ${item.doctorAverageTimeOfCare}</span>
-                                    <span class="doctor-status">현재 의사 상태: ${item.doctorStatus}</span>
-                                </div>
-                            </a>
+                            <img src="https://d338jhig5816rv.cloudfront.net/admin1">
+                            <div class="text-area">
+                                <span class="name">의사이름: ${item.doctorName}</span>
+                                <span class="average-time-of-care">평균 진료 시간: ${item.doctorAverageTimeOfCare}</span>
+                                <span class="doctor-status">현재 의사 상태: ${item.doctorStatus}</span>
+                            </div>
                         </div>`;
                     $('.doctor-container').append(html);
                 });
@@ -33,27 +31,9 @@ $(document).ready(function() {
         }
     });
 
-    function openDoctorForm(event, link) {
-        event.preventDefault();
-        const doctorForm = document.getElementById("doctor-form"),
-            formCloseBtn = document.querySelector("#form_close"),
-            formCloseBtn2 = document.querySelector("#form_close2"),
-            doctorName = link.querySelector(".name").textContent,
-            doctorStatus = link.querySelector(".doctor-status").textContent;
-
-        // 의사 이름과 상태를 폼에 삽입
-        doctorForm.querySelector(".doctor-name").textContent = doctorName;
-        doctorForm.querySelector("#doctor_status").value = doctorStatus;
-
-        // 모달 폼 열기
-        doctorForm.classList.add("open");
-        formCloseBtn.addEventListener("click", closeDoctorForm);
-        formCloseBtn2.addEventListener("click", closeDoctorForm);
-    }
-
-    const formOpenBtn = document.querySelector(".dotor-add-area"),
-        formContainer = document.querySelector(".form_container"),
-        formCloseBtn = document.querySelector(".form_close");
+    const formOpenBtn = document.querySelector(".dotor-add-area");
+    const formContainer = document.querySelector(".form_container");
+    const formCloseBtn = document.querySelector(".form_close");
 
     formOpenBtn.addEventListener("click", () => formContainer.classList.add("show"));
     formCloseBtn.addEventListener("click", () => formContainer.classList.remove("show"));
