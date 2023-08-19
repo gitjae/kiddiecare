@@ -39,6 +39,14 @@
     padding: 20px;
 }
 
+/*#div-appo{*/
+/*    display: none;*/
+/*}*/
+
 .main-div{
     display: none;
+}
+
+#div-schedule{
+    display: block;
 }

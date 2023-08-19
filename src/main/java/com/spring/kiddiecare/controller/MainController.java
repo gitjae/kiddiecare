@@ -16,7 +16,6 @@ import com.spring.kiddiecare.domain.user.UserResponseDto;
 import com.spring.kiddiecare.service.ChildrenService;
 import com.spring.kiddiecare.service.DoctorService;
 import com.spring.kiddiecare.service.HospitalService;
-import com.spring.kiddiecare.util.AppoView;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -27,7 +26,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
 
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -303,4 +301,8 @@ public class MainController {
     // 어드민 병원 예약정보 수정 (설정해둔예약관리)
     @GetMapping("admin/appointment/modify")
     public String hospitalAdminAppoModify() { return "hospitalAdminAppoModify";}
+
+    // timeslot 생성 완료 페이지
+    @GetMapping("admin/timeSlotsCreateComp")
+    public String appoCreateComplete(){ return "timeSlotsCreateComp";}
 }

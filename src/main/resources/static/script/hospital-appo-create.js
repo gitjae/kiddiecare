@@ -83,11 +83,7 @@ $("#set-date").click(function() {
     setDate();
 });
 
-// time-set-btn 클릭 시 time-set-area 영역 표시
-$('#time-set-btn').click(function (){
-    $('.time-set-area').show();
-    $('.meal-time-set-area').show();
-})
+
 
 
 // <제외날짜> 날짜 클릭 시 클릭한 날짜 삭제 가능
@@ -112,6 +108,11 @@ function exceptAdd() {
     let content = "";
     // console.log(day);
     const exceptDaysButtons = document.querySelectorAll("#except-days-area .remove");
+
+    if(day === '') {
+        alert('날짜를 입력해주세요.');
+        return;
+    }
 
     let dupl = false;
     for (const button of exceptDaysButtons) {
@@ -151,6 +152,7 @@ function setDate() {
     const day = document.getElementById('except-day');
     day.min = startDate;
     day.max = endDate;
+
 }
 
 // 날짜 범위 설정 끝났을 시 시간 범위 설정하기
@@ -218,25 +220,38 @@ function timeSetBtn() {
 
     // 받아온 요일 정보 배열
     console.log(setWeekdayArr);
-    const setWeekday = document.getElementById('set-weekday');
-    let weekday = ["일", "월", "화", "수", "목", "금", "토"];
-    let output = "";
 
-    for (let i = 0; i < setWeekdayArr.length; i++) {
-        output += `
+    if(setWeekdayArr.length === 0){
+        swal("날짜 설정을 다시 해주세요", "날짜 범위 지정이 잘못되어 있습니다","warning");
+
+    }else{
+        // time-set-btn 클릭 시 time-set-area 영역 표시
+        $('.time-set-area').show();
+        $('.meal-time-set-area').show();
+
+        const setWeekday = document.getElementById('set-weekday');
+        let weekday = ["일", "월", "화", "수", "목", "금", "토"];
+        let output = "";
+
+        for (let i = 0; i < setWeekdayArr.length; i++) {
+            output += `
             <div class="week-area">
-                <p class="week-title">${weekday[setWeekdayArr[i]]}</p>
+                <p class="week-title">${weekday[setWeekdayArr[i]]}요일</p>
                 <input type="number" id="start-hour-${i}" min="0" max="24" placeholder="0~24"/>
+                :
                 <input type="number" id="start-minute-${i}" value="00" readonly/>
                 부터
                 <input type="number" id="end-hour-${i}" min="0" max="24" placeholder="0~24"/>
+                :
                 <input type="number" id="end-minute-${i}" value="00" readonly/>
-
-                <input type="text" id="max-num-${i}" class="max-num" placeholder="예약가능인원수 설정">
+                <span>예약 가능 인원수: </span>
+                <input type="text" id="max-num-${i}" class="max-num" >
             </div>
         `;
+        }
+        setWeekday.innerHTML = output;
     }
-    setWeekday.innerHTML = output;
+
 }
 
 // 예약 생성하기 버튼 클릭 시 입력되지 않은 영역 예외처리
@@ -350,11 +365,12 @@ function saveTimes() {
         data: JSON.stringify(groupedData),
         contentType: "application/json; charset=utf-8",
         success: function (response) {
+            location.href = "/admin/timeSlotsCreateComp";
             console.log("저장 성공!");
-            console.log(response);
+            // console.log(response.create);
         },
         error: function (error) {
-            console.log("저장 실패...ㅠ");
+            alert("스케줄 생성을 실패하였습니다.");
             console.log(error);
         }
     });
