@@ -8,6 +8,7 @@
     <script src="/script/mypage-user.js"></script>
     <script src="/script/mypage-children.js"></script>
     <script src="/script/mypage-appo.js"></script>
+    <script src="/script/mypage-likeHospital.js"></script>
 </head>
 <c:import url="header.jsp"/>
 <body>
@@ -103,7 +104,7 @@
                 </div>
 
                 <div class="main-div" id="div-favor">
-                    <p>찜</p>
+                    <p>찜한 병원</p>
                 </div>
             </div>
         </div>
