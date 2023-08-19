@@ -115,10 +115,8 @@ document.getElementById('time-list').addEventListener("click", (event) => {
                     const statusDropdown = tr.querySelector('select');
                     statusDropdown.addEventListener('change', (event) => {
 
-                        let result = confirm(`
-                            * 예약상태 변경
-                            ${parseInt(event.target.value)}상태로 수정하시겠습니까?
-                        `)
+                        let result = confirm(`* 예약상태 변경  
+상태를 수정하시겠습니까?`);
 
                         if(result){
                             const selectedValue = event.target.value;

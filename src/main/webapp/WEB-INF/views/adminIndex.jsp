@@ -16,8 +16,8 @@
               <div id="bar-nav">
                   <div id="log-area">
                       <input type="text" id="ykiho" name="ykiho" placeholder="병원코드" value="${Ykiho}" style="display: none">
-                      <span>${log}님 반갑습니다.</span>
-                      <span><span id="hospital_name"></span>병원</span>
+                      <p><b><span>${log}님 반갑습니다.</b></span></p>
+                      <span id="hospital_name"></span>
                   </div>
                   <ul id="ul-nav">
                       <li>

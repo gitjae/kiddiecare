@@ -55,12 +55,11 @@ public class TimeSlotsLimitService {
         timeSlotsLimit.setEnable(timeSlotsLimit.getMax() - (timeSlotsLimit.getCount() + timeSlotsLimit.getBlock()));
 
         int timeMax = timeSlotsLimit.getMax();
-//        int timeCount = timeSlotsLimit.getCount();
         int timeBlock = timeSlotsLimit.getBlock();
         int timeEnable = timeSlotsLimit.getEnable();
 
 
-        // 돼야 하는 조건
+        // 만족해야 하는 조건
         // max >= enable
         if(timeMax >= timeEnable && timeEnable >= 0 && timeMax >= timeBlock) {
             timeSlotsLimitRepository.save(timeSlotsLimit);
@@ -82,16 +81,6 @@ public class TimeSlotsLimitService {
         for (String key : data.keySet()) {
             List<TimeSlotsLimitRequestDto> dataList = data.get(key);
             for (TimeSlotsLimitRequestDto rowData : dataList) {
-                String date = rowData.getDate();
-                String weekday = rowData.getWeekday();
-                int time = rowData.getTime();
-                int max = rowData.getMax();
-                // max랑 동일하게
-                int enable = rowData.getMax();
-                rowData.setEnable(enable);
-
-                // 잘 들어와졌는지 테스트
-//                System.out.println("date " + date);
 
                 TimeSlotsLimit timeSlotsLimit = new TimeSlotsLimit(rowData);
 
@@ -101,8 +90,6 @@ public class TimeSlotsLimitService {
                 Time getTime = timeSlotsLimit.getTime();
 
                 boolean dupl = timeSlotsLimitRepository.existsByYkihoAndDoctorNoAndDateAndTime(ykiho, doctorNo, getDate, getTime);
-
-
                 System.out.println(dupl);
 
                 // 중복 안될 때 저장
