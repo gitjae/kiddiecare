@@ -178,6 +178,26 @@ form{
     padding: 10px;
     gap: 10px;
 }
+
+.container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.spinner{
+    width: 80px;
+    height: 80px;
+    border: 7px solid blue;
+    border-top-color: transparent;
+    border-radius: 50%;
+    animation: spinner 0.7s linear infinite;
+}
+@keyframes spinner{
+    from{}
+    to{
+        transform: rotate(360deg);
+    }
+}
 /* ================================================ */
 
 .err{

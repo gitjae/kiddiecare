@@ -11,9 +11,6 @@
 <body>
 <div class="container">
   <section id="section">
-      <div class="mypage-title">
-          <p>관리자 페이지</p>
-      </div>
       <div class="content-wrapper">
           <aside id="sidebar">
               <div id="bar-nav">
@@ -34,17 +31,20 @@
                           </div>
                       </li>
                       <li>
-                          <div id="userInfo-change" name="div-userInfo" onclick="sectionChange(this)">
-                              회원정보 변경
+                          <div id="admin-info-change" name="admin-info-change" onclick="sectionChange(this)">
+                              관리자 정보 변경
+                          </div>
+                      </li>
+                      <li>
+                          <div id="hosp-doctor" name="hosp-doctor" onclick="sectionChange(this)">
+                              의사 정보
                           </div>
                       </li>
                   </ul>
               </div>
           </aside>
           <div id="main-section">
-              <div class="main-div" id="div-user">
-<%--                    본문 내용 --%>
-              </div>
+              <c:import url="adminDoctorInfo.jsp"></c:import>
           </div>
       </div>
   </section>

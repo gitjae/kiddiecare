@@ -60,8 +60,6 @@ public class AdminController {
             // DB에 넣을 데이터 생성
             Admin admin = new Admin(adminDto);
 
-            System.out.println("처음 어드민"+admin);
-
             // 사진 파일 올리기
             String saveFile = imageUploadController.uploadFile(adminDto.getFile(),adminDto.getAdminId());
             if(saveFile == null){
@@ -73,7 +71,6 @@ public class AdminController {
             String encodedPassword = passwordEncoder.encode(adminDto.getAdminPw());
             admin.setAdminPw(encodedPassword);
 
-            System.out.println("나중 어드민"+admin);
             // DB에 저장
             try {
                 adminService.joinAdminUserByAdmin(admin);

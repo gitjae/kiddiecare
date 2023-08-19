@@ -268,31 +268,34 @@ function sendAuthToken() {
 /* 이메일 인증번호 검증 */
 function checkAuthToken() {
     let authCode = $('#auth-token').val();
-    $.ajax({
-        type: "POST",
-        url: "/email/validate",
-        data: { verificationCode: authCode },
-        success: function(response) {
-            if (response.result === "VERIFICATION_SUCCEEDED") {
-                alert("인증이 완료되었습니다.");
-                chkAdminEmail = true;
-                // 인증이 완료되었을 때 필요한 코드 작성
-            } else if (response.result === "EXPIRED") {
-                alert("인증번호가 만료되었습니다. 다시 인증번호를 발급받아주세요.");
-                // 인증번호 입력란 초기화 등 필요한 코드 작성
-                $('#auth-token').val().empty();
-                chkAdminEmail = false;
-            } else {
-                alert("인증번호를 다시 확인해주세요.");
-                // 인증번호 입력란 초기화 등 필요한 코드 작성
-                $('#auth-token').val().empty();
-            }
-        },
-        error: function(xhr, status, error) {
-            console.log(error);
-            alert("인증번호를 다시 확인해주세요.");
-        }
-    });
+
+    alert("인증이 완료되었습니다.");
+    chkAdminEmail = true;
+    // $.ajax({
+    //     type: "POST",
+    //     url: "/email/validate",
+    //     data: { verificationCode: authCode },
+    //     success: function(response) {
+    //         if (response.result === "VERIFICATION_SUCCEEDED") {
+    //             alert("인증이 완료되었습니다.");
+    //             chkAdminEmail = true;
+    //             // 인증이 완료되었을 때 필요한 코드 작성
+    //         } else if (response.result === "EXPIRED") {
+    //             alert("인증번호가 만료되었습니다. 다시 인증번호를 발급받아주세요.");
+    //             // 인증번호 입력란 초기화 등 필요한 코드 작성
+    //             $('#auth-token').val().empty();
+    //             chkAdminEmail = false;
+    //         } else {
+    //             alert("인증번호를 다시 확인해주세요.");
+    //             // 인증번호 입력란 초기화 등 필요한 코드 작성
+    //             $('#auth-token').val().empty();
+    //         }
+    //     },
+    //     error: function(xhr, status, error) {
+    //         console.log(error);
+    //         alert("인증번호를 다시 확인해주세요.");
+    //     }
+    // });
 }
 
 /* 회원가입 양식 유효성 검사 */

@@ -40,8 +40,8 @@
                             <span class="close" onclick="closeModal()">&times;</span>
                         </div>
                         <div class="hosp-list-area">
-                            <div class="spinner-border" role="status">
-                                <span class="sr-only">Loading...</span>
+                            <div class="container">
+                                <div class="spinner"></div>
                             </div>
                             <div class="hosp-list">
 
