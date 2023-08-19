@@ -20,6 +20,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -192,6 +193,15 @@ public class MainController {
 
         return "userBooking";
     }
+
+    @GetMapping("/api/checkLogin")
+    public ResponseEntity<Boolean> checkLoginStatus(Model model) {
+        if(model.containsAttribute("log")) {
+            return ResponseEntity.ok(true);
+        }
+        return ResponseEntity.ok(false);
+    }
+
 
     @GetMapping("user/update")
     public String userUpdate(WebRequest request, Model model){
