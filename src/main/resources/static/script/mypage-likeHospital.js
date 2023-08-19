@@ -13,6 +13,11 @@ function getLikedHospitals() {
                 let p = document.createElement('p');
                 p.textContent = name;
 
+                // 카드 클릭 이벤트
+                card.addEventListener('click', function() {
+                    window.location.href = `/appointment/hospitalDetail?hospitalName=${name}`;
+                });
+
                 card.appendChild(p);
                 divFavor.appendChild(card);
             });
