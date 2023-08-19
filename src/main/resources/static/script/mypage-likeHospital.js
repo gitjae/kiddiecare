@@ -4,27 +4,36 @@ function getLikedHospitals() {
         url: '/api/likedHospitals',
     })
         .done(res => {
-            let hospitalNames = res.map(hospital => hospital.hospitalName);
             let divFavor = document.getElementById('div-favor');
-            hospitalNames.forEach(name => {
-                let card = document.createElement('div');
-                card.className = 'hospital-card'; // 카드 스타일링을 위한 클래스 추가
 
+            // 찜한 병원 리스트가 비어있는지 확인
+            if (res.length === 0) {
                 let p = document.createElement('p');
-                p.textContent = name;
+                p.textContent = '찜한 병원이 없습니다.';
+                divFavor.appendChild(p);
+            } else {
+                let hospitalNames = res.map(hospital => hospital.hospitalName);
+                hospitalNames.forEach(name => {
+                    let card = document.createElement('div');
+                    card.className = 'hospital-card';
 
-                // 카드 클릭 이벤트
-                card.addEventListener('click', function() {
-                    window.location.href = `/appointment/hospitalDetail?hospitalName=${name}`;
+                    let p = document.createElement('p');
+                    p.textContent = name;
+
+                    // 카드 클릭 이벤트 리스너 추가
+                    card.addEventListener('click', function() {
+                        window.location.href = `/appointment/hospitalDetail?hospitalName=${name}`; // 페이지 이동
+                    });
+
+                    card.appendChild(p);
+                    divFavor.appendChild(card);
                 });
-
-                card.appendChild(p);
-                divFavor.appendChild(card);
-            });
+            }
         })
         .fail(err => {
             console.error("Error:", err);
         });
 }
+
 
 window.onload = getLikedHospitals;
