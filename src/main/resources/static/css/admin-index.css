@@ -36,7 +36,7 @@
 /* 본문 */
 #main-section {
     flex-grow: 1;
-    padding: 20px;
+    padding: 0px 20px;
 }
 
 .main-div{

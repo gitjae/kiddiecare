@@ -46,6 +46,9 @@ public class MainController {
     private final DoctorService doctorService;
     private final ChildrenService childrenService;
 
+
+    @GetMapping("/test")
+    public String test() {return  "login-test";}
     @GetMapping("/")
     public String index(){
         return "index";

@@ -5,12 +5,11 @@ import com.spring.kiddiecare.domain.doctor.DoctorRepository;
 import com.spring.kiddiecare.domain.doctor.DoctorResponseDto;
 import com.spring.kiddiecare.domain.timeSlotsLimit.TimeSlotsLimit;
 import com.spring.kiddiecare.domain.timeSlotsLimit.TimeSlotsLimitRepository;
+import com.spring.kiddiecare.service.DoctorService;
 import lombok.RequiredArgsConstructor;
 import org.json.JSONObject;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.WebRequest;
 
 import java.sql.Date;
 import java.sql.Time;
@@ -25,6 +24,7 @@ import java.util.Optional;
 public class DoctorController {
     private final TimeSlotsLimitRepository timeSlotsLimitRepository;
     private final DoctorRepository doctorRepository;
+    private final DoctorService doctorService;
 
     @GetMapping("schedule")
     public Map onSchedule(@ModelAttribute TimeSlotsLimit timeSlotsLimit){
@@ -53,4 +53,85 @@ public class DoctorController {
 
         return jsonObject.toMap();
     }
+
+    @GetMapping("select")
+    public Map searchDoctorData(WebRequest request){
+        JSONObject jsonObject = new JSONObject();
+        String ykiho = (String) request.getAttribute("Ykiho",WebRequest.SCOPE_SESSION);
+
+        if(ykiho == null){
+            return jsonObject.put("response","no ykiho").toMap();
+        }
+
+        List<Doctor> doctorList = doctorRepository.findAllByYkiho(ykiho);
+        if(doctorList == null){
+            return jsonObject.put("response","no data").toMap();
+        }
+        jsonObject.put("response","success");
+        jsonObject.put("data",doctorList);
+        return jsonObject.toMap();
+    }
+
+    @PostMapping(value ="create", consumes = {"multipart/form-data"})
+    public Map addDoctorData(@ModelAttribute DoctorResponseDto doctorDto,WebRequest request){
+        JSONObject jsonObject = new JSONObject();
+
+        // 세션에서 Ykiho 확인
+        String ykiho = (String) request.getAttribute("Ykiho",WebRequest.SCOPE_SESSION);
+        if(ykiho == null){
+            return jsonObject.put("response","fail no ykiho").toMap();
+        }
+
+        if (doctorDto != null){
+            Doctor doctorData  = doctorRepository.findByYkihoAndDoctorName(ykiho,doctorDto.getDoctorName());
+            if (doctorData != null){
+                return jsonObject.put("response","fail cause already in DB").toMap();
+            }
+
+            doctorDto.setYkiho(ykiho);
+            Doctor doctor = new Doctor(doctorDto);
+
+            try{
+                doctorService.createDoctor(doctor);
+                return jsonObject.put("response","success").toMap();
+            }catch (Exception e){
+                return jsonObject.put("response","fail cause DB error").toMap();
+            }
+        }
+
+        return jsonObject.put("response","fail").toMap();
+    }
+
+    @GetMapping("delete")
+    public Map deleteDoctorData(@ModelAttribute DoctorResponseDto doctorDto){
+        JSONObject jsonObject = new JSONObject();
+        Doctor doctorData  = doctorRepository.findByYkihoAndDoctorName(doctorDto.getYkiho(),doctorDto.getDoctorName());
+        if(doctorData != null){
+            try {
+                doctorService.deleteDoctor(doctorData.getNo());
+                return jsonObject.put("response","success").toMap();
+            }catch (Exception e){
+                return jsonObject.put("response","fail cause DB error").toMap();
+            }
+        }
+        return jsonObject.put("response","fail").toMap();
+    }
+
+    @PostMapping(value ="update", consumes = {"multipart/form-data"})
+    public Map updateDoctorData(@ModelAttribute DoctorResponseDto doctorDto){
+        JSONObject jsonObject = new JSONObject();
+        Doctor doctorData  = doctorRepository.findByYkihoAndDoctorName(doctorDto.getYkiho(),doctorDto.getDoctorName());
+        if(doctorData != null){
+            try {
+                Doctor doctor = doctorService.updateDoctor(doctorDto);
+                jsonObject.put("response","success");
+                jsonObject.put("data",doctor);
+                return jsonObject.toMap();
+            }catch (Exception e){
+                return jsonObject.put("response","fail cause DB error").toMap();
+            }
+        }
+        return jsonObject.put("response","fail").toMap();
+    }
+
 }

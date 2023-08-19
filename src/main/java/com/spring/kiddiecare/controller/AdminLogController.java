@@ -25,6 +25,7 @@ public class AdminLogController {
 
     private final AdminRepository adminRepository;
 
+    @SessionScope
     @PostMapping(value = "login/check")
     public Map login(@RequestBody AdminRequestDto adminDto, HttpSession session) {
         System.out.println(adminDto);

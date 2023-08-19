@@ -54,7 +54,7 @@ public class EmailVerificationController {
 
     @SessionScope
     @PostMapping("create")
-    public Map sendVerificationEmail(@ModelAttribute AdminRequestDto adminDto, Model model) {
+    public Map sendVerificationEmail(@ModelAttribute AdminRequestDto adminDto, HttpServletRequest request) {
         JSONObject resultJson = new JSONObject();
         String verificationCode = getAuthToken();
         String verificationDuration = getVerificationDuration();
@@ -67,8 +67,10 @@ public class EmailVerificationController {
             helper.setText("[kiddiecare] 이메일 확인 코드 : " + verificationCode);
             mailSender.send(message);
 
-            model.addAttribute("verification_code", verificationCode);
-            model.addAttribute("verification_duration", verificationDuration);
+            HttpSession session = request.getSession();
+
+            session.setAttribute("verification_code", verificationCode);
+            request.setAttribute("verification_duration", verificationDuration);
 
             resultJson.put("result", "VERIFICATION_SENT");
             resultJson.put("verification_code", verificationCode);
@@ -82,17 +84,20 @@ public class EmailVerificationController {
     }
 
     //TODO 유효시간 설정 -> redis 사용하지 않는 이유 이미 사용하기 때문이고 ec2때문에
+    //TODO 일단 정상적인 로직 수정을 해야함
     @PostMapping("validate")
     public Map validateVerificationCode(HttpServletRequest request, String verificationCode) {
         JSONObject resultJson = new JSONObject();
-
         HttpSession session = request.getSession();
         String savedCode = (String) session.getAttribute("verification_code");
-        String savedDuration = (String) session.getAttribute("VerificationDuration");
+        String savedDuration = (String) session.getAttribute("verification_duration");
 
         if(savedCode != null || savedDuration != null){
             resultJson.put("result", "VERIFICATION_FAILED");
         }
+
+        System.out.println(savedCode+"savedCode");
+        System.out.println(savedDuration+"savedDuration");
 
         String[] currentTime = getCurrentTime().split("/");
         String[] Duration = savedDuration.split("/");
@@ -105,7 +110,8 @@ public class EmailVerificationController {
                 if(verificationCode.equals(savedCode)){
                     resultJson.put("result",message);
                     session.removeAttribute("verification_code");
-                    session.removeAttribute("VerificationDuration");
+                    session.removeAttribute("verification_duration");
+                    session.invalidate(); // 세션 무효화
                 }else{
                     resultJson.put("result","fail");
                 }

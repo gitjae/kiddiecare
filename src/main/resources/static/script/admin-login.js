@@ -20,7 +20,6 @@ function checkValue(htmlForm) {
     }
 
     if (check === true) {
-        console.log("dd")
         $.ajax({
             method: "POST",
             url: "/admin/login/check",
