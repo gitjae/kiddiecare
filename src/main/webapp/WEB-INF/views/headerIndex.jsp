@@ -39,7 +39,7 @@
         </div>
         <a class="searchHos" href="/hospital/Search">동네병원</a>
         <a class="mypage-a" href="#">마이페이지</a>
-        <a class="logout-a" href="" onclick="logout()">로그아웃</a>
+        <a class="logout-a" href="/admin/logout">로그아웃</a>
       </c:otherwise>
     </c:choose>
   </div>

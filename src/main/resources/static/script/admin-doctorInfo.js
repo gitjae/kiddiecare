@@ -10,9 +10,10 @@ $(document).ready(function() {
                         <div class="doctor-area">
                             <img src="https://d338jhig5816rv.cloudfront.net/admin1">
                             <div class="text-area">
-                                <span class="name">의사이름: ${item.doctorName}</span>
-                                <span class="average-time-of-care">평균 진료 시간: ${item.doctorAverageTimeOfCare}</span>
-                                <span class="doctor-status">현재 의사 상태: ${item.doctorStatus}</span>
+                                <span>의사 번호:<span class="doctor-num">${item.no}</span></span>
+                                <span>의사이름:<span class="name">${item.doctorName}</span></span>
+                                <span>평균 진료 시간:<span class="average-time-of-care">${item.doctorAverageTimeOfCare}</span></span>
+                                <span>현재 의사 상태:<span class="doctor-status">${item.doctorStatus}</span></span>
                             </div>
                         </div>`;
                     $('.doctor-container').append(html);
@@ -32,7 +33,23 @@ $(document).ready(function() {
     });
 
     $(document).on('click', '.doctor-area', function() {
+        var no = $(this).find('.doctor-num').text();
+        var doctorName = $(this).find('.name').text(); // 수정한 부분
+        var doctorTime = $(this).find('.average-time-of-care').text(); // 수정한 부분
+        var doctorStatus = $(this).find('.doctor-status').text(); // 수정한 부분
+
+        console.log(doctorName,doctorTime,doctorStatus)
+
+        // .doctor-info-container의 input 요소에 가져온 값을 대입합니다.
+        $('.doctor-info-container input[name="no"]').val(no);
+        $('.doctor-info-container input[name="doctorName"]').val(doctorName);
+        $('.doctor-info-container input[name="doctorAverageTimeOfCare"]').val(doctorTime);
+        $('.doctor-info-container input[name="doctorStatus"]').val(doctorStatus);
         $('.doctor-info-container').addClass('show');
+    });
+
+    $('.form_close2').click(function() {
+        $('.doctor-info-container').removeClass('show');
     });
 
     const formOpenBtn = document.querySelector(".dotor-add-area");
@@ -43,20 +60,33 @@ $(document).ready(function() {
     formCloseBtn.addEventListener("click", () => formContainer.classList.remove("show"));
 
 
+    $(document).on('click', '.button-delete', deleteDoctor);
+    $(document).on('click', '.button-update', updateDoctor);
+
     /* 의사 삭제하기 */
     function deleteDoctor(){
+        var data= {
+            no:$('#doctor-no').val(),
+            doctorName: $('#doctor-name').val(),
+            doctorAverageTimeOfCare: $('#doctor-average-time-of-care').val(),
+            file:$('#doctor-image-update').val(),
+            doctorStatus:$('#doctor-status').val()
+        }
         $.ajax({
-            type: "POST",
+            type: "DELETE",
             url: "/api/v1/doctor/delete",
-            data: {adminId: id},
+            data: data,
             success: function (response) {
+                console.log(response);
                 if (response.response === "success") {
                     alert("삭제 완료되었습니다.");
-                    location.reload();
+
                 } else if(response.response === "fail cause already in DB") {
                     alert("이미 있는 데이터 입니다.");
+
                 }else{
                     alert("데이터 저장에 실패하였습니다.")
+                    location.reload();
                 }
             },
             error: function (xhr, status, error) {
@@ -67,11 +97,18 @@ $(document).ready(function() {
     }
 
     /* 의사 데이터 수정하기 */
-    function updateDoctor(){
+    function updateDoctor(htmlForm){
+        var data= {
+            no:$('#doctor-no').val(),
+            doctorName: $('#doctor-name').val(),
+            doctorAverageTimeOfCare: $('#doctor-average-time-of-care').val(),
+            file:$('#doctor-image-update').val(),
+            doctorStatus:$('#doctor-status').val()
+        }
         $.ajax({
-            type: "POST",
+            type: "PUT",
             url: "/api/v1/doctor/update",
-            data: {adminId: id},
+            data: data,
             success: function (response) {
                 if (response.response === "success") {
                     alert("수정 완료되었습니다.");

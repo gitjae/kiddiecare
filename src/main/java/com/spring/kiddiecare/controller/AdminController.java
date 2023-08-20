@@ -10,6 +10,7 @@ import org.json.JSONObject;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Map;
 import java.util.Optional;
@@ -45,12 +46,11 @@ public class AdminController {
     public Map adminJoin(@ModelAttribute AdminRequestDto adminDto){
         JSONObject result = new JSONObject();
 
-        System.out.println("adminDto값 확인"+adminDto);
+        System.out.println(adminDto);
 
         // 데이터값 확인
         if(adminDto == null){
-            result.put("response","fail cause joinForm data is null");
-            return result.toMap();
+            return result.put("response","fail cause joinForm data is null").toMap();
         }
 
         // 데이터베이스에 있는지 확인

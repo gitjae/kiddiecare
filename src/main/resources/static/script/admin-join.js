@@ -137,6 +137,9 @@ function showModal() {
 // 모달 창을 닫는 함수
 function closeModal() {
     var modal = document.getElementById("myModal");
+    $('#admin-id').val('');
+    $('.hosp-list').empty();
+    $(".container-spinner").hide();
     modal.style.display = "none";
 }
 
@@ -196,7 +199,7 @@ function chkAdminId(){
 function searchHospName() {
     let hospName = $('#hosp-search').val();
     $('.hosp-list').empty();
-    $(".spinner-border").show();
+    $(".container-spinner").show();
     console.log("hospName"+hospName);
     $.ajax({
         type: "GET",
@@ -205,7 +208,7 @@ function searchHospName() {
         success: function(response) {
             if (response.result === "success") {
                 chkAdminHospName = true;
-                $(".spinner-border").hide();
+                $(".container-spinner").hide();
                 if (response.data !== null){
                     response.data.forEach(item => {
                         const hospData = item;
@@ -402,10 +405,27 @@ function checkValue(htmlForm) {
     //     alert("아이디 중복확인을 해주세요.")
     //     check = false;
     // }
-
     /* 서버 검증 결과 확인 */
     if (check) {
-        htmlForm.submit();
-        location.href = "/login";
+        $.ajax({
+            url: '/admin/info/join',
+            type: 'POST',
+            enctype: 'multipart/form-data',
+            data: new FormData($('form')[0]),
+            processData: false,
+            contentType: false,
+            success: function(data) {
+                if(data.response === "success"){
+                    location.href = '/admin/index';
+                }else{
+                    alert("에러가 발생하였습니다.")
+                }
+            },
+            error: function(xhr, error) {
+                console.log(xhr);
+                console.log(error);
+                //작업이 실패한 후의 코드
+            }
+        });
     }
 }

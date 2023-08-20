@@ -28,7 +28,7 @@ function checkValue(htmlForm) {
             success: function(data) {
                 console.log(data);
                 if (data.adminLogin === "success") {
-                    location.href = "/adminIndex";
+                    location.href = "/admin/index";
                 } else {
                     alert('아이디와 비밀번호가 일치하지 않습니다.');
                 }

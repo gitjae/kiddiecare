@@ -1,4 +1,4 @@
-var socket  = null;
+ var socket  = null;
 $(document).ready(function(){
     // 웹소켓 연결
     let sock = new SockJS('/echo-ws');

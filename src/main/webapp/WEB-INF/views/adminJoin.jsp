@@ -40,7 +40,7 @@
                             <span class="close" onclick="closeModal()">&times;</span>
                         </div>
                         <div class="hosp-list-area">
-                            <div class="container">
+                            <div class="container-spinner">
                                 <div class="spinner"></div>
                             </div>
                             <div class="hosp-list">

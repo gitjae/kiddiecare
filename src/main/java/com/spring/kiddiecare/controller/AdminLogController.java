@@ -18,7 +18,7 @@ import java.util.Map;
 import java.util.Optional;
 
 @RequiredArgsConstructor
-@RestController
+@Controller
 @SessionAttributes({"log"}) // 세션을 사용하고 있다라는걸 바인딩 해줘야함
 @RequestMapping("admin")
 public class AdminLogController {
@@ -28,10 +28,7 @@ public class AdminLogController {
     @SessionScope
     @PostMapping(value = "login/check")
     public Map login(@RequestBody AdminRequestDto adminDto, HttpSession session) {
-        System.out.println(adminDto);
-        Object a = new Object();
         JSONObject response = new JSONObject();
-//        boolean sessionIsNull = Optional.ofNullable(request.getAttribute("log", WebRequest.SCOPE_SESSION)).isEmpty();
         Optional<String> adminId = Optional.ofNullable(adminDto.getAdminId());
         Optional<String> adminPw = Optional.ofNullable(adminDto.getAdminPw());
         if(adminId.isPresent() && adminPw.isPresent()){
@@ -66,7 +63,9 @@ public class AdminLogController {
     @GetMapping("logout")
     public String logout(WebRequest request, SessionStatus status){ // 세션에 대한 권한을 준다. 없으면 remove가 실행되지 않는다.
         status.setComplete();
-        request.removeAttribute("log",WebRequest.SCOPE_SESSION);// scope는 지정 되어있음
+        request.removeAttribute("log",WebRequest.SCOPE_SESSION);
+        request.removeAttribute("Ykiho",WebRequest.SCOPE_SESSION);
+        // scope는 지정 되어있음
         return "redirect:/"; //약속된 키워드임 ㅇㅇ
     }
 }
