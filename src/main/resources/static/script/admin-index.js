@@ -61,4 +61,11 @@ function contentChange(nav){
     const name = $(nav).attr("name");
     $('.main-div').css("display", "none");
     $(`#${name}`).css("display", "block");
+
+    // 의사 영역 표시
+    if ($(`#${name}`).is('div#div-schedule.main-div') || $(`#${name}`).is('div#div-appo.main-div') || $(`#${name}`).is('div#div-appo-modify.main-div')) {
+        $('#docChoose').css("display", "block");
+    } else {
+        $('#docChoose').css("display", "none");
+    }
 }

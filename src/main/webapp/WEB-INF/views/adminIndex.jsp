@@ -7,6 +7,12 @@
     <link href="/css/common.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/admin-index.css">
 </head>
+<c:choose>
+    <c:when test="${empty Ykiho}">
+        <c:url var="myUrl" value="/admin/login"/>
+        <c:redirect url="${myUrl}"></c:redirect>
+    </c:when>
+    <c:otherwise>
 <c:import url="headerIndex.jsp"></c:import>
 <body>
 <div class="container">
@@ -16,7 +22,7 @@
               <div id="bar-nav">
                   <div id="log-area">
                       <input type="text" id="ykiho" name="ykiho" placeholder="병원코드" value="${Ykiho}" style="display: none">
-                      <p><b><span>${log}님 반갑습니다.</b></span></p>
+                      <p><span><b>${log}님 반갑습니다.</b></span></p>
                       <span id="hospital_name"></span>
                   </div>
                   <ul id="ul-nav">
@@ -63,7 +69,7 @@
 <%--              <div class="select-option"></div>--%>
 <%--              --%>
 
-              <fieldset>
+              <fieldset id="docChoose">
                   <legend><b>의사 선택</b></legend>
                   <div id="selectedDoctor" style="display: none"></div>
                   <div class="select-option"></div>
@@ -101,5 +107,7 @@
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 </body>
+    </c:otherwise>
+</c:choose>
 <%--<c:import url="footer.jsp"></c:import>--%>
 </html>
