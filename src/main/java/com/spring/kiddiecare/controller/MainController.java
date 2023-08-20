@@ -52,7 +52,7 @@ public class MainController {
         return "index";
     }
 
-    @GetMapping("adminIndex")
+    @GetMapping("/admin/index")
     public String adminIndex(){
         return "adminIndex";
     }

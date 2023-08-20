@@ -66,7 +66,7 @@ function modify(btn) {
     console.log("Max:", maxInput);
     console.log("Block:", blockInput);
 
-    if (countInput <= maxInput && blockInput <= maxInput) { // 요청 조건에 맞게 수정
+    if (countInput <= maxInput && blockInput <= maxInput) {
         // 조건에 맞다면 ajax 전송
         $.ajax({
             url: "/modifyTimeSlots",
@@ -80,7 +80,6 @@ function modify(btn) {
             if(result.modify === "success") {
                 // 제목, 내용, 아이콘
                 swal("정보 수정 성공!", "" ,"success" );
-                alert("수정 성공!");
             }else {
                 alert("수정 실패");
             }

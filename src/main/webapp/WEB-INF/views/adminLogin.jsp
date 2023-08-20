@@ -5,6 +5,7 @@
   Time: 오후 4:00
   To change this template use File | Settings | File Templates.
 --%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -17,6 +18,7 @@
     <script src="/script/admin-login.js"></script>
     <title>login</title>
 </head>
+<c:import url="headerIndex.jsp"></c:import>
 <body>
 <div class="container">
     <section>

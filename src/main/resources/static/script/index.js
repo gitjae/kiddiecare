@@ -4,7 +4,8 @@ window.onload = function() {
     });
 
     document.getElementById('admin-appo').addEventListener('click', e => {
-        window.location = '/adminIndex';
+        // window.location = '/adminIndex';
+        window.location = '/admin/index';
     });
 
     document.getElementById('user-myPage').addEventListener('click', e => {
