@@ -48,6 +48,7 @@
                     <button id="send" onclick="sendCode()">인증번호발송</button>
                 </div>
                 <div id="div-code">
+                    <label for="phone">인증번호</label>
                     <input type="text" id="code" name="code">
                     <button id="verify" onclick="verify()">인증하기</button>
                     <button id="phone-update" onclick="phoneUpdate()">전화번호 변경</button>
@@ -59,6 +60,7 @@
                 </div>
 
                 <div class="form-group">
+                    <label for="phone">우편번호</label>
                     <input class="form-control" style="width: 40%; display: inline;" placeholder="우편번호" name="addr1"
                            id="addr1" value="${user.postcode}" type="text" readonly="readonly">
                     <button type="button" class="btn btn-default" onclick="execPostCode();"><i class="fa fa-search"></i>
@@ -66,11 +68,13 @@
                     </button>
                 </div>
                 <div class="form-group">
+                    <label for="phone">도로명 주소</label>
                     <input class="form-control" style="top: 5px;" placeholder="도로명 주소" name="addr2" id="addr2"
                            value="${user.addr}" type="text"
                            readonly="readonly"/>
                 </div>
                 <div class="form-group">
+                    <label for="phone">상세주소</label>
                     <input class="form-control" placeholder="상세주소" name="addr3" id="addr3" value="${user.addr_detail}"
                            type="text"/>
                     <button id="addr-update" onclick="addrUpdate()">주소 변경</button>

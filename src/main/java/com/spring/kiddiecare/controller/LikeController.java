@@ -1,20 +1,26 @@
 package com.spring.kiddiecare.controller;
 
+import com.spring.kiddiecare.domain.hospital.Hospital;
+import com.spring.kiddiecare.domain.hospital.HospitalResponseDto;
 import com.spring.kiddiecare.domain.likeHospital.LikeHospital;
 import com.spring.kiddiecare.domain.likeHospital.LikeHospitalRepository;
 import com.spring.kiddiecare.domain.user.User;
 import com.spring.kiddiecare.domain.user.UserRepository;
+import com.spring.kiddiecare.service.LikeHospitalService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @RestController
 public class LikeController {
     private final LikeHospitalRepository likeHospitalRepository;
     private final UserRepository userRepository;
+    private final LikeHospitalService likeHospitalService;
 
     @PostMapping("/api/like/{ykiho}")
     public void likeHospital(HttpSession session, @PathVariable String ykiho) {
@@ -57,6 +63,23 @@ public class LikeController {
             }
         }
         return check;
+    }
+
+    @GetMapping("/api/likedHospitals")
+    public List<HospitalResponseDto> getLikedHospitals(HttpSession session) {
+        String userId = (String) session.getAttribute("log"); // userId를 세션에서 가져옴
+        Optional<User> foundUser = userRepository.findUserById(userId); // userId로 User를 찾음
+
+        if (!foundUser.isPresent()) {
+            throw new RuntimeException("User not found.");
+        }
+
+        int userNo = foundUser.get().getNo();
+
+        List<Hospital> likedHospitals = likeHospitalService.getLikedHospitalsByUserNo(userNo);
+        return likedHospitals.stream()
+                .map(hospital -> new HospitalResponseDto(hospital.getYkiho(), hospital.getHospitalName()))
+                .collect(Collectors.toList());
     }
 
 }

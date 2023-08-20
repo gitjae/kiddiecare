@@ -2,7 +2,7 @@
 /*    margin-bottom: 30px;*/
 /*}*/
 
-.mypage-title p{
+.mypage-title p {
     font-size: xx-large;
     font-weight: bolder;
     padding: 30px;
@@ -58,7 +58,7 @@
 }
 
 .info-content, .appo-no, .div-appo, .appo-hospital, .appo-date, .appo-time, .appo-doctor, .appo-status, .appo-name, .appo-symptomm, .appo-note,
-.child-name, .child-gender, .child-birth, .child-info{
+.child-name, .child-gender, .child-birth, .child-info {
     flex-grow: 1;
 }
 
@@ -69,15 +69,21 @@
     margin-bottom: 20px;
 }
 
-
-
-
-
 /* 초기 설정 */
-.main-div{
+.main-div {
     display: none;
 }
 
-#div-user{
+#div-user {
     display: block;
+}
+
+/* 찜한 병원 */
+.hospital-card {
+    border: 1px solid #e0e0e0;
+    padding: 10px;
+    margin: 10px;
+    border-radius: 5px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+    max-width: 300px;
 }

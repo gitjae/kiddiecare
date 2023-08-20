@@ -3,6 +3,7 @@ package com.spring.kiddiecare.domain.likeHospital;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -11,4 +12,7 @@ public interface LikeHospitalRepository extends JpaRepository<LikeHospital, Inte
     LikeHospital findByUserNoAndYkiho(int userNo, String ykiho);
 
     Optional<LikeHospital> findLikeHospitalByUserNoAndYkiho(int userNo, String ykiho);
+
+    List<LikeHospital> findByUserNo(int userNo);
+
 }
