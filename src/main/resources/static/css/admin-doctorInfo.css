@@ -12,7 +12,7 @@
     height: 300px;
     width: 250px;
     border-radius: 10px;
-    border: 2px dashed #999;
+    border: 3px dashed #999;
     display: flex;
     flex-direction: row;
     justify-items: center;
@@ -50,20 +50,26 @@
     justify-items: center;
     gap: 10px;
     padding: 20px;
+    font-family: 'ONE-Mobile-POP', sans-serif;
 }
 
 
-#main-section > h1{
+#admin-doctor-info-h1 {
     margin-bottom: 20px;
     font-family: 'ONE-Mobile-POP', sans-serif;
     font-size: 30px;
     color: #74aedb !important;
 }
 
-.dotor-add-area:hover{
+.dotor-add-area:hover {
     cursor: pointer;
     color: #3E85EF;
     border: 3px dashed #3E85EF;
+}
+
+.dotor-add-area:hover i{
+    cursor: pointer;
+    color: #3E85EF;
 }
 
 .uil-plus{

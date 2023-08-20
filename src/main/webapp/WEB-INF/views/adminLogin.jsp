@@ -31,7 +31,7 @@
                         <span>관리자 로그인</span>
                     </a>
                 </div>
-                <form class="login-form" method="POST">
+                <form class="login-form">
                     <div class="input-setting">
                         <label for="input-id" id="label-id">ID</label>
                         <input type="text" required placeholder="아이디를 입력해 주세요." name="adminId" class="current-id" id="input-id">

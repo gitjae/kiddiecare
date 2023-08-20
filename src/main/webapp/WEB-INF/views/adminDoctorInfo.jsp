@@ -65,7 +65,7 @@
         </div>
     </div>
 </div>
-<h1>의사 선생님 정보</h1>
+<h1 id="admin-doctor-info-h1">의사 선생님 정보</h1>
 <div class="doctor-container">
     <div class="dotor-add-area">
         <i class="uil uil-plus"></i>
