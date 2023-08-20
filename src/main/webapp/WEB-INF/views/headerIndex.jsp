@@ -13,7 +13,7 @@
 <body>
 <header id="header">
   <div class="logoWrap">
-    <a href="/adminIndex">
+    <a href="/admin/login">
       <div class="logoImg">
         <img src="/image/logo_hospital_512.png"><span class="logoTitle">우리동네소아과 관리자</span>
       </div>
