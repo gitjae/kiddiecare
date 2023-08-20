@@ -141,7 +141,7 @@ $(document).ready(function () {
             dataType: 'json',
             contentType: "application/json",
             data: JSON.stringify({
-                no: appoNo,         // null로 보냈다가 appointmentController
+                no: appoNo,
                 patientId: patientId,
                 guardian: parentId,
                 timeSlotNo: timeSlotNo,

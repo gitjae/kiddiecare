@@ -177,7 +177,6 @@ function showTimeSlots(slots) {
                 // 닥터 카드 만들기
                 for(let i=0; i<res.doctors.length; i++){
                     var card = `<div class="doctor-card" onclick="selectDoctor(this)">
-                        <div>이미지</div>
                         <div class="doctorName" no="${res.doctors[i].no}">${res.doctors[i].doctorName}</div>
                         <div class="timeSlot" slot="${res.slots[i].no}">(${res.slots[i].enable}/${res.slots[i].max})</div>
                     </div>`
