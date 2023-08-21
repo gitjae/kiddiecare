@@ -10,7 +10,7 @@
 
 
 ### 기능 및 담당자
-- 팀장 이규재✨[이메일](mailto:dlrbwo2022@gmail.com) ([GitHub](깃헙주소))
+- 팀장 이규재✨[이메일](mailto:dlrbwo2022@gmail.com) ([GitHub](https://github.com/gitjae))
   * 사용자 CRUD 구현
       - 회원가입
       - 로그인
@@ -32,12 +32,28 @@
       - 예약정보 확인 및 수정
       - 자녀 CRUD
   
-- 팀원 채희재✨[이메일](mailto:heejae0629@naver.com) ([GitHub](깃헙주소))
+- 팀원 채희재✨[이메일](mailto:heejae0629@naver.com) ([GitHub](https://github.com/heejae101?tab=repositories))
+  - WAS 아키텍처 구현
+  
+  - Docker 환경 설정
+  
   - 공공 데이터포털 API 연동
-    -  
-  - 
-    - 
-- 팀원 한희수✨[이메일](mailto:juntu09@gmail.com) ([GitHub]([www,github.com/hee-duck](https://github.com/hee-duck)))
+    - 여러 API에서 받아온 공공 데이터를 WAS에서 데이터 정제
+    - redis 데이터 저장 후 캐시 기능 구현
+    
+  - 병원 관리자 기능
+    - OPEN API로 구현한 병원 상세 주소 검색기능 구현
+    - javax.mail의 SMTP프로토콜을 사용하여 이메일 인증 기능 구현 
+    - Spring security의 BCrypt해쉬알고리즘으로 레인보우 테이블 대입을 방지
+    - AWS S3 & ClouldFront를 이용한 정적 파일 관리
+    
+  - websocket 알림 기능
+    - peer to peer로 실시간 알람 기능 구현 (현재 진행중)
+    - pub/sub 구조 구현 (현재 논의중)
+    
+  - swagger
+    - REST API로 구현된 로직들을 문서화하여 한눈에 볼 수 있는 기능 구현(현재 진행중)
+- 팀원 한희수✨[이메일](mailto:juntu09@gmail.com) ([GitHub](https://github.com/hee-duck))
   * 사용자 병원 예약 기능 구현
     - 병원 상세페이지
         - 카카오맵 API를 사용하여 해당 병원의 지도 표시
@@ -62,6 +78,16 @@
 
   * 서비스 디자인(CSS) 총괄
     
-- 팀원 이윤정✨[이메일](mailto:dldbswjd889@naver.com) ([GitHub](깃헙주소))
-  -
-    - 
+- 팀원 이윤정✨[이메일](mailto:dldbswjd889@naver.com) ([GitHub](https://github.com/yunJeong3))
+  * 관리자 예약 관리 페이지
+    - 관리자 스케줄 관리 기능
+      - 한 타임당 유저가 예약이 가능하게 병원 스케줄을 생성
+      - 스케줄에 등록된 예약 정보 변경 가능
+        
+    - 관리자 유저 예약 관리 기능
+      - 유저가 예약한 날짜/시간 변경 가능
+      - 유저의 예약상태 변경 가능
+     
+    - web socket 알림 기능
+      - peer to peer로 실시간 알람 기능 구현(진행중)
+
