@@ -5,6 +5,7 @@
   Time: 오후 4:00
   To change this template use File | Settings | File Templates.
 --%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -17,6 +18,7 @@
     <script src="/script/admin-login.js"></script>
     <title>login</title>
 </head>
+<c:import url="headerIndex.jsp"></c:import>
 <body>
 <div class="container">
     <section>
@@ -26,10 +28,10 @@
 <%--                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-file-earmark-code-fill" viewBox="0 0 16 16">--%>
 <%--                            <path d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0zM9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1zM6.646 7.646a.5.5 0 1 1 .708.708L5.707 10l1.647 1.646a.5.5 0 0 1-.708.708l-2-2a.5.5 0 0 1 0-.708l2-2zm2.708 0 2 2a.5.5 0 0 1 0 .708l-2 2a.5.5 0 0 1-.708-.708L10.293 10 8.646 8.354a.5.5 0 1 1 .708-.708z"/>--%>
 <%--                        </svg>--%>
-                        <span>Admin Login</span>
+                        <span>관리자 로그인</span>
                     </a>
                 </div>
-                <form class="login-form" method="POST">
+                <form class="login-form">
                     <div class="input-setting">
                         <label for="input-id" id="label-id">ID</label>
                         <input type="text" required placeholder="아이디를 입력해 주세요." name="adminId" class="current-id" id="input-id">

@@ -8,12 +8,12 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/stompjs@2.3.3/lib/stomp.min.js"></script>
-<%--  <script src="/script/admin-header.js"></script>--%>
+  <script src="/script/admin-header.js"></script>
 </head>
 <body>
 <header id="header">
   <div class="logoWrap">
-    <a href="/adminIndex">
+    <a href="/admin/index">
       <div class="logoImg">
         <img src="/image/logo_hospital_512.png"><span class="logoTitle">우리동네소아과 관리자</span>
       </div>
@@ -39,7 +39,7 @@
         </div>
         <a class="searchHos" href="/hospital/Search">동네병원</a>
         <a class="mypage-a" href="#">마이페이지</a>
-        <a class="logout-a" href="" onclick="logout()">로그아웃</a>
+        <a class="logout-a" onclick="logout()">로그아웃</a>
       </c:otherwise>
     </c:choose>
   </div>

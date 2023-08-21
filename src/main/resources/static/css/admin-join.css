@@ -179,8 +179,8 @@ form{
     gap: 10px;
 }
 
-.container{
-    display: flex;
+.container-spinner{
+    display: none;
     align-items: center;
     justify-content: center;
 }
@@ -191,6 +191,7 @@ form{
     border-top-color: transparent;
     border-radius: 50%;
     animation: spinner 0.7s linear infinite;
+    margin: 0 auto;
 }
 @keyframes spinner{
     from{}

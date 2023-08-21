@@ -12,7 +12,7 @@
     height: 300px;
     width: 250px;
     border-radius: 10px;
-    border: 2px dashed #999;
+    border: 3px dashed #999;
     display: flex;
     flex-direction: row;
     justify-items: center;
@@ -50,20 +50,26 @@
     justify-items: center;
     gap: 10px;
     padding: 20px;
+    font-family: 'ONE-Mobile-POP', sans-serif;
 }
 
 
-#main-section > h1{
+#admin-doctor-info-h1 {
     margin-bottom: 20px;
     font-family: 'ONE-Mobile-POP', sans-serif;
     font-size: 30px;
     color: #74aedb !important;
 }
 
-.dotor-add-area:hover{
+.dotor-add-area:hover {
     cursor: pointer;
     color: #3E85EF;
     border: 3px dashed #3E85EF;
+}
+
+.dotor-add-area:hover i{
+    cursor: pointer;
+    color: #3E85EF;
 }
 
 .uil-plus{
@@ -98,8 +104,8 @@
 }
 
 .doctor-info-container img{
-    height: 150px;
-    width: 200px;
+    height: 100%;
+    width: 100%;
     margin: 0 auto;
     border-radius: 10px;
 }
@@ -168,7 +174,8 @@
 
 .input_box i.uil-clock,
 .input_box i.uil-user,
-.input_box i.uil-user-square {
+.input_box i.uil-user-square,
+.input_box i.uil-check{
     left: 0;
 }
 
@@ -212,4 +219,14 @@
 .doctor-info-container .button:hover,
 .form_container .button:hover {
     background: #3E85EF;
+}
+
+.form_close2{
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    color: #0b0217;
+    font-size: 22px;
+    opacity: 0.7;
+    cursor: pointer;
 }

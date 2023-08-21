@@ -102,8 +102,6 @@ public class TimeSlotsController {
             e.printStackTrace();
             json.put("create","fail");
         }
-
-
         return json.toMap();
     }
 

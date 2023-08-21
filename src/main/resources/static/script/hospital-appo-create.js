@@ -271,11 +271,22 @@ $('#appo-create-btn').click(function() {
         console.log($('#start-hour-' + i).val());
         console.log($('#end-hour-' + i).val());
 
-        // 시작시간 < 끝시간 예외처리
-        if ($('#start-hour-' + i).val() >= $('#end-hour-' + i).val()) {
-            alert('시간 범위를 확인해주세요.');
+        let startHour = parseInt($('#start-hour-' + i).val());
+        let endHour = parseInt($('#end-hour-' + i).val());
+
+        // 시작시간 < 끝시간일 때 예외처리
+        if (startHour > endHour) {
+            alert('시작 시간은 종료 시간보다 작아야 합니다.');
             $('#start-hour-' + i).focus();
             return;
+
+        }else if(startHour === endHour) {
+            alert('시작시간과 종료시간이 같습니다. 다시 입력해주세요.');
+            $('#start-hour-' + i).focus();
+
+        }else if(startHour > 25 && endHour < 0) {
+            alert('시간 범위를 다시 입력해주세요.');
+            $('#start-hour-' + i).focus();
         }
 
         // 예약가능한 인원수 입력 안한 부분 예외처리

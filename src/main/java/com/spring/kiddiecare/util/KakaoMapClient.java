@@ -18,8 +18,8 @@ import java.net.HttpURLConnection;
 public class KakaoMapClient {
 
     private final RestTemplate restTemplate;
-    //@Value("${kakao.rest_api_key}")
 
+    //@Value("${kakao.rest_api_key}")
     private String API_KEY = "76566ba0dfe292387f057613321b300c";
 
     public KakaoMapClient(){

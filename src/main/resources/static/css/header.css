@@ -216,6 +216,7 @@ section {
     padding: 5px;
     cursor: pointer;
     opacity: 0.7;
+    font-size: 20px;
 }
 .toast .close:hover{
     opacity: 1;

@@ -102,10 +102,18 @@ public class DoctorController {
         return jsonObject.put("response","fail").toMap();
     }
 
-    @GetMapping("delete")
-    public Map deleteDoctorData(@ModelAttribute DoctorResponseDto doctorDto){
+    @DeleteMapping("delete")
+    public Map deleteDoctorData(@ModelAttribute DoctorResponseDto doctorDto,WebRequest request){
         JSONObject jsonObject = new JSONObject();
-        Doctor doctorData  = doctorRepository.findByYkihoAndDoctorName(doctorDto.getYkiho(),doctorDto.getDoctorName());
+
+        System.out.println(doctorDto);
+
+        String ykiho = (String) request.getAttribute("Ykiho",WebRequest.SCOPE_SESSION);
+        if(ykiho == null){
+            return jsonObject.put("response","fail no ykiho").toMap();
+        }
+
+        Doctor doctorData  = doctorRepository.findByYkihoAndDoctorName(ykiho,doctorDto.getDoctorName());
         if(doctorData != null){
             try {
                 doctorService.deleteDoctor(doctorData.getNo());
@@ -117,15 +125,21 @@ public class DoctorController {
         return jsonObject.put("response","fail").toMap();
     }
 
-    @PostMapping(value ="update", consumes = {"multipart/form-data"})
-    public Map updateDoctorData(@ModelAttribute DoctorResponseDto doctorDto){
+    @PutMapping(value ="update", consumes = {"multipart/form-data"})
+    public Map updateDoctorData(@ModelAttribute DoctorResponseDto doctorDto, WebRequest request){
         JSONObject jsonObject = new JSONObject();
-        Doctor doctorData  = doctorRepository.findByYkihoAndDoctorName(doctorDto.getYkiho(),doctorDto.getDoctorName());
+
+        String ykiho = (String) request.getAttribute("Ykiho",WebRequest.SCOPE_SESSION);
+        if(ykiho == null){
+            return jsonObject.put("response","fail no ykiho").toMap();
+        }
+
+        Doctor doctorData  = doctorRepository.findByYkihoAndDoctorName(ykiho,doctorDto.getDoctorName());
         if(doctorData != null){
             try {
-                Doctor doctor = doctorService.updateDoctor(doctorDto);
+                Doctor doctorUpdate = doctorService.updateDoctor(doctorDto);
                 jsonObject.put("response","success");
-                jsonObject.put("data",doctor);
+                jsonObject.put("data",doctorDto);
                 return jsonObject.toMap();
             }catch (Exception e){
                 return jsonObject.put("response","fail cause DB error").toMap();

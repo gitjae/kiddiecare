@@ -32,11 +32,11 @@ public class DoctorService {
     }
 
     @Transactional
-    public Doctor updateDoctor(DoctorResponseDto boardDto){
-        Doctor doctor = doctorRepository.findById(boardDto.getNo()).orElseThrow(
+    public Doctor updateDoctor(DoctorResponseDto doctorDto){
+        Doctor doctor = doctorRepository.findById(doctorDto.getNo()).orElseThrow(
                 () -> new IllegalArgumentException("존재하지 않는 의사입니다.")
         );
-        doctor.Update(boardDto);
+        doctor.Update(doctorDto);
         return doctor;
     }
 }

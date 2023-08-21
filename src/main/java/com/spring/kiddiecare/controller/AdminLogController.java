@@ -5,6 +5,7 @@ import com.spring.kiddiecare.domain.hospitalAdmin.AdminRepository;
 import com.spring.kiddiecare.domain.hospitalAdmin.AdminRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.json.JSONObject;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -24,19 +25,17 @@ import java.util.Optional;
 public class AdminLogController {
 
     private final AdminRepository adminRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    @SessionScope
     @PostMapping(value = "login/check")
     public Map login(@RequestBody AdminRequestDto adminDto, HttpSession session) {
-        System.out.println(adminDto);
-        Object a = new Object();
         JSONObject response = new JSONObject();
-//        boolean sessionIsNull = Optional.ofNullable(request.getAttribute("log", WebRequest.SCOPE_SESSION)).isEmpty();
+
         Optional<String> adminId = Optional.ofNullable(adminDto.getAdminId());
         Optional<String> adminPw = Optional.ofNullable(adminDto.getAdminPw());
         if(adminId.isPresent() && adminPw.isPresent()){
-            Admin admin = adminRepository.findByAdminIdAndAdminPw(adminId.get(), adminPw.get());
-            if (admin != null) {
+            Admin admin = adminRepository.findByAdminId(adminDto.getAdminId());
+            if(passwordEncoder.matches(adminDto.getAdminPw(),admin.getAdminPw())){
                 session.setAttribute("log",admin.getAdminId());
                 session.setAttribute("Ykiho",admin.getYkiho());
                 response.put("adminLogin","success");
@@ -63,10 +62,13 @@ public class AdminLogController {
 //                });
 //    }
 
-    @GetMapping("logout")
-    public String logout(WebRequest request, SessionStatus status){ // 세션에 대한 권한을 준다. 없으면 remove가 실행되지 않는다.
+    @GetMapping("logout/check")
+    public Map logout(WebRequest request, SessionStatus status){ // 세션에 대한 권한을 준다. 없으면 remove가 실행되지 않는다.
+        JSONObject response = new JSONObject();
         status.setComplete();
-        request.removeAttribute("log",WebRequest.SCOPE_SESSION);// scope는 지정 되어있음
-        return "redirect:/"; //약속된 키워드임 ㅇㅇ
+        request.removeAttribute("log",WebRequest.SCOPE_SESSION);
+        request.removeAttribute("Ykiho",WebRequest.SCOPE_SESSION);
+        // scope는 지정 되어있음
+        return response.toMap(); //약속된 키워드임 ㅇㅇ
     }
 }

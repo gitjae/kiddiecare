@@ -91,14 +91,6 @@ public class AppointmentController {
 
 
 
-
-    // 충돌나서 주석처리.
-//    @GetMapping("{ykiho}")
-//    public List<Doctor> getDoctors(@PathVariable String ykiho) {
-//        return doctorRepository.findByYkiho(ykiho);
-//    }
-
-
 //    @PostMapping(value = "appo-add", consumes = {"application/json"})
 //    public Map appo_add(@RequestBody AppoRequestDto appoDto) {
 //        JSONObject json = new JSONObject();
@@ -148,20 +140,23 @@ public class AppointmentController {
 
     @GetMapping("/getAppoDetails")
     public List<AppoResponseDto> getAppoDetails(@RequestParam int timeSlotNo) {
-        List<AppoResponseDto> appoList = appoResponseRepository.findAllByTimeSlotNo(timeSlotNo);
-        List<AppoResponseDto> noDeleteList = new ArrayList<>();
+        // 삭제가 아닌 리스트만 가져올 때
+//        List<AppoResponseDto> appoList = appoResponseRepository.findAllByTimeSlotNo(timeSlotNo);
+//        List<AppoResponseDto> noDeleteList = new ArrayList<>();
+//
+//        for(AppoResponseDto data : appoList) {
+//            // status가 삭제가 아닌 리스트만 가져오기
+//            if(data.getAppoStatus() != 2) {
+//                noDeleteList.add(data);
+//            }
+//        }
+//        return noDeleteList;
 
-        for(AppoResponseDto data : appoList) {
-            // status가 삭제가 아닌 리스트만 가져오기
-            if(data.getAppoStatus() != 2) {
-                noDeleteList.add(data);
-            }
-        }
-
-        return noDeleteList;
+        // 저장된 모든 리스트 가져올 때
+        return appoResponseRepository.findAllByTimeSlotNo(timeSlotNo);
     }
 
-    // 수정
+    // 페이징처리
     @GetMapping("/getAppoDetails/{page}")
     public List<AppoResponseDto> getAppoDetails(@RequestParam int timeSlotNo, @PathVariable int page, @PageableDefault(size=10) Pageable pageable){
         List<AppoResponseDto> appoList = appoResponseRepository.findAllBySlotNoAndPage(timeSlotNo, pageable.withPage(page-1));

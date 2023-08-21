@@ -46,6 +46,7 @@ public class EchoHandler extends TextWebSocketHandler {
                 String url = strs[3];
                 WebSocketSession targetSession = users.get(target);  // 메시지를 받을 세션 조회
 
+
                 // 실시간 접속시
                 if(targetSession!=null) {
                     // ex: [&분의일] 신청이 들어왔습니다.
