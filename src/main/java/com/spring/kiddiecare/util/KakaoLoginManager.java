@@ -7,15 +7,17 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
+@Component
 public class KakaoLoginManager {
 
     private RestTemplate restTemplate = new RestTemplate();
 
-    @Value("kakao.restapi.key")
+    @Value("${kakao.restapi.key}")
     private String KAKAO_REST_API_KEY;
 
     public String getKAKAO_REST_API_KEY(){

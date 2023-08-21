@@ -8,7 +8,10 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @Getter
 @ConfigurationProperties("naver.sms")
 public class NaverApiProperty {
-    private NaverApi naverApi = new NaverApi();
+    private boolean enabled;
+    private NaverApiProperty.NaverApi naverApi = new NaverApi();
+    @Setter
+    @Getter
     class NaverApi{
         private String accessKey;
         private String secretKey;

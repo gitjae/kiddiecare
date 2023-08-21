@@ -8,7 +8,8 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @Getter
 @ConfigurationProperties("kakao.restapi")
 public class KakaoApiProperty {
-    private KakaoApi kakaoApi = new KakaoApi();
+    private boolean enabled;
+    private KakaoApiProperty.KakaoApi kakaoApi = new KakaoApi();
 
     @Setter
     @Getter
