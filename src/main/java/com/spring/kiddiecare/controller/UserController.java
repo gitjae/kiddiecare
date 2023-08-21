@@ -301,6 +301,18 @@ public class UserController {
         }
     }
 
+    @GetMapping("/findPhone")
+    public ResponseEntity<?> getUserPhone(@RequestParam String id) {
+        Optional<User> userOptional = userRepository.findUserById(id);
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            return ResponseEntity.ok(user.getPhone());
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+
 
 }
 
