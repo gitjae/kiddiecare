@@ -33,10 +33,21 @@
       - 자녀 CRUD
   
 - 팀원 채희재✨[이메일](mailto:heejae0629@naver.com) ([GitHub](깃헙주소))
+  - WAS 아키텍처 구현
+  - Docker 환경 설정
   - 공공 데이터포털 API 연동
-    -  
-  - 
-    - 
+    - 여러 API에서 받아온 공공 데이터를 WAS에서 데이터 정제
+    - redis 데이터 저장 후 캐시 기능 구현
+  - 병원 관리자 기능
+    - OPEN API로 구현한 병원 상세 주소 검색기능 구현
+    - javax.mail의 SMTP프로토콜을 사용하여 이메일 인증 기능 구현 
+    - Spring security의 BCrypt해쉬알고리즘으로 레인보우 테이블 대입을 방지
+    - AWS S3 & ClouldFront를 이용한 정적 파일 관리
+  - websocket 알림 기능
+    - peer to peer로 실시간 알람 기능 구현 (현재 진행중)
+    - pub/sub 구조 구현 (현재 논의중)
+  - swagger
+    - REST API로 구현된 로직들을 문서화하여 한눈에 볼 수 있는 기능 구현(현재 진행중)
 - 팀원 한희수✨[이메일](mailto:juntu09@gmail.com) ([GitHub]([www,github.com/hee-duck](https://github.com/hee-duck)))
   * 사용자 병원 예약 기능 구현
     - 병원 상세페이지
