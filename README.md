@@ -32,7 +32,7 @@
       - 예약정보 확인 및 수정
       - 자녀 CRUD
   
-- 팀원 채희재✨[이메일](mailto:heejae0629@naver.com) ([GitHub](깃헙주소))
+- 팀원 채희재✨[이메일](mailto:heejae0629@naver.com) (([GitHub](https://github.com/heejae101?tab=repositories)))
   - WAS 아키텍처 구현
   - Docker 환경 설정
   - 공공 데이터포털 API 연동
