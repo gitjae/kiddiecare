@@ -158,20 +158,28 @@ document.getElementById('time-list').addEventListener("click", (event) => {
                             showModal();
                             console.log(detail.childrenName);
 
+                            let genderStr = '';
+
+                            if (detail.childrenGender === 1 || detail.childrenGender === 3) {
+                                genderStr = '남';
+                            } else if (detail.childrenGender === 2 || detail.childrenGender === 4) {
+                                genderStr = '여';
+                            }
+
                             let content = document.getElementById('text-area');
                             // 전역변수로 저장
                             selectedUser = detail;
                             content.innerHTML = `
                                 <h3>[ 어린이 정보 ]</h3>
-                                <b>어린이 이름: </b> <p>${detail.childrenName}</p>
-                                <b>어린이 생년월일: </b> <p>${detail.childrenBirth}</p>
-                                <b>어린이 성별: </b> <p>${detail.childrenGender}</p>
-                                <b>어린이 참고사항: </b> <p>${detail.childrenInfo}</p>
+                                <p><b>어린이 이름: </b> <span>${detail.childrenName}</span></p>
+                                <p><b>어린이 생년월일: </b> <span>${detail.childrenBirth}</span></p>
+                                <p><b>어린이 성별: </b> <span>${genderStr}</span></p>
+                                <p><b>어린이 참고사항: </b> <span>${detail.childrenInfo}</span></p>
                                 <hr>
                                 <h3>[ 보호자 정보 ]</h3>
-                                <b>보호자명: </b><p>${detail.usersName}</p>
-                                <b>보호자 생년월일: </b><p>${detail.usersBirth}</p>
-                                <b>보호자 주소: </b><p>${detail.usersAddr}</p>
+                                <p><b>보호자명: </b> <span>${detail.usersName}</span></p>
+                                <p><b>보호자 생년월일: </b <span>${detail.usersBirth}</span></p>
+                                <p><b>보호자 주소: </b> <span>${detail.usersAddr}</span></p>
                                 <button id="change-info" onclick="changeDate()">예약정보 변경하기</button>
                             `;
                         }).fail(function (error) {
@@ -304,14 +312,15 @@ function clickListener(event) {
                 timeSlotNo: id,
             },
         }).done(function (result) {
-            alert(result.update);
+            // alert(result.update);
+            alert("예약이 변경되었습니다.");
         }).fail(function (error) {
             alert(error);
         })
 
         // 취소버튼
     } else if(result === false) {
-        alert("취소누름");
+        alert("변경을 취소하셨습니다.");
     }
 }
 

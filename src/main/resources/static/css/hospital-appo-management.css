@@ -82,10 +82,29 @@
     /*display: flex;*/
     background-color: #fefefe;
     margin: 15% auto;
-    padding: 20px;
+    padding: 40px;
     border: 1px solid #888;
     width: 70%;
+
 }
+
+.modal-content h3{
+    margin: 20px 0 20px 10px;
+    font-size: 25px;
+}
+
+.modal-content p{
+    margin-bottom: 10px;
+    margin-left: 20px;
+}
+
+/* 모달창 닫기 */
+.close{
+    font-size: 40px;
+    width: 20px;
+    height: 20px;
+}
+
 
 /* 테이블 */
 .detail-area table{

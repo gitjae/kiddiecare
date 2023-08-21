@@ -94,6 +94,9 @@ public class TimeSlotsLimitService {
 
                 // 중복 안될 때 저장
                 if(!dupl) {
+                    // enable = max 같게 설정
+                    timeSlotsLimit.setEnable(timeSlotsLimit.getMax());
+
                     timeSlotsLimitRepository.save(timeSlotsLimit);
 
                     System.out.println("저장됨:" +timeSlotsLimit);
