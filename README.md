@@ -10,15 +10,15 @@
 
 
 ### 기능 및 담당자
-- 팀장 이규재✨[이메일 주소](mailto:dlrbwo2022@gmail.com) ([GitHub](깃헙주소))
+- 팀장 이규재✨[이메일](mailto:dlrbwo2022@gmail.com) ([GitHub](깃헙주소))
   - 
     - 
-- 팀원 채희재✨[이메일 주소](mailto:heejae0629@naver.com) ([GitHub](깃헙주소))
+- 팀원 채희재✨[이메일](mailto:heejae0629@naver.com) ([GitHub](깃헙주소))
   - 공공 데이터포털 API 연동
     -  
   - 
     - 
-- 팀원 한희수✨[이메일 주소](mailto:juntu09@gmail.com) ([GitHub](github.com/hee-duck))
+- 팀원 한희수✨[이메일](mailto:juntu09@gmail.com) ([GitHub]([www,github.com/hee-duck](https://github.com/hee-duck)))
   * 사용자 병원 예약 기능 구현
     - 병원 상세페이지
         ㄴ 카카오맵 API를 사용하여 해당 병원의 지도 표시
@@ -43,6 +43,6 @@
 
   * 서비스 디자인(CSS) 총괄
     
-- 팀원 이윤정✨[이메일 주소](mailto:dldbswjd889@naver.com) ([GitHub](깃헙주소))
+- 팀원 이윤정✨[이메일](mailto:dldbswjd889@naver.com) ([GitHub](깃헙주소))
   -
     - 
