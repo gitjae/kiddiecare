@@ -10,15 +10,17 @@
 
 
 ### 기능 및 담당자
-- 팀장 이규재[이메일 주소](mailto:dlrbwo2022@gmail.com)
+- 팀장 이규재✨[이메일 주소](mailto:dlrbwo2022@gmail.com) ([GitHub](깃헙주소))
   - 
     - 
-- 팀원 채희재[이메일 주소](mailto:heejae0629@naver.com)
+- 팀원 채희재✨[이메일 주소](mailto:heejae0629@naver.com) ([GitHub](깃헙주소))
+  - 공공 데이터포털 API 연동
+    -  
+  - 
+    - 
+- 팀원 한희수✨[이메일 주소](mailto:juntu09@gmail.com) ([GitHub](깃헙주소))
   -
     - 
-- 팀원 한희수[이메일 주소](mailto:juntu09@gmail.com)
-  -
-    - 
-- 팀원 이윤정[이메일 주소](mailto:dldbswjd889@naver.com)
+- 팀원 이윤정✨[이메일 주소](mailto:dldbswjd889@naver.com) ([GitHub](깃헙주소))
   -
     - 
