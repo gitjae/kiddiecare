@@ -10,6 +10,8 @@
 ### 테스크툴
 - 우리동네소아과 Notion [link](https://www.notion.so/sally-/Index-7ee893e575af456e98a09b7bfae9ea0f?pvs=4)
 
+### 아키텍처
+![image](./KiddiecareArchitecture.png)
 
 ### 기능 및 담당자
 - 팀장 이규재✨[이메일](mailto:dlrbwo2022@gmail.com) ([GitHub](https://github.com/gitjae))
@@ -38,12 +40,13 @@
   - WAS 아키텍처 구현
   
   - Docker 환경 설정
-  
+   - redis 환경 구축
+   
   - 공공 데이터포털 API 연동
     - 여러 API에서 받아온 공공 데이터를 WAS에서 데이터 정제
     - redis 데이터 저장 후 캐시 기능 구현
     
-  - 병원 관리자 기능
+  - 병원 관리자 기능 & 의사정보 CRUD
     - OPEN API로 구현한 병원 상세 주소 검색기능 구현
     - javax.mail의 SMTP프로토콜을 사용하여 이메일 인증 기능 구현 
     - Spring security의 BCrypt해쉬알고리즘으로 레인보우 테이블 대입을 방지
