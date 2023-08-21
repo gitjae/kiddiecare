@@ -9,7 +9,7 @@
 - 2023.08.01 ~ 2023.08.25(3주)
 
 ### 테스크툴
--[link](https://www.notion.so/sally-/Index-7ee893e575af456e98a09b7bfae9ea0f?pvs=4)
+- 우리동네소아과 Notion [link](https://www.notion.so/sally-/Index-7ee893e575af456e98a09b7bfae9ea0f?pvs=4)
 
 
 ### 기능 및 담당자
