@@ -11,7 +11,7 @@
 <head>
   <title>Title</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
-    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=89098ae2758f1c766fe8ab93b869f264"></script>
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey="></script>
     <script src="/script/geolocation.js"></script>
 </head>
 <body>
