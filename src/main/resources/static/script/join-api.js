@@ -157,11 +157,14 @@ function sendCode(){
         data:{number:phone}
     }).done(res => {
         if(res.send === 'success'){
+            alert("인증코드가 발송되었습니다.");
+            console.log(res.code)
+            $('#verify').prop("disabled", false);
+        } else {
             if(res.dupl === 'true'){
                 alert("이미 등록된 전화번호 입니다.");
             } else {
-                console.log(res.code)
-                $('#verify').prop("disabled", false);
+                alert("인증코드 발송에 실패했습니다.");
             }
         }
     })
