@@ -53,7 +53,7 @@
     
   - swagger
     - REST API로 구현된 로직들을 문서화하여 한눈에 볼 수 있는 기능 구현(현재 진행중)
-- 팀원 한희수✨[이메일](mailto:juntu09@gmail.com) ([GitHub]([www,github.com/hee-duck](https://github.com/hee-duck)))
+- 팀원 한희수✨[이메일](mailto:juntu09@gmail.com) ([GitHub](https://github.com/hee-duck))
   * 사용자 병원 예약 기능 구현
     - 병원 상세페이지
         - 카카오맵 API를 사용하여 해당 병원의 지도 표시
