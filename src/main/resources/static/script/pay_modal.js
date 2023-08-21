@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    $("#iamportPayment").click(function () {
+    $("#payBtn").click(function () {
         const userId = document.getElementById('loggedInUser').value;
         // AJAX로 사용자의 전화번호 정보 가져오기
         $.ajax({
