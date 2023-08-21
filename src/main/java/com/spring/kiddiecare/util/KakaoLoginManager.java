@@ -2,6 +2,7 @@ package com.spring.kiddiecare.util;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -13,7 +14,9 @@ import org.springframework.web.client.RestTemplate;
 public class KakaoLoginManager {
 
     private RestTemplate restTemplate = new RestTemplate();
-    private String KAKAO_REST_API_KEY = "76566ba0dfe292387f057613321b300c";
+
+    @Value("kakao.restapi.key")
+    private String KAKAO_REST_API_KEY;
 
     public String getKAKAO_REST_API_KEY(){
         return KAKAO_REST_API_KEY;
