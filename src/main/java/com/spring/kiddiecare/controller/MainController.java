@@ -17,6 +17,7 @@ import com.spring.kiddiecare.service.ChildrenService;
 import com.spring.kiddiecare.service.DoctorService;
 import com.spring.kiddiecare.service.HospitalService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -44,6 +45,9 @@ public class MainController {
     private final HospitalService hospitalService;
     private final DoctorService doctorService;
     private final ChildrenService childrenService;
+
+    @Value("kakao.restapi.appkey")
+    private String appkey;
 
 
     @GetMapping("/test")
@@ -74,7 +78,10 @@ public class MainController {
     public String adminJoin(){return "adminJoin";}
 
     @GetMapping("/hospital/Search")
-    public String hospitalSearch(){return "hospitalSearchList";}
+    public String hospitalSearch(Model model){
+        model.addAttribute("appkey", appkey);
+        return "hospitalSearchList";
+    }
 
     @GetMapping("admin/appointment")
     public String hospitalReservationForm() {
@@ -238,6 +245,7 @@ public class MainController {
 
     @GetMapping("appointment/hospitalDetail")
     public String showReservePage(@RequestParam("hospitalName") String hospitalName, Model model) {
+        model.addAttribute("appkey", appkey);
         return "hospitalDetail";
     }
 

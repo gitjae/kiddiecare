@@ -20,17 +20,17 @@ import java.util.Random;
 
 @Component
 public class SMSSender {
-    //@Value("${naver.sms.accessKey}")
-    private String myAccessKey = "CDDHLg3dNsQsJaW2pYQj";
+    @Value("${naver.sms.accessKey}")
+    private String myAccessKey;
 
-    //@Value("${naver.sms.secretKey}")
-    private String mySecretKey = "lpVK621oy0fqpTihQHQIJefrec1KnboXASRhwWfp";
+    @Value("${naver.sms.secretKey}")
+    private String mySecretKey;
 
-    //@Value("${naver.sms.serviceId}")
-    private String serviceId = "ncp:sms:kr:313580135273:kiddiecare";
+    @Value("${naver.sms.serviceId}")
+    private String serviceId;
 
-    //@Value("${naver.sms.senderNumber}")
-    private String senderNumber = "01087008416";
+    @Value("${naver.sms.senderNumber}")
+    private String senderNumber;
 
     private RestTemplate restTemplate = new RestTemplate();
 

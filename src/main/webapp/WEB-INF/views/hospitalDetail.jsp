@@ -6,7 +6,7 @@
     <title>병원 상세정보</title>
     <link href="/css/common.css" rel="stylesheet">
     <link href="/css/hospital-detail-css.css" rel="stylesheet">
-    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=89098ae2758f1c766fe8ab93b869f264"></script>
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=${appkey}"></script>
 
 </head>
 <c:import url="header.jsp"></c:import>
