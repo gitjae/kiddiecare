@@ -1,9 +1,8 @@
 # kiddiecare
-- 프로젝트 개요
+### 프로젝트 개요
   - 소아과 진료 대란으로 인한 진료 예약 오픈런 사회 문제 발생
-  - 위치 기반 진료 가능 소아과 예약 서비스를 통한 사회 문제 완화 목표
-    
-- [서비스 소개](https://www.canva.com/design/DAFq090KJgM/7b8D36mU1B6-N7yS6tYZfw/edit) 
+  - 위치 기반 진료 가능 소아과 예약 서비스를 통한 사회 문제 완화 목표  
+  - [서비스 소개](https://www.canva.com/design/DAFq090KJgM/7b8D36mU1B6-N7yS6tYZfw/edit) 
 
 ### 작업기간
 - 2023.08.01 ~ 2023.08.25(3주)
