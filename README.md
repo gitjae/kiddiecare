@@ -10,7 +10,7 @@
 
 
 ### 기능 및 담당자
-- 팀장 이규재✨[이메일](mailto:dlrbwo2022@gmail.com) ([GitHub](깃헙주소))
+- 팀장 이규재✨[이메일](mailto:dlrbwo2022@gmail.com) ([GitHub](https://github.com/gitjae))
   * 사용자 CRUD 구현
       - 회원가입
       - 로그인
@@ -78,7 +78,7 @@
 
   * 서비스 디자인(CSS) 총괄
     
-- 팀원 이윤정✨[이메일](mailto:dldbswjd889@naver.com) ([GitHub](깃헙주소))
+- 팀원 이윤정✨[이메일](mailto:dldbswjd889@naver.com) ([GitHub](https://github.com/yunJeong3))
   * 관리자 예약 관리 페이지
     - 관리자 스케줄 관리 기능
       - 한 타임당 유저가 예약이 가능하게 병원 스케줄을 생성
@@ -90,3 +90,4 @@
      
     - web socket 알림 기능
       - peer to peer로 실시간 알람 기능 구현(진행중)
+
