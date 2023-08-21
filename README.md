@@ -11,7 +11,7 @@
 - 우리동네소아과 Notion [link](https://www.notion.so/sally-/Index-7ee893e575af456e98a09b7bfae9ea0f?pvs=4)
 
 ### 아키텍처
-![image](./KiddiecareArchitecture.png)
+![image](/KiddiecareArchitecture.png)
 
 ### 기능 및 담당자
 - 팀장 이규재✨[이메일](mailto:dlrbwo2022@gmail.com) ([GitHub](https://github.com/gitjae))
