@@ -20,17 +20,17 @@ import java.util.Random;
 
 @Component
 public class SMSSender {
-    //@Value("${naver.sms.accessKey}")
-    private String myAccessKey = "CDDHLg3dNsQsJaW2pYQj";
+    @Value("${naver.sms.accessKey}")
+    private String myAccessKey;
 
-    //@Value("${naver.sms.secretKey}")
-    private String mySecretKey = "lpVK621oy0fqpTihQHQIJefrec1KnboXASRhwWfp";
+    @Value("${naver.sms.secretKey}")
+    private String mySecretKey;
 
-    //@Value("${naver.sms.serviceId}")
-    private String serviceId = "ncp:sms:kr:313580135273:kiddiecare";
+    @Value("${naver.sms.serviceId}")
+    private String serviceId;
 
-    //@Value("${naver.sms.senderNumber}")
-    private String senderNumber = "01087008416";
+    @Value("${naver.sms.senderNumber}")
+    private String senderNumber;
 
     private RestTemplate restTemplate = new RestTemplate();
 
@@ -49,7 +49,6 @@ public class SMSSender {
         headers.set("x-ncp-apigw-signature-v2", sig);
 
         // 메시지 본문 구성
-
         JSONObject requestJson = new JSONObject();
         requestJson.put("type", "SMS");
         requestJson.put("from", senderNumber);
@@ -59,8 +58,6 @@ public class SMSSender {
         msg.put("to", recipientNumber);
         messages.add(msg);
         requestJson.put("messages", messages);
-        //requestBody.put("to", new String[] {recipientNumber});
-        //requestBody.put("content", message);
         System.out.println(requestJson.toString());
         HttpEntity<String> request = new HttpEntity<>(requestJson.toString(), headers);
 
@@ -70,15 +67,6 @@ public class SMSSender {
         Map<String, Object> responseBody = response.getBody();
 
         return responseBody;
-        /*if (responseBody != null) {
-            String requestTime = (String) responseBody.get("requestTime");
-            String statusCode = (String) responseBody.get("statusCode");
-
-            System.out.println("Request Time: " + requestTime);
-            System.out.println("Status Code: " + statusCode);
-        } else {
-            System.err.println("응답 바디가 비어 있습니다.");
-        }*/
     }
 
     public String makeSignature(Long time) throws Exception{

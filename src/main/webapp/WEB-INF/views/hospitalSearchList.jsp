@@ -12,7 +12,7 @@
     <title>List</title>
     <link href="/css/common.css" rel="stylesheet">
     <link href="/css/hospital-search-css.css" rel="stylesheet">
-    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=89098ae2758f1c766fe8ab93b869f264"></script>
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=${appkey}"></script>
     <script src="/script/hospital-search-list.js"></script>
     <script src="/script/hospital-search-kakaomap.js"></script>
 </head>

@@ -1,3 +1,8 @@
+window.onload = function (){
+    buildCalendar();
+    $('.appo-table').css({"display":"block"});
+}
+
 function appoUpdate(){
     const no = $('.appo-no').text();
     const symptom = $('#appo-symptom').val();
