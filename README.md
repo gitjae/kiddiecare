@@ -18,7 +18,7 @@
     -  
   - 
     - 
-- 팀원 한희수✨[이메일 주소](mailto:juntu09@gmail.com) ([GitHub](mailto:github.com/hee-duck))
+- 팀원 한희수✨[이메일 주소](mailto:juntu09@gmail.com) ([GitHub](github.com/hee-duck))
   * 사용자 병원 예약 기능 구현
     - 병원 상세페이지
         ㄴ 카카오맵 API를 사용하여 해당 병원의 지도 표시
