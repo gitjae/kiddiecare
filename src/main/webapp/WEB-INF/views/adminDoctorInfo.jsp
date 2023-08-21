@@ -17,7 +17,7 @@
 <div class="form_container">
     <i class="uil uil-times form_close"></i>
     <div class="form doctor_form">
-        <form method="POST" action="/api/v1/doctor/create" enctype="multipart/form-data">
+        <form method="POST">
             <h2>의사 추가</h2>
             <div class="input_box">
                 <input type="text" name="doctorName" placeholder="의사이름을 입력해주세요." required />
@@ -31,7 +31,7 @@
                 <input type="file" id="doctor-image" name="file" accept=".png,.jpg" size="10000000"/>
                 <i class="uil uil-user-square"></i>
             </div>
-            <button class="button">의사 추가</button>
+            <button class="button" onclick="addDoctor()">의사 추가</button>
         </form>
     </div>
 </div>
