@@ -204,5 +204,23 @@ $(document).ready(function () {
         return "order_no_" + timestamp;
     }
 
+    // 전체 동의 체크박스 클릭 이벤트
+    $("#allTerms").on('click', function() {
+        if ($(this).prop('checked')) {
+            $(".individualTerm").prop('checked', true);
+        } else {
+            $(".individualTerm").prop('checked', false);
+        }
+    });
+
+    // 개별 약관 체크박스 클릭 이벤트
+    $(".individualTerm").on('click', function() {
+        if ($(".individualTerm:checked").length === 3) { // 모든 개별 약관이 체크된 경우
+            $("#allTerms").prop('checked', true);
+        } else {
+            $("#allTerms").prop('checked', false);
+        }
+    });
+
 });
 

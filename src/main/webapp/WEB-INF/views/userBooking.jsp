@@ -11,7 +11,6 @@
     <script src="/script/user-booking.js"></script>
     <%-- import.payment.js --%>
     <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
-    <script type="text/javascript" src="/script/pay_modal.js"></script>
 </head>
 <c:import url="header.jsp"></c:import>
 <body>
@@ -62,29 +61,43 @@
             <div class="form-area">
                 <h4>약관동의</h4>
                 <div class="term-section">
+                    <input type="checkbox" id="allTerms" > 모두 동의합니다.
+                </div>
+
+                <div class="term-section">
                     <h5 class="term-title"> * 이용약관 <button class="view-btn">(펼치기)</button></h5>
                     <div class="term-content">
                         <c:import url="userTerm.jsp"></c:import>
                     </div>
-                    <input type="checkbox" id="userTerm" required> 동의합니다.
+                    <input type="checkbox" class="individualTerm" id="userTerm" required> 동의합니다.
                 </div>
                 <div class="term-section">
                     <h5 class="term-title"> * 개인정보처리방침 <button class="view-btn">(펼치기)</button></h5>
                     <div class="term-content">
                         <c:import url="privacyTerm.jsp"></c:import>
                     </div>
-                    <input type="checkbox" id="privacyTerm" required> 동의합니다.
+                    <input type="checkbox" class="individualTerm" id="privacyTerm" required> 동의합니다.
                 </div>
                 <div class="term-section">
                     <h5 class="term-title"> * 위치기반서비스 이용약관 <button class="view-btn">(펼치기)</button></h5>
                     <div class="term-content">
                         <c:import url="locationTerm.jsp"></c:import>
                     </div>
-                    <input type="checkbox" id="locationTerm" required> 동의합니다.
+                    <input type="checkbox" class="individualTerm" id="locationTerm" required> 동의합니다.
                 </div>
+
             </div>
 
-            <input type="submit" id="payBtn" value="결제하기">
+            <div class="pay-notice-area">
+                <div class="notice-box">
+                    <img class="pay-notice-img" src="/image/exclamation-mark.png">
+                    <p class="pay-notice-title">결제 전 꼭 확인해주세요!</p>
+                </div>
+                <p class="pay-notice-text">결제하신 금액은 우리동네소아과 예약금이예요.</p>
+                <p class="pay-notice-text">환자의 진료 또는 시술에 의한 최종 진료 비용은 병원에서 결제가 가능해요.</p>
+                <p class="pay-notice-text">예약금은 예약 취소 시 환불이 불가해요.</p>
+                <input type="submit" id="payBtn" value="결제하기">
+            </div>
         </form>
 
         <!-- 결제 모달창 시작 -->
