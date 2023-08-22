@@ -78,6 +78,9 @@ public class MainController {
     @GetMapping("/admin/join")
     public String adminJoin(){return "adminJoin";}
 
+    @GetMapping("pay")
+    public String payment(){return "pay";}
+
     @GetMapping("/hospital/Search")
     public String hospitalSearch(Model model){
         String appkey = env.getProperty("kakao.restapi.appkey");
