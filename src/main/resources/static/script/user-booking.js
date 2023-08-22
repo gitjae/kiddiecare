@@ -116,10 +116,11 @@ $(document).ready(function () {
         window.location.href = "/childRegister";
     });
 
-    // "결제하기 패스하고 예약꽂기" 버튼 클릭 이벤트
+    // "결제하기" 버튼 클릭 이벤트
     $("#payBtn").on('click', function (e) {
         e.preventDefault();
 
+        // 예약정보 가져오기
         let patientId = $("#selectedChildNo").val();
         let parentId = $("#parentId").val();
         let timeSlotNo = $("#timeSlotNo").val();
@@ -128,39 +129,98 @@ $(document).ready(function () {
         let appoStatus = 1; // 기본값 설정 (변경 가능)
         let appoNo = generateEightDigitRandom();    // 난수 생성
 
-        console.log("appoNo :", appoNo);
-        console.log("patientId : ", patientId);
-        console.log("parentId : ", parentId);
-        console.log("timeSlotNo : ", timeSlotNo);
-        console.log("symptom : ", symptom);
-        console.log("note : ", note);
-
-        $.ajax({
-            url: "/api/v1/admin/appo",
-            type: "POST",
-            dataType: 'json',
-            contentType: "application/json",
-            data: JSON.stringify({
-                no: appoNo,
-                patientId: patientId,
-                guardian: parentId,
-                timeSlotNo: timeSlotNo,
-                symptom: symptom,
-                note: note,
-                appoStatus: appoStatus
-            }),
-            success: function (response) {
-                if (response.success) {
-                    updateTimeSlotCount(timeSlotNo);
-                    window.location.href = `/bookingComplete`;
-                } else {
-                    alert("예약 실패");
-                }
-            },
-            error: function (err) {
-                console.error('Error during appointment booking:', err.responseText);
-                alert("예약 중 오류 발생");
+        // 모달 창에서 결제하기 버튼 클릭 시, 결제 로직 수행
+        payment(function(success) {
+            if (success) {
+                // 결제 성공 후 DB 저장 로직
+                sendToDB(appoNo, patientId, parentId, timeSlotNo, symptom, note, appoStatus);
+            } else {
+                alert("결제 실패");
             }
         });
+
+        function sendToDB(appoNo, patientId, parentId, timeSlotNo, symptom, note, appoStatus) {
+            $.ajax({
+                url: "/api/v1/admin/appo",
+                type: "POST",
+                dataType: 'json',
+                contentType: "application/json",
+                data: JSON.stringify({
+                    no: appoNo,
+                    patientId: patientId,
+                    guardian: parentId,
+                    timeSlotNo: timeSlotNo,
+                    symptom: symptom,
+                    note: note,
+                    appoStatus: appoStatus
+                }),
+                success: function (response) {
+                    if (response.success) {
+                        updateTimeSlotCount(timeSlotNo);
+                        setTimeout(() => {
+                            location.href = "/bookingComplete"
+                        }, 3000); // 예: 3초 후 리다이렉트
+                    } else {
+                        alert("예약 실패");
+                    }
+                },
+                error: function (err) {
+                    console.error('Error during appointment booking:', err.responseText);
+                    alert("예약 중 오류 발생");
+                }
+            });
+        }
     });
+
+    function payment(callback) {
+        IMP.init('imp40242012'); // 아임포트 관리자의 가맹점 식별코드
+
+        const merchantUid = generateMerchantUid(); // 동적으로 merchant_uid 생성
+        const userName = document.getElementById('loggedInUser').value;
+
+        // param
+        IMP.request_pay({
+            pg: 'kakaopay.TC0ONETIME',
+            pay_method: 'card',
+            merchant_uid: merchantUid,
+            name: '우리동네소아과 예약금 결제',
+            amount: 2000,
+            buyer_email: 'juntu09@gmail.com',  // 유저 정보로 변경 필요
+            buyer_name: userName,
+            buyer_tel: '010',
+        }, function (rsp) {
+            if (rsp.success) {
+                callback(true);
+            } else {
+                alert("결제 실패 : 코드(" + rsp.error_code + ") / 메시지(" + rsp.error_msg + ")");
+                callback(false);
+            }
+        });
+    }
+
+    function generateMerchantUid() {
+        const currentDate = new Date();
+        const timestamp = currentDate.getTime();
+        return "order_no_" + timestamp;
+    }
+
+    // 전체 동의 체크박스 클릭 이벤트
+    $("#allTerms").on('click', function() {
+        if ($(this).prop('checked')) {
+            $(".individualTerm").prop('checked', true);
+        } else {
+            $(".individualTerm").prop('checked', false);
+        }
+    });
+
+    // 개별 약관 체크박스 클릭 이벤트
+    $(".individualTerm").on('click', function() {
+        if ($(".individualTerm:checked").length === 3) { // 모든 개별 약관이 체크된 경우
+            $("#allTerms").prop('checked', true);
+        } else {
+            $("#allTerms").prop('checked', false);
+        }
+    });
+
 });
+
