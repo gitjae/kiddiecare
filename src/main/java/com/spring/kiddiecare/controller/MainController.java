@@ -50,8 +50,8 @@ public class MainController {
     private String appkey;
 
 
-    @GetMapping("/test")
-    public String test() {return  "login-test";}
+    @GetMapping("/excel")
+    public String test() {return  "ExcelData";}
     @GetMapping("/")
     public String index(){
         return "index";
