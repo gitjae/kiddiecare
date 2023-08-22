@@ -51,8 +51,8 @@ public class MainController {
     @Value("${kakao.restapi.appkey}")
     private String key;
 
-    @GetMapping("/test")
-    public String test() {return  "login-test";}
+    @GetMapping("/excel")
+    public String test() {return  "ExcelData";}
     @GetMapping("/")
     public String index(){
         return "index";
