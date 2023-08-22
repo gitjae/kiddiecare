@@ -16,11 +16,11 @@ public class HospBasisItem {
     @XmlElement(name = "addr")
     private String addr; // 주소
 
-    @XmlElement(name = "clCd")
-    private String clCd; // 종별코드
-
-    @XmlElement(name = "clCdNm")
-    private String clCdNm; // 종별코드명
+//    @XmlElement(name = "clCd")
+//    private String clCd; // 종별코드
+//
+//    @XmlElement(name = "clCdNm")
+//    private String clCdNm; // 종별코드명
 
 //    @XmlElement(name = "cmdcGdrCnt")
 //    private String cmdcGdrCnt; // 한방일반의 인원수
@@ -52,8 +52,8 @@ public class HospBasisItem {
     @XmlElement(name = "drTotCnt")
     private String drTotCnt; // 의사 총 수
 
-    @XmlElement(name = "emdongNm")
-    private String emdongNm; // 읍면동명
+//    @XmlElement(name = "emdongNm")
+//    private String emdongNm; // 읍면동명
 
     @XmlElement(name = "estbDd")
     private String estbDd; // 개설일자
@@ -61,17 +61,17 @@ public class HospBasisItem {
     @XmlElement(name = "hospUrl")
     private String hospUrl; // 홈페이지
 
-    @XmlElement(name = "mdeptGdrCnt")
-    private String mdeptGdrCnt; // 의과일반의 인원수
-
-    @XmlElement(name = "mdeptIntnCnt")
-    private String mdeptIntnCnt; // 의과인턴 인원수
-
-    @XmlElement(name = "mdeptResdntCnt")
-    private String mdeptResdntCnt; // 의과레지던트 인원수
-
-    @XmlElement(name = "mdeptSdrCnt")
-    private String mdeptSdrCnt; // 의과전문의 인원수
+//    @XmlElement(name = "mdeptGdrCnt")
+//    private String mdeptGdrCnt; // 의과일반의 인원수
+//
+//    @XmlElement(name = "mdeptIntnCnt")
+//    private String mdeptIntnCnt; // 의과인턴 인원수
+//
+//    @XmlElement(name = "mdeptResdntCnt")
+//    private String mdeptResdntCnt; // 의과레지던트 인원수
+//
+//    @XmlElement(name = "mdeptSdrCnt")
+//    private String mdeptSdrCnt; // 의과전문의 인원수
 
 //    @XmlElement(name = "pnursCnt")
 //    private String pnursCnt; // 조산사 인원수

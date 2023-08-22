@@ -29,6 +29,31 @@ var socket = null;
 $(document).ready(function() {
     var sessionValue = $('#sessionValue').val();
 
+    // $.ajax({
+    //     type: 'POST',
+    //     url: '/websocket/member',
+    //     data: {
+    //         target: target,
+    //         content: content,
+    //         type: type,
+    //         url: url
+    //     },
+    //     success: function(response){    // db전송 성공시 실시간 알림 전송
+    //         // 소켓에 전달되는 메시지
+    //         // 위에 기술한 EchoHandler에서 ,(comma)를 이용하여 분리시킨다.
+    //         if(response === ""){
+    //             console.log("dd")
+    //         }else{
+    //             console.log("ddd")
+    //         }
+    //         socket.send("관리자,"+target+","+content+","+url);
+    //     },
+    //     error: function(xhr, status, error) {
+    //         console.log(error);
+    //         alert("인증번호를 다시 확인해주세요.");
+    //     }
+    // });
+
     if (sessionValue !== undefined && sessionValue !== "") {
         console.log(sessionValue);
         let sock = new SockJS('/echo-ws');
@@ -53,12 +78,6 @@ $(document).ready(function() {
             $(".notifi-area").append(alarm);
         }
 
-        // function countAdd() {
-        //     let cnt = Number($('#count').text() === "" ? 0 : $('#count').text());
-        //     $('#count').text(cnt + 1);
-        //
-        // }
-
         function countAdd() {
             let cnt = Number($('#count').text() === "" ? 0 : $('#count').text());
             if (cnt === 0) { // 알림이 없을 때 새 알림 도착하면 display 속성변경
@@ -66,11 +85,6 @@ $(document).ready(function() {
             }
             $('#count').text(cnt + 1);
         }
-
-        // function alarmAdd() {
-        //     let cnt = Number($('#alarm').text() === "" ? 0 : $('#alarm').text());
-        //     $('#alarm').text(cnt + 1).show();
-        // }
 
         function alarmAdd() {
             let cnt = Number($('#alarm').text() === "" ? 0 : $('#alarm').text());

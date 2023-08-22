@@ -14,7 +14,7 @@ import java.util.*;
 public class EchoHandler extends TextWebSocketHandler {
 
     //로그인 한 전체
-    List<WebSocketSession> sessions = new ArrayList<>();
+//    List<WebSocketSession> sessions = new ArrayList<>();
     // 로그인중인 개별유저
     private Map<String, WebSocketSession> users = new HashMap<>();
 
@@ -27,9 +27,8 @@ public class EchoHandler extends TextWebSocketHandler {
             log(senderId + " 연결 됨");
             users.put(senderId, session);   // 로그인중 개별유저 저장
         }
-//        String userId = (String) session.getAttributes().get("userId");
-//        users.put(userId, session);
     }
+
     // 클라이언트가 Data 전송 시
     @Override
     protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
@@ -63,7 +62,7 @@ public class EchoHandler extends TextWebSocketHandler {
         if(senderId!=null) {   // 로그인 값이 있는 경우만
             log(senderId + " 연결 종료됨");
             users.remove(senderId);
-            sessions.remove(session);
+//            sessions.remove(session);
         }
     }
     // 에러 발생시

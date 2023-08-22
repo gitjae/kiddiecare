@@ -41,7 +41,8 @@ public class ExcelFileController {
         String extension = FilenameUtils.getExtension(file.getOriginalFilename()); // 3
 
         if (!extension.equals("xlsx") && !extension.equals("xls")) {
-            throw new IOException("엑셀파일만 업로드 해주세요.");
+//            throw new IOException("엑셀파일만 업로드 해주세요.");
+            return jsonObject.put("response","엑셀파일만 업로드 해주세요.").toMap();
         }
 
         Workbook workbook = null;

@@ -38,8 +38,6 @@ $(document).ready(function() {
         var doctorTime = $(this).find('.average-time-of-care').text(); // 수정한 부분
         var doctorStatus = $(this).find('.doctor-status').text(); // 수정한 부분
 
-        console.log(doctorName,doctorTime,doctorStatus)
-
         // .doctor-info-container의 input 요소에 가져온 값을 대입합니다.
         $('.doctor-info-container input[name="no"]').val(no);
         $('.doctor-info-container input[name="doctorName"]').val(doctorName);
@@ -59,9 +57,30 @@ $(document).ready(function() {
     formOpenBtn.addEventListener("click", () => formContainer.classList.add("show"));
     formCloseBtn.addEventListener("click", () => formContainer.classList.remove("show"));
 
-
     $(document).on('click', '.button-delete', deleteDoctor);
     $(document).on('click', '.button-update', updateDoctor);
+
+    $(".dotor-add-area").click(()=>{
+        $.ajax({
+            url: 'api/v1/doctor/subject',
+            type: 'GET',
+            success: function(data) {
+                if(data.response === "success"){
+                    data.data.forEach(item => {
+                        let html = `<option value="${item}">${item}</option>`;
+                        $('#option-area').append(html);
+                    });
+                }else{
+                    alert("에러가 발생하였습니다.")
+                }
+            },
+            error: function(xhr, error) {
+                console.log(xhr);
+                console.log(error);
+            }
+        });
+    });
+
 
     function addDoctor(){
         $.ajax({
