@@ -26,7 +26,9 @@ import java.util.Optional;
 public class KakaoLoginController {
 
     private final UserRepository userRepository;
-    KakaoLoginManager loginManager = new KakaoLoginManager();
+    // 인스턴스를 스프링이 아닌 직접 생성하여 사용하는 경우, 스프링이 Beans 초기화를 못해 @Value 주입에 실패
+    // KakaoLoginManager loginManager = new KakaoLoginManager();
+    private final KakaoLoginManager loginManager;
     String codeRequrl = "";
 
     @GetMapping("/login/kakao/callback")

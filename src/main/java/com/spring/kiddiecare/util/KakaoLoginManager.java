@@ -26,6 +26,7 @@ public class KakaoLoginManager {
 
     public String redirect_uri = "http://localhost:8080/login/kakao/callback";
 
+
     public String getKakaoAccessToken(String code){
         String access_Token = "";
         String reqURL = "https://kauth.kakao.com/oauth/token";
@@ -38,6 +39,7 @@ public class KakaoLoginManager {
 
         MultiValueMap<String, Object> parameters = new LinkedMultiValueMap<String, Object>();
         parameters.add("grant_type", "authorization_code");
+        System.out.println("kakao api key : " + KAKAO_REST_API_KEY);
         parameters.add("client_id", KAKAO_REST_API_KEY);
         parameters.add("redirect_uri", redirect_uri);
         parameters.add("code", code);
