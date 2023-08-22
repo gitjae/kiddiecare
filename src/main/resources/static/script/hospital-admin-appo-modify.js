@@ -4,12 +4,18 @@ const ykiho = $('#ykiho').val();
 
 // 날짜 선택 시 로그인한 병원 timeslot 불러오기
 $('#lookup-date').on('change', function (){
-    // 날짜 선택 시 하단 내용 표시
-    $('.detail-change-area').show();
+
+    // 의사 선택 확인
+    if (!$('.select-option .option').hasClass('selected')) {
+        alert('의사를 선택해주세요.');
+        $('#lookup-date').val('');
+        return;
+    }
 
     let selectedDate = new Date($(this).val());
     let formatDate = selectedDate.toISOString().slice(0, 10);
     let tableBody = $('#appo-mo-table');
+    let detail = $('.detail-change-area');
     console.log(formatDate);
 
     tableBody.html('');
@@ -27,25 +33,36 @@ $('#lookup-date').on('change', function (){
             doctorNo: doctorNo
         },
     }).done(function (list) {
-        tableBody.html('');
-        list.forEach((detail) => {
-            tableBody.append(`
-                <tr>
-                    <!--<td> detail.no </td>-->
-                    <!-- <td>${detail.doctorNo}</td> -->
-                    <td>${ $('.option.selected').text()}</td>
-                    <td>${detail.weekday}</td>
-                    <td>${detail.date}</td>
-                    <td>${detail.time}</td>
-                    <td><input type="number" class="max_in" value="${detail.max}" min="0">명</td>
-                    <td><input type="number" class="block_in" value="${detail.block}" min="0">명</td>
-                    <td><input type="number" class="count_in" value="${detail.count}" min="0" readonly>명</td>
-<!--                    <td><input type="number" value="detail.enable" readonly>명</td> -->
-                    <td><button name="${detail.no}" onclick="modify(this)">수정</button></td>
-                </tr>
-            `);
-            console.log(detail);
-        })
+
+        if (Array.isArray(list) && list.length > 0) {
+            // 날짜 선택 시 하단 내용 표시
+            $('.detail-change-area').show();
+            $('#no-detail').hide();
+
+            tableBody.html('');
+            list.forEach((detail) => {
+                tableBody.append(`
+                    <tr>
+                        <!--<td> detail.no </td>-->
+                        <!-- <td>${detail.doctorNo}</td> -->
+                        <td>${$('.option.selected').text()}</td>
+                        <td>${detail.weekday}</td>
+                        <td>${detail.date}</td>
+                        <td>${detail.time}</td>
+                        <td><input type="number" class="max_in" value="${detail.max}" min="0">명</td>
+                        <td><input type="number" class="block_in" value="${detail.block}" min="0">명</td>
+                        <td><input type="number" class="count_in" value="${detail.count}" min="0" readonly>명</td>
+    <!--                    <td><input type="number" value="detail.enable" readonly>명</td> -->
+                        <td><button name="${detail.no}" onclick="modify(this)">수정</button></td>
+                    </tr>
+                `);
+                console.log(detail);
+            })
+        }else{
+            // $('#appo-mo-table').html('');
+            $('.detail-change-area').hide();
+            $('#no-detail').show();
+        }
     }).fail(function (error) {
        console.log(error);
     });

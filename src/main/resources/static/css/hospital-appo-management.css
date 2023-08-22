@@ -41,6 +41,7 @@
 
 
 #time-bar-area {
+    display: none;
     /*display: flex;*/
     /*flex-direction: column;*/
 }
@@ -114,5 +115,13 @@
 }
 
 #table-body>tr:hover{
-    background: #bebebe;
+    background: #E4F3FF;
+}
+
+.detail-area {
+    display: none;
+}
+
+.selected-time {
+    background: #93dbe9;
 }

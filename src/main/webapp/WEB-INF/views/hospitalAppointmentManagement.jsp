@@ -16,7 +16,7 @@
 </head>
 <body>
         <div class="select-area">
-            <h1>[ 예약자 현황 ]</h1>
+            <h1>예약자 현황</h1>
 <%--            <button>전체 예약자 불러오기</button>--%>
 <%--            <button>날짜별 예약자 불러오기</button>--%>
 
@@ -30,16 +30,15 @@
             <p id="date-status"></p>
             <input type="date" id="confirm-date">
 
-            <div id="time-bar-area">
+            <div id="time-bar-area" >
                 <ul id="time-list">
-<%--                    <li>9:00~10:00</li>--%>
+
                 </ul>
             </div>
 
             <div class="detail-area">
-                <h1>디테일</h1>
-                <p id="detail-status"></p>
-                <table>
+                <table id="appo-table">
+                    <h1>예약자 상세정보</h1>
                     <thead id="thead">
                         <tr>
                             <th>No.</th>
@@ -57,6 +56,7 @@
 <%--                    <p id="page">1</p>--%>
 <%--                    <button onclick="pagePlus()"> > </button>--%>
                 </table>
+                <div id="no-appo" style="display: none;">예약 없음</div>
             </div>
         </div>
 

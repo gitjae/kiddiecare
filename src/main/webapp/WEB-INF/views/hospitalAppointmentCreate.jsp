@@ -98,6 +98,17 @@
         </div>
     </div>
 
+    <!-- style="display: none" -->
+    <div id="loading" style="display: none">
+        <div class="loading-content">
+            <div class="loadingio-spinner-spinner-822xu4kqp5u"><div class="ldio-zhpd3csebyc">
+                <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
+                </div>
+            </div>
+            <p>저장중입니다 잠시만 기다려주세요..</p>
+        </div>
+    </div>
+
 <%--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>--%>
 <%--<script src="/script/hospital-appo-create.js"></script>--%>
 </body>

@@ -20,6 +20,7 @@ public class HospitalAppointmentService {
 
     private final AppoRepository appoRepository;
     private final AppoResponseObjectRepository appoResponseObjectRepository;
+    private final TimeSlotsLimitService timeSlotsLimitService;
 
     // 코드 중복체크
     public String duplCode() {
@@ -56,9 +57,24 @@ public class HospitalAppointmentService {
     @Transactional
     public void updateStatus(String appoNo, int status) {
         Appointment appo = appoRepository.findByNo(appoNo);
-        appo.setAppoStatus(status);
 
-        appoRepository.save(appo);
+        // timeslot도 minus 필요
+        if(appo != null) {
+            // appoNo의 timeslotNo 찾기
+            int timeNo = appo.getTimeSlotNo();
+
+            // 1. 예약완료 -> 예약취소 (enable+1)
+            if(status == 2) {
+                // timeno 차감해서 저장
+                timeSlotsLimitService.plusEnable(timeNo);
+
+            }
+            // 예약 상태 변경
+            appo.setAppoStatus(status);
+            // 변경한 appo 저장
+            appoRepository.save(appo);
+        }
+
     }
 
 }
