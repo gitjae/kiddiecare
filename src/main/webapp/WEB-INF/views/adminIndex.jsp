@@ -105,6 +105,7 @@
 <script src="/script/hospital-admin-appo-modify.js"></script>
 <script src="/script/hospital-appo-management.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="/script/logout-api.js"></script>
 
 </body>
     </c:otherwise>

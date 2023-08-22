@@ -1,11 +1,12 @@
-function logout(){
+function adminLogout() {
     $.ajax({
         method: "GET",
         url: "/admin/logout/check",
-    }).done(function (){
+    }).done(function () {
         alert("로그아웃되었습니다.");
         location.href = '/';
-    }).fail(function(error) {
+    }).fail(function (error) {
         alert(error);
     });
 }
+

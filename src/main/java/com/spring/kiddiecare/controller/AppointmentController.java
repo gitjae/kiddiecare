@@ -1,5 +1,8 @@
 package com.spring.kiddiecare.controller;
 
+import com.spring.kiddiecare.domain.alarm.Alarm;
+import com.spring.kiddiecare.domain.alarm.AlarmRepository;
+import com.spring.kiddiecare.domain.alarm.AlarmReqeustDto;
 import com.spring.kiddiecare.domain.doctor.DoctorRepository;
 import com.spring.kiddiecare.domain.doctor.DoctorResponseDto;
 import com.spring.kiddiecare.domain.hospital.*;
@@ -9,6 +12,8 @@ import com.spring.kiddiecare.domain.hospitalAdmin.AdminRequestDto;
 import com.spring.kiddiecare.domain.timeSlotsLimit.TimeSlotsLimit;
 import com.spring.kiddiecare.domain.timeSlotsLimit.TimeSlotsLimitRepository;
 import com.spring.kiddiecare.domain.timeSlotsLimit.TimeSlotsLimitRequestDto;
+import com.spring.kiddiecare.domain.user.User;
+import com.spring.kiddiecare.domain.user.UserRepository;
 import com.spring.kiddiecare.service.HospitalAppointmentService;
 import com.spring.kiddiecare.service.TimeSlotsLimitService;
 import lombok.RequiredArgsConstructor;
@@ -36,7 +41,8 @@ public class AppointmentController {
     private final AppoResponseRepository appoResponseRepository;
     private final AppoAdminDetailRepository appoAdminDetailRepository;
     private final TimeSlotsLimitService timeSlotsLimitService;
-
+    private final AlarmRepository alarmRepository;
+    private final UserRepository userRepository;
 
     /**
      * 의사의 ykiho,no를 받아 해당 의사의 근무 일을 반환 해준다.
@@ -181,11 +187,50 @@ public class AppointmentController {
     // 유저 예약상태 변경
     @PutMapping("/modifyAdminAppo/appoStatusChange")
     public Map updateStatus(@RequestParam String appoNo, int status) {
-//        Appointment appo = appoRepository.findByNo(appoNo);
+        // appointmentNo로 해당 appointment객체 반환
+        Appointment appo = appoRepository.findByNo(appoNo);
         JSONObject json = new JSONObject();
+        int userNo = 0;
+        String userId = "";
+        String userName;
 
-        hospitalAppointmentService.updateStatus(appoNo, status);
-        json.put("status","update");
+        try {
+            // hospital_appointment 테이블의 status, timeSlots 테이블의 enable 변경
+            hospitalAppointmentService.updateStatus(appoNo, status);
+            int timeNo = appo.getTimeSlotNo();
+            userNo = appo.getGuardian();
+
+            TimeSlotsLimit timeSlot = timeSlotsLimitRepository.findByNo(timeNo);
+            String ykiho = timeSlot.getYkiho();
+
+            User user = userRepository.findUserByNo(userNo);
+            userName = user.getName();
+            System.out.println("user확인" + user);
+            userId = user.getId();
+
+            String statusVal = "";
+            if (status == 1) {
+                statusVal = "예약완료";
+            } else if (status == 2) {
+                statusVal = "예약취소";
+            } else if (status == 3) {
+                statusVal = "예약보류";
+            } else {
+                statusVal = "이용완료";
+            }
+
+            String text = userName + "님, " + statusVal + "가 되었습니다.";
+            AlarmReqeustDto alarm = new AlarmReqeustDto();
+            alarm.setAlarmText(text);
+            alarm.setHospYkiho(ykiho);
+            alarm.setUserId(userId);
+            alarmRepository.save(new Alarm(alarm));
+
+        } catch (Exception e) {
+            return json.put("status", "fail").toMap();
+        }
+        // 예약자정보
+        json.put("status", "update");
 
         return json.toMap();
     }

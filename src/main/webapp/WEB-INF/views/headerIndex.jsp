@@ -4,7 +4,7 @@
 <head>
   <title>Title</title>
   <link href="/css/common.css" rel="stylesheet">
-  <link href="/css/header.css" rel="stylesheet">
+  <link href="/css/adminHeader.css" rel="stylesheet">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/stompjs@2.3.3/lib/stomp.min.js"></script>
@@ -37,9 +37,11 @@
             <div class="notifi-area"></div>
           </div>
         </div>
+        <a class="searchHos" href="/">홈으로</a>
         <a class="searchHos" href="/hospital/Search">동네병원</a>
         <a class="mypage-a" href="#">마이페이지</a>
-        <a class="logout-a" onclick="logout()">로그아웃</a>
+        <a class="logout-a" onclick="adminLogout()">로그아웃</a>
+
       </c:otherwise>
     </c:choose>
   </div>

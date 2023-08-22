@@ -48,6 +48,7 @@ public class LogController {
         status.setComplete();
         // 세션 속성 수정 가능
         request.removeAttribute("log", WebRequest.SCOPE_SESSION); // scope : 미리 약속돼있는 상수
+        request.removeAttribute("Ykiho", WebRequest.SCOPE_SESSION); // admin 로그아웃용
 
         JSONObject json = new JSONObject();
         json.put("logout","success");

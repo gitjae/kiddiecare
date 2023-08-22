@@ -26,4 +26,7 @@ public interface TimeSlotsLimitRepository extends JpaRepository<TimeSlotsLimit, 
 
     // 예약 생성 시 ykiho, doctorNo, date, time이 중복될 시 거르는 용도
     boolean existsByYkihoAndDoctorNoAndDateAndTime(String ykiho, long doctorNo, Date date, Time time);
+
+    // timeslot no를 입력받아 timeslot 받아오기
+    TimeSlotsLimit findByNo(int no);
 }

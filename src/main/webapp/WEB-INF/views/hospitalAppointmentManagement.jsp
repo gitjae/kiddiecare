@@ -26,7 +26,7 @@
 
 <%--            </div>--%>
 
-            <h1>날짜 설정</h1>
+            <h3>날짜 설정</h3>
             <p id="date-status"></p>
             <input type="date" id="confirm-date">
 
@@ -38,7 +38,7 @@
 
             <div class="detail-area">
                 <table id="appo-table">
-                    <h1>예약자 상세정보</h1>
+                    <h3>예약자 상세정보</h3>
                     <thead id="thead">
                         <tr>
                             <th>No.</th>

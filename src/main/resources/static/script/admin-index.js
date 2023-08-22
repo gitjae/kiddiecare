@@ -69,3 +69,4 @@ function contentChange(nav){
         $('#docChoose').css("display", "none");
     }
 }
+
