@@ -8,7 +8,9 @@
 - 2023.08.01 ~ 2023.08.25(3주)
 
 ### 테스크툴
-- 우리동네소아과 Notion [link](https://www.notion.so/sally-/Index-7ee893e575af456e98a09b7bfae9ea0f?pvs=4)
+- 우리동네소아과 Notion [link](https://sally-.notion.site/Index-7ee893e575af456e98a09b7bfae9ea0f?pvs=4)
+- 회의록 [link](https://sally-.notion.site/5beff6a68f144e18bf806deda0353b0a?v=9e172e94f7654f0a9538f797ba60e429&pvs=4)
+
 
 ### 아키텍처
 ![image](/KiddiecareArchitecture.png)
