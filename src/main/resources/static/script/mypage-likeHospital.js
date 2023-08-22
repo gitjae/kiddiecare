@@ -9,7 +9,7 @@ function getLikedHospitals() {
             // 찜한 병원 리스트가 비어있는지 확인
             if (res.length === 0) {
                 let p = document.createElement('p');
-                p.textContent = '찜한 병원이 없습니다.';
+                p.textContent = '찜한 병원이 아직 없어요.';
                 divFavor.appendChild(p);
             } else {
                 let hospitalNames = res.map(hospital => hospital.hospitalName);

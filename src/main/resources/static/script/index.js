@@ -11,6 +11,11 @@ window.onload = function() {
     document.getElementById('user-myPage').addEventListener('click', e => {
         window.location = '/mypage';
     });
+
+    document.getElementById('like-hospitalPage').addEventListener('click', function() {
+        window.location.href = '/mypage';
+        document.getElementById('nav-favor').click();
+    });
 }
 
 function search(){
