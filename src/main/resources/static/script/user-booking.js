@@ -129,92 +129,80 @@ $(document).ready(function () {
         let appoStatus = 1; // 기본값 설정 (변경 가능)
         let appoNo = generateEightDigitRandom();    // 난수 생성
 
-        // 예약 요청
-        $.ajax({
-            url: "/api/v1/admin/appo",
-            type: "POST",
-            dataType: 'json',
-            contentType: "application/json",
-            data: JSON.stringify({
-                no: appoNo,
-                patientId: patientId,
-                guardian: parentId,
-                timeSlotNo: timeSlotNo,
-                symptom: symptom,
-                note: note,
-                appoStatus: appoStatus
-            }),
-            success: function (response) {
-                if (response.success) {
-                    updateTimeSlotCount(timeSlotNo);
-
-                    // 모달 창 띄우기
-                    var modal = document.getElementById("paymentModal");
-                    modal.style.display = "block";
-
-                    // 모달 창에서 결제하기 버튼 클릭 시, 결제 로직 수행
-                    $("#iamportPayment").on('click', function () {
-                        payment();
-                    });
-
-                    // // 모달 닫기 버튼 이벤트
-                    // var closeModal = document.getElementsByClassName("close")[0];
-                    // closeModal.onclick = function() {
-                    //     modal.style.display = "none";
-                    // }
-
-                    // 화면 어디든 클릭하면 모달 창 닫기
-                    // window.onclick = function(event) {
-                    //     if (event.target == modal) {
-                    //         modal.style.display = "none";
-                    //     }
-                    // }
-
-                    // window.location.href = `/pay`;
-                } else {
-                    alert("예약 실패");
-                }
-            },
-            error: function (err) {
-                console.error('Error during appointment booking:', err.responseText);
-                alert("예약 중 오류 발생");
+        // 모달 창에서 결제하기 버튼 클릭 시, 결제 로직 수행
+        payment(function(success) {
+            if (success) {
+                // 결제 성공 후 DB 저장 로직
+                sendToDB(appoNo, patientId, parentId, timeSlotNo, symptom, note, appoStatus);
+            } else {
+                alert("결제 실패");
             }
         });
-        // 주문번호 1씩 증가
-        function generateMerchantUid() {
-            const currentDate = new Date();
-            const timestamp = currentDate.getTime();
-            return "order_no_" + timestamp;
-        }
 
-        function payment(data) {
-            IMP.init('imp40242012'); // 아임포트 관리자의 가맹점 식별코드
-
-            const merchantUid = generateMerchantUid(); // 동적으로 merchant_uid 생성
-            const userName = document.getElementById('loggedInUser').value;
-
-            // param
-            IMP.request_pay({
-                pg : 'kakaopay.TC0ONETIME',
-                pay_method : 'card',
-                merchant_uid: merchantUid,
-                name : '우리동네소아과 예약금 결제',
-                amount : 2000,
-                buyer_email : 'juntu09@gmail.com',  // 유저 정보로 변경 필요
-                buyer_name : userName,
-                buyer_tel : '010',
-            }, function(rsp) { // callback 로직
-                if (rsp.success) {
-                    // alert("결제 성공 -> imp_uid : "+rsp.imp_uid+" / merchant_uid(orderKey) : " + rsp.merchant_uid);
-                    // location.href = "/bookingComplete"
-                    setTimeout(() => {
-                        location.href = "/bookingComplete"
-                    }, 3000); // 예: 3초 후 리다이렉트
-                } else {
-                    alert("결제 실패 : 코드("+rsp.error_code+") / 메시지(" + rsp.error_msg +")");
+        function sendToDB(appoNo, patientId, parentId, timeSlotNo, symptom, note, appoStatus) {
+            $.ajax({
+                url: "/api/v1/admin/appo",
+                type: "POST",
+                dataType: 'json',
+                contentType: "application/json",
+                data: JSON.stringify({
+                    no: appoNo,
+                    patientId: patientId,
+                    guardian: parentId,
+                    timeSlotNo: timeSlotNo,
+                    symptom: symptom,
+                    note: note,
+                    appoStatus: appoStatus
+                }),
+                success: function (response) {
+                    if (response.success) {
+                        updateTimeSlotCount(timeSlotNo);
+                        setTimeout(() => {
+                            location.href = "/bookingComplete"
+                        }, 3000); // 예: 3초 후 리다이렉트
+                    } else {
+                        alert("예약 실패");
+                    }
+                },
+                error: function (err) {
+                    console.error('Error during appointment booking:', err.responseText);
+                    alert("예약 중 오류 발생");
                 }
             });
         }
     });
+
+    function payment(callback) {
+        IMP.init('imp40242012'); // 아임포트 관리자의 가맹점 식별코드
+
+        const merchantUid = generateMerchantUid(); // 동적으로 merchant_uid 생성
+        const userName = document.getElementById('loggedInUser').value;
+
+        // param
+        IMP.request_pay({
+            pg: 'kakaopay.TC0ONETIME',
+            pay_method: 'card',
+            merchant_uid: merchantUid,
+            name: '우리동네소아과 예약금 결제',
+            amount: 2000,
+            buyer_email: 'juntu09@gmail.com',  // 유저 정보로 변경 필요
+            buyer_name: userName,
+            buyer_tel: '010',
+        }, function (rsp) {
+            if (rsp.success) {
+                callback(true);
+            } else {
+                alert("결제 실패 : 코드(" + rsp.error_code + ") / 메시지(" + rsp.error_msg + ")");
+                callback(false);
+            }
+        });
+    }
+
+    function generateMerchantUid() {
+        const currentDate = new Date();
+        const timestamp = currentDate.getTime();
+        return "order_no_" + timestamp;
+    }
+
 });
 

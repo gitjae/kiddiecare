@@ -15,6 +15,7 @@
 </head>
 <c:import url="header.jsp"></c:import>
 <body>
+<input type="hidden" id="loggedInUser" value="${log}">
 <div class="container">
     <section>
         <p class="user-appo-title">진료예약</p>
