@@ -38,11 +38,11 @@
 <%--                </ul>--%>
 <%--            </div>--%>
 
+            <div id="no-detail" style="display: none;">해당 날짜에 예약을 생성하지 않았습니다.</div>
             <div class="detail-change-area">
-                <h1>디테일</h1>
-                <button id="reset" onclick="reset()">RESET</button>
-                <p id="detail-status"></p>
                 <table>
+                    <h1>디테일</h1>
+                    <button id="reset" onclick="reset()">RESET</button>
                     <thead id="thead">
                     <tr>
 <%--                        <th>No.</th>--%>
@@ -64,6 +64,7 @@
     <%--                <p id="page">1</p>--%>
     <%--                <button onclick="pagePlus()"> > </button>--%>
                 </table>
+
             </div>
 
         </div>

@@ -369,6 +369,7 @@ function saveTimes() {
     });
 
     console.log(groupedData);
+    $("#loading").show();  // 로딩창 시작
 
     $.ajax({
         type: "POST",
@@ -376,11 +377,13 @@ function saveTimes() {
         data: JSON.stringify(groupedData),
         contentType: "application/json; charset=utf-8",
         success: function (response) {
+            $("#loading").hide();
             location.href = "/admin/timeSlotsCreateComp";
             console.log("저장 성공!");
             // console.log(response.create);
         },
         error: function (error) {
+            $("#loading").hide();
             alert("스케줄 생성을 실패하였습니다.");
             console.log(error);
         }

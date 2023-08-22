@@ -3,6 +3,14 @@ let ykihoValue = document.getElementById('ykiho').value;
 
 // 날짜 선택 시 로그인한 병원의 timeslot불러옴
 document.getElementById('confirm-date').addEventListener('change', function (event) {
+
+    // 의사 선택 확인
+    if (!$('.select-option .option').hasClass('selected')) {
+        alert('의사를 선택해주세요.');
+        $('#confirm-date').val('');
+        return;
+    }
+
     const selectedDate = new Date(event.target.value);
     const formattedDate = selectedDate.toISOString().slice(0, 10);
     const selectedDoctor = document.getElementById('selectedDoctor').textContent;
@@ -24,6 +32,9 @@ document.getElementById('confirm-date').addEventListener('change', function (eve
         dateStatusText.innerText ="";
 
         if(Array.isArray(list) && list.length > 0) {
+            // 타임 바 표시
+            $('#time-bar-area').show();
+
             list.forEach((detail) => {
                 let hour = detail.time;
                 const no = detail.no;
@@ -37,6 +48,7 @@ document.getElementById('confirm-date').addEventListener('change', function (eve
                 timeList.appendChild(li);
             });
         } else {
+            $('#time-bar-area').hide();
             tableBody.innerHTML = '';
             dateStatusText.innerText = "선택한 날짜에 예약을 생성하지 않았습니다.";
         }
@@ -54,13 +66,20 @@ document.getElementById('time-list').addEventListener("click", (event) => {
     // 페이징처리
     // let nowPage = document.getElementById('page').textContent;
 
-    // 기존 선택 삭제
-    for (const child of timeList.children) {
-        child.classList.remove('selected');
-    }
+    // // 기존 선택 삭제
+    // for (const child of timeList.children) {
+    //     child.classList.remove('selected-time');
+    // }
+    //
+    // // 선택 요소에 selected 클래스 추가 (선택 표시)
+    // event.target.classList.add('selected-time');
+
+    // 이전에 선택된 요소의 selected 클래스 제거
+    const prevSelected = timeList.querySelector('.selected-time');
+    prevSelected && prevSelected.classList.remove('selected-time');
 
     // 선택 요소에 selected 클래스 추가 (선택 표시)
-    event.target.classList.add('selected');
+    event.target.classList.add('selected-time');
 
     if (event.target && event.target.nodeName === "LI") {
         // 선택한 timeNo
@@ -77,6 +96,10 @@ document.getElementById('time-list').addEventListener("click", (event) => {
         }).done(function (list) {
             // 예약이 있을 때만 반복문 실행
             if (Array.isArray(list) && list.length > 0) {
+                $('.detail-area').show();
+                $('#appo-table').show();
+                $('#no-appo').hide();
+
                 list.forEach((detail) => {
                     const createStatusDropdown = (appoStatus) => {
                         const statusOptions = [
@@ -97,7 +120,7 @@ document.getElementById('time-list').addEventListener("click", (event) => {
                     tr.innerHTML = `
                         <td>${detail.appoNo}</td>
                         <td>
-                            <select>
+                            <select id="status">
                                 ${createStatusDropdown(detail.appoStatus)}
                             </select>
                         </td>
@@ -109,11 +132,21 @@ document.getElementById('time-list').addEventListener("click", (event) => {
                     `;
 
 
-
                     tr.dataset.appoNo = detail.appoNo;
 
                     const statusDropdown = tr.querySelector('select');
+
+
+                    // 예약 취소상태일 때 선택 불가(disabled) 처리.
+                    if(statusDropdown.value === "2") {
+                        statusDropdown.setAttribute('disabled','');
+                    }
+
                     statusDropdown.addEventListener('change', (event) => {
+                        // 예약 취소상태일 때 선택 불가(disabled) 처리.
+                        if(statusDropdown.value === "2") {
+                            statusDropdown.setAttribute('disabled','');
+                        }
 
                         let result = confirm(`* 예약상태 변경  
 상태를 수정하시겠습니까?`);
@@ -138,6 +171,8 @@ document.getElementById('time-list').addEventListener("click", (event) => {
                                 console.log(error);
                                 alert('상태변경 실패');
                             })
+                        } else {
+
                         }
 
                     })
@@ -160,9 +195,10 @@ document.getElementById('time-list').addEventListener("click", (event) => {
 
                             let genderStr = '';
 
-                            if (detail.childrenGender === 1 || detail.childrenGender === 3) {
+                            // 수정필요
+                            if (detail.childrenGender === 1) {
                                 genderStr = '남';
-                            } else if (detail.childrenGender === 2 || detail.childrenGender === 4) {
+                            } else if (detail.childrenGender === 0) {
                                 genderStr = '여';
                             }
 
@@ -182,6 +218,17 @@ document.getElementById('time-list').addEventListener("click", (event) => {
                                 <p><b>보호자 주소: </b> <span>${detail.usersAddr}</span></p>
                                 <button id="change-info" onclick="changeDate()">예약정보 변경하기</button>
                             `;
+
+                            if (statusDropdown.value === "2") {
+                                const changeInfoButtons = document.querySelectorAll('#change-info');
+                                changeInfoButtons.forEach((changeInfoBtn) => {
+                                    if (changeInfoBtn) {
+                                        changeInfoBtn.setAttribute('disabled', '');
+                                    }
+                                });
+                            }
+
+
                         }).fail(function (error) {
                             console.log(error);
                         })
@@ -192,6 +239,9 @@ document.getElementById('time-list').addEventListener("click", (event) => {
                 });
             } else {
                 console.log("예약 없음");
+                $('#appo-table').hide();
+                $('#no-appo').show();
+
             }
         }).fail(function (error) {
             console.log(error);
@@ -342,6 +392,21 @@ function pagePlus() {
     nowPage += 1;
     page.innerText = String(nowPage);
 }
+
+// const statusOp = document.querySelector("#status");
+
+// 예약취소 상태 확인용
+$(document).ready(function() {
+    if ($("#status").val() === "2") {
+        console.log("2임");
+    }
+
+    $('#status').on('change', function() {
+        const selectedOption = $(this).val();
+        console.log(`선택된 옵션: ${selectedOption}`);
+    });
+});
+
 
 /* 전체 예약자 불러오기 */
 
