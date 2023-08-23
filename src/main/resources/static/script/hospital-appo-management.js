@@ -26,6 +26,7 @@ document.getElementById('confirm-date').addEventListener('change', function (eve
             date: formattedDate,
             doctorNo: selectedDoctor
         },
+
     }).done(function (list) {
         // 기존 요소 삭제
         timeList.innerHTML = "";
@@ -135,7 +136,8 @@ document.getElementById('time-list').addEventListener("click", (event) => {
                     tr.dataset.appoNo = detail.appoNo;
 
                     const statusDropdown = tr.querySelector('select');
-
+                    // 변경 전 status 담아두기
+                    const lastStatus = tr.statusDropdown.value;
 
                     // 예약 취소상태일 때 선택 불가(disabled) 처리.
                     // if(statusDropdown.value === "2") {
@@ -166,12 +168,25 @@ document.getElementById('time-list').addEventListener("click", (event) => {
                                     status: selectedValue
                                 }
                             }).done(function (result) {
-                                console.log(result.status)
-                                // soc
+                                // alarmDto 받음
+                                let alarm = result.alarm;
+                                // userid 받음
+                                let id = result.sId;
+                                console.log("결과"+alarm);
+                                console.log(alarm.alarmText);
                                 alert('상태변경 성공');
+
+                                // socket으로 메세지 전송
+                                let type = '70';
+                                let target = id;
+                                let content = alarm.alarmText;
+                                // mypage로 이동
+                                let url = '/mypage';
+
+                                socket.send("관리자,"+target+","+content+","+url);
+
                                 console.log(`Selected value:  ${selectedValue}`);
 
-                                
                             }).fail(function (error) {
                                 console.log(error);
                                 alert('상태변경 실패');

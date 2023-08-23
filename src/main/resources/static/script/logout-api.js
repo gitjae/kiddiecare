@@ -54,6 +54,14 @@ $(document).ready(function() {
     //     }
     // });
 
+    $.ajax({
+        type: 'POST',
+        url: '/websocket/member',
+        data : {
+
+        }
+    })
+
     if (sessionValue !== undefined && sessionValue !== "") {
         console.log(sessionValue);
         let sock = new SockJS('/echo-ws');
