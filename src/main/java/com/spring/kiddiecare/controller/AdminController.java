@@ -46,8 +46,6 @@ public class AdminController {
     public Map adminJoin(@ModelAttribute AdminRequestDto adminDto){
         JSONObject result = new JSONObject();
 
-        System.out.println(adminDto);
-
         // 데이터값 확인
         if(adminDto == null){
             return result.put("response","fail cause joinForm data is null").toMap();
@@ -107,62 +105,66 @@ public class AdminController {
     }
 
     // TODO 전체적인 로직 수정 해야함
-    @PutMapping("update/{adminName}")
-    public Map adminUpdate(@PathVariable String adminName, @RequestBody AdminRequestDto adminDto, WebRequest request){
-        Optional<String> session = Optional.ofNullable(request.getAttribute("log", WebRequest.SCOPE_SESSION).toString());
+    @PutMapping("update/{updateItem}")
+    public Map adminUpdate(@PathVariable String updateItem, @ModelAttribute AdminRequestDto adminDto, WebRequest request) {
+        String sessionId = (String) request.getAttribute("log", WebRequest.SCOPE_SESSION);
         JSONObject result = new JSONObject();
 
-        //세션 확인
-        if(session.isEmpty()){
-            result.put("response","fail cause session does not exist.");
-            return result.toMap();
-        }
+        System.out.println(updateItem);
 
-        // 세션값과 수정하려는 정보와 일치하는지 확인
-        if(!session.get().equals(adminName)) {
-            result.put("response", "fail cause session and admin do not match.");
-            return result.toMap();
+        // session 값 확인
+        if (sessionId == null) {
+            return result.put("response", "fail cause session does not exist.").toMap();
         }
+        try{
+            //어드민 이름은 그냥 수정가능하고, 어드민Email은 js에서 이메일 인증을 한번더 받으므로 그냥 update해주면 된다.
+            if (updateItem.equals("adminName") || updateItem.equals("adminEmail")) {
+                adminService.updateAdminByAdminDto(adminDto, sessionId);
 
-        // 비밀번호 Encrypt
-        if(adminDto == null){
-            result.put("response", "fail cause joinForm data is null.");
-            return result.toMap();
-        }else{
-            adminDto.setAdminPw(passwordEncoder.encode(adminDto.getAdminPw()));
+                // 비밀번호의 경우 DB에서 한번 확인작업이 필요하다.
+            } else if (updateItem.equals("adminPw")){
+                String adminPw = adminDto.getAdminPw();
+                String adminUpdatePw = adminDto.getUpdateAdminPw();
+
+                Admin admin = adminRepository.findByAdminId(sessionId);
+
+                if(passwordEncoder.matches(adminPw,admin.getAdminPw())){
+                    String adminUpdatePwEncrypt = passwordEncoder.encode(adminUpdatePw);
+                    adminDto.setAdminPw(adminUpdatePwEncrypt);
+                    adminService.updateAdminByAdminDto(adminDto,sessionId);
+                }else{
+                    return result.put("response","fail cause pw is not matches").toMap();
+                }
+            }else{
+                return result.put("response","fail cause updateItem not value").toMap();
+            }
+        }catch (Exception e){
+            return result.put("response","fail cause DB error").toMap();
         }
-
-        //DB에서 데이터가 있는지 확인후 수정 로직
-        try {
-            adminService.updateAdminByNo(adminDto);
-            result.put("response", "success");
-        } catch (Exception e) {
-            result.put("response", "fail cause cannot save.");
-        }
-
-        return result.toMap();
+        return result.put("response","success").toMap();
     }
 
-    @DeleteMapping("leave/{adminName}")
-    public Map delete(@PathVariable String adminName, WebRequest request,AdminRequestDto adminDto){
+    @DeleteMapping("leave")
+    public Map delete(@ModelAttribute AdminRequestDto adminDto, WebRequest request){
         JSONObject result = new JSONObject();
-        Optional<String> session = Optional.ofNullable(request.getAttribute("log", WebRequest.SCOPE_SESSION).toString());
+        Optional<String> sessionId = Optional.ofNullable((String) request.getAttribute("log", WebRequest.SCOPE_SESSION));
 
-        if(session.isEmpty()){
-            result.put("join","fail cause session does not exist.");
-            return result.toMap();
+        if(sessionId.isEmpty()){
+            return result.put("response", "fail cause session does not exist.").toMap();
         }
 
-        Optional<Admin> adminInfo = Optional.ofNullable(adminRepository.findByadminNameAndAdminPw(adminName,adminDto.getAdminPw()));
+        Optional<Admin> adminInfo = Optional.ofNullable(adminRepository.findByAdminId(sessionId.get()));
         if(adminInfo.isPresent()){
             try{
-                adminService.deleteAdminByNo(adminInfo.get().getNo());
-                result.put("leave","success");
+                String encryptPw = passwordEncoder.encode(adminDto.getAdminPw());
+                if(passwordEncoder.matches(encryptPw,adminInfo.get().getAdminPw())){
+                    adminService.deleteAdminByNo(adminInfo.get().getNo());
+                }
             }catch (Exception e){
-                result.put("leave","fail cause cannot delete.");
+                return result.put("leave","fail cause cannot delete.").toMap();
             }
         }
-        return result.toMap();
+        return result.put("response","success").toMap();
     }
 
     // TODO 의사 정보 받아서 저장하는 로직

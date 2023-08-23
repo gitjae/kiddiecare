@@ -39,6 +39,7 @@ public class Admin extends AdminTimestamp{
         this.adminName = adminDto.getAdminName();
         this.adminEmail = adminDto.getAdminEmail();
     }
+
     public void Update(AdminRequestDto adminDto){
         this.adminPw = adminDto.getAdminPw();
         this.adminName = adminDto.getAdminName();

@@ -83,8 +83,6 @@ public class EmailVerificationController {
         return resultJson.toMap();
     }
 
-    //TODO 유효시간 설정 -> redis 사용하지 않는 이유 이미 사용하기 때문이고 ec2때문에
-    //TODO 일단 정상적인 로직 수정을 해야함
     @PostMapping("validate")
     public Map validateVerificationCode(HttpServletRequest request, String verificationCode) {
         JSONObject resultJson = new JSONObject();
