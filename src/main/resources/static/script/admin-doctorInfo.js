@@ -8,7 +8,7 @@ $(document).ready(function() {
                 response.data.forEach(item => {
                     let html = `
                         <div class="doctor-area">
-                            <img src="https://d338jhig5816rv.cloudfront.net/admin1">
+                            <img src="https://d338jhig5816rv.cloudfront.net/${item.doctorName}">
                             <div class="text-area">
                                 <span>의사 번호:<span class="doctor-num">${item.no}</span></span>
                                 <span>의사이름:<span class="name">${item.doctorName}</span></span>
@@ -31,6 +31,8 @@ $(document).ready(function() {
             alert("서버에 문제가 발생했습니다. 잠시 후 다시 시도해주세요.");
         }
     });
+
+    getSubject();
 
     $(document).on('click', '.doctor-area', function() {
         var no = $(this).find('.doctor-num').text();
@@ -59,29 +61,6 @@ $(document).ready(function() {
 
     $(document).on('click', '.button-delete', deleteDoctor);
     $(document).on('click', '.button-update', updateDoctor);
-
-    $(".dotor-add-area").click(()=>{
-        $.ajax({
-            url: 'api/v1/doctor/subject',
-            type: 'GET',
-            success: function(data) {
-                if(data.response === "success"){
-                    data.data.forEach(item => {
-                        let html = `<option value="${item}">${item}</option>`;
-                        $('#option-area').append(html);
-                    });
-                }else{
-                    alert("에러가 발생하였습니다.")
-                }
-            },
-            error: function(xhr, error) {
-                console.log(xhr);
-                console.log(error);
-            }
-        });
-    });
-
-
 
     /* 의사 삭제하기 */
     function deleteDoctor(){
@@ -146,6 +125,27 @@ $(document).ready(function() {
         });
     }
 });
+
+function getSubject(){
+    $.ajax({
+        url: 'api/v1/doctor/subject',
+        type: 'GET',
+        success: function(data) {
+            if(data.response === "success"){
+                data.data.forEach(item => {
+                    let html = `<option value="${item}">${item}</option>`;
+                    $('#option-area').append(html);
+                });
+            }else{
+                alert("에러가 발생하였습니다.")
+            }
+        },
+        error: function(xhr, error) {
+            console.log(xhr);
+            console.log(error);
+        }
+    });
+}
 
 
 function addDoctor(){

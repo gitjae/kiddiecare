@@ -31,10 +31,10 @@
                 <select name="subject" id="option-area">
                 </select>
             </div>
-            <!--<div class="input_box">
+            <div class="input_box">
                 <input type="file" id="doctor-image" name="file" accept=".png,.jpg" size="10000000"/>
                 <i class="uil uil-user-square"></i>
-            </div>-->
+            </div>
             <button class="button" onclick="addDoctor()">의사 추가</button>
         </form>
     </div>

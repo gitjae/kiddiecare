@@ -170,26 +170,30 @@ window.onclick = function (event) {
 function chkAdminId(){
     let id = $('#admin-id').val();
     if(id !== "") {
-        $("#admin-id-null").hide();
-        $.ajax({
-            type: "POST",
-            url: "/admin/info/id/check",
-            data: {adminId: id},
-            success: function (response) {
-                if (response.response === "Not a duplicate value.") {
-                    alert("사용 가능한 아이디 입니다.");
-                    chkAdminIdValue = true;
-                } else {
-                    console.log(response.response === "duplicate value");
-                    alert("사용 불가능한 아이디 입니다.");
-                    chkAdminIdValue = false;
+        if(idChk.test(id)){
+            $("#admin-id-null").hide();
+            $.ajax({
+                type: "POST",
+                url: "/admin/info/id/check",
+                data: {adminId: id},
+                success: function (response) {
+                    if (response.response === "Not a duplicate value.") {
+                        alert("사용 가능한 아이디 입니다.");
+                        chkAdminIdValue = true;
+                    } else {
+                        console.log(response.response === "duplicate value");
+                        alert("사용 불가능한 아이디 입니다.");
+                        chkAdminIdValue = false;
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.log(error);
+                    alert("아이디 중복확인이 실패하였습니다. 잠시 후 다시 시도해주세요.");
                 }
-            },
-            error: function (xhr, status, error) {
-                console.log(error);
-                alert("아이디 중복확인이 실패하였습니다. 잠시 후 다시 시도해주세요.");
-            }
-        });
+            });
+        }else{
+            alert("영문, 숫자만 사용가능합니다.");
+        }
     }else{
         $("#admin-id-null").show().css('color','red');
     }

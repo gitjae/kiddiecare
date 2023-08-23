@@ -42,6 +42,21 @@ public class AdminController {
         return result.toMap();
     }
 
+    @GetMapping("data")
+    public Map getadminName(WebRequest request){
+        JSONObject result = new JSONObject();
+        Optional<String> sessionId = Optional.ofNullable((String) request.getAttribute("log", WebRequest.SCOPE_SESSION));
+        if(sessionId.isPresent()){
+            Admin admin = adminRepository.findByAdminId(sessionId.get());
+            result.put("response","success");
+            result.put("adminName",admin.getAdminName());
+            result.put("adminEmail",admin.getAdminEmail());
+        }else{
+            result.put("response","fail cause session does not exist.");
+        }
+        return result.toMap();
+    }
+
 
     @PostMapping(value ="join", consumes = {"multipart/form-data"})
     public Map adminJoin(@ModelAttribute AdminRequestDto adminDto){
@@ -91,7 +106,7 @@ public class AdminController {
     @PostMapping("pw/check")
     public Map adminPwSameCheck(@RequestBody AdminRequestDto adminDto, WebRequest request){
         JSONObject result = new JSONObject();
-        Optional<String> session = Optional.ofNullable(request.getAttribute("log", WebRequest.SCOPE_SESSION).toString());
+        Optional<String> session = Optional.ofNullable((String) request.getAttribute("log", WebRequest.SCOPE_SESSION));
         if(session.isPresent()){
             Admin admin = adminRepository.findByAdminName(session.get());
             String message = admin.getAdminPw().equals(adminDto.getAdminPw()) ? "duplicate value" : "Not a duplicate value.";
@@ -114,8 +129,6 @@ public class AdminController {
         String sessionId = (String) request.getAttribute("log", WebRequest.SCOPE_SESSION);
         JSONObject result = new JSONObject();
 
-        System.out.println(updateItem);
-
         // session 값 확인
         if (sessionId == null) {
             return result.put("response", "fail cause session does not exist.").toMap();
@@ -130,6 +143,9 @@ public class AdminController {
                 String adminPw = adminDto.getAdminPw();
                 String adminUpdatePw = adminDto.getUpdateAdminPw();
 
+                System.out.println(adminPw);
+                System.out.println(adminUpdatePw);
+
                 Admin admin = adminRepository.findByAdminId(sessionId);
 
                 if(passwordEncoder.matches(adminPw,admin.getAdminPw())){
@@ -143,6 +159,7 @@ public class AdminController {
                 return result.put("response","fail cause updateItem not value").toMap();
             }
         }catch (Exception e){
+            System.out.println(e);
             return result.put("response","fail cause DB error").toMap();
         }
         return result.put("response","success").toMap();
@@ -165,14 +182,9 @@ public class AdminController {
                     adminService.deleteAdminByNo(adminInfo.get().getNo());
                 }
             }catch (Exception e){
-                return result.put("leave","fail cause cannot delete.").toMap();
+                return result.put("response","fail cause cannot delete.").toMap();
             }
         }
         return result.put("response","success").toMap();
     }
-
-    // TODO 의사 정보 받아서 저장하는 로직
-    // TODO ADMIN MAIN이 없음
-
-
 }
