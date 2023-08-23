@@ -48,7 +48,7 @@
             </div>
         </div>
 
-        <p class="info-sub-title">예약은 <strong>날짜 선택 &#8680; 예약 시간 선택 &#8680; 담당 의사 선택</strong> 순서로 진행해주세요.</p>
+        <p class="info-sub-title">변경을 원하시는 날짜와 시간, 의사를 선택해주세요.</p>
         <div class="appo-table">
             <table class="Calendar">
                 <thead>
