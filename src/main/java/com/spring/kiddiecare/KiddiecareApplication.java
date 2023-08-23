@@ -15,6 +15,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableCaching
 public class KiddiecareApplication {
 
+    // war 파일 만들때 생성
     protected SpringApplicationBuilder configure(SpringApplicationBuilder builder){
         return builder.sources(KiddiecareApplication.class);
     }

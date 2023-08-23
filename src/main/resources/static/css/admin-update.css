@@ -1,0 +1,128 @@
+.admin-update-container{
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    width:768px;
+    height: 100%;
+    margin: 0 auto;
+    margin-top: 56px;
+}
+
+.admin-update-container form{
+}
+
+.admin-update-container input{
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid #dce1e6;
+    border-radius: 6px;
+    color: inherit;
+    font: inherit;
+}
+
+.admin-update-container button{
+    outline: none;
+    box-sizing: border-box;
+    border-radius: 8px;
+    transition: background-color 0.3s ease 0s, border-color 0.3s ease 0s;
+    text-decoration: none;
+    -webkit-tap-highlight-color: transparent;
+    display: inline-flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    cursor: pointer;
+    position: relative;
+    user-select: none;
+    white-space: nowrap;
+    max-width: 100%;
+    height: 40px;
+    font-size: 16px;
+    padding: 0px 24px;
+    line-height: 16px;
+    min-width: 80px;
+    border: none;
+    color: #ffffff;
+    background-color: #0078ff;
+    font-weight: 600;
+}
+
+#admin-info-btn-area{
+    display: flex;
+    -webkit-box-pack: end;
+    justify-content: flex-end;
+}
+
+.admin-info{
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #dce1e6;
+    border-radius: 6px;
+    padding: 20px
+}
+
+.admin-info-form{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.admin-info > h2{
+    font-size: 2.25rem;
+    margin: 0px;
+}
+
+.admin-info > p{
+    font-size: 1rem;
+    margin-top: 0.25rem;
+    margin-bottom: 0.5rem;
+    line-height: 1.5;
+    color: #868E96;
+}
+
+.admin-info-btn{
+    width: 45px;
+}
+
+.admin-info-update{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    border: 1px solid #dce1e6;
+    border-radius: 6px;
+    padding: 20px;
+}
+
+.admin-info-update span{
+    padding: 20px;
+}
+
+.pw-form{
+    display: flex;
+    flex-direction: column;
+}
+
+#admin-leave-btn{
+    background-color: #FF6B6B;
+    color: #FFFFFF;
+}
+
+.admin-info-update span{
+    line-height: 1.5;
+    font-weight: 600;
+    font-size: 1.125rem;
+}
+
+.admin-info-update button{
+    padding: 20px;
+    margin-top: 15px;
+}
+
+#pw-text-area{
+    display: flex;
+}
+
+.admin-info-Email{
+    width: 65%;
+}

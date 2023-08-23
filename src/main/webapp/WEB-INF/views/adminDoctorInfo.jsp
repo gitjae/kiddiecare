@@ -27,6 +27,10 @@
                 <input type="text" name="doctorAverageTimeOfCare" placeholder="진료 평균 시간" required />
                 <i class="uil uil-clock"></i>
             </div>
+            <div>
+                <select name="subject" id="option-area">
+                </select>
+            </div>
             <div class="input_box">
                 <input type="file" id="doctor-image" name="file" accept=".png,.jpg" size="10000000"/>
                 <i class="uil uil-user-square"></i>
@@ -40,9 +44,7 @@
     <div class="form doctor_form">
         <h2>의사 정보 수정</h2>
         <img src="https://d338jhig5816rv.cloudfront.net/admin1">
-        <div class="input_box">
-            <input type="hidden" id="doctor-no" name="no" />
-        </div>
+        <input type="hidden" id="doctor-no" name="no" />
         <div class="input_box">
             <input type="text" id="doctor-name" name="doctorName" />
             <i class="uil uil-user"></i>

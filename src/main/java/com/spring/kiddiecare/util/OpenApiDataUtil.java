@@ -6,7 +6,9 @@ import com.spring.kiddiecare.openApi.hospInfo.HospDetailItem;
 import com.spring.kiddiecare.openApi.hospInfo.HospDetailResponse;
 import com.spring.kiddiecare.openApi.hospSubInfo.HospSubItem;
 import com.spring.kiddiecare.openApi.hospSubInfo.HospSubResponse;
+import com.spring.kiddiecare.openApi.hospbasis.HospBasisItem;
 import com.spring.kiddiecare.openApi.hospbasis.HospBasisResponse;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
@@ -16,6 +18,7 @@ import org.springframework.web.client.RestTemplate;
 import java.net.URI;
 import java.time.Duration;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 
@@ -46,14 +49,14 @@ public class OpenApiDataUtil {
             URI reqeustUrl = new URI(url);
             HospBasisResponse data = restTemplate.getForObject(reqeustUrl, HospBasisResponse.class);
             if (data != null) {
-                HospData.setHospListData(data.getBody().getItems()); // hospMainData 값 설정
+                List<HospBasisItem> hostList = data.getBody().getItems();
+                HospData.setHospListData(hostList);
+                // hospMainData 값 설정
                 valueOps.set(query, HospData, cacheTtl);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        System.out.println("hospData 확인 " + HospData);
         return HospData;
     }
 

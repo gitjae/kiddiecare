@@ -3,6 +3,8 @@ package com.spring.kiddiecare.controller;
 import com.spring.kiddiecare.domain.doctor.Doctor;
 import com.spring.kiddiecare.domain.doctor.DoctorRepository;
 import com.spring.kiddiecare.domain.doctor.DoctorResponseDto;
+import com.spring.kiddiecare.domain.excel.ExcelData;
+import com.spring.kiddiecare.domain.excel.ExcelDataRepository;
 import com.spring.kiddiecare.domain.timeSlotsLimit.TimeSlotsLimit;
 import com.spring.kiddiecare.domain.timeSlotsLimit.TimeSlotsLimitRepository;
 import com.spring.kiddiecare.service.DoctorService;
@@ -25,6 +27,7 @@ public class DoctorController {
     private final TimeSlotsLimitRepository timeSlotsLimitRepository;
     private final DoctorRepository doctorRepository;
     private final DoctorService doctorService;
+    private final ExcelDataRepository excelDataRepository;
 
     @GetMapping("schedule")
     public Map onSchedule(@ModelAttribute TimeSlotsLimit timeSlotsLimit){
@@ -146,6 +149,19 @@ public class DoctorController {
             }
         }
         return jsonObject.put("response","fail").toMap();
+    }
+
+    @GetMapping("subject")
+    public Map getDoctorSubject(){
+        JSONObject jsonObject = new JSONObject();
+        ArrayList<String> data = new ArrayList<>();
+        List<ExcelData> subjectList  = excelDataRepository.findAll();
+        for(ExcelData items : subjectList){
+            data.add(items.getSubject());
+        }
+        jsonObject.put("response","success");
+        jsonObject.put("data",data);
+        return jsonObject.toMap();
     }
 
 }
