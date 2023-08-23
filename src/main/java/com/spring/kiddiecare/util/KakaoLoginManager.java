@@ -24,7 +24,7 @@ public class KakaoLoginManager {
         return KAKAO_REST_API_KEY;
     }
 
-    public String redirect_uri = "https://www.kiddiecare.site/login/kakao/callback";
+    public String redirect_uri = "https://kiddiecare.site/login/kakao/callback";
 
 
     public String getKakaoAccessToken(String code){
