@@ -14,7 +14,7 @@
         <div class="index-session">
             <div class="img-wrapper">
                 <div class="session-title">
-                    <p class="top-title">주변의 예약가능한 병원을 손쉽게 찾아보세요.</p>
+                    <p class="top-title">주변의 예약가능한 병원을 손쉽게 찾아보세요</p>
                     <p class="bottom-title">&#x2714; 병원검색 &nbsp; &#x2714; 진료현황 &nbsp; &#x2714; 실시간 예약</p>
                 </div>
                 <div class="index-search">
