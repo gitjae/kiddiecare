@@ -17,15 +17,15 @@ import javax.persistence.Table;
 @AllArgsConstructor
 public class Alarm {
     @Id
-    private long alarm_no;
-    private String hosp_ykiho;
-    private String user_id;
-    private String alarm_text;
+    private long alarmNo;
+    private String hospYkiho;
+    private String userId;
+    private String alarmText;
 
     public Alarm(AlarmReqeustDto alarmDto){
-        this.alarm_no = 0L;
-        this.hosp_ykiho = alarmDto.getHosp_ykiho();
-        this.user_id = alarmDto.getUser_id();
-        this.alarm_text = alarmDto.getAlarm_text();
+        this.alarmNo = 0L;
+        this.hospYkiho = alarmDto.getHospYkiho();
+        this.userId = alarmDto.getUserId();
+        this.alarmText = alarmDto.getAlarmText();
     }
 }

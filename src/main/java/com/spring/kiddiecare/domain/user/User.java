@@ -1,10 +1,7 @@
 package com.spring.kiddiecare.domain.user;
 
 import com.spring.kiddiecare.util.KakaoMapClient;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.Entity;
