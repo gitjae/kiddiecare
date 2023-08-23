@@ -14,8 +14,8 @@
         <div class="index-session">
             <div class="img-wrapper">
                 <div class="session-title">
-                    <p class="top-title">주변의 예약가능한 병원을 손쉽게 찾아보세요</p>
-                    <p class="bottom-title">&#x2714; 병원검색 &nbsp; &#x2714; 진료현황 &nbsp; &#x2714; 실시간 예약</p>
+                    <p class="top-title">주변의 예약 가능한 병원을 손쉽게 찾아보세요</p>
+                    <p class="bottom-title">&#x2714; 병원검색 &nbsp; &#x2714; 예약현황 &nbsp; &#x2714; 실시간 예약</p>
                 </div>
                 <div class="index-search">
                     <input type="text" id="search-input" class="search-input" placeholder="병원명 또는 지역으로 검색할 수 있어요."
