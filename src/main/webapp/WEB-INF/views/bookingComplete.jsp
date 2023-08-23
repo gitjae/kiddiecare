@@ -34,6 +34,14 @@
             text-align: center;
             font-size: large;
         }
+
+        .move-index{
+            text-decoration-line: underline;
+            color: #3E85EF;
+            text-decoration-color: #3E85EF;
+            text-align: center;
+            margin-top: 50px;
+        }
     </style>
 </head>
 <c:import url="header.jsp"></c:import>
@@ -44,6 +52,7 @@
             <img src="/image/booking-completed.png">
             <p class="completed-title">예약이 완료되었습니다!</p>
             <p class="completed-sub-title">예약 내용 확인 및 수정/취소는 마이페이지에서 가능해요.</p>
+            <a role="link"  href="/" class="move-index">홈으로 돌아가기</a>
         </div>
     </section>
 </div>

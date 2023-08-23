@@ -24,22 +24,28 @@ function getAppo(page){
 
             let status = "";
             let button = ``;
+            let statusClass = "";  // 예약 상태에 따른 색상
+
             switch (appo.appoStatus) {
                 case 1:
                     status = "예약완료";
+                    statusClass = "status-1";
                     button = `<button onclick="appoModify(this)">수정</button>
                     <button onclick="cancelAppo(this)">취소</button>`
                     break;
                 case 2:
                     status = "예약취소";
+                    statusClass = "status-2";
                     break;
                 case 3:
                     status = "예약보류";
+                    statusClass = "status-3";
                     button = `<button onclick="appoModify(this)">수정</button>
                     <button onclick="cancelAppo(this)">취소</button>`
                     break;
                 case 4:
                     status = "이용완료";
+                    statusClass = "status-4";
                     break;
                 default:
                     status = "";
@@ -69,7 +75,7 @@ function getAppo(page){
                 </div>
                 <div class="info-item">
                     <span class="info-title">예약상태</span>
-                    <span class="appo-status">${status}</span>
+                    <span class="appo-status ${statusClass}">${status}</span>
                 </div>
                 <div class="info-item">
                     <span class="info-title">자녀이름</span>

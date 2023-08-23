@@ -49,7 +49,7 @@
         </div>
 
 
-        <div class="kakaoMap-area" style="width:100%;height: 700px;">  <!-- height: 400px; -->
+        <div class="kakaoMap-area" style="width:100%;height: 700px;">
             <div id="map" style="width:100%;height:100%; margin-top: 50px;">
                 <button style="position: absolute; z-index: 2; margin: 20px;" onclick="getUserLocation()">내 주변 병원 찾기</button>
             </div>

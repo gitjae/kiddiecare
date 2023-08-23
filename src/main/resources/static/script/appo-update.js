@@ -1,6 +1,6 @@
 window.onload = function (){
     buildCalendar();
-    $('.appo-table').css({"display":"block"});
+    $('.appo-table').css({"display":"flex"});
 }
 
 function appoUpdate(){
@@ -23,10 +23,10 @@ function appoUpdate(){
         contentType:'application/json; charset=utf-8'
     }).done(res => {
         if(res.update == 'success'){
-            alert('예약을 수정했습니다.');
+            alert('예약 수정이 완료되었습니다.');
             location.href = '/mypage';
         } else {
-            alert('예약 수정에 실패했습니다.');
+            alert('예약 수정에 실패하였습니다.');
         }
     })
 }

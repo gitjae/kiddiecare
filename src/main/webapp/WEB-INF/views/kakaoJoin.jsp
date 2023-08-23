@@ -10,7 +10,7 @@
 <head>
     <link href="/css/common.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/join.css">
-    <title>Title</title>
+    <title>회원가입</title>
 </head>
 <body>
 <div class="container">

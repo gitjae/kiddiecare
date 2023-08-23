@@ -19,11 +19,11 @@ input{
     font-weight: bold;
     margin-right: 10px;
     width: 100px;
+    margin-bottom: 0;
 }
 
 #note, #symptom{
     width: 200px;
-    /*color: #a6a6a6;*/
 }
 
 .term-section{
@@ -152,3 +152,5 @@ h4{
     font-weight: bold;
     cursor: pointer;
 }
+
+/* 예약 캘린더 */

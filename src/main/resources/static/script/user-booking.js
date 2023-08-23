@@ -1,4 +1,19 @@
 let selectedChildId = null;
+let childInfo = null;
+
+function renderChildCard(child) {
+    const card = `
+            <div class="children-card" data-id="${child.id}">
+            <h4>${child.name}</h4>
+            <p>생년월일 : ${child.birth}</p>
+            <p>성별 : ${child.gender === 1 || child.gender === 3 ? '남자' : '여자'}</p>
+             <p data-info="${child.info}">추가 정보 : ${child.info}</p>
+            <button class="select-children" onclick="selectChildren(${child.id})">선택</button>
+        </div>
+    `;
+
+    $("#childrenContainer").append(card);
+}
 
 function selectChildren(childrenId) {
     // 이전에 선택된 카드의 selected-card 클래스 제거
@@ -6,26 +21,19 @@ function selectChildren(childrenId) {
         document.querySelector(`.children-card[data-id='${selectedChildId}']`).classList.remove('selected-card');
     }
 
+    // 현재 선택된 카드
+    const selectedCard = document.querySelector(`.children-card[data-id='${childrenId}']`);
+
     // 현재 선택된 카드에 selected-card 클래스 추가
-    document.querySelector(`.children-card[data-id='${childrenId}']`).classList.add('selected-card');
+    selectedCard.classList.add('selected-card');
 
     // 선택된 childrenId를 변수에 저장 및 hidden input에 설정
     selectedChildId = childrenId;
     document.getElementById("selectedChildNo").value = childrenId;
-}
 
-function renderChildCard(child) {
-    const card = `
-            <div class="children-card" data-id="${child.id}">
-                <h4>${child.name}</h4>
-                <p>생년월일: ${child.birth}</p>
-                <p>성별: ${child.gender === 1 || child.gender === 3 ? '남자' : '여자'}</p>
-                <p>추가 정보: ${child.info}</p>
-                <button class="select-children" onclick="selectChildren(${child.id})">선택</button>
-            </div>
-        `;
-
-    $("#childrenContainer").append(card);
+    // 자녀의 info 정보를 note 필드에 표기
+    childInfo = selectedCard.querySelector('[data-info]').getAttribute('data-info');
+    document.getElementById("note").value = childInfo;
 }
 
 // 타임슬롯 갱신
@@ -188,7 +196,7 @@ $(document).ready(function () {
             amount: 2000,
             buyer_email: 'juntu09@gmail.com',  // 유저 정보로 변경 필요
             buyer_name: userName,
-            buyer_tel: '010',
+            buyer_tel: '010',       //  // 유저 정보로 변경 필요
         }, function (rsp) {
             if (rsp.success) {
                 callback(true);

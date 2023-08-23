@@ -78,6 +78,24 @@
     display: block;
 }
 
+/* 예약 상태 */
+.status-1 {
+    color: blue;
+}
+
+.status-2 {
+    color: red;
+}
+
+.status-3 {
+    color: gray;
+}
+
+.status-4 {
+    color: green;
+}
+
+
 /* 찜한 병원 */
 .hospital-card {
     border: 1px solid #e0e0e0;
