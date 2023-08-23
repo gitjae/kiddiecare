@@ -9,7 +9,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>예약수정</title>
     <link rel="stylesheet" href="/css/hospital-detail-css.css">
 </head>
 <c:import url="header.jsp"/>

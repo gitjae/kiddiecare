@@ -3,7 +3,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>사용자 예약 페이지</title>
+    <title>예약정보입력</title>
     <link href="/css/common.css" rel="stylesheet">
     <link href="/css/user-booking-css.css" rel="stylesheet">
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=${appkey}"></script>
