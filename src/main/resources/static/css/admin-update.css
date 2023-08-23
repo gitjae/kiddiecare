@@ -5,7 +5,6 @@
     width:768px;
     height: 100%;
     margin: 0 auto;
-    margin-top: 56px;
 }
 
 .admin-update-container form{
@@ -111,6 +110,7 @@
 .pw-form{
     display: flex;
     flex-direction: column;
+    gap: 10px;
 }
 
 #admin-leave-btn{
@@ -127,7 +127,6 @@
 .admin-info-update button{
     padding: 20px;
     margin-top: 15px;
-    margin-left: 10px;
 }
 
 #pw-text-area{
@@ -146,4 +145,10 @@
 
 #import-email{
     color: red;
+}
+
+.email-form-area{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }

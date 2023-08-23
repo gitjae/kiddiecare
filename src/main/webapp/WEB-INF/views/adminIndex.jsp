@@ -95,6 +95,10 @@
                   <c:import url="adminDoctorInfo.jsp"></c:import>
               </div>
 
+              <div class="main-div" id="div-userInfo">
+                  <c:import url="adminUpdate.jsp"></c:import>
+              </div>
+
           </div>
 
       </div>

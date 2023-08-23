@@ -6,7 +6,7 @@ function getAdminInfoForm(){
         // pw-text-area 영역 감추기
         infoTextArea.hide();
         // pw-form 영역 보이기
-        infoForm.show('flex');
+        infoForm.css('display', 'flex');
     });
 }
 
@@ -19,18 +19,18 @@ function getAdminPwForm(){
         // pw-text-area 영역 감추기
         pwTextArea.hide();
         // pw-form 영역 보이기
-        pwForm.show('flex');
+        pwForm.css('display', 'flex');
     });
 }
 
 /* adminPwForm */
 function getAdminEmailUpdateForm(){
     const emailTextArea = $('#admin-email-text-area');
-    const emailForm = $('.email-form');
+    const emailForm = $('.email-form-area');
 
     emailTextArea.on('click',() => {
         emailTextArea.hide();
-        emailForm.show('flex');
+        emailForm.css('display', 'flex');
     });
 }
 
@@ -44,7 +44,6 @@ function adminInfoUpdateForm(){
         success: function(data) {
             if(data.response === "success"){
                 alert("수정되었습니다.")
-                location.href = '/admin/update';
             }else if(data.response === "fail cause pw is not matches"){
                 alert("비밀번호가 맞지 않습니다.")
             }else if(data.response === "fail cause updateItem not value"){
@@ -54,6 +53,7 @@ function adminInfoUpdateForm(){
             }else if(data.response === "fail cause session does not exist."){
                 alert("로그인 해주세요.")
             }
+            location.href = '/admin/update';
         },
         error: function(xhr, error) {
             console.log(xhr);
@@ -77,7 +77,6 @@ function adminPwUpdateForm(){
         success: function(data) {
             if(data.response === "success"){
                 alert("수정되었습니다.")
-                location.href = '/admin/update';
             }else if(data.response === "fail cause pw is not matches"){
                 alert("비밀번호가 맞지 않습니다.")
             }else if(data.response === "fail cause updateItem not value"){
@@ -87,6 +86,7 @@ function adminPwUpdateForm(){
             }else if(data.response === "fail cause session does not exist."){
                 alert("로그인 해주세요.")
             }
+            location.href = '/admin/update';
         },
         error: function(xhr, error) {
             console.log(xhr);
@@ -97,11 +97,57 @@ function adminPwUpdateForm(){
 }
 
 function sendVerificationEmail(){
-
+    var adminEmail = $('input[name="adminEmail"]').val();
+    $.ajax({
+        url: '/email/create',
+        type: 'POST',
+        data: {
+            adminEmail:adminEmail
+        },
+        success: function(data) {
+            if(data.response === "VERIFICATION_SENT"){
+                alert("수정되었습니다.")
+            }else if(data.response === "Target is null"){
+                alert("비밀번호가 맞지 않습니다.")
+            }else{
+                alert("그냥 오류")
+            }
+            location.href = '/admin/update';
+        },
+        error: function(xhr, error) {
+            console.log(xhr);
+            console.log(error);
+            alert(" 5 에러가 발생하였습니다.")
+        }
+    });
 }
 
 function validateVerificationCode(){
-
+    var adminEmail = $('input[name="adminEmail"]').val();
+    var code = $('input[name="code"]').val();
+    $.ajax({
+        url: '/email/validate',
+        type: 'POST',
+        data: {
+            adminEmail:adminEmail,
+            code:code
+        },
+        success: function(data) {
+            if(data.response === "VERIFICATION_SUCCEEDED"){
+                alert("수정되었습니다.")
+            }else if(data.response === "VERIFICATION_FAILED"){
+                alert("비밀번호가 맞지 않습니다.")
+            }else{
+                alert("그냥 오류")
+            }
+            location.href = '/admin/update';
+        },
+        error: function(xhr, error) {
+            console.log(xhr);
+            console.log(error);
+            alert(" 5 에러가 발생하였습니다.")
+        }
+    });
 }
 
 function adminEmailUpdateForm(){
@@ -115,7 +161,6 @@ function adminEmailUpdateForm(){
         success: function(data) {
             if(data.response === "success"){
                 alert("수정되었습니다.")
-                location.href = '/admin/update';
             }else if(data.response === "fail cause pw is not matches"){
                 alert("비밀번호가 맞지 않습니다.")
             }else if(data.response === "fail cause updateItem not value"){
@@ -125,6 +170,7 @@ function adminEmailUpdateForm(){
             }else if(data.response === "fail cause session does not exist."){
                 alert("로그인 해주세요.")
             }
+            location.href = '/admin/update';
         },
         error: function(xhr, error) {
             console.log(xhr);
@@ -144,7 +190,6 @@ function deleteAdmin(){
         success: function(data) {
             if(data.response === "success"){
                 alert("수정되었습니다.")
-                location.href = '/admin/update';
             }else if(data.response === "fail cause pw is not matches"){
                 alert("비밀번호가 맞지 않습니다.")
             }else if(data.response === "fail cause updateItem not value"){
@@ -154,6 +199,7 @@ function deleteAdmin(){
             }else if(data.response === "fail cause session does not exist."){
                 alert("로그인 해주세요.")
             }
+            location.href = '/admin/update';
         },
         error: function(xhr, error) {
             console.log(xhr);

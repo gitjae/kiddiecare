@@ -15,7 +15,7 @@
 </head>
 <body>
 <div class="admin-update-container">
-    <section class="admin-info">
+    <div class="admin-info">
         <div id="admin-info-text-area">
             <h2>이름</h2>
             <p>병원</p>
@@ -29,8 +29,8 @@
             <input name="hospitalName" placeholder="">
             <button class="admin-info-update-btn" onclick="adminInfoUpdateForm()">수정</button>
         </form>
-    </section>
-    <section class="admin-info-update">
+    </div>
+    <div class="admin-info-update">
         <div class="admin-info-pw-area">
             <div id="pw-text-area">
                 <span>비밀번호</span>
@@ -47,18 +47,20 @@
         <div class="admin-info-email-area">
             <div class="email-form" id="admin-email-text-area">
                 <span>이메일</span>
-                <input id="admin-info-Email" name="adminEmail" readonly/>
+                <input id="admin-info-Email" readonly/>
                 <button onclick="getAdminEmailUpdateForm()">이메일 변경</button>
             </div>
-            <form class="email-form">
-                <span> 관리자 이메일 수정 </span>
-                <span id="import-email">* 이메일 변경시 이메일 인증을 다시해야합니다.*</span>
+            <form class="email-form-area">
+                <div class="email-form-text">
+                    <span> 관리자 이메일 수정 </span>
+                    <span id="import-email">* 이메일 변경시 이메일 인증을 다시해야합니다.*</span>
+                </div>
                 <div class="email-form">
                     <input name="adminEmail" placeholder="">
                     <button onclick="sendVerificationEmail()">인증 보내기</button>
                 </div>
                 <div class="email-form">
-                    <input name="adminEmailCheck" placeholder="">
+                    <input name="code" placeholder="">
                     <button onclick="validateVerificationCode()">인증 받기</button>
                 </div>
                 <button onclick="adminEmailUpdateForm()">변경</button>
@@ -68,7 +70,7 @@
             <span>회원 탈퇴</span>
             <button id="admin-leave-btn" onclick="deleteAdmin()">회원 탈퇴</button>
         </div>
-    </section>
+    </div>
 </div>
 </body>
 </html>

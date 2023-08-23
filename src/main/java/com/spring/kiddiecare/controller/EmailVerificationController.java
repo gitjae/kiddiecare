@@ -1,12 +1,17 @@
 package com.spring.kiddiecare.controller;
 
 import com.spring.kiddiecare.domain.hospitalAdmin.AdminRequestDto;
+import com.spring.kiddiecare.domain.hospitalInfo.HospData;
 import lombok.RequiredArgsConstructor;
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.context.annotation.SessionScope;
 import org.springframework.web.context.request.WebRequest;
 
@@ -15,9 +20,11 @@ import javax.mail.internet.MimeMessage;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Random;
 
 @RestController
@@ -26,6 +33,9 @@ import java.util.Random;
 public class EmailVerificationController {
 
     private final JavaMailSender mailSender;
+    private final RedisTemplate redisTemplate;
+    private ValueOperations<String, String> valueOps;
+    private Duration cacheTtl = Duration.ofMinutes(3);
 
     private String getAuthToken() {
         String randomString = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -52,76 +62,56 @@ public class EmailVerificationController {
         return current.format(formatter);
     }
 
-    @SessionScope
     @PostMapping("create")
-    public Map sendVerificationEmail(@ModelAttribute AdminRequestDto adminDto, HttpServletRequest request) {
+    public Map sendVerificationEmail(@ModelAttribute AdminRequestDto adminDto) {
         JSONObject resultJson = new JSONObject();
         String verificationCode = getAuthToken();
         String verificationDuration = getVerificationDuration();
-        try{
-            MimeMessage message = mailSender.createMimeMessage();
-            MimeMessageHelper helper = new MimeMessageHelper(message, true);
-            helper.setFrom(new InternetAddress("oeglks601@gmail.com","kiddiecare"));
-            helper.setTo(adminDto.getAdminEmail());
-            helper.setSubject("[kiddiecare] 이메일 확인 코드");
-            helper.setText("[kiddiecare] 이메일 확인 코드 : " + verificationCode);
-            mailSender.send(message);
+        String target = adminDto.getAdminEmail();
 
-            HttpSession session = request.getSession();
+        System.out.println(adminDto);
 
-            session.setAttribute("verification_code", verificationCode);
-            request.setAttribute("verification_duration", verificationDuration);
+        if(target != null){
+            try{
+                MimeMessage message = mailSender.createMimeMessage();
+                MimeMessageHelper helper = new MimeMessageHelper(message, true);
+                helper.setFrom(new InternetAddress("oeglks601@gmail.com","kiddiecare"));
+                helper.setTo(target);
+                helper.setSubject("[kiddiecare] 이메일 확인 코드");
+                helper.setText("[kiddiecare] 이메일 확인 코드 : " + verificationCode);
+                mailSender.send(message);
 
-            resultJson.put("result", "VERIFICATION_SENT");
-            resultJson.put("verification_code", verificationCode);
-            resultJson.put("verification_duration", verificationDuration);
-        }catch (Exception e){
-            System.out.println(e);
-            resultJson.put("result", "FAIL");
+                //redis 저장
+                valueOps.set(target, verificationCode, cacheTtl);
+
+                resultJson.put("response", "VERIFICATION_SENT");
+                resultJson.put("verification_code", verificationCode);
+                resultJson.put("verification_duration", verificationDuration);
+            }catch (Exception e){
+                System.out.println(e);
+                resultJson.put("result", "FAIL");
+            }
+        }else{
+            resultJson.put("response", "Target is null");
         }
 
         return resultJson.toMap();
     }
 
     @PostMapping("validate")
-    public Map validateVerificationCode(HttpServletRequest request, String verificationCode) {
+    public Map validateVerificationCode(@ModelAttribute AdminRequestDto adminDto) {
         JSONObject resultJson = new JSONObject();
-        HttpSession session = request.getSession();
-        String savedCode = (String) session.getAttribute("verification_code");
-        String savedDuration = (String) session.getAttribute("verification_duration");
 
-        if(savedCode != null || savedDuration != null){
-            resultJson.put("result", "VERIFICATION_FAILED");
+        String verificationCode = valueOps.get(adminDto.getAdminEmail());
+        if (verificationCode == null) {
+            return resultJson.put("response","VERIFICATION_FAILED").toMap();
         }
 
-        System.out.println(savedCode+"savedCode");
-        System.out.println(savedDuration+"savedDuration");
-
-        String[] currentTime = getCurrentTime().split("/");
-        String[] Duration = savedDuration.split("/");
-
-        if(currentTime[0].equals(Duration[0])){
-            try{
-                int now = Integer.parseInt(currentTime[1]);
-                int duTime = Integer.parseInt(Duration[1]);
-                String message = now <= duTime ? "VERIFICATION_SUCCEEDED" : "EXPIRED";
-                if(verificationCode.equals(savedCode)){
-                    resultJson.put("result",message);
-                    session.removeAttribute("verification_code");
-                    session.removeAttribute("verification_duration");
-                    session.invalidate(); // 세션 무효화
-                }else{
-                    resultJson.put("result","fail");
-                }
-            }catch (Exception e){
-                resultJson.put("result", "VERIFICATION_FAILED");
-            }
-        }else {
-            resultJson.put("result", "VERIFICATION_FAILED");
+        if(!verificationCode.equals(adminDto.getCode())){
+            return resultJson.put("response","VERIFICATION_FAILED").toMap();
         }
 
-        return resultJson.toMap();
+        return resultJson.put("response","VERIFICATION_SUCCEEDED").toMap();
     }
-
 
 }
