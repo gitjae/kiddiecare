@@ -12,49 +12,46 @@
 <div class="container">
     <section>
         <div class="index-session">
-            <div class="session-title">
-                <p class="top-title">주변에 예약 가능한 병원이 어디지?</p>
-                <p class="bottom-title">이제 한 눈에 주변 병원을 확인하고 실시간으로 예약해보세요!</p>
+            <div class="img-wrapper">
+                <div class="session-title">
+                    <p class="top-title">예약이 가능한 병원을 찾는데 보탬이 되어드릴게요.</p>
+                    <p class="bottom-title">이제 한 눈에 주변 병원의 진료 현황을 확인하고 실시간으로 예약해보세요!</p>
+                </div>
+                <div class="index-search">
+                    <input type="text" id="search-input" class="search-input" placeholder="병원명 또는 지역으로 검색할 수 있어요."
+                           name="searchText" maxlength="100">
+                    <button type="submit" class="search-btn" onclick="search()">
+                        <img src="/image/search-white.png" onclick="">
+                    </button>
+                </div>
             </div>
-            <div class="index-search">
-                <input type="text" id="search-input" class="search-input" placeholder="병원명으로 검색할 수 있어요." name="searchText" maxlength="100">
-                <button type="submit" class="search-btn" onclick="search()">
-                    <img src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png" onclick="">
-                </button>
+        </div>
+
+        <div class="shortCut-container">
+            <p class="shortCut-title">바로가기</p>
+            <div class="shortCut-area">
+                <div id="find-nearby-hospital-div">
+                    <img src="/image/medical-team.png">
+                    <p>주변 병원 찾기</p>
+                </div>
+
+                <div id="favorite-hospital-div">
+                    <img src="/image/favorite.png">
+                    <p>찜한 병원</p>
+                </div>
+
+    <%--            <div class="admin-myPage">--%>
+    <%--                <p>병원 어드민(사이트 도움말로 변경)</p>--%>
+    <%--                <img src="/image/userGuide.png">--%>
+    <%--            </div>--%>
+
+                <div id="user-myPage">
+                    <img src="/image/edit.png">
+                    <p>마이페이지</p>
+                </div>
             </div>
         </div>
 
-        <div class="shortCut-area">
-            <div class="find-nearby-hospital-div">
-                <h2>주변 병원 찾기</h2>
-                <p>위치 기반으로 내 주변에 있는 병원 검색 가능합니다.<br>병원 예약은 로그인 후에 가능해요!</p>
-                <button id="one-hospitalPage">주변 병원 찾기</button>
-                <img src="/image/medical-team.png">
-            </div>
-
-            <div class="shortCut-area2">
-            <div class="favorite-hospital-div">
-                <h2>찜한 병원</h2>
-                <p>자주 가는 병원을 등록하면 검색할 필요없이 원하는 병원만 검색할 수 있어요.</p>
-                <button id="like-hospitalPage">찜한 병원</button>
-                <img src="/image/favorite.png">
-            </div>
-
-            <div class="admin-myPage">
-                <h2>병원 어드민(사이트 도움말로 변경)</h2>
-                <p>병원 관계자는 병원 정보 수정과 환자 예약관리를 할 수 있어요.</p>
-                <button id="admin-appo">병원 마이페이지</button>
-                <img src="/image/userGuide.png">
-            </div>
-            </div>
-
-            <div class="user-myPage">
-                <h2>회원 마이페이지</h2>
-                <p>회원은 예약정보 수정과 자녀 관리가 가능해요.</p>
-                <button id="user-myPage">회원 마이페이지</button>
-                <img src="/image/edit.png">
-            </div>
-        </div>
         <a href="/appointment/hospitalDetail?hospitalName=가톨릭대학교인천성모병원&sgguCd=220003">가톨릭대학교인천성모병원 숏컷</a>
     </section>
 </div>
