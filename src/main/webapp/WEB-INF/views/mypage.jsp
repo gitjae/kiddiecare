@@ -32,9 +32,9 @@
                         <li>
                             <div id="nav-appo" name="div-appo" onclick="sectionChange(this), getAppo(1)">예약내역</div>
                         </li>
-                        <li>
-                            <div id="nav-review" name="div-review" onclick="sectionChange(this)">후기관리</div>
-                        </li>
+<%--                        <li>--%>
+<%--                            <div id="nav-review" name="div-review" onclick="sectionChange(this)">후기관리</div>--%>
+<%--                        </li>--%>
                         <li>
                             <div id="nav-favor" name="div-favor" onclick="sectionChange(this)">찜한병원</div>
                         </li>
@@ -86,7 +86,7 @@
                     <div id="children">
 
                     </div>
-                    <a href="childRegister">자녀등록</a>
+                    <a href="childRegister" style="text-decoration: underline">자녀 등록을 원하시나요?</a>
                     <button onclick="prevChildren()" style="background: none; color: #007BFF; font-size: larger; font-weight: 700;">&#9665;</button>
                     <button onclick="nextChildren()" style="background: none; color: #007BFF; font-size: larger; font-weight: 700;">&#9655;</button>
                 </div>
@@ -99,12 +99,11 @@
                     <button onclick="nextAppo()" style="background: none; color: #007BFF; font-size: larger; font-weight: 700;">&#9655;</button>
                 </div>
 
-                <div class="main-div" id="div-review">
-                    <p>후기</p>
-                </div>
+<%--                <div class="main-div" id="div-review">--%>
+<%--                    <p>후기</p>--%>
+<%--                </div>--%>
 
                 <div class="main-div" id="div-favor">
-                    <p>찜한 병원</p>
                 </div>
             </div>
         </div>

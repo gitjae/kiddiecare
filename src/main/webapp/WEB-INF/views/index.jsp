@@ -36,7 +36,7 @@
             <div class="favorite-hospital-div">
                 <h2>찜한 병원</h2>
                 <p>자주 가는 병원을 등록하면 검색할 필요없이 원하는 병원만 검색할 수 있어요.</p>
-                <button id="two-hospitalPage">찜한 병원(개발 전)</button>
+                <button id="like-hospitalPage">찜한 병원</button>
                 <img src="/image/favorite.png">
             </div>
 
