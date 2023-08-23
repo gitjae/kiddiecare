@@ -1,3 +1,7 @@
+input{
+    font-size: medium;
+}
+
 .user-appo-title{
     font-size: xx-large;
     font-weight: bold;
@@ -23,6 +27,10 @@
 }
 
 .term-section{
+    margin-bottom: 10px;
+}
+
+h4{
     margin-bottom: 10px;
 }
 

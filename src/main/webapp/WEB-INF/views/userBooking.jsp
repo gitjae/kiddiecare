@@ -52,12 +52,13 @@
             </div>
             <div class="info-item">
                 <span class="info-title">증상</span>
-                <span><input type="text" id="symptom" placeholder="아픈곳을 적어주세요."></span>
+                <span><input type="text" id="symptom" placeholder="증상을 적어주세요."></span>
             </div>
             <div class="info-item">
                 <span class="info-title">참고사항</span>
-                <span><input type="text" id="note" placeholder="병원에서 참고할 부분을 알려주세요."><br/></span>
+                <span><input type="text" id="note" value="${child.info}"><br/></span>
             </div>
+
             <div class="form-area">
                 <h4>약관동의</h4>
                 <div class="term-section">
