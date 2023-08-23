@@ -48,7 +48,7 @@
             </div>
         </div>
 
-        <p class="info-sub-title">변경을 원하시는 날짜와 시간, 의사를 선택해주세요.</p>
+        <p class="info-sub-title">변경할 날짜와 시간, 의사를 선택해주세요.</p>
         <div class="appo-table">
             <table class="Calendar">
                 <thead>

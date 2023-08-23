@@ -19,25 +19,6 @@
 <c:import url="header.jsp"></c:import>
 <body>
     <section>
-<%--        <c:when test="${empty response}">--%>
-<%--            <div class="data-notfund">--%>
-<%--                <p>찾는 병원이 없어요..</p>--%>
-<%--            </div>--%>
-<%--        </c:when>--%>
-<%--        <c:otherwise>--%>
-<%--            <c:forEach items="${response}" var="item">--%>
-<%--                <div class="hospList">--%>
-<%--                    <a>--%>
-<%--                    </a>--%>
-<%--                    <span>병원명 : ${item.yadmNm}</span>--%>
-<%--                    <span>병원 주소: ${item.addr}</span>--%>
-<%--                    <span>병원 번호: 미정</span>--%>
-<%--                    <span>운영시간: 미정</span>--%>
-<%--                    <span>휴진일: 미정</span>--%>
-<%--                </div>--%>
-<%--            </c:forEach>--%>
-<%--        </c:otherwise>--%>
-
         <div id="hospital-list">
             <div class="flex-area">
                 <p class="list-title">병원 목록</p>
@@ -58,7 +39,7 @@
         </div>
 
 
-        <div class="kakaoMap-area" style="width:100%;height: 700px;">  <!-- height: 400px; -->
+        <div class="kakaoMap-area" style="width:100%;height: 700px;">
             <div id="map" style="width:100%;height:100%; margin-top: 50px;">
                 <button style="position: absolute; z-index: 2; margin: 20px;" onclick="getUserLocation()">내 주변 병원 찾기</button>
             </div>

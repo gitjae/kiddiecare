@@ -150,8 +150,8 @@ td {
 /* max = count timeSlots 비활성화 */
 .full-time-slot {
     background-color: #E9E9E9;
-    pointer-events: none;  /* 클릭 방지 */
-    cursor: not-allowed;  /* 커서 모양 변경 */
+    pointer-events: none;
+    cursor: not-allowed;
     opacity: 0.5;
 }
 
