@@ -10,6 +10,7 @@ import lombok.*;
 public class AlarmReqeustDto {
     private long alarmNo;
     private String hospYkiho;
-    private String userId;
+//    private String userId;
+    private int userNo;
     private String alarmText;
 }

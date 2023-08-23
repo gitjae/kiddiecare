@@ -19,13 +19,14 @@ public class Alarm {
     @Id
     private long alarmNo;
     private String hospYkiho;
-    private String userId;
+//    private String userId;
+    private int userNo;
     private String alarmText;
 
     public Alarm(AlarmReqeustDto alarmDto){
         this.alarmNo = 0L;
         this.hospYkiho = alarmDto.getHospYkiho();
-        this.userId = alarmDto.getUserId();
+        this.userNo = alarmDto.getUserNo();
         this.alarmText = alarmDto.getAlarmText();
     }
 }

@@ -34,12 +34,12 @@ $(document).ready(function(){
     }
 
     $('#notifySendBtn').click(function(e){
-        let modal = $('#message').has(e.target);
-        let type = '70';
-        let target = $('#targetUserId').val();
-        let content = $('#message').val();
-        let url = '/websocket';
-        socket.send("관리자,"+target+","+content+","+url);
+        let modal = $('#message').has(e.target); // 메세지
+        let type = '70'; // 타입 스트링
+        let target = $('#targetUserId').val(); // 보낼id
+        let content = $('#message').val(); // 보낼내용
+        let url = '/websocket'; // url
+        socket.send("관리자,"+target+","+content+","+url); // 내용
         $('#message').val('');// textarea 초기화
         // 전송한 정보를 db에 저장
         // $.ajax({
