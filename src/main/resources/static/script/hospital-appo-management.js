@@ -26,6 +26,7 @@ document.getElementById('confirm-date').addEventListener('change', function (eve
             date: formattedDate,
             doctorNo: selectedDoctor
         },
+
     }).done(function (list) {
         // 기존 요소 삭제
         timeList.innerHTML = "";
@@ -135,25 +136,27 @@ document.getElementById('time-list').addEventListener("click", (event) => {
                     tr.dataset.appoNo = detail.appoNo;
 
                     const statusDropdown = tr.querySelector('select');
-
+                    // 변경 전 status 담아두기
+                    const lastStatus = tr.statusDropdown.value;
 
                     // 예약 취소상태일 때 선택 불가(disabled) 처리.
-                    if(statusDropdown.value === "2") {
-                        statusDropdown.setAttribute('disabled','');
-                    }
-
+                    // if(statusDropdown.value === "2") {
+                    //     statusDropdown.setAttribute('disabled','');
+                    // }
+                    
+                    // 예약 취소상태로 변경됐을 때 선택 불가(disabled) 처리.
                     statusDropdown.addEventListener('change', (event) => {
-                        // 예약 취소상태일 때 선택 불가(disabled) 처리.
-                        if(statusDropdown.value === "2") {
-                            statusDropdown.setAttribute('disabled','');
-                        }
+                        console.log('취소됨');
+                        // if(statusDropdown.value === "2") {
+                        //     statusDropdown.setAttribute('disabled','');
+                        // }
 
                         let result = confirm(`* 예약상태 변경  
 상태를 수정하시겠습니까?`);
 
                         if(result){
                             const selectedValue = event.target.value;
-                            console.log(`Selected value:  ${selectedValue}`);
+
                             let selectedAppoNo = tr.dataset.appoNo;
                             console.log(selectedAppoNo);
 
@@ -165,8 +168,25 @@ document.getElementById('time-list').addEventListener("click", (event) => {
                                     status: selectedValue
                                 }
                             }).done(function (result) {
-                                console.log(result.status)
+                                // alarmDto 받음
+                                let alarm = result.alarm;
+                                // userid 받음
+                                let id = result.sId;
+                                console.log("결과"+alarm);
+                                console.log(alarm.alarmText);
                                 alert('상태변경 성공');
+
+                                // socket으로 메세지 전송
+                                let type = '70';
+                                let target = id;
+                                let content = alarm.alarmText;
+                                // mypage로 이동
+                                let url = '/mypage';
+
+                                socket.send("관리자,"+target+","+content+","+url);
+
+                                console.log(`Selected value:  ${selectedValue}`);
+
                             }).fail(function (error) {
                                 console.log(error);
                                 alert('상태변경 실패');
@@ -207,19 +227,21 @@ document.getElementById('time-list').addEventListener("click", (event) => {
                             selectedUser = detail;
                             content.innerHTML = `
                                 <h3>[ 어린이 정보 ]</h3>
-                                <p><b>어린이 이름: </b> <span>${detail.childrenName}</span></p>
-                                <p><b>어린이 생년월일: </b> <span>${detail.childrenBirth}</span></p>
-                                <p><b>어린이 성별: </b> <span>${genderStr}</span></p>
-                                <p><b>어린이 참고사항: </b> <span>${detail.childrenInfo}</span></p>
+                                <p><b>이름: </b> <span>${detail.childrenName}</span></p>
+                                <p><b>생년월일: </b> <span>${detail.childrenBirth}</span></p>
+                                <p><b>성별: </b> <span>${genderStr}</span></p>
+                                <p><b>참고사항: </b> <span>${detail.childrenInfo}</span></p>
                                 <hr>
                                 <h3>[ 보호자 정보 ]</h3>
-                                <p><b>보호자명: </b> <span>${detail.usersName}</span></p>
-                                <p><b>보호자 생년월일: </b <span>${detail.usersBirth}</span></p>
-                                <p><b>보호자 주소: </b> <span>${detail.usersAddr}</span></p>
+                                <p><b>이름: </b> <span>${detail.usersName}</span></p>
+                                <p><b>생년월일: </b <span>${detail.usersBirth}</span></p>
+                                <p><b>주소: </b> <span>${detail.usersAddr}</span></p>
                                 <button id="change-info" onclick="changeDate()">예약정보 변경하기</button>
                             `;
 
+                            // 예약취소 상태일 때
                             if (statusDropdown.value === "2") {
+                                
                                 const changeInfoButtons = document.querySelectorAll('#change-info');
                                 changeInfoButtons.forEach((changeInfoBtn) => {
                                     if (changeInfoBtn) {

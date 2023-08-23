@@ -16,7 +16,8 @@ public class UserResponseDto {
     private String name;
     private int birth;
     private boolean gender;
-    private int phone;
+    //private int phone;
+    private String phone;
     private String email;
     private String postcode;
     private String addr;

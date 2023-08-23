@@ -28,7 +28,7 @@ public class LogController {
 
     @PostMapping("login")
     public Map login(@RequestBody UserRequestDto userDto, Model model){
-        Optional<User> user = userRepository.findUserByIdAndIsValid(userDto.getId(), true);
+        Optional<User> user = userRepository.findUserById(userDto.getId());
         JSONObject json = new JSONObject();
         if(!user.isEmpty() && passwordEncoder.matches(userDto.getPassword(), user.get().getPassword())){
         //if(!user.isEmpty() && user.get().getPassword().equals(userDto.getPassword())){
@@ -48,6 +48,7 @@ public class LogController {
         status.setComplete();
         // 세션 속성 수정 가능
         request.removeAttribute("log", WebRequest.SCOPE_SESSION); // scope : 미리 약속돼있는 상수
+        request.removeAttribute("Ykiho", WebRequest.SCOPE_SESSION); // admin 로그아웃용
 
         JSONObject json = new JSONObject();
         json.put("logout","success");

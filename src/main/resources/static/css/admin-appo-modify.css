@@ -2,6 +2,13 @@
 /*    width: 100%;*/
 /*}*/
 
+#select-area-modify {
+    width: 100%;
+    padding-top: 30px;
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
 .detail-change-area>table{
     text-align: center;
     width: 100%;
@@ -22,3 +29,4 @@
 .detail-change-area{
     display: none;
 }
+

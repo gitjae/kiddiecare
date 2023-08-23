@@ -1,5 +1,8 @@
 package com.spring.kiddiecare.controller;
 
+import com.spring.kiddiecare.domain.alarm.Alarm;
+import com.spring.kiddiecare.domain.alarm.AlarmRepository;
+import com.spring.kiddiecare.domain.alarm.AlarmReqeustDto;
 import com.spring.kiddiecare.domain.doctor.DoctorRepository;
 import com.spring.kiddiecare.domain.doctor.DoctorResponseDto;
 import com.spring.kiddiecare.domain.hospital.*;
@@ -9,6 +12,8 @@ import com.spring.kiddiecare.domain.hospitalAdmin.AdminRequestDto;
 import com.spring.kiddiecare.domain.timeSlotsLimit.TimeSlotsLimit;
 import com.spring.kiddiecare.domain.timeSlotsLimit.TimeSlotsLimitRepository;
 import com.spring.kiddiecare.domain.timeSlotsLimit.TimeSlotsLimitRequestDto;
+import com.spring.kiddiecare.domain.user.User;
+import com.spring.kiddiecare.domain.user.UserRepository;
 import com.spring.kiddiecare.service.HospitalAppointmentService;
 import com.spring.kiddiecare.service.TimeSlotsLimitService;
 import lombok.RequiredArgsConstructor;
@@ -36,7 +41,8 @@ public class AppointmentController {
     private final AppoResponseRepository appoResponseRepository;
     private final AppoAdminDetailRepository appoAdminDetailRepository;
     private final TimeSlotsLimitService timeSlotsLimitService;
-
+    private final AlarmRepository alarmRepository;
+    private final UserRepository userRepository;
 
     /**
      * 의사의 ykiho,no를 받아 해당 의사의 근무 일을 반환 해준다.
@@ -155,23 +161,22 @@ public class AppointmentController {
         // 저장된 모든 리스트 가져올 때
         return appoResponseRepository.findAllByTimeSlotNo(timeSlotNo);
     }
-
     // 페이징처리
-    @GetMapping("/getAppoDetails/{page}")
-    public List<AppoResponseDto> getAppoDetails(@RequestParam int timeSlotNo, @PathVariable int page, @PageableDefault(size=10) Pageable pageable){
-        List<AppoResponseDto> appoList = appoResponseRepository.findAllBySlotNoAndPage(timeSlotNo, pageable.withPage(page-1));
-        List<AppoResponseDto> noDeleteList = new ArrayList<>();
-
-        for(AppoResponseDto data : appoList) {
-           // status가 삭제가 아닌 리스트만 가져오기
-            if(data.getAppoStatus() != 2) {
-                noDeleteList.add(data);
-            }
-        }
-        return noDeleteList;
-//        System.out.println(appoResponseRepository.findAllBySlotNoAndPage(timeSlotNo, pageable.withPage(page-1)));
-//        return appoResponseRepository.findAllBySlotNoAndPage(timeSlotNo, pageable.withPage(page-1));
-    }
+//    @GetMapping("/getAppoDetails/{page}")
+//    public List<AppoResponseDto> getAppoDetails(@RequestParam int timeSlotNo, @PathVariable int page, @PageableDefault(size=10) Pageable pageable){
+//        List<AppoResponseDto> appoList = appoResponseRepository.findAllBySlotNoAndPage(timeSlotNo, pageable.withPage(page-1));
+//        List<AppoResponseDto> noDeleteList = new ArrayList<>();
+//
+//        for(AppoResponseDto data : appoList) {
+//           // status가 삭제가 아닌 리스트만 가져오기
+//            if(data.getAppoStatus() != 2) {
+//                noDeleteList.add(data);
+//            }
+//        }
+//        return noDeleteList;
+////        System.out.println(appoResponseRepository.findAllBySlotNoAndPage(timeSlotNo, pageable.withPage(page-1)));
+////        return appoResponseRepository.findAllBySlotNoAndPage(timeSlotNo, pageable.withPage(page-1));
+//    }
 
     @GetMapping("/getAppoUserDetail")
     public AppoAdminDetailDto getAppoAdminDetail(@RequestParam String hospAppoNo) {
@@ -181,14 +186,57 @@ public class AppointmentController {
     // 유저 예약상태 변경
     @PutMapping("/modifyAdminAppo/appoStatusChange")
     public Map updateStatus(@RequestParam String appoNo, int status) {
-//        Appointment appo = appoRepository.findByNo(appoNo);
+        // appointmentNo로 해당 appointment객체 반환
         JSONObject json = new JSONObject();
+        Appointment appo = appoRepository.findByNo(appoNo);
+        AlarmReqeustDto alarm = new AlarmReqeustDto();
 
-        hospitalAppointmentService.updateStatus(appoNo, status);
-        json.put("status","update");
+        int userNo = 0;
+        String userId = "";
+        String userName;
+
+        try {
+            // hospital_appointment 테이블의 status, timeSlots 테이블의 enable 변경
+            hospitalAppointmentService.updateStatus(appoNo, status);
+            int timeNo = appo.getTimeSlotNo();
+            userNo = appo.getGuardian();
+
+            TimeSlotsLimit timeSlot = timeSlotsLimitRepository.findByNo(timeNo);
+            String ykiho = timeSlot.getYkiho();
+
+            User user = userRepository.findUserByNo(userNo);
+            userName = user.getName();
+            System.out.println("user확인" + user);
+            userId = user.getId();
+
+            String statusVal = "";
+            if (status == 1) {
+                statusVal = "예약완료";
+            } else if (status == 2) {
+                statusVal = "예약취소";
+            } else if (status == 3) {
+                statusVal = "예약보류";
+            } else {
+                statusVal = "이용완료";
+            }
+
+            String text = userName + "님 " + statusVal + "가 되었습니다.";
+
+            alarm.setAlarmText(text);
+            alarm.setHospYkiho(ykiho);
+            alarm.setUserNo(userNo);
+            alarmRepository.save(new Alarm(alarm));
+
+        } catch (Exception e) {
+            return json.put("status", "fail").toMap();
+        }
+        // 성공 시 userId 반환
+        json.put("sId", userId);
+        json.put("alarm", alarm);
 
         return json.toMap();
     }
+
 
     // enable 자동 변경
     // int status => 1: 추가, 2: 삭제, 3: 변경, 4: 보류

@@ -29,3 +29,17 @@ function gotofind(){
 function kakaoLogin(){
     location.href = `https://kauth.kakao.com/oauth/authorize?client_id=${keys.kakaoRestApi}&redirect_uri=http://localhost:8080/login/kakao/callback&response_type=code`
 }
+
+$(document).ready(function() {
+    // 일반회원 로그인 버튼 클릭 이벤트
+    $('#user-login-btn').click(function() {
+        $('#form').show();
+        $('.login-form').hide();
+    });
+
+    // 병원회원 로그인 버튼 클릭 이벤트
+    $('#admin-login-btn').click(function() {
+        $('.login-form').show();
+        $('#form').hide();
+    });
+});

@@ -82,28 +82,7 @@ $(document).ready(function() {
     });
 
 
-    function addDoctor(){
-        $.ajax({
-            url: 'api/v1/doctor/create',
-            type: 'POST',
-            enctype: 'multipart/form-data',
-            data: new FormData($('form')[0]),
-            processData: false,
-            contentType: false,
-            success: function(data) {
-                if(data.response === "success"){
-                    location.href = '/admin/index';
-                }else{
-                    alert("에러가 발생하였습니다.")
-                }
-            },
-            error: function(xhr, error) {
-                console.log(xhr);
-                console.log(error);
-                //작업이 실패한 후의 코드
-            }
-        });
-    }
+
     /* 의사 삭제하기 */
     function deleteDoctor(){
         var data= {
@@ -167,3 +146,27 @@ $(document).ready(function() {
         });
     }
 });
+
+
+function addDoctor(){
+    $.ajax({
+        url: '/api/v1/doctor/create',
+        type: 'POST',
+        enctype: 'multipart/form-data',
+        data: new FormData($('form')[0]),
+        processData: false,
+        contentType: false,
+        success: function(data) {
+            if(data.response === "success"){
+                location.href = '/admin/index';
+            }else{
+                alert("에러가 발생하였습니다.")
+            }
+        },
+        error: function(xhr, error) {
+            console.log(xhr);
+            console.log(error);
+            //작업이 실패한 후의 코드
+        }
+    });
+}

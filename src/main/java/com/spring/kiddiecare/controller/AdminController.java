@@ -1,5 +1,6 @@
 package com.spring.kiddiecare.controller;
 
+import com.spring.kiddiecare.domain.hospital.Hospital;
 import com.spring.kiddiecare.domain.hospitalAdmin.Admin;
 import com.spring.kiddiecare.domain.hospitalAdmin.AdminRepository;
 import com.spring.kiddiecare.domain.hospitalAdmin.AdminRequestDto;
@@ -54,6 +55,8 @@ public class AdminController {
         // 데이터베이스에 있는지 확인
         Optional<Admin> userIsNull = Optional.ofNullable(adminRepository.findByAdminId(adminDto.getAdminId()));
         if(userIsNull.isEmpty()){
+            // Hospital 생성
+            Hospital hospital = new Hospital(adminDto);
 
             // DB에 넣을 데이터 생성
             Admin admin = new Admin(adminDto);
@@ -71,7 +74,8 @@ public class AdminController {
 
             // DB에 저장
             try {
-                adminService.joinAdminUserByAdmin(admin);
+                //adminService.joinAdminUserByAdmin(admin);
+                adminService.joinAdminUserAndHospital(admin, hospital);
                 result.put("response","success");
             }catch (Exception e){
                 System.out.println(e);

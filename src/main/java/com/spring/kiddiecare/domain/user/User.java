@@ -1,10 +1,7 @@
 package com.spring.kiddiecare.domain.user;
 
 import com.spring.kiddiecare.util.KakaoMapClient;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.Entity;
@@ -25,7 +22,8 @@ public class User {
     private String name;
     private int birth;
     private boolean gender;
-    private int phone;
+    //private int phone;
+    private String phone;
     private String email;
     private String postcode;
     private String addr;
@@ -55,7 +53,7 @@ public class User {
     public void update(UserRequestDto userDto){
         if(userDto.getPassword() != null)
             this.password = userDto.getPassword();
-        if(userDto.getPhone() != 0)
+        if(userDto.getPhone() != null)
             this.phone = userDto.getPhone();
         if(userDto.getEmail() != null)
             this.email = userDto.getEmail();

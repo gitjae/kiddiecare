@@ -104,6 +104,7 @@
     font-size: 40px;
     width: 20px;
     height: 20px;
+    cursor: pointer;
 }
 
 
@@ -124,4 +125,30 @@
 
 .selected-time {
     background: #93dbe9;
+}
+
+#change-info {
+    margin-top: 20px;
+    margin-left: 10px;
+}
+
+/* modal */
+#mo-time-list>li {
+    font-size: 18px;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+#mo-time-list>li:hover{
+    background: #cccccc;
+}
+
+#mo-time-list>li:first-child {
+    margin-top: 10px;
+}
+
+#modify-date {
+    font-size: 17px;
+    margin-top: 10px;
+    margin-bottom: 12px;
 }

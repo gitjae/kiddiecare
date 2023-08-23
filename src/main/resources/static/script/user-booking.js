@@ -172,6 +172,7 @@ $(document).ready(function () {
         }
     });
 
+    // 결제
     function payment(callback) {
         IMP.init('imp40242012'); // 아임포트 관리자의 가맹점 식별코드
 
@@ -198,6 +199,7 @@ $(document).ready(function () {
         });
     }
 
+    // 예약번호 증가
     function generateMerchantUid() {
         const currentDate = new Date();
         const timestamp = currentDate.getTime();

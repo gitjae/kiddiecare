@@ -8,8 +8,9 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AlarmReqeustDto {
-    private long alarm_no;
-    private String hosp_ykiho;
-    private String user_id;
-    private String alarm_text;
+    private long alarmNo;
+    private String hospYkiho;
+//    private String userId;
+    private int userNo;
+    private String alarmText;
 }

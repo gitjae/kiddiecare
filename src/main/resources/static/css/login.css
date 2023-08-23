@@ -5,6 +5,13 @@
     font-style: normal;
 }
 
+@font-face {
+    font-family: 'omyu_pretty';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-01@1.0/omyu_pretty.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
 .container {
     display: flex;
     justify-content: center;
@@ -24,6 +31,10 @@
     text-align: center;
 }
 
+.notice-title{
+    font-family: 'omyu_pretty', sans-serif;
+}
+
 #main-section {
     padding: 50px;
     width: 80%;
@@ -35,13 +46,17 @@
     border-radius: 5px;
 }
 
+#form, .login-form {
+    display: none;
+}
+
 .login-div{
     padding: 70px;
     background: #ffffff;
     border-radius: 5px;
 }
 
-#form{
+#form, .login-form{
     text-align: center;
     width: 80%;
     margin: 100px auto;
@@ -53,6 +68,7 @@ label{
     margin-right: 20px;
     text-align: center;
 }
+
 input{
     display: inline-block;
     width: 70%;
@@ -62,11 +78,11 @@ input{
     border-bottom: 1px solid #bebebe;
 }
 
-#div-id, #div-pw{
+#div-id, #div-pw, .div-pw, .div-id{
     margin-bottom: 30px;
 }
 
-#div-btn{
+#div-btn, .div-btn{
     margin-bottom: 30px;
 }
 
@@ -75,6 +91,49 @@ input{
     cursor: pointer;
 }
 
+#submit-btn:hover{
+    cursor: pointer;
+}
+
 #submit, #findIdAndPw {
     margin: 0 10px;
+}
+
+#submit-btn{
+    margin: 0 10px;
+    height: 35px;
+    background: #3E85EF;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    width: 55px;
+}
+
+.login-notice {
+    text-align: center;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+.notice-title {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+    /*font-weight: bold;*/
+}
+
+.sign-up-area{
+    display: flex;
+    margin-top: 30px;
+    justify-content: center;
+}
+
+.sign-up-area p, .sign-up-area a {
+    margin-right: 10px;
+}
+
+.sign-up-area a {
+    text-decoration-line: underline;
+    color: #3E85EF;
+    text-decoration-color: #3E85EF;
 }

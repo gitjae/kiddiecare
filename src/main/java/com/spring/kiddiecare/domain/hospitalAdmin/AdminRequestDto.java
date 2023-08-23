@@ -20,4 +20,6 @@ public class AdminRequestDto {
     private String adminName;
     private String doctorName;
     private MultipartFile file;
+
+    private String hospitalName;
 }
