@@ -27,40 +27,12 @@ function toggleNotifi() {
 // 웹소켓 연결 및 데이터 수신
 var socket = null;
 $(document).ready(function() {
+    if ($('.admin-index').length > 0) {
+        $('.notifi-box').css('right', '110px');
+
+
+    }
     var sessionValue = $('#sessionValue').val();
-
-    // $.ajax({
-    //     type: 'POST',
-    //     url: '/websocket/member',
-    //     data: {
-    //         target: target,
-    //         content: content,
-    //         type: type,
-    //         url: url
-    //     },
-    //     success: function(response){    // db전송 성공시 실시간 알림 전송
-    //         // 소켓에 전달되는 메시지
-    //         // 위에 기술한 EchoHandler에서 ,(comma)를 이용하여 분리시킨다.
-    //         if(response === ""){
-    //             console.log("dd")
-    //         }else{
-    //             console.log("ddd")
-    //         }
-    //         socket.send("관리자,"+target+","+content+","+url);
-    //     },
-    //     error: function(xhr, status, error) {
-    //         console.log(error);
-    //         alert("인증번호를 다시 확인해주세요.");
-    //     }
-    // });
-
-    $.ajax({
-        type: 'POST',
-        url: '/websocket/member',
-        data : {
-
-        }
-    })
 
     if (sessionValue !== undefined && sessionValue !== "") {
         console.log(sessionValue);

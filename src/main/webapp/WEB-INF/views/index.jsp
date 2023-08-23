@@ -40,11 +40,6 @@
                     <p>찜한 병원</p>
                 </div>
 
-    <%--            <div class="admin-myPage">--%>
-    <%--                <p>병원 어드민(사이트 도움말로 변경)</p>--%>
-    <%--                <img src="/image/userGuide.png">--%>
-    <%--            </div>--%>
-
                 <div id="user-myPage">
                     <img src="/image/edit.png">
                     <p>마이페이지</p>

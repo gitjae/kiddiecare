@@ -78,9 +78,6 @@ public class MainController {
     @GetMapping("/admin/join")
     public String adminJoin(){return "adminJoin";}
 
-    @GetMapping("/admin/update")
-    public String adminUpdate(){return "adminUpdate";}
-
     @GetMapping("pay")
     public String payment(){return "pay";}
 

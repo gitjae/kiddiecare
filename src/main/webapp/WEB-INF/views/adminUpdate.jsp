@@ -17,17 +17,20 @@
 <div class="admin-update-container">
     <div class="admin-info">
         <div id="admin-info-text-area">
-            <h2>이름</h2>
-            <p>병원</p>
+            <h2 id="admin-name">이름</h2>
+            <p id="hos-name">병원</p>
             <div id="admin-info-btn-area">
                 <button class="admin-info-btn" onclick="getAdminInfoForm()">수정</button>
             </div>
         </div>
         <form class="admin-info-form">
             <span> 관리자 개인정보 수정 </span>
-            <input name="adminName" placeholder="">
-            <input name="hospitalName" placeholder="">
-            <button class="admin-info-update-btn" onclick="adminInfoUpdateForm()">수정</button>
+            <input id="adminName" name="adminName" placeholder="">
+            <input id="hospitalName" name="hospitalName" placeholder="">
+            <div class="info-btn">
+                <input type="button" class="admin-info-update-btn" value="수정" onclick="adminInfoUpdateForm()">
+                <input type="button" class="admin-red-btn" value="취소" onclick="closeInfoForm()">
+            </div>
         </form>
     </div>
     <div class="admin-info-update">
@@ -41,7 +44,10 @@
                 <input name="adminPw" placeholder="현재 비밀번호">
                 <input name="adminUpdatePw" placeholder="새 비밀번호">
                 <input id="admin-pw-again" name="adminUpdatePwAgain" placeholder="새 비밀번호 확인">
-                <button onclick="adminPwUpdateForm()">비밀번호 변경 저장</button>
+                <div class="info-btn">
+                    <input type="button" value="비밀번호 변경 저장" onclick="adminPwUpdateForm()">
+                    <input type="button" value="취소" class="admin-red-btn" onclick="closeInfoForm()">
+                </div>
             </form>
         </div>
         <div class="admin-info-email-area">
@@ -56,19 +62,22 @@
                     <span id="import-email">* 이메일 변경시 이메일 인증을 다시해야합니다.*</span>
                 </div>
                 <div class="email-form">
-                    <input name="adminEmail" placeholder="">
-                    <button onclick="sendVerificationEmail()">인증 보내기</button>
+                    <input name="adminEmail" placeholder="이메일을 입력해주세요.">
+                    <input type="button" value="인증 보내기" onclick="sendVerificationEmail()">
                 </div>
                 <div class="email-form">
-                    <input name="code" placeholder="">
-                    <button onclick="validateVerificationCode()">인증 받기</button>
+                    <input name="code" placeholder="인증 코드를 입력해주세요.">
+                    <input type="button" value="인증 받기" onclick="validateVerificationCode()">
                 </div>
-                <button onclick="adminEmailUpdateForm()">변경</button>
+                <div class="info-btn-reverse">
+                    <input type="button" value="변경" onclick="adminEmailUpdateForm()">
+                    <input type="button" value="취소" class="admin-red-btn" onclick="closeInfoForm()">
+                </div>
             </form>
         </div>
         <div class="admin-leave-area">
             <span>회원 탈퇴</span>
-            <button id="admin-leave-btn" onclick="deleteAdmin()">회원 탈퇴</button>
+            <button class="admin-red-btn" onclick="deleteAdmin()">회원 탈퇴</button>
         </div>
     </div>
 </div>

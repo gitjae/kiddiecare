@@ -1,13 +1,20 @@
+/* InfoForm 열기 */
 function getAdminInfoForm(){
     const infoTextArea = $('#admin-info-text-area');
     const infoForm = $('.admin-info-form');
 
-    infoTextArea.on('click', () => {
-        // pw-text-area 영역 감추기
-        infoTextArea.hide();
-        // pw-form 영역 보이기
-        infoForm.css('display', 'flex');
-    });
+    infoTextArea.css("display", "none");
+    $('#adminName').val($('#hos-name').text());
+    $('#hospitalName').val($('#admin-name').text());
+    infoForm.css('display', 'flex');
+}
+
+/* InfoForm 닫기 */
+function closeInfoForm() {
+    const infoTextArea = $('#admin-info-text-area');
+    const infoForm = $('.admin-info-form');
+    infoTextArea.css('display', 'flex');
+    infoForm.css("display", "none");
 }
 
 /* adminPwForm */
@@ -53,7 +60,6 @@ function adminInfoUpdateForm(){
             }else if(data.response === "fail cause session does not exist."){
                 alert("로그인 해주세요.")
             }
-            location.href = '/admin/update';
         },
         error: function(xhr, error) {
             console.log(xhr);
@@ -86,7 +92,6 @@ function adminPwUpdateForm(){
             }else if(data.response === "fail cause session does not exist."){
                 alert("로그인 해주세요.")
             }
-            location.href = '/admin/update';
         },
         error: function(xhr, error) {
             console.log(xhr);
@@ -112,7 +117,6 @@ function sendVerificationEmail(){
             }else{
                 alert("그냥 오류")
             }
-            location.href = '/admin/update';
         },
         error: function(xhr, error) {
             console.log(xhr);
@@ -140,7 +144,6 @@ function validateVerificationCode(){
             }else{
                 alert("그냥 오류")
             }
-            location.href = '/admin/update';
         },
         error: function(xhr, error) {
             console.log(xhr);
@@ -170,7 +173,6 @@ function adminEmailUpdateForm(){
             }else if(data.response === "fail cause session does not exist."){
                 alert("로그인 해주세요.")
             }
-            location.href = '/admin/update';
         },
         error: function(xhr, error) {
             console.log(xhr);
@@ -199,7 +201,6 @@ function deleteAdmin(){
             }else if(data.response === "fail cause session does not exist."){
                 alert("로그인 해주세요.")
             }
-            location.href = '/admin/update';
         },
         error: function(xhr, error) {
             console.log(xhr);

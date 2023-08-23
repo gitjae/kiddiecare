@@ -5,7 +5,6 @@ $(function () {
 
 function get_hospital_name() {
     let ykiho = $('#ykiho').val();
-
     $.ajax({
         url: `/hospitalName/${ykiho}`,
         method: 'GET',
