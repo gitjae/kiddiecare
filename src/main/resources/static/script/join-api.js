@@ -29,54 +29,54 @@ function join(){
     const addr_detail = $('#addr3').val();
 
     if(!duplChk){
-        alert("아이디 중복체크");
+        alert("아이디 중복체크를 확인해야 합니다.");
         return false;
     }
 
     if(!getid.test(id)){
         $("#id").val("");
-        alert("아이디");
+        alert("영어 소문자와 숫자 4~20자리 입력만 가능합니다.");
         return false;
     }
 
     if(!getpw.test(password)){
         $("#password").val("");
-        alert("비밀번호");
+        alert("문자, 숫자 특수문자를 포함하여 8자리 이상 입력해야 합니다.");
         return false;
     }
 
     if(password != pwChk){
         $("#passwordChk").val("");
-        alert("비밀번호확인");
+        alert("비밀번호확인이 일치하지 않습니다.");
         return false;
     }
 
     if(!getName.test(name)){
         $('#name').val("");
-        alert("이름");
+        alert("한글, 영어 2~8자리 입력만 가능합니다.");
         return false;
     }
 
     if (!getMail.test(email)){
         $('#email').val("");
-        alert("이메일");
+        alert("이메일양식에 맞지 않습니다.");
         return false;
     }
 
     if(!getBirth.test(birth)){
         $('#birth').val("");
-        alert("생년월일")
+        alert("생년월일을 YYYYMMDD에 맞춰 입력해주세요.")
         return false;
     }
 
     if(!getPhone.test(phone)){
         $('#phone').val("");
-        alert("전화번호");
+        alert("전화번호를 입력해주세요 ex) 01012345678");
         return false;
     }
 
     if(!phoneChk){
-        alert("전화번호 인증");
+        alert("전화번호를 인증받아야 합니다.");
         return false;
     }
 
@@ -109,9 +109,11 @@ function join(){
         data:JSON.stringify(data),
         contentType:'application/json; charset=utf-8'
     }).done(res => {
-        alert(res.join);
         if(res.join === "success"){
+            alert('가입에 성공했습니다.')
             location.href = "/login";
+        } else {
+            alert('가입에 실패했습니다.')
         }
     })
 }
@@ -123,7 +125,7 @@ function idDuplChk(){
 
     if(!getid.test(id)){
         $("#id").val("");
-        alert("아이디");
+        alert("영어 소문자와 숫자 4~20자리 입력만 가능합니다.");
         return false;
     }
 
@@ -134,10 +136,10 @@ function idDuplChk(){
         if(user.id === id){
             $('#id').val("");
             duplChk = false;
-            alert("중복된 아이디");
+            alert("중복된 아이디 입니다.");
         } else {
             duplChk = true;
-            alert("사용가능한 아이디");
+            alert("사용가능한 아이디 입니다.");
         }
     })
 }
@@ -147,7 +149,7 @@ function sendCode(){
 
     if(!getPhone.test(phone)){
         $('#phone').val("");
-        alert("전화번호");
+        alert("전화번호를 입력해주세요 ex) 01012345678");
         return false;
     }
 
@@ -184,6 +186,7 @@ function verify(){
             $('#code').prop("disabled",true);
             $('#verify').prop("disabled",true);
             phoneChk = true;
+            alert("인증에 성공했습니다.")
         } else {
             alert("인증에 실패했습니다.")
         }

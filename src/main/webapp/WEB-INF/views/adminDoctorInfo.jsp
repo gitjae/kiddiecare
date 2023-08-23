@@ -17,7 +17,7 @@
 <div class="form_container">
     <i class="uil uil-times form_close"></i>
     <div class="form doctor_form">
-        <form method="POST">
+        <form method="POST" onsubmit="return false">
             <h2>의사 추가</h2>
             <div class="input_box">
                 <input type="text" name="doctorName" placeholder="의사이름을 입력해주세요." required />
@@ -31,10 +31,10 @@
                 <select name="subject" id="option-area">
                 </select>
             </div>
-            <div class="input_box">
+            <!--<div class="input_box">
                 <input type="file" id="doctor-image" name="file" accept=".png,.jpg" size="10000000"/>
                 <i class="uil uil-user-square"></i>
-            </div>
+            </div>-->
             <button class="button" onclick="addDoctor()">의사 추가</button>
         </form>
     </div>

@@ -29,6 +29,7 @@ public class UserController {
     private final UserService userService;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final SMSSender smsSender;
 
     @PostMapping("join")
     public Map join(@RequestBody UserRequestDto userDto){
@@ -106,15 +107,14 @@ public class UserController {
     public Map SmsSend(@RequestParam String number, HttpSession session){
         JSONObject jsonObject = new JSONObject();
 
-        int phone = Integer.parseInt(number);
-        Optional<User> foundUser = userRepository.findUserByPhone(phone);
+        Optional<User> foundUser = userRepository.findUserByPhone(number);
         if (foundUser.isPresent()){
             jsonObject.put("send","fail");
             jsonObject.put("dupl","true");
             return jsonObject.toMap();
         }
 
-        SMSSender smsSender = new SMSSender();
+        //SMSSender smsSender = new SMSSender();
         RandomUtil randomUtil = new RandomUtil();
         String code = randomUtil.makeRandomCode();
 
@@ -157,13 +157,12 @@ public class UserController {
     public Map SmsSendFind(@RequestBody UserRequestDto userDto, HttpSession session){
         JSONObject jsonObject = new JSONObject();
 
-        int phone = userDto.getPhone();
-        String number = String.valueOf(phone);
+        String number = userDto.getPhone();
         String name = userDto.getName();
         String id = userDto.getId();
-        Optional<User> foundUser = userRepository.findUserByIdAndNameAndPhone(id, name, phone);
+        Optional<User> foundUser = userRepository.findUserByIdAndNameAndPhone(id, name, number);
         if (foundUser.isPresent()){
-            SMSSender smsSender = new SMSSender();
+            //SMSSender smsSender = new SMSSender();
             RandomUtil randomUtil = new RandomUtil();
             String code = randomUtil.makeRandomCode();
 
@@ -212,10 +211,6 @@ public class UserController {
         String sessionCode = (String) session.getAttribute("code");
         LocalDateTime time = (LocalDateTime) session.getAttribute("time");
 
-        System.out.println("scode"+sessionCode);
-        System.out.println("code"+code);
-        System.out.println("time"+time);
-
         if(sessionCode != null && time != null){
             if(time.plusMinutes(3).isAfter(LocalDateTime.now())){
                 if (sessionCode.equals(code)){
@@ -242,8 +237,8 @@ public class UserController {
     @GetMapping("findid")
     public Map findId(@RequestParam String name, @RequestParam int phone){
         JSONObject jsonObject = new JSONObject();
-        System.out.println("name:"+name+"/phone:"+phone);
-        Optional<User> foundUser = userRepository.findUserByNameAndPhone(name, phone);
+
+        Optional<User> foundUser = userRepository.findUserByNameAndPhone(name, String.valueOf(phone));
 
         if(foundUser.isPresent()){
             User user = foundUser.get();
@@ -263,7 +258,7 @@ public class UserController {
 
         String id = userDto.getId();
         String name = userDto.getName();
-        int phone = userDto.getPhone();
+        String phone = userDto.getPhone();
 
         Optional<User> foundUser = userRepository.findUserByIdAndNameAndPhone(id, name, phone);
 

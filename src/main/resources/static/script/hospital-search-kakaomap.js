@@ -67,7 +67,7 @@ function getUserLocation() {
 function setPosition(position) {
     xPos = position.coords.longitude;
     yPos = position.coords.latitude;
-    console.log("x:"+xPos+"y:"+yPos);
+
     data = {
         xPos:xPos,
         yPos:yPos,

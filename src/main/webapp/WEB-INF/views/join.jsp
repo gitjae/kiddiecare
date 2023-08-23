@@ -27,7 +27,7 @@
                     </div>
                     <div id="div-pw">
                         <label for="password">비밀번호</label>
-                        <input type="password" id="password" name="password" placeholder="한글, 영어 대소문자 [2~8자리 까지 입력 가능]">
+                        <input type="password" id="password" name="password" placeholder="문자, 숫자 특수문자를 포함 [8~20자리 까지 입력 가능]">
                     </div>
                     <div id="div-pwChk">
                         <label for="passwordChk">비밀번호확인</label>

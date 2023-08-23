@@ -26,7 +26,7 @@
 
                 <div class="input-box">
                     <label for="hosp-name">병원명 </label>
-                    <input type="text" id="hosp-name" name="hosp-name" placeholder="병원찾기 버튼을 눌러 병원을 조회하세요" readonly />
+                    <input type="text" id="hosp-name" name="hospitalName" placeholder="병원찾기 버튼을 눌러 병원을 조회하세요" readonly />
                     <input type="button" id="hosp-name-btn" class="button-style" name="hosp-name-btn" value="병원 찾기" onclick="showModal()" />
                     <div class="err-box">
                         <span class="err" id="hosp-name-null">병원찾기로 병원을 조회하세요.</span>

@@ -54,7 +54,7 @@ function getChildren(page) {
 
 function delChildInfo(btn) {
     const no = $(btn).closest('.div-child').find('.child-name').attr('child-no');
-    if (confirm('정말로 이 자녀정보를 지우시겠습니까?')) {
+    if (confirm('자녀정보를 삭제하면 아직 진료받지 않은 예약까지 삭제됩니다.\n\n정말로 이 자녀정보를 지우시겠습니까?')) {
         $.ajax({
             method: 'DELETE',
             url: `api/v1/children/child/${no}`
@@ -97,9 +97,9 @@ function updateChildForm(btn) {
             <div id="div-gender">
                 <span class="info-title">성별</span>
                 <span><label for="gender-m">남</label>
-                <input type="radio" id="gender-m" class="gender" name="gender-${no}" value="m" ${gender ? 'checked' : ''}>
+                <input type="radio" id="gender-m" class="gender" name="gender-${no}" value="m" ${gender ? 'checked' : ''} disabled>
                 <label for="gender-f">여</label>
-                <input type="radio" id="gender-f" class="gender" name="gender-${no}" value="f" ${!gender ? 'checked' : ''}></span>
+                <input type="radio" id="gender-f" class="gender" name="gender-${no}" value="f" ${!gender ? 'checked' : ''} disabled></span>
             </div>
             </div>
             
