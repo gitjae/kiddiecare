@@ -1,6 +1,6 @@
 window.onload = function (){
     buildCalendar();
-    $('.appo-table').css({"display":"block"});
+    $('.appo-table').css({"display":"flex"});
 }
 
 function appoUpdate(){
