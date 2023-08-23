@@ -26,6 +26,7 @@ public class User {
     private int birth;
     private boolean gender;
     private int phone;
+    //private String phone;
     private String email;
     private String postcode;
     private String addr;
@@ -57,6 +58,10 @@ public class User {
             this.password = userDto.getPassword();
         if(userDto.getPhone() != 0)
             this.phone = userDto.getPhone();
+        /*
+        if(userDto.getPhone() != null)
+            this.phone = userDto.getPhone();
+        */
         if(userDto.getEmail() != null)
             this.email = userDto.getEmail();
         if(userDto.getPostcode() != null)
