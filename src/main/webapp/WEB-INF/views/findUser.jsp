@@ -42,19 +42,30 @@
                         <label for="find-password-name">이름</label>
                         <input id="find-password-name">
                     </div>
-                    <div class="phone-a">
-                        <label for="find-password-phone">전화번호</label>
-                        <input id="find-password-phone">
+                    <div>
+                        <div class="phone-a">
+                            <label for="find-password-phone">전화번호</label>
+                            <input id="find-password-phone">
+                        </div>
                         <button id="send" onclick="sendCode()">인증번호 발송</button>
                     </div>
+
                     <div id="div-verify">
                         <label for="verify-code">인증번호</label>
                         <input id="verify-code">
                         <button id="verify-btn" onclick="verify()">인증하기</button>
                     </div>
-                    <button id="find-password-btn" onclick="findPassword()">비밀번호 찾기</button>
-                    <div id="find-password-result">
-                        <p id="response-password"></p>
+
+                    <div class="new-password-a" style="display: none">
+                        <div id="div-password-new">
+                            <label for="password-new">새 비밀번호</label>
+                            <input type="password" id="password-new" name="password">
+                        </div>
+                        <div id="div-password-chk">
+                            <label for="password-new-chk">비밀번호확인</label>
+                            <input type="password" id="password-new-chk" name="password">
+                        </div>
+                        <button id="find-password-btn" onclick="findPassword()">비밀번호 찾기</button>
                     </div>
                 </div>
             </div>
