@@ -9,6 +9,7 @@
 }
 
 .admin-update-container form{
+    display: none;
 }
 
 .admin-update-container input{
@@ -68,12 +69,12 @@
     gap: 20px;
 }
 
-.admin-info > h2{
+.admin-info h2{
     font-size: 2.25rem;
     margin: 0px;
 }
 
-.admin-info > p{
+.admin-info p{
     font-size: 1rem;
     margin-top: 0.25rem;
     margin-bottom: 0.5rem;
@@ -95,7 +96,16 @@
 }
 
 .admin-info-update span{
-    padding: 20px;
+    padding: 10px;
+    margin-top: 10px;
+}
+
+#admin-email-text-area:last-child{
+    margin-left: 10px;
+}
+
+.email-form > input{
+    width: 65%;
 }
 
 .pw-form{
@@ -117,6 +127,7 @@
 .admin-info-update button{
     padding: 20px;
     margin-top: 15px;
+    margin-left: 10px;
 }
 
 #pw-text-area{
@@ -125,4 +136,14 @@
 
 .admin-info-Email{
     width: 65%;
+}
+
+.admin-update-container form > span{
+    line-height: 1.5;
+    font-weight: 600;
+    font-size: 1.125rem;
+}
+
+#import-email{
+    color: red;
 }

@@ -34,8 +34,8 @@ public class AdminService {
         adminRepository.deleteById(no);// 아이디 값은 pk이다!!
     }
     @Transactional
-    public Admin updateAdminByNo(AdminRequestDto adminDto){
-        Admin admin = adminRepository.findByAdminId(adminDto.getAdminId());
+    public Admin updateAdminByAdminDto(AdminRequestDto adminDto, String session){
+        Admin admin = adminRepository.findByAdminId(session);
         admin.Update(adminDto);
         return admin;
     }
