@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>로그인</title>
+    <link rel="shortcut icon" href="/image/favicon.ico">
     <link href="/css/common.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/login.css">
 <%--    <link rel="stylesheet" href="/css/admin-login.css">--%>

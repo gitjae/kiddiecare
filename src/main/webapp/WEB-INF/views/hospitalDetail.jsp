@@ -4,10 +4,10 @@
 <html>
 <head>
     <title>병원 상세정보</title>
+    <link rel="shortcut icon" href="/image/favicon.ico">
     <link href="/css/common.css" rel="stylesheet">
     <link href="/css/hospital-detail-css.css" rel="stylesheet">
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=${appkey}"></script>
-
 </head>
 <c:import url="header.jsp"></c:import>
 <body>

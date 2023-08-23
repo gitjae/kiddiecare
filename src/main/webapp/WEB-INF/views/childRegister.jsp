@@ -3,6 +3,7 @@
 <html>
 <head>
     <title>자녀등록</title>
+    <link rel="shortcut icon" href="/image/favicon.ico">
     <link href="/css/childRegister.css" rel="stylesheet">
     <script src="/script/childRegister.js"></script>
 </head>

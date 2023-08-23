@@ -4,6 +4,7 @@
 <html>
 <head>
     <title>예약정보입력</title>
+    <link rel="shortcut icon" href="/image/favicon.ico">
     <link href="/css/common.css" rel="stylesheet">
     <link href="/css/user-booking-css.css" rel="stylesheet">
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=${appkey}"></script>

@@ -4,6 +4,7 @@
 <%-- MainController -> @GetMapping("adminIndex") --%>
 <head>
     <title>우리동네소아과 관리자 페이지</title>
+    <link rel="shortcut icon" href="/image/favicon.ico">
     <link href="/css/common.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/admin-index.css">
 </head>
