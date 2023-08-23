@@ -20,30 +20,17 @@
 
         <h1>예약 관리</h1>
 
-<%--        <h1>의사 선택</h1>--%>
-<%--        <p id="selectedDoctor"></p>--%>
-<%--        <div class="select-option">--%>
-
-<%--        </div>--%>
-
         <h3>날짜 설정</h3>
         <p id="date-status"></p>
 
         <div id="detail-area">
             <input type="date" id="lookup-date">
 
-<%--            <div id="time-bar-area">--%>
-<%--                <ul id="time-list">--%>
-<%--                    &lt;%&ndash; <li>9:00~10:00</li>&ndash;%&gt;--%>
-<%--                </ul>--%>
-<%--            </div>--%>
-
             <div id="no-detail" style="display: none;">해당 날짜에 예약을 생성하지 않았습니다.</div>
             <div class="detail-change-area">
                 <table>
                     <h3>상세 스케줄</h3>
-                    <button id="reset" onclick="reset()">RESET</button>
-                    <button id="all-save" onclick="allSave()">전체저장</button>
+                    <button id="reset" onclick="reset()">DB내용 다시 불러오기</button>
                     <thead id="thead">
                     <tr>
 <%--                        <th>No.</th>--%>
@@ -61,9 +48,6 @@
                     <tbody id="appo-mo-table">
                     </tbody>
 
-    <%--                <button onclick="pageMinus()"> < </button>--%>
-    <%--                <p id="page">1</p>--%>
-    <%--                <button onclick="pagePlus()"> > </button>--%>
                 </table>
 
             </div>

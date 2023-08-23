@@ -19,7 +19,6 @@ public class Alarm {
     @Id
     private long alarmNo;
     private String hospYkiho;
-//    private String userId;
     private int userNo;
     private String alarmText;
 
