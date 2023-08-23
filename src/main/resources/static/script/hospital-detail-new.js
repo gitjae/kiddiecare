@@ -1,9 +1,17 @@
 let ykihoD = null;
+let urlSgguCd = getSgguCdFromUrl();
+let urlHospitalName = getHospitalNameUrl();
 
 function getSgguCdFromUrl() {
     const currentUrl = new URL(window.location.href);
     const sgguCd = currentUrl.searchParams.get('sgguCd');
     return sgguCd;
+}
+
+function getHospitalNameUrl() {
+    const currentUrl = new URL(window.location.href);
+    const hosp = currentUrl.searchParams.get('hospitalName');
+    return hosp;
 }
 
 // 예약하기 버튼 액션
@@ -54,10 +62,14 @@ function getHospInfoDetail() {
                     doctorContainer.appendChild(doctorCard);
                 });
                 $('.appo-table').css({display:"flex"});
+                $('.appo-table').show();
+                $('.info-title').show();
+                $('.doctor-info').show();
+                $('.info-sub-title').show();
+                $('#booking-btn').show();
             } else {
-                alert('우리동네소아과에 등록되지 않은 병원 입니다.');
-                $('.appo-table').empty();
                 $('#booking-btn').remove();
+                alert('우리동네소아과에 등록되지 않은 병원 입니다.');
             }
             isLiked();
         })
@@ -98,7 +110,11 @@ function isLiked(){
     console.log("y:",thisYkiho);
     $.ajax({
         method:'GET',
-        url:`/api/like/${thisYkiho}`
+        url:`/api/like`,
+        data:{
+            hospitalName:urlHospitalName,
+            sgguCd:urlSgguCd
+        }
     }).done(res => {
         console.log("isLiked:" + res);
         isLikedHosp = res;
@@ -130,22 +146,29 @@ function toggleLike(btn) {
 function likeHospital() {
     $.ajax({
         method: 'POST',
-        url: `/api/like/${ykihoD}`
+        url: `/api/like`,
+        data:{
+            hospitalName:urlHospitalName,
+            sgguCd:urlSgguCd
+        }
+    }).done(function () {
+        console.log("Liked the hospital successfully!");
+        //handleLikeStatus(ykihoD);
+        isLiked();
     })
-        .done(function () {
-            console.log("Liked the hospital successfully!");
-            //handleLikeStatus(ykihoD);
-            isLiked();
-        })
-        .fail(function (err) {
-            console.error("Error while liking the hospital:", err.responseText);
-        });
+    .fail(function (err) {
+        console.error("Error while liking the hospital:", err.responseText);
+    });
 }
 
 function unlikeHospital() {
     $.ajax({
         method: 'DELETE',
-        url: `/api/like/${ykihoD}`
+        url: `/api/like`,
+        data:{
+            hospitalName:urlHospitalName,
+            sgguCd:urlSgguCd
+        }
     })
         .done(function () {
             console.log("Unliked the hospital successfully!");
@@ -173,8 +196,8 @@ function getTotalInfo() {
         console.log(res);
         const BD = res.data.hospBasisData;
         const DD = res.data.hospDetailData;
-        const LD = res.data.hospListData;
-        const SD = res.data.hospSubData;
+        //const LD = res.data.hospListData;
+        //const SD = res.data.hospSubData;
         if (res.result == 'success') {
             // 카카오 맵
             xPos = BD.xpos;
@@ -186,14 +209,16 @@ function getTotalInfo() {
             $('#hospital-name').text(BD.yadmNm);
             $('#hospital-addr').text(BD.addr);
             $('#hospital-tell').text(BD.telno);
-            $('#workhour-mon').text((timeFormat(DD.trmtMonStart) + " - " + timeFormat(DD.trmtMonEnd)));
-            $('#workhour-tue').text(timeFormat(DD.trmtTueStart) + " - " + timeFormat(DD.trmtTueEnd));
-            $('#workhour-wed').text(timeFormat(DD.trmtWedStart) + " - " + timeFormat(DD.trmtWedEnd));
-            $('#workhour-thu').text(timeFormat(DD.trmtThuStart) + " - " + timeFormat(DD.trmtThuEnd));
-            $('#workhour-fri').text(timeFormat(DD.trmtFriStart) + " - " + timeFormat(DD.trmtFriEnd));
-            $('#workhour-sat').text(timeFormat(DD.trmtSatStart) + " - " + timeFormat(DD.trmtSatEnd));
-            $('#workhour-sun').text(timeFormat(DD.trmtSunStart) + " - " + timeFormat(DD.trmtSunEnd));
-            $('#hospital-park').text(DD.parkEtc + "주차 가능");
+            if(DD != null){
+                $('#workhour-mon').text((timeFormat(DD.trmtMonStart) + " - " + timeFormat(DD.trmtMonEnd)));
+                $('#workhour-tue').text(timeFormat(DD.trmtTueStart) + " - " + timeFormat(DD.trmtTueEnd));
+                $('#workhour-wed').text(timeFormat(DD.trmtWedStart) + " - " + timeFormat(DD.trmtWedEnd));
+                $('#workhour-thu').text(timeFormat(DD.trmtThuStart) + " - " + timeFormat(DD.trmtThuEnd));
+                $('#workhour-fri').text(timeFormat(DD.trmtFriStart) + " - " + timeFormat(DD.trmtFriEnd));
+                $('#workhour-sat').text(timeFormat(DD.trmtSatStart) + " - " + timeFormat(DD.trmtSatEnd));
+                $('#workhour-sun').text(timeFormat(DD.trmtSunStart) + " - " + timeFormat(DD.trmtSunEnd));
+                $('#hospital-park').text(DD.parkEtc + "주차 가능");
+            }
         } else {
             alert('병원정보를 불러오지 못했습니다. \n잠시 후 다시 시도해주세요.')
         }

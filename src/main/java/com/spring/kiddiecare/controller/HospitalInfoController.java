@@ -31,6 +31,7 @@ public class HospitalInfoController {
     private final String getDtlInfo = "getDtlInfo2?";
     private final String getDgsbjtInfo = "getDgsbjtInfo2?";
     private final String getTrnsprtInfo  = "getTrnsprtInfo2?";
+    private final String dgsbjtCd = "&dgsbjtCd=11";
 
 
     @Value("${external.api.decode}")
@@ -52,7 +53,7 @@ public class HospitalInfoController {
     }
 
     private Optional<HospData> getHospListByKeyword(String query){
-        String hospListUrl = baseUrl + hospInfoService + HospList + encodeServiceKey + query;
+        String hospListUrl = baseUrl + hospInfoService + HospList + encodeServiceKey + query + dgsbjtCd;
         System.out.println("HospList "+hospListUrl);
         return Optional.ofNullable(openApiDataUtil.getHospList(hospListUrl, query));
     }

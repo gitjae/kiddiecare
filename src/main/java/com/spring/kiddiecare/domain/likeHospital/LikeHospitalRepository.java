@@ -11,7 +11,11 @@ public interface LikeHospitalRepository extends JpaRepository<LikeHospital, Inte
     boolean existsByUserNoAndYkiho(int userNo, String ykiho);
     LikeHospital findByUserNoAndYkiho(int userNo, String ykiho);
 
+    LikeHospital findByUserNoAndHospitalNameAndSgguCd(int userNo, String hospitalName, String sgguCd);
+
     Optional<LikeHospital> findLikeHospitalByUserNoAndYkiho(int userNo, String ykiho);
+
+    Optional<LikeHospital> findLikeHospitalByUserNoAndHospitalNameAndSgguCd(int userNo, String hospitalName, String sgguCd);
 
     List<LikeHospital> findByUserNo(int userNo);
 

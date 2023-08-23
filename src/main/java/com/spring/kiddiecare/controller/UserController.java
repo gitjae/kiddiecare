@@ -235,10 +235,10 @@ public class UserController {
     }
 
     @GetMapping("findid")
-    public Map findId(@RequestParam String name, @RequestParam int phone){
+    public Map findId(@RequestParam String name, @RequestParam String phone){
         JSONObject jsonObject = new JSONObject();
 
-        Optional<User> foundUser = userRepository.findUserByNameAndPhone(name, String.valueOf(phone));
+        Optional<User> foundUser = userRepository.findUserByNameAndPhone(name, phone);
 
         if(foundUser.isPresent()){
             User user = foundUser.get();

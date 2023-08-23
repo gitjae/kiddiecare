@@ -19,24 +19,15 @@
 <c:import url="header.jsp"></c:import>
 <body>
     <section>
-<%--        <c:when test="${empty response}">--%>
-<%--            <div class="data-notfund">--%>
-<%--                <p>찾는 병원이 없어요..</p>--%>
-<%--            </div>--%>
-<%--        </c:when>--%>
-<%--        <c:otherwise>--%>
-<%--            <c:forEach items="${response}" var="item">--%>
-<%--                <div class="hospList">--%>
-<%--                    <a>--%>
-<%--                    </a>--%>
-<%--                    <span>병원명 : ${item.yadmNm}</span>--%>
-<%--                    <span>병원 주소: ${item.addr}</span>--%>
-<%--                    <span>병원 번호: 미정</span>--%>
-<%--                    <span>운영시간: 미정</span>--%>
-<%--                    <span>휴진일: 미정</span>--%>
-<%--                </div>--%>
-<%--            </c:forEach>--%>
-<%--        </c:otherwise>--%>
+        <div id="loading" style="display: none">
+            <div class="loading-content">
+                <div class="loadingio-spinner-spinner-822xu4kqp5u"><div class="ldio-zhpd3csebyc">
+                    <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
+                </div>
+                </div>
+                <p>데이터를 불러오는 중입니다 잠시만 기다려주세요..</p>
+            </div>
+        </div>
 
         <div id="hospital-list">
             <div class="flex-area">

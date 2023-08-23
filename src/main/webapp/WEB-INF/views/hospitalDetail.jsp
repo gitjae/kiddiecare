@@ -13,6 +13,16 @@
 <body>
 <div class="container">
     <section>
+        <div id="loading" style="display: none">
+            <div class="loading-content">
+                <div class="loadingio-spinner-spinner-822xu4kqp5u"><div class="ldio-zhpd3csebyc">
+                    <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
+                </div>
+                </div>
+                <p>데이터를 불러오는 중입니다 잠시만 기다려주세요..</p>
+            </div>
+        </div>
+
         <input type="hidden" id="loggedInUser" value="${log}">
 
         <div class="likeHospital-area">
@@ -75,15 +85,15 @@
 <%--                <p id="subject-list">진료과목 : </p>--%>
 <%--            </div>--%>
 
-            <div class="doctor-info">
+            <div class="doctor-info" style="display: none">
                 <div class="doctor-card">
 
                 </div>
             </div>
 
-            <h2 class="info-title">병원예약</h2>
-            <p class="info-sub-title">예약은 <strong>날짜 선택 &#8680; 예약 시간 선택 &#8680; 담당 의사 선택</strong> 순서로 진행해주세요.</p>
-            <div class="appo-table">
+            <h2 class="info-title" style="display: none">병원예약</h2>
+            <p class="info-sub-title" style="display: none">예약은 <strong>날짜 선택 &#8680; 예약 시간 선택 &#8680; 담당 의사 선택</strong> 순서로 진행해주세요.</p>
+            <div class="appo-table" style="display: none">
                 <table class="Calendar">
                     <thead>
                     <tr>
@@ -119,7 +129,7 @@
 
 <%--            </div>--%>
 
-            <button id="booking-btn" data-ykiho="${hospital.ykiho}">예약하기</button>
+            <button id="booking-btn" data-ykiho="${hospital.ykiho}" style="display: none">예약하기</button>
         </div>
     </section>
 </div>

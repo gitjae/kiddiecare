@@ -4,6 +4,7 @@ var keyword;
 var currentPage = 1;
 
 document.addEventListener("DOMContentLoaded", function (){
+    $('#loading').show();
     const urlParams = new URLSearchParams(window.location.search);
     keyword = urlParams.get('keyword');
     // xpos = urlParams.get('xpos');
@@ -19,7 +20,7 @@ document.addEventListener("DOMContentLoaded", function (){
         data['keyword'] = keyword;
         url = '/search/hospList';
     } else {
-        data['radius'] = '500';
+        data['radius'] = '2000';
         url = '/search/hospList/addr'
     }
 
@@ -48,14 +49,14 @@ function next(){
 }
 
 function ajaxRequest(data, url){
+    $('#loading').show();
     $.ajax({
         method:'GET',
         url:url,
-        data:data
+        data:data,
+        timeout:10000
     }).done(res => {
-        console.log(res);
         let len = Object.keys(res.data).length;
-        console.log(len);
         if(len>0){
             setMarkers(res);
             currentPage = data['pageNo'];
@@ -63,6 +64,13 @@ function ajaxRequest(data, url){
             alert('더 이상 불러올 데이터가 없습니다.');
             $('#next').prop("disabled", true);
         }
+        $('#loading').hide();
+    }).fail(function (){
+        alert('데이터를 불러오지 못했습니다.\n다시 시도해주세요')
+        $('.kakaoMap-area').hide();
+        $('#hospital-list').hide();
+        $('#loading').hide();
+
     })
 }
 
