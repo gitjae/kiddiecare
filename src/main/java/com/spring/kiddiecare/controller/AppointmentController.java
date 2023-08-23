@@ -161,7 +161,6 @@ public class AppointmentController {
         // 저장된 모든 리스트 가져올 때
         return appoResponseRepository.findAllByTimeSlotNo(timeSlotNo);
     }
-
     // 페이징처리
 //    @GetMapping("/getAppoDetails/{page}")
 //    public List<AppoResponseDto> getAppoDetails(@RequestParam int timeSlotNo, @PathVariable int page, @PageableDefault(size=10) Pageable pageable){
