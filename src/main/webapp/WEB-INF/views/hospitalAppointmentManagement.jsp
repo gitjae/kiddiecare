@@ -17,14 +17,6 @@
 <body>
         <div class="select-area">
             <h1>예약자 현황</h1>
-<%--            <button>전체 예약자 불러오기</button>--%>
-<%--            <button>날짜별 예약자 불러오기</button>--%>
-
-<%--            <h1>의사 선택</h1>--%>
-
-<%--            <div class="select-option">--%>
-
-<%--            </div>--%>
 
             <h3>날짜 설정</h3>
             <p id="date-status"></p>
@@ -42,6 +34,7 @@
                     <thead id="thead">
                         <tr>
                             <th>No.</th>
+<%--                            <th>예약생성일</th>--%>
                             <th>예약상태</th>
                             <th>보호자명</th>
                             <th>환자명</th>
@@ -52,9 +45,6 @@
                     <tbody id="table-body">
                     </tbody>
 
-<%--                    <button onclick="pageMinus()"> < </button>--%>
-<%--                    <p id="page">1</p>--%>
-<%--                    <button onclick="pagePlus()"> > </button>--%>
                 </table>
                 <div id="no-appo" style="display: none;">예약 없음</div>
             </div>
@@ -67,7 +57,6 @@
 
                 </div>
             </div>
-
         </div>
 
 

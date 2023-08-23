@@ -12,6 +12,7 @@
     <style>
         *{
             /*margin: 0;*/
+            text-align: center;
         }
         #container{
             height: 600px;
@@ -30,6 +31,10 @@
             text-align: center;
         }
 
+        button{
+            margin-top: 50px;
+        }
+
 
     </style>
     <title>예약 생성 완료</title>
@@ -42,6 +47,7 @@
             <h1>예약 생성이 완료되었습니다.</h1>
             <p>기존에 등록되어있던 예약과 겹치면, 해당 예약은 기존 예약으로 대체됩니다.</p>
             <p>생성된 예약 정보는 <b>예약정보 확인</b> 에서 확인해주세요.</p>
+            <button onclick="location.href='/admin/index'">홈으로가기</button>
         </div>
     </div>
 </body>

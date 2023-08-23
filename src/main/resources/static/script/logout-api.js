@@ -54,13 +54,22 @@ $(document).ready(function() {
     //     }
     // });
 
-    $.ajax({
-        type: 'POST',
-        url: '/websocket/member',
-        data : {
-
-        }
-    })
+    // 실행 시 db에서 불러오기
+    // $.ajax({
+    //     type: 'POST',
+    //     url: '/alarm/check',
+    //     data : {
+    //         id : sessionValue
+    //     }
+    // }).done (function (list) {
+    //     // 받아올 알람이 있을 때만
+    //     if(Array.isArray(list) && list.length > 0) {
+    //         list.forEach((detail) => {
+    //             let alarm = "<div class='text'><p>" + detail.alarmText + "</p></div>";
+    //             $(".notifi-area").append(alarm);
+    //         })
+    //     }
+    // });
 
     if (sessionValue !== undefined && sessionValue !== "") {
         console.log(sessionValue);
@@ -77,6 +86,7 @@ $(document).ready(function() {
 
         sock.onmessage = onMessage;
 
+        // 메세지가 왔을 때
         function onMessage(evt) {
             countAdd();
             alarmAdd();

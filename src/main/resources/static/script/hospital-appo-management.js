@@ -64,16 +64,6 @@ document.getElementById('confirm-date').addEventListener('change', function (eve
 document.getElementById('time-list').addEventListener("click", (event) => {
     const tableBody = document.getElementById('table-body');
     const timeList = document.getElementById('time-list');
-    // 페이징처리
-    // let nowPage = document.getElementById('page').textContent;
-
-    // // 기존 선택 삭제
-    // for (const child of timeList.children) {
-    //     child.classList.remove('selected-time');
-    // }
-    //
-    // // 선택 요소에 selected 클래스 추가 (선택 표시)
-    // event.target.classList.add('selected-time');
 
     // 이전에 선택된 요소의 selected 클래스 제거
     const prevSelected = timeList.querySelector('.selected-time');
@@ -101,7 +91,11 @@ document.getElementById('time-list').addEventListener("click", (event) => {
                 $('#appo-table').show();
                 $('#no-appo').hide();
 
+                // 날짜 오름차순 정렬
+                list.sort((a, b) => new Date(b.createdTime) - new Date(a.createdTime));
+
                 list.forEach((detail) => {
+
                     const createStatusDropdown = (appoStatus) => {
                         const statusOptions = [
                             { value: 1, text: "예약완료" },
@@ -117,9 +111,11 @@ document.getElementById('time-list').addEventListener("click", (event) => {
                     };
 
                     const tr = document.createElement('tr');
-
+                    // let createdTime = new Date(detail.createdTime);
+                    console.log(detail.createdTime);
                     tr.innerHTML = `
                         <td>${detail.appoNo}</td>
+<!--                        <td>createdTime</td>-->
                         <td>
                             <select id="status">
                                 ${createStatusDropdown(detail.appoStatus)}
@@ -137,19 +133,16 @@ document.getElementById('time-list').addEventListener("click", (event) => {
 
                     const statusDropdown = tr.querySelector('select');
                     // 변경 전 status 담아두기
-                    const lastStatus = tr.statusDropdown.value;
+                    let lastStatus = statusDropdown.value;
 
                     // 예약 취소상태일 때 선택 불가(disabled) 처리.
-                    // if(statusDropdown.value === "2") {
-                    //     statusDropdown.setAttribute('disabled','');
-                    // }
+                    if(statusDropdown.value === "2") {
+                        statusDropdown.setAttribute('disabled','');
+                    }
                     
                     // 예약 취소상태로 변경됐을 때 선택 불가(disabled) 처리.
                     statusDropdown.addEventListener('change', (event) => {
-                        console.log('취소됨');
-                        // if(statusDropdown.value === "2") {
-                        //     statusDropdown.setAttribute('disabled','');
-                        // }
+
 
                         let result = confirm(`* 예약상태 변경  
 상태를 수정하시겠습니까?`);
@@ -172,8 +165,6 @@ document.getElementById('time-list').addEventListener("click", (event) => {
                                 let alarm = result.alarm;
                                 // userid 받음
                                 let id = result.sId;
-                                console.log("결과"+alarm);
-                                console.log(alarm.alarmText);
                                 alert('상태변경 성공');
 
                                 // socket으로 메세지 전송
@@ -183,19 +174,27 @@ document.getElementById('time-list').addEventListener("click", (event) => {
                                 // mypage로 이동
                                 let url = '/mypage';
 
-                                socket.send("관리자,"+target+","+content+","+url);
+                                socket.send("관리자"+","+target+","+content+","+url);
 
                                 console.log(`Selected value:  ${selectedValue}`);
 
                             }).fail(function (error) {
                                 console.log(error);
                                 alert('상태변경 실패');
+                                // 변경 실패했을 때 기존 상태로 변경
+                                statusDropdown.value = lastStatus;
                             })
+                            
+                        // 취소눌렀을 때 기존 상태로 내용 변경
                         } else {
-
+                            statusDropdown.value = lastStatus;
                         }
 
-                    })
+                        if(statusDropdown.value === "2") {
+                            statusDropdown.setAttribute('disabled','');
+                            console.log('취소됨');
+                        }
+                    });
 
 
                     // 자세히보기 버튼 클릭 시 상세정보 표시
@@ -324,7 +323,6 @@ function changeDate() {
             console.log(list);
             // 기존 요소 삭제
             timeList.innerHTML = "";
-            // dateStatusText.innerText ="";
 
             if(Array.isArray(list) && list.length > 0) {
                 list.forEach((detail) => {
