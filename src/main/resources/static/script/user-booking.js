@@ -188,7 +188,7 @@ $(document).ready(function () {
             amount: 2000,
             buyer_email: 'juntu09@gmail.com',  // 유저 정보로 변경 필요
             buyer_name: userName,
-            buyer_tel: '010',
+            buyer_tel: '010',       //  // 유저 정보로 변경 필요
         }, function (rsp) {
             if (rsp.success) {
                 callback(true);
