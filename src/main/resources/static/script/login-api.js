@@ -42,4 +42,18 @@ $(document).ready(function() {
         $('.login-form').show();
         $('#form').hide();
     });
+
+    $('#id').keyup(function (e){
+        if(e.keyCode == 13){
+            $('#password').focus();
+        }
+    })
+
+    $('#password').keyup(function (e){
+        if(e.keyCode == 13){
+            login();
+        }
+    })
+
+
 });

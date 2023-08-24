@@ -57,7 +57,7 @@
         </div>
 
         <%-- 어드민 로그인 --%>
-        <form class="login-form">
+        <form id="login-form" class="login-form">
             <div class="wrapper">
                 <div class="login-div">
                     <div class="div-id">

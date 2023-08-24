@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
 
 import java.sql.Date;
+import java.sql.Time;
 import java.util.*;
 
 
@@ -185,7 +186,7 @@ public class AppointmentController {
 
     // 유저 예약상태 변경
     @PutMapping("/modifyAdminAppo/appoStatusChange")
-    public Map updateStatus(@RequestParam String appoNo, int status) {
+    public Map updateStatus(@RequestParam String appoNo, int status, String hospitalName) {
         // appointmentNo로 해당 appointment객체 반환
         JSONObject json = new JSONObject();
         Appointment appo = appoRepository.findByNo(appoNo);
@@ -203,6 +204,7 @@ public class AppointmentController {
 
             TimeSlotsLimit timeSlot = timeSlotsLimitRepository.findByNo(timeNo);
             String ykiho = timeSlot.getYkiho();
+            Time time = timeSlot.getTime();
 
             User user = userRepository.findUserByNo(userNo);
             userName = user.getName();
@@ -220,7 +222,9 @@ public class AppointmentController {
                 statusVal = "이용완료";
             }
 
-            String text = userName + "님 " + statusVal + "가 되었습니다.";
+//            String text = userName + "님 " + statusVal + "가 되었습니다.";
+//            String text = userName + "님! " + time + " 예약 '" + statusVal + "' 상태로 변경되었습니다.";
+            String text = "[" + hospitalName + "] " + userName + "님!" + time + " 예약 '" + statusVal + "' 상태로 변경되었습니다.";
 
             alarm.setAlarmText(text);
             alarm.setHospYkiho(ykiho);
