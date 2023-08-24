@@ -8,6 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+    <link rel="shortcut icon" href="/image/favicon.ico">
     <link rel="stylesheet" href="/css/admin-doctorInfo.css">
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css" />
     <script src="/script/admin-doctorInfo.js"></script>

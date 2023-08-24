@@ -3,6 +3,7 @@
 <html>
 <head>
     <title>예약완료</title>
+    <link rel="shortcut icon" href="/image/favicon.ico">
     <link href="/css/common.css" rel="stylesheet">
     <style>
         .completed-div{

@@ -3,6 +3,7 @@
 <html>
 <head>
     <title>개인정보처리방침</title>
+    <link rel="shortcut icon" href="/image/favicon.ico">
     <link href="/css/common.css" rel="stylesheet">
     <style>
         .div-userTerm{

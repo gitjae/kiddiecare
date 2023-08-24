@@ -3,6 +3,7 @@
 <html>
 <head>
     <title>회원정보수정</title>
+    <link rel="shortcut icon" href="/image/favicon.ico">
     <link href="/css/common.css" rel="stylesheet">
     <link href="/css/userUpdate-css.css" rel="stylesheet">
     <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>

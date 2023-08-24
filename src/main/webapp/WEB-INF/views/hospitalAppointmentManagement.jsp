@@ -11,6 +11,7 @@
 <html>
 <head>
     <title>Title</title>
+    <link rel="shortcut icon" href="/image/favicon.ico">
     <link href="/css/common.css" rel="stylesheet">
     <link href="/css/hospital-appo-management.css" rel="stylesheet">
 </head>

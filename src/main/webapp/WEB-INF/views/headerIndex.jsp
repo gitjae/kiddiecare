@@ -3,6 +3,7 @@
 <html>
 <head>
   <title>Title</title>
+  <link rel="shortcut icon" href="/image/favicon.ico">
   <link href="/css/common.css" rel="stylesheet">
   <link href="/css/adminHeader.css" rel="stylesheet">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>

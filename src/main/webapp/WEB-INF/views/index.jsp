@@ -3,6 +3,7 @@
 <html>
 <head>
     <title>우리동네소아과</title>
+    <link rel="shortcut icon" href="/image/favicon.ico">
     <link href="/css/common.css" rel="stylesheet">
     <link href="/css/index.css" rel="stylesheet">
     <script src="/script/index.js"></script>
