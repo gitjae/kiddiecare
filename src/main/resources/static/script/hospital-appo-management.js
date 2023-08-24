@@ -240,18 +240,31 @@ document.getElementById('time-list').addEventListener("click", (event) => {
                                 <p><b>생년월일: </b <span>${detail.usersBirth}</span></p>
                                 <p><b>주소: </b> <span>${detail.usersAddr}</span></p>
                                 <button id="change-info" onclick="changeDate()">예약정보 변경하기</button>
+                                <p id="change-info-text" style="color:gray">* 예약정보 변경은 예약자의 예약상태가 '예약보류'상태일 때만 가능합니다.</p>
                             `;
 
-                            // 예약취소/이용완료 상태일 때
-                            if (statusDropdown.value === "2" && statusDropdown.value === "4") {
-                                
-                                const changeInfoButtons = document.querySelectorAll('#change-info');
-                                changeInfoButtons.forEach((changeInfoBtn) => {
-                                    if (changeInfoBtn) {
-                                        changeInfoBtn.setAttribute('disabled', '');
-                                    }
-                                });
+                            // 예약보류 상태(3)일 때만 버튼 활성화
+                            const changeInfoButton = document.querySelector('#change-info');
+                            if (statusDropdown.value === "3") {
+                                if (changeInfoButton) {
+                                    changeInfoButton.removeAttribute('disabled');
+                                }
+                            } else {
+                                if (changeInfoButton) {
+                                    changeInfoButton.setAttribute('disabled', '');
+                                }
                             }
+
+                            // 예약취소/이용완료 상태일 때
+                            // if (statusDropdown.value === "2" && statusDropdown.value === "4") {
+                            //
+                            //     const changeInfoButtons = document.querySelectorAll('#change-info');
+                            //     changeInfoButtons.forEach((changeInfoBtn) => {
+                            //         if (changeInfoBtn) {
+                            //             changeInfoBtn.setAttribute('disabled', '');
+                            //         }
+                            //     });
+                            // }
 
 
                         }).fail(function (error) {

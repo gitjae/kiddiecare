@@ -56,7 +56,6 @@ function modifyList() {
                         <td><input type="number" class="max_in" value="${detail.max}" min="0">명</td>
                         <td><input type="number" class="block_in" value="${detail.block}" min="0">명</td>
                         <td><input type="number" class="count_in" value="${detail.count}" readonly>명</td>
-                        <td><input type="number" class="enable_in" value="${detail.enable}" readonly>명</td> 
                         <td><button name="${detail.no}" onclick="modify(this)">수정</button></td>
                     </tr>
                 `);
@@ -83,6 +82,10 @@ function modify(btn) {
     const blockInput = parseInt(row.find("input.block_in").val());
     const countInput = parseInt(row.find("input.count_in").val());
 
+    if(maxInput < 0  || blockInput < 0 || countInput < 0) {
+        alert('작성한 인원수를 확인해주세요.');
+        return;
+    }
     console.log("Max:", maxInput);
     console.log("Block:", blockInput);
 

@@ -237,6 +237,7 @@ function timeSetBtn() {
 // 예약 생성하기 버튼 클릭 시 입력되지 않은 영역 예외처리
 $('#appo-create-btn').click(function() {
     for (let i = 0; i < setWeekdayArr.length; i++) {
+
         // 내용이 없으면 alert 표시하고 focus
         if ($('#start-hour-' + i).val() === "") {
             alert('시작 시간을 입력해주세요.');
@@ -250,6 +251,7 @@ $('#appo-create-btn').click(function() {
 
         let startHour = parseInt($('#start-hour-' + i).val());
         let endHour = parseInt($('#end-hour-' + i).val());
+        let maxNum = parseInt($('#max-num-'+ i).val());
 
         // 시작시간 < 끝시간일 때 예외처리
         if (startHour > endHour) {
@@ -257,19 +259,35 @@ $('#appo-create-btn').click(function() {
             $('#start-hour-' + i).focus();
             return;
 
-        }else if(startHour === endHour) {
+        }
+        if(startHour === endHour) {
             alert('시작시간과 종료시간이 같습니다. 다시 입력해주세요.');
             $('#start-hour-' + i).focus();
+            return;
 
-        }else if(startHour > 25 && endHour < 0) {
-            alert('시간 범위를 다시 입력해주세요.');
-            $('#start-hour-' + i).focus();
         }
 
-        // 예약가능한 인원수 입력 안한 부분 예외처리
+        if(endHour > 25 || endHour < 0) {
+            alert('유효한 시간 범위를 입력해주세요.');
+            $('#end-hour-' + i).focus();
+            return;
+        }
+        if(startHour > 25 || startHour < 0) {
+            alert('유효한 시간 범위를 입력해주세요.');
+            $('#start-hour-' + i).focus();
+            return;
+        }
+
+        // 예약가능한 인원수 예외처리
         if($('#max-num-'+ i).val() === ""){
             alert('예약가능한 인원수를 입력해주세요.');
             $('#max-num-'+ i).focus();
+            return;
+        }
+
+        if(maxNum < 0) {
+            alert('0 미만의 숫자는 입력 불가능합니다.');
+            return;
         }
     }
 
@@ -294,6 +312,16 @@ function saveTimes() {
     let dinnerCheck = document.getElementById('no-dinner').checked;
     const dStartHour = parseInt(document.getElementById('d-start-hour').value, 10);
     const dEndHour = parseInt(document.getElementById('d-end-hour').value, 10);
+
+    if(!lunchCheck && lStartHour < 0 || lStartHour >= 24 || lEndHour <= 0 || lEndHour > 24) {
+        alert("유효한 점심식사 시간을 입력해주세요.");
+        return;
+    }
+
+    if(!dinnerCheck && dStartHour < 0 || dStartHour >= 24 || dEndHour <= 0 || dEndHour > 24) {
+        alert("유효한 저녁식사 시간을 입력해주세요.");
+        return;
+    }
 
     const dateFormat = date => `${date.getFullYear()}-${("0" + (date.getMonth() + 1)).slice(-2)}-${("0" + date.getDate()).slice(-2)}`; // 날짜 형식 변환 함수
     finalList.forEach(function (day) {

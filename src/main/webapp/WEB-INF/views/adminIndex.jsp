@@ -43,11 +43,6 @@
                           </div>
                       </li>
                       <li>
-                          <div id="notice" name="div-notice" onclick="contentChange(this)">
-                              공지사항 설정
-                          </div>
-                      </li>
-                      <li>
                           <div id="hosp-doctor" name="div-doctor" onclick="contentChange(this)">
                               의사정보 추가 및 수정
                           </div>
