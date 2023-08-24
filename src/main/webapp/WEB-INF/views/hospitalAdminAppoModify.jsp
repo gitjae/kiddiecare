@@ -10,6 +10,7 @@
 <html>
 <head>
     <title>병원 예약 인원수 관리</title>
+    <link rel="shortcut icon" href="/image/favicon.ico">
     <link href="/css/common.css" rel="stylesheet">
     <link href="/css/hospital-appo-create.css" rel="stylesheet">
     <link href="/css/admin-appo-modify.css" rel="stylesheet">

@@ -3,6 +3,7 @@
 <html>
 <head>
     <title>예약수정</title>
+    <link rel="shortcut icon" href="/image/favicon.ico">
     <link rel="stylesheet" href="/css/hospital-detail-css.css">
     <link href="/css/appo-update-css.css" rel="stylesheet">
 </head>

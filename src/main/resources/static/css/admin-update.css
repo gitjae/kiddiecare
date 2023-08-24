@@ -102,6 +102,19 @@
     width: 45px;
 }
 
+.info-btn > input{
+    background: #3E85EF;
+    cursor: pointer;
+    height: 40px;
+    font-size: 16px;
+    padding: 0px 24px;
+    line-height: 16px;
+    min-width: 80px;
+    border: none;
+    color: #ffffff;
+    font-weight: 600;
+}
+
 .admin-info-update{
     display: flex;
     flex-direction: column;
@@ -122,6 +135,12 @@
 
 .email-form > input{
     width: 65%;
+}
+
+.email-flex{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
 .pw-form{
@@ -164,3 +183,9 @@
     flex-direction: column;
     gap: 10px;
 }
+
+.error {
+    border: 2px solid red; /* 빨간색 테두리 */
+    background-color: #FFCCCC; /* 연한 붉은 배경색 */
+}
+

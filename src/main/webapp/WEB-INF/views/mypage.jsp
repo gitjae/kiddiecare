@@ -3,6 +3,7 @@
 <html>
 <head>
     <title>마이페이지</title>
+    <link rel="shortcut icon" href="/image/favicon.ico">
     <link href="/css/common.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/mypage.css">
     <script src="/script/mypage-user.js"></script>

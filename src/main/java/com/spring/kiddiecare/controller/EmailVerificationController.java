@@ -2,6 +2,7 @@ package com.spring.kiddiecare.controller;
 
 import com.spring.kiddiecare.domain.hospitalAdmin.AdminRequestDto;
 import com.spring.kiddiecare.domain.hospitalInfo.HospData;
+import com.spring.kiddiecare.util.OpenApiDataUtil;
 import lombok.RequiredArgsConstructor;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,9 +34,7 @@ import java.util.Random;
 public class EmailVerificationController {
 
     private final JavaMailSender mailSender;
-    private final RedisTemplate redisTemplate;
-    private ValueOperations<String, String> valueOps;
-    private Duration cacheTtl = Duration.ofMinutes(3);
+    private final OpenApiDataUtil openApiDataUtil;
 
     private String getAuthToken() {
         String randomString = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -80,19 +79,15 @@ public class EmailVerificationController {
                 helper.setSubject("[kiddiecare] 이메일 확인 코드");
                 helper.setText("[kiddiecare] 이메일 확인 코드 : " + verificationCode);
                 mailSender.send(message);
-
-                //redis 저장
-                valueOps.set(target, verificationCode, cacheTtl);
-
-                resultJson.put("response", "VERIFICATION_SENT");
-                resultJson.put("verification_code", verificationCode);
-                resultJson.put("verification_duration", verificationDuration);
             }catch (Exception e){
-                System.out.println(e);
-                resultJson.put("result", "FAIL");
+                resultJson.put("response", "fail cause email sender");
             }
+            openApiDataUtil.saveEmailAuthToken(target,verificationCode);
+            resultJson.put("response", "success");
+            resultJson.put("verification_code", verificationCode);
+            resultJson.put("verification_duration", verificationDuration);
         }else{
-            resultJson.put("response", "Target is null");
+            resultJson.put("response", "fail cause target is null");
         }
 
         return resultJson.toMap();
@@ -101,17 +96,16 @@ public class EmailVerificationController {
     @PostMapping("validate")
     public Map validateVerificationCode(@ModelAttribute AdminRequestDto adminDto) {
         JSONObject resultJson = new JSONObject();
-
-        String verificationCode = valueOps.get(adminDto.getAdminEmail());
-        if (verificationCode == null) {
-            return resultJson.put("response","VERIFICATION_FAILED").toMap();
+        String result = openApiDataUtil.getEmailAuthToken(adminDto.getAdminEmail());
+        if (result == null) {
+            return resultJson.put("response","fail cause timeout").toMap();
         }
 
-        if(!verificationCode.equals(adminDto.getCode())){
-            return resultJson.put("response","VERIFICATION_FAILED").toMap();
+        if(!result.equals(adminDto.getCode())){
+            return resultJson.put("response","fail cause not matched").toMap();
         }
 
-        return resultJson.put("response","VERIFICATION_SUCCEEDED").toMap();
+        return resultJson.put("response","success").toMap();
     }
 
 }

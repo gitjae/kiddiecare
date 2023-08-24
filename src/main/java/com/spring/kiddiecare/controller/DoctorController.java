@@ -9,6 +9,7 @@ import com.spring.kiddiecare.domain.timeSlotsLimit.TimeSlotsLimit;
 import com.spring.kiddiecare.domain.timeSlotsLimit.TimeSlotsLimitRepository;
 import com.spring.kiddiecare.service.DoctorService;
 import lombok.RequiredArgsConstructor;
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
@@ -28,6 +29,7 @@ public class DoctorController {
     private final DoctorRepository doctorRepository;
     private final DoctorService doctorService;
     private final ExcelDataRepository excelDataRepository;
+    private final ImageUploadController imageUploadController;
 
     @GetMapping("schedule")
     public Map onSchedule(@ModelAttribute TimeSlotsLimit timeSlotsLimit){
@@ -65,7 +67,6 @@ public class DoctorController {
         if(ykiho == null){
             return jsonObject.put("response","no ykiho").toMap();
         }
-
         List<Doctor> doctorList = doctorRepository.findAllByYkiho(ykiho);
         if(doctorList == null){
             return jsonObject.put("response","no data").toMap();
@@ -75,8 +76,15 @@ public class DoctorController {
         return jsonObject.toMap();
     }
 
+    /**
+     * 의사 정보를 받고 DB에 의사정보 저장
+     * @param doctorDto 프론트에서 받아온 정보
+     * @param request 세션 정보
+     * @return 반환 json
+     */
     @PostMapping(value ="create", consumes = {"multipart/form-data"})
     public Map addDoctorData(@ModelAttribute DoctorResponseDto doctorDto,WebRequest request){
+        // 반환할 json
         JSONObject jsonObject = new JSONObject();
 
         // 세션에서 Ykiho 확인
@@ -85,15 +93,27 @@ public class DoctorController {
             return jsonObject.put("response","fail no ykiho").toMap();
         }
 
+        // doctorDto 검사
         if (doctorDto != null){
-            Doctor doctorData  = doctorRepository.findByYkihoAndDoctorName(ykiho,doctorDto.getDoctorName());
-            if (doctorData != null){
+            // doctor 중복 검사
+            Doctor doctorDuplCheck  = doctorRepository.findByYkihoAndDoctorName(ykiho,doctorDto.getDoctorName());
+            if (doctorDuplCheck != null){
                 return jsonObject.put("response","fail cause already in DB").toMap();
             }
 
+            // ykiho 저장
             doctorDto.setYkiho(ykiho);
-            Doctor doctor = new Doctor(doctorDto);
 
+            // s3 파일 올리기
+            String saveFileUrl = imageUploadController.uploadFile(doctorDto.getFile(),doctorDto.getDoctorName());
+            if(saveFileUrl == null){
+                return jsonObject.put("response","fail cause image upload error").toMap();
+            }
+            doctorDto.setDoctorImageUrl(saveFileUrl);
+
+            // Doctor vo에 넣고 저장
+            Doctor doctor = new Doctor(doctorDto);
+            System.out.println(doctor);
             try{
                 doctorService.createDoctor(doctor);
                 return jsonObject.put("response","success").toMap();
@@ -101,8 +121,7 @@ public class DoctorController {
                 return jsonObject.put("response","fail cause DB error").toMap();
             }
         }
-
-        return jsonObject.put("response","fail").toMap();
+        return jsonObject.put("response","fail cause data is null").toMap();
     }
 
     @DeleteMapping("delete")
@@ -154,13 +173,19 @@ public class DoctorController {
     @GetMapping("subject")
     public Map getDoctorSubject(){
         JSONObject jsonObject = new JSONObject();
-        ArrayList<String> data = new ArrayList<>();
         List<ExcelData> subjectList  = excelDataRepository.findAll();
+
+        JSONArray list = new JSONArray();
+
         for(ExcelData items : subjectList){
-            data.add(items.getSubject());
+            JSONObject obj = new JSONObject();
+            obj.put("no", items.getNo());
+            obj.put("subject", items.getSubject());
+
+            list.put(obj);
         }
         jsonObject.put("response","success");
-        jsonObject.put("data",data);
+        jsonObject.put("data", list);
         return jsonObject.toMap();
     }
 

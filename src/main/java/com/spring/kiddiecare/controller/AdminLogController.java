@@ -35,11 +35,13 @@ public class AdminLogController {
         Optional<String> adminPw = Optional.ofNullable(adminDto.getAdminPw());
         if(adminId.isPresent() && adminPw.isPresent()){
             Admin admin = adminRepository.findByAdminId(adminDto.getAdminId());
-            if(passwordEncoder.matches(adminDto.getAdminPw(),admin.getAdminPw())){
-                session.setAttribute("log",admin.getAdminId());
-                session.setAttribute("Ykiho",admin.getYkiho());
-                response.put("adminLogin","success");
-                return response.toMap();
+            if(admin != null){
+                if(passwordEncoder.matches(adminDto.getAdminPw(),admin.getAdminPw())){
+                    session.setAttribute("log",admin.getAdminId());
+                    session.setAttribute("Ykiho",admin.getYkiho());
+                    response.put("adminLogin","success");
+                    return response.toMap();
+                }
             }
         }
         response.put("adminLogin","fail");

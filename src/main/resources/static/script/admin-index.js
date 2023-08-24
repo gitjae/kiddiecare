@@ -12,6 +12,7 @@ function get_hospital_name() {
     }).done(function (response) {
         console.log(response);
         $('#hospital_name').text(response.hospitalName);
+        $('#hos-name').text(response.hospitalName)
     }).fail(function (error) {
         console.log(error);
     });
