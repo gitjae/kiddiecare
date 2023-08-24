@@ -136,8 +136,8 @@ document.getElementById('time-list').addEventListener("click", (event) => {
                     // 변경 전 status 담아두기
                     let lastStatus = statusDropdown.value;
 
-                    // 예약 취소상태일 때 선택 불가(disabled) 처리.
-                    if(statusDropdown.value === "2") {
+                    // 예약 취소상태일 때/이용완료일 때 선택 불가(disabled) 처리.
+                    if(statusDropdown.value === "2" && statusDropdown.value === '4') {
                         statusDropdown.setAttribute('disabled','');
                     }
                     
@@ -149,6 +149,7 @@ document.getElementById('time-list').addEventListener("click", (event) => {
 상태를 수정하시겠습니까?`);
 
                         if(result){
+                            // 선택된 status dropdown 내용
                             const selectedValue = event.target.value;
                             const hospitalName = document.getElementById('hospital_name').textContent;
                             let selectedAppoNo = tr.dataset.appoNo;
@@ -163,25 +164,24 @@ document.getElementById('time-list').addEventListener("click", (event) => {
                                     hospitalName: hospitalName
                                 }
                             }).done(function (result) {
+                                console.log(result.sms);
+                                console.log(result.status);
                                 // alarmDto 받음
                                 let alarm = result.alarm;
                                 // userid 받음
                                 let id = result.sId;
                                 alert('상태변경 성공');
 
-                                // socket으로 메세지 전송
+                                // socket으로 실시간 메세지 전송
                                 let type = '70';
                                 let target = id;
                                 let content = alarm.alarmText;
                                 // mypage로 이동
                                 let url = '/mypage';
 
-                                // 병원명 이후 내용만 가져오기
+                                // 병원명 이후 내용만 가져오기 (ex. [A병원]예약됨 -> 예약됨만 가져오기 )
                                 content = content.split("]")[1];
                                 socket.send(hospitalName+","+target+","+content+","+url);
-
-
-                                console.log(`Selected value:  ${selectedValue}`);
 
                             }).fail(function (error) {
                                 console.log(error);
@@ -196,7 +196,7 @@ document.getElementById('time-list').addEventListener("click", (event) => {
                         }
 
                         // 취소 상태일 때 버튼 비활성화
-                        if(statusDropdown.value === "2") {
+                        if(statusDropdown.value === "2" && statusDropdown.value === "4") {
                             statusDropdown.setAttribute('disabled','');
                         }
                     });
@@ -219,11 +219,10 @@ document.getElementById('time-list').addEventListener("click", (event) => {
 
                             let genderStr = '';
 
-                            // 수정필요
                             if (detail.childrenGender === 1) {
-                                genderStr = '남';
+                                genderStr = '남아';
                             } else if (detail.childrenGender === 0) {
-                                genderStr = '여';
+                                genderStr = '여아';
                             }
 
                             let content = document.getElementById('text-area');
@@ -243,8 +242,8 @@ document.getElementById('time-list').addEventListener("click", (event) => {
                                 <button id="change-info" onclick="changeDate()">예약정보 변경하기</button>
                             `;
 
-                            // 예약취소 상태일 때
-                            if (statusDropdown.value === "2") {
+                            // 예약취소/이용완료 상태일 때
+                            if (statusDropdown.value === "2" && statusDropdown.value === "4") {
                                 
                                 const changeInfoButtons = document.querySelectorAll('#change-info');
                                 changeInfoButtons.forEach((changeInfoBtn) => {
@@ -389,6 +388,7 @@ function clickListener(event) {
         }).done(function (result) {
             // alert(result.update);
             alert("예약이 변경되었습니다.");
+            window.location.reload();
         }).fail(function (error) {
             alert(error);
         })
@@ -418,13 +418,9 @@ function pagePlus() {
     page.innerText = String(nowPage);
 }
 
-// const statusOp = document.querySelector("#status");
 
 // 예약취소 상태 확인용
 $(document).ready(function() {
-    if ($("#status").val() === "2") {
-        console.log("2임");
-    }
 
     $('#status').on('change', function() {
         const selectedOption = $(this).val();
@@ -432,6 +428,4 @@ $(document).ready(function() {
     });
 });
 
-
-/* 전체 예약자 불러오기 */
 

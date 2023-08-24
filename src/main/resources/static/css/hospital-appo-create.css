@@ -16,7 +16,7 @@
 }
 
 .select-option{
-
+    overflow: auto;
     gap: 50px;
     padding: 25px 30px 15px 30px;
     /*grid-template-columns: repeat(3, 1fr);*/

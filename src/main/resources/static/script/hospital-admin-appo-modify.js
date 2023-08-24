@@ -99,7 +99,15 @@ function modify(btn) {
         }).done(function (result){
             if(result.modify === "success") {
                 // 제목, 내용, 아이콘
-                swal("정보 수정 성공!", "success" ,"success" );
+                swal({
+                    title: "정보 수정 성공!",
+                    text: "수정이 완료되었습니다.",
+                    icon: "success",
+                    button: "확인",
+                }).then((value) => {
+                    window.location.reload();
+                });
+
             }else {
                 alert("수정 실패");
             }
