@@ -1,6 +1,6 @@
 var xPos = 127.0291236;
 var yPos = 37.5001387;
-var radius = 500;
+var radius = 2000;
 var map;
 var bounds;
 var marker;
@@ -56,6 +56,15 @@ function makeOutListener(infowindow) {
     };
 }
 
+function getAddrLocation(){
+    data = {
+        radius:2000
+    }
+    url = '/search/hospList/addr';
+
+    ajaxRequest(data, url);
+}
+
 function getUserLocation() {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(setPosition, displayError);
@@ -65,8 +74,8 @@ function getUserLocation() {
 }
 
 function setPosition(position) {
-    xPos = position.coords.longitude;
-    yPos = position.coords.latitude;
+    xPos = position.coords.longitude.toString().substr(0, 9);
+    yPos = position.coords.latitude.toString().substr(0, 9);
 
     data = {
         xPos:xPos,

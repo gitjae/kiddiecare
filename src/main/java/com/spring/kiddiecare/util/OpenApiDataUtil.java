@@ -27,6 +27,7 @@ public class OpenApiDataUtil {
     private final RestTemplate restTemplate;
     private final RedisTemplate redisTemplate;
     private ValueOperations<String, HospData> valueOps;
+    private ValueOperations<String,String> emailOps;
     private Duration cacheTtl = Duration.ofMinutes(60);
 
     @Autowired // inner 클래스 위에 있는 변수들을 생성해준다. @Autowired는 원래는 쓰지 않고 @RequiredArgsConstructor 사용
@@ -34,6 +35,7 @@ public class OpenApiDataUtil {
         this.restTemplate = new RestTemplate();
         this.redisTemplate = redisTemplate;
         this.valueOps = redisTemplate.opsForValue();
+        this.emailOps = redisTemplate.opsForValue();
     }
 
     public HospData getHospList(String url, String query) {
@@ -122,6 +124,15 @@ public class OpenApiDataUtil {
         }
 
         return null;
+    }
+
+    public void saveEmailAuthToken(String targetEmail, String authToken) {
+        Duration duration = Duration.ofMinutes(3);
+        emailOps.set(targetEmail,authToken,duration);
+    }
+
+    public String getEmailAuthToken(String targetEmail){
+        return emailOps.get(targetEmail);
     }
 
 }

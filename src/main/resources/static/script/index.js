@@ -13,6 +13,12 @@ window.onload = function () {
         document.getElementById('nav-favor').click();
     });
 
+    $('#search-input').keyup(function (e){
+        if(e.keyCode == 13){
+            search();
+        }
+    })
+
 }
 
 function search() {

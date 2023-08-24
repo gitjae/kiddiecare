@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.Column;
 
@@ -13,12 +14,10 @@ import javax.persistence.Column;
 @ToString
 public class DoctorResponseDto {
     private Long no;
-
     private String ykiho;
-
     private String doctorName;
-
     private int doctorAverageTimeOfCare;
-
     private byte doctorStatus;
+    private String doctorImageUrl;
+    private MultipartFile file;
 }

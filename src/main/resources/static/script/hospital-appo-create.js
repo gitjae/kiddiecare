@@ -1,16 +1,8 @@
-// const dayNames = ["일", "월", "화", "수", "목", "금", "토"];
-
-// const year = date.getFullYear();
-// const month = date.getMonth() + 1;
-// const day = date.getDate();
-// const dayOfWeek = dayNames[date.getDay()];
-
 let finalList = [];
 let setWeekdayArr = [];
 let doctorAppoDate = [];
 
-// 하루하루 지정하는건 따로 js로 달력을 만들어 줘야해서
-// 컨펌받아야함 날짜 갖고 오는건 되니깐 범위를 일주일 단위로 금지시키면 될듯
+
 function getDoctorAppoDate(){
     let adminYkiho = $('#ykiho').val();
     let no = $('.selected').attr('id');
@@ -24,13 +16,13 @@ function getDoctorAppoDate(){
         contentType: "application/json; charset=utf-8",
         success: function (response) {
             doctorAppoDate = response.data;
-            console.log(doctorAppoDate);
         },
         error: function (error) {
             console.log("의사 예약 데이터 불러오기 실패");
         }
     });
 }
+
 $(function () {
     let today = new Date();
     today.setDate(today.getDate());
@@ -50,8 +42,7 @@ $(function () {
 
     eDay.min = todayDate;
     eDay.max = lastDate;
-    console.log("today: " + todayDate);
-    console.log("lastday: " + lastDate);
+
 
 });
 
@@ -194,7 +185,6 @@ function timeSetBtn() {
     // 제외할 날짜들
     for (let i = 0; i < buttons.length; i++) {
         let day = buttons[i].id.split('_')[1];
-        console.log(day);
         exceptDaysArr.push(day);
     }
 
@@ -210,16 +200,6 @@ function timeSetBtn() {
     })
 
     setWeekdayArr.sort();
-    // console.log("끝"+setWeekdayArr);
-    //
-    // console.log("담은날짜" + setDateArr);
-    // console.log("일요일" + sundayArr);
-    // console.log("제외날짜" + exceptDaysArr);
-    // console.log("요일" + setWeekdayArr);
-    console.log("최종날짜" + finalList);
-
-    // 받아온 요일 정보 배열
-    console.log(setWeekdayArr);
 
     if(setWeekdayArr.length === 0){
         swal("날짜 설정을 다시 해주세요", "날짜 범위 지정이 잘못되어 있습니다","warning");
@@ -267,9 +247,6 @@ $('#appo-create-btn').click(function() {
             $('#end-hour-' + i).focus();
             return;
         }
-
-        console.log($('#start-hour-' + i).val());
-        console.log($('#end-hour-' + i).val());
 
         let startHour = parseInt($('#start-hour-' + i).val());
         let endHour = parseInt($('#end-hour-' + i).val());
@@ -368,7 +345,6 @@ function saveTimes() {
         }
     });
 
-    console.log(groupedData);
     $("#loading").show();  // 로딩창 시작
 
     $.ajax({
@@ -380,7 +356,7 @@ function saveTimes() {
             $("#loading").hide();
             location.href = "/admin/timeSlotsCreateComp";
             console.log("저장 성공!");
-            // console.log(response.create);
+
         },
         error: function (error) {
             $("#loading").hide();

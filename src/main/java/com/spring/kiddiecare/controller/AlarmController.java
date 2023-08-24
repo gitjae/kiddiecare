@@ -28,6 +28,7 @@ public class AlarmController {
     private final UserRepository userRepository;
     private final AlarmService alarmService;
 
+    // 알람 목록 5개씩만 표시
     @PostMapping("check")
     public Page<Alarm> getAlarmByDB(@RequestParam String id, @PageableDefault(size=5, sort = "alarmNo", direction = Sort.Direction.DESC) Pageable pageable){
         Optional<User> findUser = userRepository.findUserById(id);

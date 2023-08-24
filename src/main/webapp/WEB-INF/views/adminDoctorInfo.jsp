@@ -32,10 +32,10 @@
                 <select name="subject" id="option-area">
                 </select>
             </div>
-            <!--<div class="input_box">
+            <div class="input_box">
                 <input type="file" id="doctor-image" name="file" accept=".png,.jpg" size="10000000"/>
                 <i class="uil uil-user-square"></i>
-            </div>-->
+            </div>
             <button class="button" onclick="addDoctor()">의사 추가</button>
         </form>
     </div>
@@ -44,7 +44,7 @@
     <i class="uil uil-times form_close2"></i>
     <div class="form doctor_form">
         <h2>의사 정보 수정</h2>
-        <img src="https://d338jhig5816rv.cloudfront.net/admin1">
+        <img>
         <input type="hidden" id="doctor-no" name="no" />
         <div class="input_box">
             <input type="text" id="doctor-name" name="doctorName" />

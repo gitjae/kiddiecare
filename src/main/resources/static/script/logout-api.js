@@ -72,7 +72,7 @@ $(document).ready(function() {
             // 받아올 알람이 있을 때만
             if(Array.isArray(response.content) && response.content.length > 0) {
                 response.content.forEach((detail) => {
-                    let alarm = "<div class='text'><p>" + detail.alarmNo + "] " + detail.alarmText + "</p></div>";
+                    let alarm = "<div class='text'><p>" + detail.alarmText + "</p></div>";
                     $(".notifi-area").append(alarm);
                 })
             }
@@ -104,7 +104,7 @@ $(document).ready(function() {
             var data = evt.data;
             getToast(data);
             let alarm = "<div class='text'><p>" + data + "</p></div>";
-            $(".notifi-area").append(alarm);
+            $(".notifi-area").prepend(alarm);
         }
 
         function countAdd() {

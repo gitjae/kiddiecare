@@ -50,9 +50,10 @@
         </div>
 
 
-        <div class="kakaoMap-area" style="width:100%;height: 700px;">
-            <div id="map" style="width:100%;height:100%; margin-top: 50px;">
+        <div class="kakaoMap-area" style="width:100%;height: 800px; box-shadow: 2px 2px 2px 2px silver;">
+            <div id="map" style="width:100%;height:100%;">
                 <button style="position: absolute; z-index: 2; margin: 20px;" onclick="getUserLocation()">내 주변 병원 찾기</button>
+                <button style="position: absolute; z-index: 3; margin-top: 20px; margin-left: 160px" onclick="getAddrLocation()">주소 주변 병원 찾기</button>
             </div>
         </div>
     </section>

@@ -12,6 +12,7 @@ function get_hospital_name() {
     }).done(function (response) {
         console.log(response);
         $('#hospital_name').text(response.hospitalName);
+        $('#hos-name').text(response.hospitalName)
     }).fail(function (error) {
         console.log(error);
     });
@@ -32,7 +33,7 @@ function get_doctor_list() {
             option.className = "option";
             option.id = doctor.no;
             // option.innerText = doctor.no;
-            option.innerText = doctor.doctorName;
+            option.innerText = doctor.doctorName + " 의사";
             element.appendChild(option);
         });
     }).fail(function (error) {
@@ -49,9 +50,9 @@ function get_doctor_list() {
 
             // 선택된 의사 이름 표시
             const selectedDoctor = document.getElementById('selectedDoctor');
-            // 지정된 id 명 선택
-            selectedDoctor.textContent = e.target.id;
-            console.log(selectedDoctor.textContent);
+
+            // selectedDoctor에 선택한 id 명 표시 (display:none처리되어 있음)
+            selectedDoctor.textContent = e.target.id.split(" ")[0];
         }
     });
 }

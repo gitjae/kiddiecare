@@ -21,10 +21,16 @@ document.addEventListener("DOMContentLoaded", function (){
         url = '/search/hospList';
     } else {
         data['radius'] = '2000';
-        url = '/search/hospList/addr'
+        url = '/search/hospList/addr';
     }
 
     ajaxRequest(data, url);
+
+    $('#search-input').keyup(function (e){
+        if(e.keyCode == 13){
+            search();
+        }
+    })
 })
 
 function prev(){
@@ -67,8 +73,8 @@ function ajaxRequest(data, url){
         $('#loading').hide();
     }).fail(function (){
         alert('데이터를 불러오지 못했습니다.\n다시 시도해주세요')
-        $('.kakaoMap-area').hide();
-        $('#hospital-list').hide();
+        //$('.kakaoMap-area').hide();
+        //$('#hospital-list').hide();
         $('#loading').hide();
 
     })
