@@ -34,7 +34,7 @@
             <div class="flex-area">
                 <p class="list-title">병원 목록</p>
                 <div class="index-search">
-                    <input type="text" id="search-input" class="search-input" placeholder="병원명으로 검색할 수 있어요." name="searchText" maxlength="100">
+                    <input type="text" id="search-input" class="search-input" placeholder="검색어를 입력해주세요." name="searchText" maxlength="100">
                     <button type="submit" class="search-btn" onclick="search()">
                         <img src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png" onclick="">
                     </button>
