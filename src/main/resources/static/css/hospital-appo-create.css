@@ -16,8 +16,9 @@
 }
 
 .select-option{
+    height: 300px;
     overflow: auto;
-    gap: 50px;
+    /*gap: 50px;*/
     padding: 25px 30px 15px 30px;
     /*grid-template-columns: repeat(3, 1fr);*/
     max-width: 1100px;
@@ -34,6 +35,7 @@
     border-radius: 5px;
     text-align: left;
     padding-left: 60px;
+    margin-bottom: 20px;
     line-height: 80px;
     font-size: 20px;
     color: #737373;
@@ -51,7 +53,8 @@
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2), 0 6px 4px rgba(0, 0, 0, 0.2);
 }
 
-/* 레전드 */
+
+/* 의사선택 부분 */
 fieldset {
     background: white;
     box-shadow: 0 10px 20px rgb(0 0 0 / 11%), 0 6px 4px rgb(0 0 0 / 0%);

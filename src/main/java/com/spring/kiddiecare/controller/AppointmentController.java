@@ -90,7 +90,6 @@ public class AppointmentController {
         for (TimeSlotsLimitRequestDto dto : list) {
             System.out.println(dto);
             TimeSlotsLimit timeSlotsLimit = new TimeSlotsLimit(dto);
-//            timeSlotsLimit.setCount(timeSlotsLimit.getCount()+1);
             timeSlotsLimitRepository.save(timeSlotsLimit);
         }
             json.put("result", "success");
@@ -192,7 +191,8 @@ public class AppointmentController {
                 statusVal = "이용완료";
             }
 
-            String text = "[" + hospitalName + "] " + userName + "님!" + hours + " 예약 '" + statusVal + "' 상태로 변경되었습니다.";
+            String text = "[" + hospitalName + "] " + userName + "님! " + dateString + " " +
+                    hours + "시 예약 '" + statusVal + "' 상태로 변경되었습니다.";
 
             alarm.setAlarmText(text);
             alarm.setHospYkiho(ykiho);
