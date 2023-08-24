@@ -35,6 +35,7 @@ function getHospInfoDetail() {
     $.ajax({
         method: 'GET',
         url: `/api/appointment/hospitalDetail?hospitalName=${hospitalName}`,
+        timeout: 10000
     })
         .done(res => {
             console.log(res);
@@ -75,6 +76,8 @@ function getHospInfoDetail() {
         })
         .fail(err => {
             console.error("Error:", err);
+            alert('병원 등록 정보를 불러오는데 실패했습니다.');
+            $('#loading').hide();
         });
 }
 
@@ -191,7 +194,8 @@ function getTotalInfo() {
         data: {
             yadmNm: hospitalName,
             sgguCd: sgguCd
-        }
+        },
+        timeout:10000
     }).done(res => {
         console.log(res);
         const BD = res.data.hospBasisData;
@@ -220,8 +224,12 @@ function getTotalInfo() {
                 $('#hospital-park').text(DD.parkEtc + "주차 가능");
             }
         } else {
-            alert('병원정보를 불러오지 못했습니다. \n잠시 후 다시 시도해주세요.')
+            alert('병원정보를 불러오지 못했습니다. \n잠시 후 다시 시도해주세요.');
+            $('#loading').hide();
         }
+    }).fail(function (){
+        alert('병원정보를 불러오지 못했습니다. \n잠시 후 다시 시도해주세요.');
+        $('#loading').hide();
     })
 }
 
