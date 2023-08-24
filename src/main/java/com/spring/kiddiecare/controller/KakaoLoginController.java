@@ -39,7 +39,6 @@ public class KakaoLoginController {
 
         // 카카오 사용자 정보 요청 및 가져오기
         String email = loginManager.getKakaoUserInfo(accessToken);
-        System.out.println("email:"+email);
 
         // 사용자 정보를 확인하고, 가입되지 않은 사용자일 경우 추가 정보 입력을 위해 회원가입 페이지로 보냅니다.
         Optional<User> foundUser = userRepository.findUserById(email);
