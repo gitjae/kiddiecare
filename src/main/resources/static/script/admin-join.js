@@ -244,7 +244,7 @@ function searchHospName() {
 /* 이메일 인증번호 전송 */
 function sendAuthToken() {
     let email = $('#admin-email').val();
-    if (!regExp.test(email)) {
+    if (!regExp.test(email) || email === "") {
         alert("이메일 형식이 맞지 않습니다.");
     } else {
         $('#admin-email-btn').prop('disabled', true);
@@ -252,15 +252,12 @@ function sendAuthToken() {
             type: "POST",
             url: "/email/create",
             data: { adminEmail : email },
-            success: function(response) {
-                if (response.result === "VERIFICATION_SENT") {
+            success: function(data) {
+                if (data.response === "success") {
                     alert("인증번호를 확인해주세요.");
                     // 인증코드 입력란 활성화 등 필요한 코드 작성
-                    console.log(response.verification_duration);
-                    console.log(response.verification_code);
                     $('#admin-email-btn').prop('disabled', false);
                 } else {
-                    console.log(response.result === "FAIL");
                     alert("인증번호 전송에 실패하였습니다. 잠시 후 다시 시도해주세요.");
                 }
             },
@@ -274,35 +271,35 @@ function sendAuthToken() {
 
 /* 이메일 인증번호 검증 */
 function checkAuthToken() {
-    let authCode = $('#auth-token').val();
+    let authCode = $('#auth-code').val();
+    let email = $('#admin-email').val();
+    if(authCode !== ""){
 
-    alert("인증이 완료되었습니다.");
-    chkAdminEmail = true;
-    // $.ajax({
-    //     type: "POST",
-    //     url: "/email/validate",
-    //     data: { verificationCode: authCode },
-    //     success: function(response) {
-    //         if (response.result === "VERIFICATION_SUCCEEDED") {
-    //             alert("인증이 완료되었습니다.");
-    //             chkAdminEmail = true;
-    //             // 인증이 완료되었을 때 필요한 코드 작성
-    //         } else if (response.result === "EXPIRED") {
-    //             alert("인증번호가 만료되었습니다. 다시 인증번호를 발급받아주세요.");
-    //             // 인증번호 입력란 초기화 등 필요한 코드 작성
-    //             $('#auth-token').val().empty();
-    //             chkAdminEmail = false;
-    //         } else {
-    //             alert("인증번호를 다시 확인해주세요.");
-    //             // 인증번호 입력란 초기화 등 필요한 코드 작성
-    //             $('#auth-token').val().empty();
-    //         }
-    //     },
-    //     error: function(xhr, status, error) {
-    //         console.log(error);
-    //         alert("인증번호를 다시 확인해주세요.");
-    //     }
-    // });
+        $.ajax({
+            type: "POST",
+            url: "/email/validate",
+            data: {
+                adminEmail:email,
+                code: authCode
+            },
+            success: function(data) {
+                if(data.response === "success"){
+                    alert("인증되었습니다.")
+                    chkAdminEmail = true;
+                }else if(data.response === "fail cause not matched"){
+                    alert("인증번호가 맞지 않습니다.")
+                }else if(data.response === "fail cause timeout"){
+                    alert("인증번호 유효기간이 지났습니다.")
+                }
+            },
+            error: function(xhr, status, error) {
+                console.log(error);
+                alert("인증번호를 다시 확인해주세요.");
+            }
+        });
+    }else{
+        alert("인증번호를 입력해주세요.")
+    }
 }
 
 /* 회원가입 양식 유효성 검사 */
@@ -394,21 +391,21 @@ function checkValue(htmlForm) {
     //     check = false;
     // }
 
-    // if(!chkAdminEmail){
-    //     alert("이메일 인증을 해주세요.");
-    //     $('#chk-email').show().css('color','red');
-    //     check = false;
-    // }
+    if(!chkAdminEmail){
+        alert("이메일 인증을 해주세요.");
+        $('#chk-email').show().css('color','red');
+        check = false;
+    }
 
-    // if(!chkAdminHospName){
-    //     alert("병원 정보를 입력 해주세요.");
-    //     check = false;
-    // }
-    //
-    // if(!chkAdminIdValue){
-    //     alert("아이디 중복확인을 해주세요.")
-    //     check = false;
-    // }
+    if(!chkAdminHospName){
+        alert("병원 정보를 입력 해주세요.");
+        check = false;
+    }
+
+    if(!chkAdminIdValue){
+        alert("아이디 중복확인을 해주세요.")
+        check = false;
+    }
     /* 서버 검증 결과 확인 */
     if (check) {
         $.ajax({
