@@ -1,15 +1,13 @@
 package com.spring.kiddiecare.domain.doctor;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Entity
 @Getter
 @Setter
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "doctor")
@@ -30,18 +28,23 @@ public class Doctor {
     @Column(nullable = false, columnDefinition = "TINYINT DEFAULT 0") // default 값 설정
     private byte doctorStatus;
 
+    @Column(nullable = true)
+    private String doctorImageUrl;
+
     public Doctor(DoctorResponseDto doctorDto){
         this.no = 0L;
         this.ykiho = doctorDto.getYkiho();
         this.doctorName = doctorDto.getDoctorName();
         this.doctorAverageTimeOfCare = doctorDto.getDoctorAverageTimeOfCare();
         this.doctorStatus = doctorDto.getDoctorStatus();
+        this.doctorImageUrl = doctorDto.getDoctorImageUrl();
     }
 
     public void Update(DoctorResponseDto doctorDto){
         this.doctorName = doctorDto.getDoctorName();
         this.doctorAverageTimeOfCare = doctorDto.getDoctorAverageTimeOfCare();
         this.doctorStatus = doctorDto.getDoctorStatus();
+        this.doctorImageUrl = doctorDto.getDoctorImageUrl();
     }
 }
 
