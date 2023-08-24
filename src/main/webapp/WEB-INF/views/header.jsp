@@ -4,6 +4,10 @@
 <head>
     <title>Title</title>
     <link rel="shortcut icon" href="/image/favicon.ico">
+    <meta property="og:title" content="우리동네소아과">
+    <meta property="og:description" content="병원 예약을 쉽고 빠르게">
+    <meta property="og:image" content="/image/metaImg.jpg">
+
     <link href="/css/common.css" rel="stylesheet">
     <link href="/css/header.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
