@@ -11,6 +11,7 @@
 <html>
 <head>
     <title>Title</title>
+    <link rel="shortcut icon" href="/image/favicon.ico">
     <link href="/css/common.css" rel="stylesheet">
     <link href="/css/hospital-appo-management.css" rel="stylesheet">
 </head>
@@ -22,11 +23,13 @@
             <p id="date-status"></p>
             <input type="date" id="confirm-date">
 
+            <div id="no-appo" style="display: none;">해당 시간에 예약이 없습니다.</div>
             <div id="time-bar-area" >
                 <ul id="time-list">
 
                 </ul>
             </div>
+
 
             <div class="detail-area">
                 <table id="appo-table">
@@ -46,7 +49,7 @@
                     </tbody>
 
                 </table>
-                <div id="no-appo" style="display: none;">예약 없음</div>
+
             </div>
         </div>
 

@@ -22,7 +22,7 @@ function join(){
     const addr_detail = $('#addr3').val();
 
     if(!duplChk){
-        alert("아이디 중복체크를 확인해야 합니다.");
+        alert("아이디 중복을 확인해야 합니다.");
         return false;
     }
 
@@ -118,10 +118,10 @@ function idDuplChk(){
         if(user.id === id){
             $('#id').val("");
             duplChk = false;
-            alert("중복된 아이디");
+            alert("중복된 아이디 입니다.");
         } else {
             duplChk = true;
-            alert("사용가능한 아이디");
+            alert("사용가능한 아이디 입니다.");
         }
     })
 }
@@ -131,7 +131,7 @@ function sendCode(){
 
     if(!getPhone.test(phone)){
         $('#phone').val("");
-        alert("전화번호");
+        alert("전화번호를 입력해주세요 ex) 01012345678");
         return false;
     }
 
@@ -141,11 +141,14 @@ function sendCode(){
         data:{number:phone}
     }).done(res => {
         if(res.send === 'success'){
+            alert('인증코드가 발송되었습니다.');
+            console.log(res.code)
+            $('#verify').prop("disabled", false);
+        } else {
             if(res.dupl === 'true'){
-                alert("이미 등록된 전화번호 입니다.");
+                alert('이미 등록된 전화번호 입니다.')
             } else {
-                console.log(res.code)
-                $('#verify').prop("disabled", false);
+                alert('인증코드 발송에 실패했습니다.');
             }
         }
     })
@@ -165,6 +168,7 @@ function verify(){
             $('#code').prop("disabled",true);
             $('#verify').prop("disabled",true);
             phoneChk = true;
+            alert("인증에 성공했습니다.")
         } else {
             alert("인증에 실패했습니다.")
         }

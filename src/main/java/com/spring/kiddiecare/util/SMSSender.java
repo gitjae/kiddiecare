@@ -69,6 +69,41 @@ public class SMSSender {
         return responseBody;
     }
 
+    public Map sendLms(String recipientNumber, String message) throws Exception {
+        Long time = System.currentTimeMillis();
+        // Naver Sens API 엔드포인트 구성
+        String url = "https://sens.apigw.ntruss.com/sms/v2/services/" + serviceId + "/messages";
+
+        // 인증 헤더 생성
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.set("x-ncp-apigw-timestamp", time.toString());
+        headers.set("x-ncp-iam-access-key", myAccessKey);
+
+        String sig = makeSignature(time);
+        headers.set("x-ncp-apigw-signature-v2", sig);
+
+        // 메시지 본문 구성
+        JSONObject requestJson = new JSONObject();
+        requestJson.put("type", "LMS");
+        requestJson.put("from", senderNumber);
+        requestJson.put("content", message);
+        ArrayList<JSONObject> messages = new ArrayList<>();
+        JSONObject msg = new JSONObject();
+        msg.put("to", recipientNumber);
+        messages.add(msg);
+        requestJson.put("messages", messages);
+        System.out.println(requestJson.toString());
+        HttpEntity<String> request = new HttpEntity<>(requestJson.toString(), headers);
+
+        // API 요청
+        ResponseEntity<Map> response = restTemplate.exchange(url, HttpMethod.POST, request, Map.class);
+
+        Map<String, Object> responseBody = response.getBody();
+
+        return responseBody;
+    }
+
     public String makeSignature(Long time) throws Exception{
         String space = " ";					// one space
         String newLine = "\n";					// new line

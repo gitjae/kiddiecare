@@ -4,6 +4,7 @@
 <%-- MainController -> @GetMapping("adminIndex") --%>
 <head>
     <title>우리동네소아과 관리자 페이지</title>
+    <link rel="shortcut icon" href="/image/favicon.ico">
     <link href="/css/common.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/admin-index.css">
 </head>
@@ -61,13 +62,6 @@
           </aside>
 
           <div id="main-section">
-
-
-              <%-- 의사 선택 영역--%>
-<%--              <h1>의사 선택</h1>--%>
-<%--              <div id="selectedDoctor" style="display: none"></div>--%>
-<%--              <div class="select-option"></div>--%>
-<%--              --%>
 
               <fieldset id="docChoose">
                   <legend><b>의사 선택</b></legend>

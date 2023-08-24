@@ -3,6 +3,7 @@
 <html>
 <head>
     <title>자녀등록</title>
+    <link rel="shortcut icon" href="/image/favicon.ico">
     <link href="/css/childRegister.css" rel="stylesheet">
     <script src="/script/childRegister.js"></script>
 </head>
@@ -20,7 +21,7 @@
             </div>
             <div id="div-birth">
                 <label for="birth">생년월일</label>
-                <input type="text" id="birth" name="birth">
+                <input type="text" id="birth" name="birth" placeholder="생년월일 8자리를 입력해주세요. (YYYYMMDD)">
             </div>
             <div id="div-gender">
                 <label id="label-gender">성별</label>

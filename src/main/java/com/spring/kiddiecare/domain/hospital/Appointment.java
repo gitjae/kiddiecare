@@ -50,11 +50,11 @@ public class Appointment extends Timestamp {
             this.appoStatus = appoDto.getAppoStatus();
         }
 
-        if(appoDto.getSymptom() != null){
+        if(appoDto.getSymptom() != null && !appoDto.getSymptom().isEmpty()){
             this.symptom = appoDto.getSymptom();
         }
 
-        if(appoDto.getNote() != null){
+        if(appoDto.getNote() != null && !appoDto.getNote().isEmpty()){
             this.note = appoDto.getNote();
         }
     }

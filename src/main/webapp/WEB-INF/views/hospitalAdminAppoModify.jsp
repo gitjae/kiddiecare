@@ -10,6 +10,7 @@
 <html>
 <head>
     <title>병원 예약 인원수 관리</title>
+    <link rel="shortcut icon" href="/image/favicon.ico">
     <link href="/css/common.css" rel="stylesheet">
     <link href="/css/hospital-appo-create.css" rel="stylesheet">
     <link href="/css/admin-appo-modify.css" rel="stylesheet">
@@ -38,10 +39,10 @@
                         <th>요일</th>
                         <th>날짜</th>
                         <th>시간</th>
-                        <th>최대 예약자 수</th>
-                        <th>예외설정 수</th>
-                        <th>현재 예약자 수</th>
-                        <th>예약가능 수</th>
+                        <th>총 예약 허용 인원</th>
+                        <th>예약 예외 인원</th>
+                        <th>현재 예약 인원</th>
+                        <th>예약 가능 인원</th>
                         <th>수정하기</th>
                     </tr>
                     </thead>

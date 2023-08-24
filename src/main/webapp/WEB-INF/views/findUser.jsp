@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>아이디/비밀번호 찾기</title>
+    <link rel="shortcut icon" href="/image/favicon.ico">
     <link href="/css/common.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/join.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>

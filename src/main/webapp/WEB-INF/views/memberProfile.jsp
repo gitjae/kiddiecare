@@ -3,6 +3,7 @@
 <html>
 <head>
     <title>Member profile</title>
+    <link rel="shortcut icon" href="/image/favicon.ico">
     <link href="/css/common.css" rel="stylesheet">
 
     <style>

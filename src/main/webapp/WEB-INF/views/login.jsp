@@ -2,13 +2,14 @@
 <html>
 <head>
     <title>로그인</title>
+    <link rel="shortcut icon" href="/image/favicon.ico">
     <link href="/css/common.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/login.css">
 <%--    <link rel="stylesheet" href="/css/admin-login.css">--%>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
     <script src="/script/apikeys.js"></script>
     <script src="/script/login-api.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+<%--    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>--%>
     <script src="/script/admin-login.js"></script>
 </head>
 <body>

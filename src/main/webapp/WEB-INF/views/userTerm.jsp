@@ -3,6 +3,7 @@
 <html>
 <head>
     <title>이용약관</title>
+    <link rel="shortcut icon" href="/image/favicon.ico">
     <link href="/css/common.css" rel="stylesheet">
 </head>
 <body>

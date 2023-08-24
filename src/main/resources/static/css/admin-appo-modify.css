@@ -30,3 +30,6 @@
     display: none;
 }
 
+.enable_in,.count_in {
+    cursor: default;
+}
