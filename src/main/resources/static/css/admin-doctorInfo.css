@@ -1,4 +1,4 @@
-.doctor-container{
+#doctor-container{
     display: grid;
     gap: 50px;
     padding: 30px;
@@ -17,6 +17,26 @@
     flex-direction: row;
     justify-items: center;
     align-items: center;
+}
+
+.option-box{
+    display: flex;
+    flex-direction: row;
+    justify-items: center;
+    align-items: center;
+    margin-top: 20px;
+    gap: 20px;
+}
+
+.option-box i{
+    margin-right: 10px;
+    font-size: 20px;
+}
+
+.option-box label{
+    color: #999;
+    font-size: 14px;
+    font-family: 'ONE-Mobile-POP', sans-serif;
 }
 
 .doctor-area{
@@ -141,7 +161,7 @@
     margin-bottom: 1rem;
 }
 
-.input_box {
+.input_box{
     position: relative;
     margin-top: 30px;
     width: 100%;
@@ -164,7 +184,7 @@
     border-color: #7d2ae8;
 }
 
-.input_box i {
+.input_box i{
     position: absolute;
     top: 50%;
     transform: translateY(-50%);

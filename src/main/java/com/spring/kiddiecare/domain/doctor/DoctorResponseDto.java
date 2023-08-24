@@ -18,6 +18,8 @@ public class DoctorResponseDto {
     private String doctorName;
     private int doctorAverageTimeOfCare;
     private byte doctorStatus;
-    private String doctorImageUrl;
     private MultipartFile file;
+    /* 수정해서 넣어주는 데이터 */
+    private String doctorImageUrl;
+    private String doctorSubject;
 }

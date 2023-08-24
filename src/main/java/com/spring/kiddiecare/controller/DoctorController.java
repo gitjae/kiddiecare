@@ -9,6 +9,7 @@ import com.spring.kiddiecare.domain.timeSlotsLimit.TimeSlotsLimit;
 import com.spring.kiddiecare.domain.timeSlotsLimit.TimeSlotsLimitRepository;
 import com.spring.kiddiecare.service.DoctorService;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.io.FilenameUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.web.bind.annotation.*;
@@ -87,6 +88,8 @@ public class DoctorController {
         // 반환할 json
         JSONObject jsonObject = new JSONObject();
 
+        System.out.println(doctorDto);
+
         // 세션에서 Ykiho 확인
         String ykiho = (String) request.getAttribute("Ykiho",WebRequest.SCOPE_SESSION);
         if(ykiho == null){
@@ -104,16 +107,26 @@ public class DoctorController {
             // ykiho 저장
             doctorDto.setYkiho(ykiho);
 
+
             // s3 파일 올리기
-            String saveFileUrl = imageUploadController.uploadFile(doctorDto.getFile(),doctorDto.getDoctorName());
-            if(saveFileUrl == null){
-                return jsonObject.put("response","fail cause image upload error").toMap();
+            if(!doctorDto.getFile().isEmpty()){
+
+                // 파일 확장자 확인
+                String extension = FilenameUtils.getExtension(doctorDto.getFile().getOriginalFilename()); // 3
+                if (!extension.equals("png") && !extension.equals("jpg")) {
+                    return jsonObject.put("response","fail cause file extension not supported").toMap();
+                }
+
+                String saveFileUrl = imageUploadController.uploadFile(doctorDto.getFile(),doctorDto.getDoctorName());
+                if(saveFileUrl == null){
+                    return jsonObject.put("response","fail cause image upload error").toMap();
+                }
+                doctorDto.setDoctorImageUrl(saveFileUrl);
             }
-            doctorDto.setDoctorImageUrl(saveFileUrl);
 
             // Doctor vo에 넣고 저장
             Doctor doctor = new Doctor(doctorDto);
-            System.out.println(doctor);
+
             try{
                 doctorService.createDoctor(doctor);
                 return jsonObject.put("response","success").toMap();
@@ -125,17 +138,16 @@ public class DoctorController {
     }
 
     @DeleteMapping("delete")
-    public Map deleteDoctorData(@ModelAttribute DoctorResponseDto doctorDto,WebRequest request){
+    public Map deleteDoctorData(@ModelAttribute DoctorResponseDto doctorDto, WebRequest request){
         JSONObject jsonObject = new JSONObject();
 
-        System.out.println(doctorDto);
-
+        // 세션에서 Ykiho 확인
         String ykiho = (String) request.getAttribute("Ykiho",WebRequest.SCOPE_SESSION);
         if(ykiho == null){
             return jsonObject.put("response","fail no ykiho").toMap();
         }
 
-        Doctor doctorData  = doctorRepository.findByYkihoAndDoctorName(ykiho,doctorDto.getDoctorName());
+        Doctor doctorData  = doctorRepository.findByYkihoAndNo(ykiho,doctorDto.getNo());
         if(doctorData != null){
             try {
                 doctorService.deleteDoctor(doctorData.getNo());
@@ -151,18 +163,19 @@ public class DoctorController {
     public Map updateDoctorData(@ModelAttribute DoctorResponseDto doctorDto, WebRequest request){
         JSONObject jsonObject = new JSONObject();
 
+        System.out.println(doctorDto);
+
+        // 세션에서 Ykiho 확인
         String ykiho = (String) request.getAttribute("Ykiho",WebRequest.SCOPE_SESSION);
         if(ykiho == null){
             return jsonObject.put("response","fail no ykiho").toMap();
         }
 
-        Doctor doctorData  = doctorRepository.findByYkihoAndDoctorName(ykiho,doctorDto.getDoctorName());
+        Doctor doctorData  = doctorRepository.findByYkihoAndNo(ykiho,doctorDto.getNo());
         if(doctorData != null){
             try {
-                Doctor doctorUpdate = doctorService.updateDoctor(doctorDto);
-                jsonObject.put("response","success");
-                jsonObject.put("data",doctorDto);
-                return jsonObject.toMap();
+                doctorService.updateDoctor(doctorDto);
+                return jsonObject.put("response","success").toMap();
             }catch (Exception e){
                 return jsonObject.put("response","fail cause DB error").toMap();
             }
