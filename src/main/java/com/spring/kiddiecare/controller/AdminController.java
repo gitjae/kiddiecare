@@ -89,7 +89,6 @@ public class AdminController {
 
             // DB에 저장
             try {
-                //adminService.joinAdminUserByAdmin(admin);
                 adminService.joinAdminUserAndHospital(admin, hospital);
                 result.put("response","success");
             }catch (Exception e){

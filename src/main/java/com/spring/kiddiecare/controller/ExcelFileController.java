@@ -2,7 +2,6 @@ package com.spring.kiddiecare.controller;
 
 import com.spring.kiddiecare.domain.excel.ExcelData;
 import com.spring.kiddiecare.domain.excel.ExcelDataRepository;
-import com.spring.kiddiecare.util.ExcelReadUtil;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -18,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +39,6 @@ public class ExcelFileController {
         String extension = FilenameUtils.getExtension(file.getOriginalFilename()); // 3
 
         if (!extension.equals("xlsx") && !extension.equals("xls")) {
-//            throw new IOException("엑셀파일만 업로드 해주세요.");
             return jsonObject.put("response","엑셀파일만 업로드 해주세요.").toMap();
         }
 

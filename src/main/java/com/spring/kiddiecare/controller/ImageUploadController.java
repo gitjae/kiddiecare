@@ -27,7 +27,9 @@ public class ImageUploadController {
     private String bucket;
 
     @Value("${cloudfront.cloud-front.url}")
-    private String url;
+    private String cloudUrl;
+
+    private String s3Url;
 
     public String uploadFile(MultipartFile file, String adminName) {
         try {
@@ -35,7 +37,8 @@ public class ImageUploadController {
             metadata.setContentType(file.getContentType());
             metadata.setContentLength(file.getSize());
             amazonS3Client.putObject(bucket,adminName,file.getInputStream(),metadata);
-            return url+"/"+adminName;
+            return "https://"+cloudUrl+"/"+adminName;
+
         } catch (IOException e) {
             System.err.println(e);
         }
