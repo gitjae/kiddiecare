@@ -34,12 +34,12 @@
                       </li>
                       <li>
                           <div id="appo-status" name="div-appo" onclick="contentChange(this)">
-                              예약자 현황 / 관리
+                              예약현황
                           </div>
                       </li>
                       <li>
                           <div id="appo-modify" name="div-appo-modify" onclick="contentChange(this)">
-                              예약정보 관리
+                              스케줄 관리
                           </div>
                       </li>
                       <li>

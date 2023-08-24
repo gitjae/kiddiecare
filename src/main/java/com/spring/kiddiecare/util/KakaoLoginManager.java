@@ -24,13 +24,13 @@ public class KakaoLoginManager {
         return KAKAO_REST_API_KEY;
     }
 
-    public String redirect_uri = "http://localhost:8080/login/kakao/callback";
+    public String redirect_uri = "https://kiddiecare.site/login/kakao/callback";
 
 
     public String getKakaoAccessToken(String code){
         String access_Token = "";
         String reqURL = "https://kauth.kakao.com/oauth/token";
-        System.out.println(code);
+
         HttpHeaders headers = new HttpHeaders();
         //headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);

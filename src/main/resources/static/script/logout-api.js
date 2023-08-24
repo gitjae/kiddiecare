@@ -59,22 +59,28 @@ $(document).ready(function() {
     //     }
     // });
 
-    // 실행 시 db에서 불러오기
-    // $.ajax({
-    //     type: 'POST',
-    //     url: '/alarm/check',
-    //     data : {
-    //         id : sessionValue
-    //     }
-    // }).done (function (list) {
-    //     // 받아올 알람이 있을 때만
-    //     if(Array.isArray(list) && list.length > 0) {
-    //         list.forEach((detail) => {
-    //             let alarm = "<div class='text'><p>" + detail.alarmText + "</p></div>";
-    //             $(".notifi-area").append(alarm);
-    //         })
-    //     }
-    // });
+    // session 존재 시 db에서 불러오기
+    if(sessionValue !== undefined){
+        $.ajax({
+            type: 'POST',
+            url: '/alarm/check',
+            data : {
+                id : sessionValue,
+
+            }
+        }).done (function (response) {
+            // 받아올 알람이 있을 때만
+            if(Array.isArray(response.content) && response.content.length > 0) {
+                response.content.forEach((detail) => {
+                    let alarm = "<div class='text'><p>" + detail.alarmNo + "] " + detail.alarmText + "</p></div>";
+                    $(".notifi-area").append(alarm);
+                })
+            }
+        }).fail(function (error){
+            console.log("알람에러: "+error);
+        })
+
+    }
 
     if (sessionValue !== undefined && sessionValue !== "") {
         console.log(sessionValue);

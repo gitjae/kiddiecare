@@ -46,7 +46,11 @@
     border-radius: 5px;
 }
 
-#form, .login-form {
+#form{
+    display: block;
+}
+
+.login-form {
     display: none;
 }
 

@@ -95,7 +95,8 @@
 </div>
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
-<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+<%--<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>--%>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script src="/script/postcode.js"></script>
 <script src="/script/kakao-join.js"></script>
 </html>

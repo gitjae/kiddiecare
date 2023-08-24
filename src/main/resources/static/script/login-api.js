@@ -27,7 +27,7 @@ function gotofind(){
 }
 
 function kakaoLogin(){
-    location.href = `https://kauth.kakao.com/oauth/authorize?client_id=${keys.kakaoRestApi}&redirect_uri=http://localhost:8080/login/kakao/callback&response_type=code`
+    location.href = `https://kauth.kakao.com/oauth/authorize?client_id=${keys.kakaoRestApi}&redirect_uri=https://kiddiecare.site/login/kakao/callback&response_type=code`
 }
 
 $(document).ready(function() {
@@ -42,4 +42,18 @@ $(document).ready(function() {
         $('.login-form').show();
         $('#form').hide();
     });
+
+    $('#id').keyup(function (e){
+        if(e.keyCode == 13){
+            $('#password').focus();
+        }
+    })
+
+    $('#password').keyup(function (e){
+        if(e.keyCode == 13){
+            login();
+        }
+    })
+
+
 });
