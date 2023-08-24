@@ -34,6 +34,54 @@ $(document).ready(function() {
     }
     var sessionValue = $('#sessionValue').val();
 
+    // $.ajax({
+    //     type: 'POST',
+    //     url: '/websocket/member',
+    //     data: {
+    //         target: target,
+    //         content: content,
+    //         type: type,
+    //         url: url
+    //     },
+    //     success: function(response){    // db전송 성공시 실시간 알림 전송
+    //         // 소켓에 전달되는 메시지
+    //         // 위에 기술한 EchoHandler에서 ,(comma)를 이용하여 분리시킨다.
+    //         if(response === ""){
+    //             console.log("dd")
+    //         }else{
+    //             console.log("ddd")
+    //         }
+    //         socket.send("관리자,"+target+","+content+","+url);
+    //     },
+    //     error: function(xhr, status, error) {
+    //         console.log(error);
+    //         alert("인증번호를 다시 확인해주세요.");
+    //     }
+    // });
+
+    // session 존재 시 db에서 불러오기
+    if(sessionValue !== undefined){
+        $.ajax({
+            type: 'POST',
+            url: '/alarm/check',
+            data : {
+                id : sessionValue,
+
+            }
+        }).done (function (response) {
+            // 받아올 알람이 있을 때만
+            if(Array.isArray(response.content) && response.content.length > 0) {
+                response.content.forEach((detail) => {
+                    let alarm = "<div class='text'><p>" + detail.alarmNo + "] " + detail.alarmText + "</p></div>";
+                    $(".notifi-area").append(alarm);
+                })
+            }
+        }).fail(function (error){
+            console.log("알람에러: "+error);
+        })
+
+    }
+
     if (sessionValue !== undefined && sessionValue !== "") {
         console.log(sessionValue);
         let sock = new SockJS('/echo-ws');
@@ -49,6 +97,7 @@ $(document).ready(function() {
 
         sock.onmessage = onMessage;
 
+        // 메세지가 왔을 때
         function onMessage(evt) {
             countAdd();
             alarmAdd();

@@ -113,8 +113,8 @@ function setMarkers(res){
                                 <div class="hospital-addr" sidoCd="${hosp.sidoCd}" sgguCd="${hosp.sgguCd}">${hosp.addr}</div>
                                 <div class="hospital-tel">${hosp.telno == null ? "" : hosp.telno}</div>
                                 <div class="hospital-weekday">${hosp.weekday == null ? "" : hosp.weekday}</div>
-                                <div class="hospital-holiday">${hosp.noTrmtHoli == null ? "" : "공휴일"}</div>
-                                <div class="hospital-sunday">${hosp.noTrmtSun == null ? "" : "일요일"}</div>
+                                <div class="hospital-holiday">${hosp.noTrmtHoli == null ? "" : "공휴일 : " + hosp.noTrmtHoli}</div>
+                                <div class="hospital-sunday">${hosp.noTrmtSun == null ? "" : "일요일 : " + hosp.noTrmtSun}</div>
                                 <div class="blank">&nbsp;</div>
                             </a>`;
 

@@ -14,3 +14,8 @@ function gotoUpdate(){
     location.href = '/user/update';
 }
 
+function getFavorFromUrl() {
+    const currentUrl = new URL(window.location.href);
+    const favor = currentUrl.searchParams.get('favor');
+    return favor;
+}

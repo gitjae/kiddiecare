@@ -37,7 +37,7 @@ public class UserService {
     }
 
     @Transactional
-    public boolean deleteUser(String id){
+    public boolean deactiveUser(String id){
         boolean check = false;
 
         Optional<User> foundUser = userRepository.findUserById(id);
@@ -45,6 +45,22 @@ public class UserService {
         if(!foundUser.isEmpty()){
             User user = foundUser.get();
             user.setValid(false);
+
+            check = true;
+        }
+
+        return check;
+    }
+
+    @Transactional
+    public boolean deleteUser(String id){
+        boolean check = false;
+
+        Optional<User> foundUser = userRepository.findUserById(id);
+
+        if(!foundUser.isEmpty()){
+            User user = foundUser.get();
+            userRepository.deleteById(user.getNo());
 
             check = true;
         }

@@ -36,7 +36,6 @@
                 </div>
                 <button id="set-date">날짜 범위 설정</button>
             </div>
-<%--                <button id="set-date" onclick="setDate()">날짜 범위 설정</button>--%>
 
             <div id="except-area">
                 <h3>제외날짜</h3>
@@ -45,8 +44,6 @@
                     <input type="button" id="except-add" onclick="exceptAdd()" value="추가">
                 </div>
                 <div>
-                    <input type="checkbox" id="except-holidays">
-                    <label for="except-holidays">공휴일제외</label>
                     <input type="checkbox" id="except-sunday">
                     <label for="except-sunday">일요일제외</label>
                 </div>
@@ -98,7 +95,6 @@
         </div>
     </div>
 
-    <!-- style="display: none" -->
     <div id="loading" style="display: none">
         <div class="loading-content">
             <div class="loadingio-spinner-spinner-822xu4kqp5u"><div class="ldio-zhpd3csebyc">
@@ -109,7 +105,5 @@
         </div>
     </div>
 
-<%--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>--%>
-<%--<script src="/script/hospital-appo-create.js"></script>--%>
 </body>
 </html>

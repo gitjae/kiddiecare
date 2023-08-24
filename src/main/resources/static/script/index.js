@@ -9,7 +9,7 @@ window.onload = function () {
     });
 
     document.getElementById('favorite-hospital-div').addEventListener('click', function () {
-        window.location.href = '/mypage';
+        window.location.href = '/mypage?favor=true';
         document.getElementById('nav-favor').click();
     });
 

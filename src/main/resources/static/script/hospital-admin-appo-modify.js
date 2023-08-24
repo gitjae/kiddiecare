@@ -24,13 +24,10 @@ function modifyList() {
     let formatDate = selectedDate.toISOString().slice(0, 10);
     let tableBody = $('#appo-mo-table');
     let detail = $('.detail-change-area');
-    console.log(formatDate);
 
     tableBody.html('');
 
     const doctorNo = $('#selectedDoctor').text();
-
-    console.log(selectedDate);
 
     $.ajax({
         url: '/getTimeSlots',
@@ -51,8 +48,6 @@ function modifyList() {
             list.forEach((detail) => {
                 tableBody.append(`
                     <tr>
-                        <!--<td> detail.no </td>-->
-                        <!-- <td>${detail.doctorNo}</td> -->
                         <td>${$('.option.selected').text()}</td>
                         <td>${detail.weekday}</td>
                         <td>${detail.date}</td>
@@ -64,7 +59,6 @@ function modifyList() {
                         <td><button name="${detail.no}" onclick="modify(this)">수정</button></td>
                     </tr>
                 `);
-                console.log(detail);
             })
         }else{
             // $('#appo-mo-table').html('');

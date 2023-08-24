@@ -11,4 +11,6 @@ public class LikeHospitalRequestDto {
     private int no;
     private int userNo;
     private String ykiho;
+    private String hospitalName;
+    private String sgguCd;
 }

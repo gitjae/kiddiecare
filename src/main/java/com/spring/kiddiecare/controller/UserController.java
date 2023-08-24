@@ -235,10 +235,10 @@ public class UserController {
     }
 
     @GetMapping("findid")
-    public Map findId(@RequestParam String name, @RequestParam int phone){
+    public Map findId(@RequestParam String name, @RequestParam String phone){
         JSONObject jsonObject = new JSONObject();
 
-        Optional<User> foundUser = userRepository.findUserByNameAndPhone(name, String.valueOf(phone));
+        Optional<User> foundUser = userRepository.findUserByNameAndPhone(name, phone);
 
         if(foundUser.isPresent()){
             User user = foundUser.get();
@@ -252,27 +252,17 @@ public class UserController {
         return jsonObject.toMap();
     }
 
+
+
     @PostMapping("findpw")
-    public Map findPw(@RequestBody UserRequestDto userDto){
+    public Map findpassword(@RequestBody UserRequestDto userDto){
         JSONObject jsonObject = new JSONObject();
-
-        String id = userDto.getId();
-        String name = userDto.getName();
-        String phone = userDto.getPhone();
-
-        Optional<User> foundUser = userRepository.findUserByIdAndNameAndPhone(id, name, phone);
-
-        if(foundUser.isPresent()){
-            User user = foundUser.get();
-            UserResponseDto userResponseDto = new UserResponseDto();
-            userResponseDto.setPassword(user.getPassword());
-
-            jsonObject.put("find", "success");
-            jsonObject.put("user", userResponseDto);
-            return jsonObject.toMap();
+        System.out.println(userDto);
+        boolean check = userService.updateUser(userDto.getId(), userDto);
+        if (check){
+            return jsonObject.put("find", "success").toMap();
         }
-        jsonObject.put("find", "fail");
-        return jsonObject.toMap();
+        return jsonObject.put("find", "fail").toMap();
     }
 
     @GetMapping("getUser")

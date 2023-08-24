@@ -6,6 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.time.LocalDateTime;
 
 
 @Getter
@@ -25,4 +26,5 @@ public class AppoResponseDto {
     private String symptom;
     @Column(nullable = false)
     private int slotNo;
+    private LocalDateTime createdTime;
 }

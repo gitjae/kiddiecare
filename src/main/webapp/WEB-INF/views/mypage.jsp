@@ -2,7 +2,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>마이페이지</title>
     <link href="/css/common.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/mypage.css">
     <script src="/script/mypage-user.js"></script>

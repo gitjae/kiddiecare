@@ -13,17 +13,21 @@ import javax.persistence.Table;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "likeHospital")
+@Table(name = "like_hospital")
 @Entity
 public class LikeHospital {
     @Id
     private int no;
     private int userNo;
     private String ykiho;
+    private String hospitalName;
+    private String sgguCd;
 
     public LikeHospital(LikeHospitalRequestDto likeRequestDto) {
         this.no = likeRequestDto.getNo();
         this.userNo = likeRequestDto.getUserNo();
-        this.ykiho = likeRequestDto.getYkiho();
+        //this.ykiho = likeRequestDto.getYkiho();
+        this.hospitalName = likeRequestDto.getHospitalName();
+        this.sgguCd = likeRequestDto.getSgguCd();
     }
 }
