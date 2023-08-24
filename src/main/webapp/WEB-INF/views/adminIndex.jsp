@@ -62,13 +62,6 @@
 
           <div id="main-section">
 
-
-              <%-- 의사 선택 영역--%>
-<%--              <h1>의사 선택</h1>--%>
-<%--              <div id="selectedDoctor" style="display: none"></div>--%>
-<%--              <div class="select-option"></div>--%>
-<%--              --%>
-
               <fieldset id="docChoose">
                   <legend><b>의사 선택</b></legend>
                   <div id="selectedDoctor" style="display: none"></div>

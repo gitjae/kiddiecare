@@ -69,10 +69,11 @@ document.getElementById('time-list').addEventListener("click", (event) => {
     const prevSelected = timeList.querySelector('.selected-time');
     prevSelected && prevSelected.classList.remove('selected-time');
 
-    // 선택 요소에 selected 클래스 추가 (선택 표시)
-    event.target.classList.add('selected-time');
 
     if (event.target && event.target.nodeName === "LI") {
+        // 선택 요소에 selected 클래스 추가 (선택 표시)
+        event.target.classList.add('selected-time');
+
         // 선택한 timeNo
         const timeNo = parseInt(event.target.id);
 
@@ -149,7 +150,7 @@ document.getElementById('time-list').addEventListener("click", (event) => {
 
                         if(result){
                             const selectedValue = event.target.value;
-
+                            const hospitalName = document.getElementById('hospital_name').textContent;
                             let selectedAppoNo = tr.dataset.appoNo;
                             console.log(selectedAppoNo);
 
@@ -158,7 +159,8 @@ document.getElementById('time-list').addEventListener("click", (event) => {
                                 method: 'PUT',
                                 data:{
                                     appoNo: selectedAppoNo,
-                                    status: selectedValue
+                                    status: selectedValue,
+                                    hospitalName: hospitalName
                                 }
                             }).done(function (result) {
                                 // alarmDto 받음
@@ -174,7 +176,10 @@ document.getElementById('time-list').addEventListener("click", (event) => {
                                 // mypage로 이동
                                 let url = '/mypage';
 
-                                socket.send("관리자"+","+target+","+content+","+url);
+                                // 병원명 이후 내용만 가져오기
+                                content = content.split("]")[1];
+                                socket.send(hospitalName+","+target+","+content+","+url);
+
 
                                 console.log(`Selected value:  ${selectedValue}`);
 
@@ -190,9 +195,9 @@ document.getElementById('time-list').addEventListener("click", (event) => {
                             statusDropdown.value = lastStatus;
                         }
 
+                        // 취소 상태일 때 버튼 비활성화
                         if(statusDropdown.value === "2") {
                             statusDropdown.setAttribute('disabled','');
-                            console.log('취소됨');
                         }
                     });
 
@@ -341,8 +346,8 @@ function changeDate() {
                     timeList.appendChild(li);
                 });
             } else {
-                // tableBody.innerHTML = '';
-                // dateStatusText.innerText = "선택한 날짜에 예약을 생성하지 않았습니다.";
+                tableBody.innerHTML = '';
+                dateStatusText.innerText = "선택한 날짜에 예약을 생성하지 않았습니다.";
             }
 
         }).fail(function (error) {

@@ -48,7 +48,8 @@ function modifyList() {
             list.forEach((detail) => {
                 tableBody.append(`
                     <tr>
-                        <td>${$('.option.selected').text()}</td>
+                        <!-- 이름만 가져오기 -->
+                        <td>${$('.option.selected').text().split(" ")[0]}</td>
                         <td>${detail.weekday}</td>
                         <td>${detail.date}</td>
                         <td>${detail.time}</td>
@@ -70,17 +71,6 @@ function modifyList() {
     });
 }
 
-function allSave(){
-    // timeslot no 가져오기
-    const timeSlotNo = parseInt(btn.name);
-
-    // tr 안의 td 요소 중 max_in, block_in인 value 가져오기
-    const row = $(btn).closest("tr");
-    const maxInput = parseInt(row.find("input.max_in").val());
-    const blockInput = parseInt(row.find("input.block_in").val());
-    const countInput = parseInt(row.find("input.count_in").val());
-
-}
 
 function modify(btn) {
 
@@ -109,7 +99,7 @@ function modify(btn) {
         }).done(function (result){
             if(result.modify === "success") {
                 // 제목, 내용, 아이콘
-                swal("정보 수정 성공!", "" ,"success" );
+                swal("정보 수정 성공!", "success" ,"success" );
             }else {
                 alert("수정 실패");
             }
