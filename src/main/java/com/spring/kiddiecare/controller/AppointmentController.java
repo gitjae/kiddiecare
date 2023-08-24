@@ -16,6 +16,7 @@ import com.spring.kiddiecare.domain.user.User;
 import com.spring.kiddiecare.domain.user.UserRepository;
 import com.spring.kiddiecare.service.HospitalAppointmentService;
 import com.spring.kiddiecare.service.TimeSlotsLimitService;
+import com.spring.kiddiecare.util.SMSSender;
 import lombok.RequiredArgsConstructor;
 import org.json.JSONObject;
 import org.springframework.data.domain.Pageable;
@@ -27,6 +28,7 @@ import org.springframework.web.context.request.WebRequest;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 
@@ -44,6 +46,7 @@ public class AppointmentController {
     private final TimeSlotsLimitService timeSlotsLimitService;
     private final AlarmRepository alarmRepository;
     private final UserRepository userRepository;
+    private final SMSSender smsSender;
 
     /**
      * 의사의 ykiho,no를 받아 해당 의사의 근무 일을 반환 해준다.
@@ -96,32 +99,6 @@ public class AppointmentController {
     }
 
 
-
-
-//    @PostMapping(value = "appo-add", consumes = {"application/json"})
-//    public Map appo_add(@RequestBody AppoRequestDto appoDto) {
-//        JSONObject json = new JSONObject();
-//
-//        int randNumber = Integer.parseInt(createRanNum());
-////        String randNumber = createRanNum();
-//
-//        System.out.println(randNumber);
-//
-//        appoDto.setNo(randNumber);
-//        appoDto.setPatientId(1);
-//        appoDto.setGuardian(1);
-//        appoDto.setTimeSlotNo(1);
-//        appoDto.setSymptom("");
-//
-//        System.out.println(appoDto);
-//        Appointment appo = new Appointment(appoDto);
-//        appoRepository.save(appo);
-//
-//        json.put("add", "success");
-//
-//        return json.toMap();
-//    }
-
     @PostMapping(consumes = {"application/json"})
     public ResponseEntity<Map<String, Boolean>> bookAppointment(@RequestBody AppoRequestDto appoDto) {
         HashMap<String, Boolean> response = new HashMap<>();
@@ -162,22 +139,6 @@ public class AppointmentController {
         // 저장된 모든 리스트 가져올 때
         return appoResponseRepository.findAllByTimeSlotNo(timeSlotNo);
     }
-    // 페이징처리
-//    @GetMapping("/getAppoDetails/{page}")
-//    public List<AppoResponseDto> getAppoDetails(@RequestParam int timeSlotNo, @PathVariable int page, @PageableDefault(size=10) Pageable pageable){
-//        List<AppoResponseDto> appoList = appoResponseRepository.findAllBySlotNoAndPage(timeSlotNo, pageable.withPage(page-1));
-//        List<AppoResponseDto> noDeleteList = new ArrayList<>();
-//
-//        for(AppoResponseDto data : appoList) {
-//           // status가 삭제가 아닌 리스트만 가져오기
-//            if(data.getAppoStatus() != 2) {
-//                noDeleteList.add(data);
-//            }
-//        }
-//        return noDeleteList;
-////        System.out.println(appoResponseRepository.findAllBySlotNoAndPage(timeSlotNo, pageable.withPage(page-1)));
-////        return appoResponseRepository.findAllBySlotNoAndPage(timeSlotNo, pageable.withPage(page-1));
-//    }
 
     @GetMapping("/getAppoUserDetail")
     public AppoAdminDetailDto getAppoAdminDetail(@RequestParam String hospAppoNo) {
@@ -204,7 +165,16 @@ public class AppointmentController {
 
             TimeSlotsLimit timeSlot = timeSlotsLimitRepository.findByNo(timeNo);
             String ykiho = timeSlot.getYkiho();
+            // 예약된 시간 포맷
             Time time = timeSlot.getTime();
+            SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
+            String timeString = timeFormat.format(time);
+
+            String hours = timeString.substring(0, 2); // 첫번째 ':'의 앞 두글자만 추출
+            // 예약된 timeslot 날짜 포맷
+            Date date = timeSlot.getDate();
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            String dateString = dateFormat.format(date);
 
             User user = userRepository.findUserByNo(userNo);
             userName = user.getName();
@@ -222,15 +192,32 @@ public class AppointmentController {
                 statusVal = "이용완료";
             }
 
-//            String text = userName + "님 " + statusVal + "가 되었습니다.";
-//            String text = userName + "님! " + time + " 예약 '" + statusVal + "' 상태로 변경되었습니다.";
-            String text = "[" + hospitalName + "] " + userName + "님!" + time + " 예약 '" + statusVal + "' 상태로 변경되었습니다.";
+            String text = "[" + hospitalName + "] " + userName + "님!" + hours + " 예약 '" + statusVal + "' 상태로 변경되었습니다.";
 
             alarm.setAlarmText(text);
             alarm.setHospYkiho(ykiho);
             alarm.setUserNo(userNo);
             alarmRepository.save(new Alarm(alarm));
 
+            // 상태 변경 시 메세지 보내기
+            String userPhone = user.getPhone();
+            String sendMessage = "[우리동네소아과]\n" +
+                    "[" + hospitalName + "]" + userName + "님! " +
+                    dateString + " " + hours + "시 예약상태가 " + statusVal +
+                    "로 변경되었습니다.";
+
+            Map responseBody = null;
+            // 문자 메세지 전송
+
+            responseBody = smsSender.sendLms(userPhone, sendMessage);
+            if(responseBody != null) {
+                String statusCode = (String) responseBody.get("statusCode");
+                if(statusCode.equals("202")){
+                    json.put("sms","success");
+                }else{
+                    return json.put("sms", "fail").toMap();
+                }
+            }
         } catch (Exception e) {
             return json.put("status", "fail").toMap();
         }
@@ -242,8 +229,8 @@ public class AppointmentController {
     }
 
 
-    // enable 자동 변경
-    // int status => 1: 추가, 2: 삭제, 3: 변경, 4: 보류
+    // enable 값 변경
+    // int status => 3: 변경
     @PutMapping("/modifyAdminAppo/{status}")
     public Map updateAppo(@RequestParam String hospAppoNo, int hour, int timeSlotNo,@PathVariable int status) {
         JSONObject json = new JSONObject();
@@ -270,4 +257,6 @@ public class AppointmentController {
     public List<Appointment> getAllAppo(String hospAppoNo) {
         return appoRepository.findAll();
     }
+
+
 }
