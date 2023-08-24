@@ -190,7 +190,7 @@ function adminPwUpdateForm(){
 
 function sendVerificationEmail(){
     var adminEmail = $('input[name="adminEmail"]').val();
-    if(adminEmail !== ""){
+    if(adminEmail !== "" && regExp.test(adminEmail)){
         $.ajax({
             url: '/email/create',
             type: 'POST',
@@ -199,8 +199,6 @@ function sendVerificationEmail(){
             },
             success: function(data) {
                 if(data.response === "success"){
-                    console.log(data.verification_code);
-                    console.log(data.verification_duration);
                     $('.email-auth-code-area').prop('disabled', false);
                     $('.email-get-auth-code').prop('disabled', true);
                     alert("인증번호를 확인해주세요.")

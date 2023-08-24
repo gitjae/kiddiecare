@@ -68,8 +68,6 @@ public class EmailVerificationController {
         String verificationDuration = getVerificationDuration();
         String target = adminDto.getAdminEmail();
 
-        System.out.println(adminDto);
-
         if(target != null){
             try{
                 MimeMessage message = mailSender.createMimeMessage();
@@ -95,6 +93,7 @@ public class EmailVerificationController {
 
     @PostMapping("validate")
     public Map validateVerificationCode(@ModelAttribute AdminRequestDto adminDto) {
+        System.out.println(adminDto);
         JSONObject resultJson = new JSONObject();
         String result = openApiDataUtil.getEmailAuthToken(adminDto.getAdminEmail());
         if (result == null) {
