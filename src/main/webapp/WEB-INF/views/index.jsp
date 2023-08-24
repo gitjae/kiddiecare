@@ -47,8 +47,6 @@
                 </div>
             </div>
         </div>
-
-        <a href="/appointment/hospitalDetail?hospitalName=가톨릭대학교인천성모병원&sgguCd=220003">가톨릭대학교인천성모병원 숏컷</a>
     </section>
 </div>
 </body>
