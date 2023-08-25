@@ -20,7 +20,6 @@ function get_hospital_name() {
         method: 'GET',
         timeout: 0
     }).done(function (response) {
-        console.log(response);
         $('#hospital_name').val(response.hospitalName);
     }).fail(function (error) {
         console.log(error);
@@ -36,7 +35,6 @@ function get_doctor() {
         timeout: 0
     }).done(function (list) {
         list.forEach(doctor => {
-            console.log(doctor.doctorName);
             const option = document.createElement('option');
             option.value = doctor.doctorName;
             option.innerText = doctor.doctorName;
@@ -61,9 +59,6 @@ function set_date(){
 
     $("#date").prop("min", minStr);
     $("#date").prop("max", maxStr);
-
-    console.log('시작날짜 : ',minStr);
-    console.log('종료날짜 : ',maxStr);
 
     $("#except-area").css("display", "block");
     document.getElementById('date').value = new Date().toISOString().substring(0, 10);
@@ -156,7 +151,6 @@ function convertInputsToJson() {
     let date_for_weekday = new Date(date);
     let weekday = ["일","월","화","수","목","금","토"];
     weekday = weekday[date_for_weekday.getDay()];
-    console.log(weekday);
 
     for (const hour of hours) {
         const max = getInputValue(`max_${hour}`);
@@ -177,7 +171,6 @@ function convertInputsToJson() {
         };
         result.push(data);
     }
-    console.log(result);
     $.ajax({
         type: "POST",
         url: "/api/v1/admin/appo/timeset-add",
@@ -193,7 +186,6 @@ function convertInputsToJson() {
             alert("업로드 실패..");
         }
     })
-    console.log(result);
     return result;
 }
 

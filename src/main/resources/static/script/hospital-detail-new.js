@@ -30,7 +30,6 @@ document.getElementById("booking-btn").onclick = function () {
 // 정보 뿌리기
 function getHospInfoDetail() {
     const hospitalName = getHospitalNameFromUrl();
-    // console.log("hospitalName : ", hospitalName);
 
     $.ajax({
         method: 'GET',
@@ -38,7 +37,6 @@ function getHospInfoDetail() {
         timeout: 10000
     })
         .done(res => {
-            console.log(res);
             if (res.dbHospitalData) {
                 document.getElementById('hospital-name').textContent = res.dbHospitalData.hospitalName;
                 document.getElementById('hospital-name').setAttribute('ykiho', res.dbHospitalData.ykiho);
@@ -110,7 +108,6 @@ function updateButtonBasedOnLikeStatus(isLiked) {
 
 function isLiked(){
     const thisYkiho = ykihoD;
-    console.log("y:",thisYkiho);
     $.ajax({
         method:'GET',
         url:`/api/like`,
@@ -119,7 +116,6 @@ function isLiked(){
             sgguCd:urlSgguCd
         }
     }).done(res => {
-        console.log("isLiked:" + res);
         isLikedHosp = res;
         displayLikeSymbol();
     })
@@ -155,8 +151,6 @@ function likeHospital() {
             sgguCd:urlSgguCd
         }
     }).done(function () {
-        console.log("Liked the hospital successfully!");
-        //handleLikeStatus(ykihoD);
         isLiked();
     })
     .fail(function (err) {
@@ -174,8 +168,6 @@ function unlikeHospital() {
         }
     })
         .done(function () {
-            console.log("Unliked the hospital successfully!");
-            //handleLikeStatus(ykihoD);
             isLiked();
         })
         .fail(function (err) {
@@ -197,7 +189,6 @@ function getTotalInfo() {
         },
         timeout:10000
     }).done(res => {
-        console.log(res);
         const BD = res.data.hospBasisData;
         const DD = res.data.hospDetailData;
         //const LD = res.data.hospListData;
