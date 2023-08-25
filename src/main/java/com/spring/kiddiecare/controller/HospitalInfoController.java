@@ -42,19 +42,19 @@ public class HospitalInfoController {
 
     private Optional<HospData> getHospSubByYkiho(String ykiho){
         String hospSubUrl = baseUrl + admDtlInfoService + getDgsbjtInfo + encodeServiceKey + "&ykiho=" + ykiho;
-        System.out.println("hospSubUrl "+hospSubUrl);
+
         return Optional.ofNullable(openApiDataUtil.getHospSubData(hospSubUrl, ykiho));
     }
 
     private Optional<HospData> getHospDetailByHospData(String ykiho, String yadmNm){
         String hospDetailUrl = baseUrl + admDtlInfoService + getDtlInfo + encodeServiceKey + "&ykiho=" + ykiho;
-        System.out.println("hospDetailUrl "+hospDetailUrl);
+
         return Optional.ofNullable(openApiDataUtil.getHospData(hospDetailUrl, yadmNm));
     }
 
     private Optional<HospData> getHospListByKeyword(String query){
         String hospListUrl = baseUrl + hospInfoService + HospList + encodeServiceKey + query + dgsbjtCd;
-        System.out.println("HospList "+hospListUrl);
+
         return Optional.ofNullable(openApiDataUtil.getHospList(hospListUrl, query));
     }
 
@@ -134,7 +134,7 @@ public class HospitalInfoController {
         JSONObject result = new JSONObject();
         // queryParam 받아오기
         String query = getQueryParamBySearchDto(searchDto);
-        System.out.println("query"+query);
+
         // openAPI 요청
         Optional<HospData> hospData = getHospListByKeyword(query);
         if(hospData.isPresent()){
@@ -154,7 +154,7 @@ public class HospitalInfoController {
         String log = (String) request.getAttribute("log", WebRequest.SCOPE_SESSION);
 
         Optional<String> session = Optional.ofNullable(log);
-        System.out.println("session" + session);
+
         if(session.isPresent()){
             Optional<User> userInfo = userRepository.findUserById(session.get());
             if(userInfo.isPresent()){
@@ -167,7 +167,7 @@ public class HospitalInfoController {
             String userYpos = "&yPos=37.57260376169445";
             query += userXpos+userYpos;
         }
-        System.out.println("query:"+query);
+
 
         Optional<HospData> hospListData = getHospListByKeyword(query);
         if(hospListData.isPresent()){
@@ -188,7 +188,7 @@ public class HospitalInfoController {
     @GetMapping("/search/detail")
     public Map getHospDetail(@RequestParam(defaultValue="")String yadmNm, @RequestParam(defaultValue = "")String sgguCd){
         JSONObject result = new JSONObject();
-        System.out.println("yadmNm:"+yadmNm+"/sgguCd:"+sgguCd);
+
         if(yadmNm.isEmpty() || sgguCd.isEmpty()){
             return result.put("result","fail").toMap();
         }
@@ -201,7 +201,7 @@ public class HospitalInfoController {
         String query = "&yadmNm=" + encodeYadmNm + "&sgguCd=" + sgguCd; // + sgguCd
         Optional<HospData> hospListData = getHospListByKeyword(query);
 
-        System.out.println("hospListData:"+hospListData);
+
         if(hospListData.isPresent()){
             List<HospBasisItem> HospList = hospListData.get().getHospListData();
             String ykiho = "";

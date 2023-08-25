@@ -76,7 +76,7 @@ public class OpenApiDataUtil {
             HospDetailResponse data = restTemplate.getForObject(reqeustUrl, HospDetailResponse.class);
             HospDetailItem item = data.getBody().getItems().getItem();
             if(item != null){
-                System.out.println("데이터 확인하겠습니다. "+ item);
+
                 HospData.setHospDetailData(item);
                 valueOps.set(yadmNm, HospData, cacheTtl);
             }
@@ -84,14 +84,13 @@ public class OpenApiDataUtil {
             e.printStackTrace();
         }
 
-        System.out.println("hospData 확인 " + HospData);
         return HospData;
     }
 
     public HospData getHospSubData(String url, String yadmNm){
         // 캐시 데이터 확인
         Optional<HospData> cachedData = Optional.ofNullable(valueOps.get(yadmNm));
-        System.out.println("cache"+cachedData);
+
         if(cachedData.isPresent()){
             List<HospSubItem> hospSubData = cachedData.get().getHospSubData();
             if(hospSubData != null){
@@ -101,7 +100,7 @@ public class OpenApiDataUtil {
                 URI reqeustUrl = new URI(url);
                 Optional<HospSubResponse> data = Optional.ofNullable(
                         restTemplate.getForObject(reqeustUrl, HospSubResponse.class));
-                System.out.println("진료데이터 확인 "+data);
+
                 // 진료 과목 데이터를 확인
                 if(data.isPresent()){
                     int totalCount = data.get().getBody().getTotalCount();
@@ -109,7 +108,7 @@ public class OpenApiDataUtil {
                     if (totalCount > 10) {
                         url += "&numOfRows="+totalCount;
                         data = Optional.ofNullable(restTemplate.getForObject(new URI(url), HospSubResponse.class));
-                        System.out.println("정보다시 불러옴");
+
                     }
                     // data가 있다면
                     data.ifPresent(hospSubResponse -> cachedData.get().setHospSubData(hospSubResponse.getBody().getItems()));

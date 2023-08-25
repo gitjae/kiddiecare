@@ -90,7 +90,7 @@ public class TimeSlotsLimitService {
                 Time getTime = timeSlotsLimit.getTime();
 
                 boolean dupl = timeSlotsLimitRepository.existsByYkihoAndDoctorNoAndDateAndTime(ykiho, doctorNo, getDate, getTime);
-                System.out.println(dupl);
+
 
                 // 중복 안될 때 저장
                 if(!dupl) {
@@ -99,10 +99,8 @@ public class TimeSlotsLimitService {
 
                     timeSlotsLimitRepository.save(timeSlotsLimit);
 
-                    System.out.println("저장됨:" +timeSlotsLimit);
 
-                }else if(dupl){
-                    System.out.println("저장안됨:" +timeSlotsLimit);
+
                 }
             }
         }

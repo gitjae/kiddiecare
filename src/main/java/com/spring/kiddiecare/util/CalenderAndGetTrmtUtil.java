@@ -19,13 +19,13 @@ public class CalenderAndGetTrmtUtil {
         String[] dayNames = {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
         String displayName = dayNames[dayOfWeek - 1];
         // 출력
-        System.out.println("오늘은 " + displayName + "입니다.");
+
 
         return dayOfWeek;
     }
 
     public String getStartByWeekday(HospDetailItem item) {
-        System.out.println(item);
+
         String start = "";
         String end = "";
         if(item != null){

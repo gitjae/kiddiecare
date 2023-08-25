@@ -84,7 +84,7 @@ public class LikeController {
         /*return likedHospitals.stream()
                 .map(hospital -> new HospitalResponseDto(hospital.getYkiho(), hospital.getHospitalName()))
                 .collect(Collectors.toList());*/
-        System.out.println(likedHospitals);
+
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("list", likedHospitals);
         return jsonObject.toMap();

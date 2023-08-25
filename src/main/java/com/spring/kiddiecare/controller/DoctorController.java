@@ -88,7 +88,7 @@ public class DoctorController {
         // 반환할 json
         JSONObject jsonObject = new JSONObject();
 
-        System.out.println(doctorDto);
+
 
         // 세션에서 Ykiho 확인
         String ykiho = (String) request.getAttribute("Ykiho",WebRequest.SCOPE_SESSION);
@@ -163,7 +163,7 @@ public class DoctorController {
     public Map updateDoctorData(@ModelAttribute DoctorResponseDto doctorDto, WebRequest request){
         JSONObject jsonObject = new JSONObject();
 
-        System.out.println(doctorDto);
+
 
         // 세션에서 Ykiho 확인
         String ykiho = (String) request.getAttribute("Ykiho",WebRequest.SCOPE_SESSION);

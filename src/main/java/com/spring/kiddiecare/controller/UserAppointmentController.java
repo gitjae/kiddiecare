@@ -71,7 +71,7 @@ public class UserAppointmentController {
 
                 AppoView appoView = new AppoView(appo, hospital, timeSlotsLimit, doctor, child);
                 appoDtos.add(appoView);
-                System.out.println(appoView.getNote());
+
             }
 
             jsonObject.put("appointments", appoDtos);

@@ -44,7 +44,7 @@ public class WebSocketController {
     @PostMapping("/websocket/member")
     public Map webSocketTest(@ModelAttribute WebSocketRequest ws){
         JSONObject json = new JSONObject();
-        System.out.println(ws);
+
         return json.toMap();
     }
 
