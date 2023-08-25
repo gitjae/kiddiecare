@@ -55,11 +55,16 @@
     - AWS S3 & ClouldFront를 이용한 정적 파일 관리
     
   - websocket 알림 기능
-    - peer to peer로 실시간 알람 기능 구현 (현재 진행중)
-    - pub/sub 구조 구현 (현재 논의중)
+    - peer to peer로 실시간 알람 기능 구현
+    - pub/sub 구조 구현 (현재 버전에서 제외)
     
   - swagger
-    - REST API로 구현된 로직들을 문서화하여 한눈에 볼 수 있는 기능 구현(현재 진행중)
+    - REST API로 구현된 로직들을 문서화하여 한눈에 볼 수 있는 기능 구현(현재 버전에서 제외)
+   
+  - excel 파일 파싱 및 파일 파일 다운로드
+    -  병원 정보 업로드 & 파싱 구현 (현재 버전에서 부분 구현)
+    -  병원 예약정보 파일 파일 다운로드 (현재 버전에서 제외)
+      
 - 팀원 한희수✨[이메일](mailto:juntu09@gmail.com) ([GitHub](https://github.com/hee-duck))
   * 사용자 병원 예약 기능 구현
     - 병원 상세페이지
