@@ -2,7 +2,7 @@
 ### 프로젝트 개요
   - 소아과 진료 대란으로 인한 진료 예약 오픈런 사회 문제 발생
   - 위치 기반 진료 가능 소아과 예약 서비스를 통한 사회 문제 완화 목표  
-  - [서비스 소개](https://www.canva.com/design/DAFq090KJgM/7b8D36mU1B6-N7yS6tYZfw/edit) 
+  - [서비스 소개](https://www.canva.com/design/DAFsau9GZBY/2M8eC4xSIYN6akEFfxHpSw/edit?utm_content=DAFsau9GZBY&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton) 
 
 ### 작업기간
 - 2023.08.01 ~ 2023.08.25(3주)
