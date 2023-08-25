@@ -53,7 +53,6 @@ function sendCode(){
     }).done(res => {
         if(res.send === 'success'){
             alert('인증번호가 발송되었습니다.')
-            console.log(res.code);
             $('#div-verify').show();
         } else {
             alert('인증번호 발송에 실패했습니다.')
@@ -68,7 +67,6 @@ function verify(){
         url:'/api/v1/users/verify',
         data:{code:code}
     }).done(res => {
-        console.log(res)
         if(res.verify === 'success'){
             $('#find-password-id').prop("disabled",true);
             $('#find-password-name').prop("disabled",true);
@@ -115,7 +113,6 @@ function findPassword(){
         data:JSON.stringify(data),
         contentType:'application/json; charset=utf-8'
     }).done(res => {
-        console.log(res);
         if(res.find == 'success'){
             alert('비밀번호 변경에 성공했습니다.')
             location.href = '/login'

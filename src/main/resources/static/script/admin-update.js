@@ -180,8 +180,6 @@ function adminPwUpdateForm(){
                 }
             },
             error: function(xhr, error) {
-                console.log(xhr);
-                console.log(error);
                 alert(" 5 에러가 발생하였습니다.")
             }
         });

@@ -144,7 +144,6 @@ function setMarkers(res){
                 map: map, // 마커를 표시할 지도
                 position: positions[i].latlng // 마커의 위치
             });
-            //console.log(marker);
 
             bounds.extend(positions[i].latlng);
 

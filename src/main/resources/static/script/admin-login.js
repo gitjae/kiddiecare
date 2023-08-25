@@ -4,9 +4,6 @@ function checkValue(htmlForm) {
 
     let check = true;
 
-    console.log(ID);
-    console.log(PW);
-
     if (ID === "") {
         $('#error-id').show();
         $('#user_email').focus();
@@ -26,7 +23,6 @@ function checkValue(htmlForm) {
             data: JSON.stringify({adminId:ID, adminPw: PW }),
             contentType:'application/json; charset=utf-8',
             success: function(data) {
-                console.log(data);
                 if (data.adminLogin === "success") {
                     location.href = "/admin/index";
                 } else {

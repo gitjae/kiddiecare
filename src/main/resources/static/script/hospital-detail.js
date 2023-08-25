@@ -3,8 +3,6 @@ window.onload = function () {
     buildCalendar();
     getTotalInfo();
     handleLikeFeature(ykiho);
-    console.log(userNo);
-    console.log(ykiho);
 }
 
 let ykiho = null;
@@ -22,7 +20,6 @@ function buildCalendar() {
     let lastDate = new Date(nowMonth.getFullYear(), nowMonth.getMonth() + 1, 0);
 
     let tbody_Calendar = document.querySelector(".Calendar > tbody");
-    // console.log("nowMonth : " + nowMonth.getFullYear());
 
     document.getElementById("calYear").innerText = nowMonth.getFullYear();
     document.getElementById("calMonth").innerText = leftPad(nowMonth.getMonth() + 1);
@@ -80,14 +77,9 @@ function choiceDate(nowColumn) {
     selectDay = dayNames[selectDate.getDay()]; // 선택된 요일 저장
     formattedDate = selectDate.getFullYear() + "-" + leftPad(selectDate.getMonth() + 1) + "-" + leftPad(selectDate.getDate());  // --> 선택된 날짜: Thu Aug 17 2023 00:00:00 GMT+0900 (한국 표준시) 값 변경
 
-    // console.log("선택된 날짜:", formattedDate);  // String
-    // console.log("선택된 요일:", selectDay);
-
     document.querySelector('.time-slots-table').style.display = 'block';        // css
 
     let ykiho = document.getElementById("hospital-name").getAttribute("ykiho");
-    console.log("ykiho : ", ykiho);
-
     document.querySelector('.time-slots-table').innerHTML = '';     // ajax 호출 전에 슬롯 정보 초기화시켜서 데이터가 있는 날 -> 없는 날 클릭하면 다시 호출되도록
 
     $.ajax({
@@ -95,8 +87,6 @@ function choiceDate(nowColumn) {
             ykiho: ykiho, date: selectDate
         }
     }).done(res => {
-        console.log(res);
-        console.log(res.slots);
         if (res.slots && res.slots.length > 0) {  // slots 데이터가 있을 경우에만 화면 업데이트
             showTimeSlots(res.slots);
         }
@@ -155,8 +145,6 @@ function showTimeSlots(slots) {
             selectedSlotInfo.weekday = this.getAttribute('data-weekday');
             selectedSlotInfo.ykiho = this.getAttribute('data-ykiho');
             selectedSlotInfo.timeSlotNo = this.getAttribute('data-timeSlotNo');
-
-            console.log(selectedSlotInfo);
         });
     });
 
@@ -209,14 +197,12 @@ document.getElementById("booking-btn").onclick = function () {
 // 정보 뿌리기
 function getHospInfoDetail() {
     const hospitalName = getHospitalNameFromUrl();
-    // console.log("hospitalName : ", hospitalName);
 
     $.ajax({
         method: 'GET',
         url: `/api/appointment/hospitalDetail?hospitalName=${hospitalName}`,
     })
         .done(res => {
-            // console.log(res);
             if (res.dbHospitalData) {
                 document.getElementById('hospital-name').textContent = res.dbHospitalData.hospitalName;
                 document.getElementById('hospital-name').setAttribute('ykiho', res.dbHospitalData.ykiho);
@@ -253,12 +239,8 @@ function getHospInfoDetail() {
 let userName = null;
 function handleLikeFeature(ykiho) {
     userName = document.getElementById('loggedInUser').value;
-    console.log("*** userName : ", userName);
-    console.log("*** ykiho : ", ykiho);
-
     getUserNoBySession()
         .then(userNo => {
-            console.log("*** userNo : ", userNo);
             checkLikeStatus(userNo, ykiho);
             // 찜 기능 나머지
         })
@@ -295,7 +277,6 @@ function likeHospital(userNo, ykiho) {
         })
     })
         .done(function() {
-            console.log("Liked the hospital successfully!");
             updateLikeButtons(true);
         })
         .fail(function(err) {
@@ -309,7 +290,6 @@ function unlikeHospital(userNo, ykiho) {
         url: `/api/like/${userNo}/${ykiho}`
     })
         .done(function() {
-            console.log("Unliked the hospital successfully!");
             updateLikeButtons(false);
         })
         .fail(function(err) {
@@ -358,7 +338,6 @@ function getTotalInfo() {
             sgguCd: sgguCd
         }
     }).done(res => {
-        // console.log(res);
         const BD = res.data.hospBasisData;
         const DD = res.data.hospDetailData;
         const LD = res.data.hospListData;

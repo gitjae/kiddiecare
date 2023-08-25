@@ -67,7 +67,6 @@ function getDoctorInfo(){
             }
         },
         error: function (xhr, status, error) {
-            console.log(error);
             alert("서버에 문제가 발생했습니다. 잠시 후 다시 시도해주세요.");
         }
     });
@@ -142,7 +141,6 @@ function updateDoctor(htmlForm){
             }
         },
         error: function (xhr, status, error) {
-            console.log(error);
             alert("서버에 문제가 발생했습니다. 잠시 후 다시 시도해주세요.");
         }
     });
@@ -158,7 +156,6 @@ function deleteDoctor(){
         url: "/api/v1/doctor/delete",
         data: data,
         success: function (response) {
-            console.log(response);
             if (response.response === "success") {
                 getDoctorInfo()
                 alert("삭제 완료되었습니다.");
@@ -172,7 +169,6 @@ function deleteDoctor(){
             }
         },
         error: function (xhr, status, error) {
-            console.log(error);
             alert("서버에 문제가 발생했습니다. 잠시 후 다시 시도해주세요.");
         }
     });

@@ -17,7 +17,6 @@ $(function (){
         url:`/search/hospList/addr`,
         data:param
     }).done(res => {
-        console.log(res);
         if(res.result === 'success'){
             xPos = res.centerX;
             yPos = res.centerY;
@@ -143,7 +142,6 @@ function setPosition(position) {
             radius:'500'
         }
     }).done(res => {
-        console.log(res);
         if(res.result === 'success'){
             makeMap();
 

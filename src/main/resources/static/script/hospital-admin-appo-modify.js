@@ -86,8 +86,6 @@ function modify(btn) {
         alert('작성한 인원수를 확인해주세요.');
         return;
     }
-    console.log("Max:", maxInput);
-    console.log("Block:", blockInput);
 
     if (countInput <= maxInput && blockInput <= maxInput) {
         // 조건에 맞다면 ajax 전송
