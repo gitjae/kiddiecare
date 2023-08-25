@@ -28,7 +28,7 @@ public class OpenApiDataUtil {
     private final RedisTemplate redisTemplate;
     private ValueOperations<String, HospData> valueOps;
     private ValueOperations<String,String> emailOps;
-    private Duration cacheTtl = Duration.ofMinutes(60);
+    private Duration cacheTtl = Duration.ofMinutes(180);
 
     @Autowired // inner 클래스 위에 있는 변수들을 생성해준다. @Autowired는 원래는 쓰지 않고 @RequiredArgsConstructor 사용
     public OpenApiDataUtil(RedisTemplate redisTemplate) {
