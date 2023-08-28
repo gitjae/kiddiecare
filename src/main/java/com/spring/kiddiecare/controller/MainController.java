@@ -88,10 +88,6 @@ public class MainController {
         return "hospitalSearchList";
     }
 
-    @GetMapping("admin/appointment")
-    public String hospitalReservationForm() {
-        return "hospitalAppointmentForm";
-    }
 
     //TODO 나중에 세션 주는거 수정 해야함
     @GetMapping("admin/appointment/create")
