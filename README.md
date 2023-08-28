@@ -101,5 +101,5 @@
       - 유저의 예약상태 변경 가능
      
     - web socket 알림 기능
-      - peer to peer로 실시간 알람 기능 구현(진행중)
+      - peer to peer로 실시간 알람 기능 구현
 
