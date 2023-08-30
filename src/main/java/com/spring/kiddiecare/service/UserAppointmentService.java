@@ -26,6 +26,12 @@ public class UserAppointmentService {
     private final TimeSlotsLimitRepository timeSlotsLimitRepository;
     private final TimeSlotsLimitService timeSlotsLimitService;
 
+    /**
+     * 사용자측 병원 예약 정보 수정 서비스
+     * @param request 세션 로그인 계정 확인용 WebRequest 객체
+     * @param appoDto 업데이트 할 예약 정보를 담고있는 Dto
+     * @return 업데이트 결과를 담은 JSON 객체
+     */
     @Transactional
     public JSONObject updateAppo(WebRequest request, AppoRequestDto appoDto){
         JSONObject jsonObject = new JSONObject();
@@ -46,12 +52,20 @@ public class UserAppointmentService {
         int oldTimeslotNo = appo.getTimeSlotNo();
 
         appo.update(appoDto);
+        // 기존 예약 시간대 예약 슬롯 +1
         timeSlotsLimitService.plusEnable(oldTimeslotNo);
+        // 수정된 예약 시간대 예약 슬롯 -1
         timeSlotsLimitService.minusEnable(appoDto.getTimeSlotNo());
 
         return jsonObject.put("update", "success");
     }
 
+    /**
+     * 사용자측 병원 예약 취소 서비스
+     * @param appoNo 예약번호
+     * @param request 세션 로그인 계정 확인용 WebRequest 객체
+     * @return 예약 취소 결과를 담은 JSON 객체
+     */
     @Transactional
     public JSONObject appoCancel(String appoNo, WebRequest request){
         JSONObject jsonObject = new JSONObject();
@@ -74,7 +88,7 @@ public class UserAppointmentService {
         return jsonObject.put("cancel", "success");
     }
 
-
+    // 예약 완전 삭제 - 사용하지 말것
     @Transactional
     public JSONObject appoDelete(String appoNo, WebRequest request){
         JSONObject jsonObject = new JSONObject();

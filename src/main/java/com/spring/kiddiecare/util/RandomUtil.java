@@ -28,6 +28,10 @@ public class RandomUtil {
         return result;
     }
 
+    /**
+     * 전화번호 인증용 난수 6자리 생성
+     * @return 난수 6자리
+     */
     public String makeRandomCode(){
         String code = "";
 

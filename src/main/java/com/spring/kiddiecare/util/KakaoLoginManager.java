@@ -27,6 +27,11 @@ public class KakaoLoginManager {
     public String redirect_uri = "https://kiddiecare.site/login/kakao/callback";
 
 
+    /**
+     * 카카오 로그인 API에서 제공하는 AccessToken을 받아오는 메소드
+     * @param code 카카오 로그인시 redirect_uri로 보내는 인가코드
+     * @return AccessToken
+     */
     public String getKakaoAccessToken(String code){
         String access_Token = "";
         String reqURL = "https://kauth.kakao.com/oauth/token";
@@ -39,7 +44,7 @@ public class KakaoLoginManager {
 
         MultiValueMap<String, Object> parameters = new LinkedMultiValueMap<String, Object>();
         parameters.add("grant_type", "authorization_code");
-        System.out.println("kakao api key : " + KAKAO_REST_API_KEY);
+        //System.out.println("kakao api key : " + KAKAO_REST_API_KEY);
         parameters.add("client_id", KAKAO_REST_API_KEY);
         parameters.add("redirect_uri", redirect_uri);
         parameters.add("code", code);
@@ -48,7 +53,7 @@ public class KakaoLoginManager {
 
         //ResponseEntity<JSONObject> response = restTemplate.postForEntity(reqURL, restRequest, JSONObject.class);
         ResponseEntity<String> response = restTemplate.postForEntity(reqURL, restRequest, String.class);
-        System.out.println(response);
+        //System.out.println(response);
         String responseBody = response.getBody();
 
         JSONObject jsonObject = new JSONObject(responseBody);
@@ -62,6 +67,11 @@ public class KakaoLoginManager {
         return access_Token;
     }
 
+    /**
+     * 카카오 로그인 API를 통해 카카오 회원정보를 받아오는 메소드
+     * @param accessToken 카카오 로그인 AccessToken
+     * @return 카카오 계정에 등록된 email
+     */
     public String getKakaoUserInfo(String accessToken){
         String reqURL = "https://kapi.kakao.com/v2/user/me";
 

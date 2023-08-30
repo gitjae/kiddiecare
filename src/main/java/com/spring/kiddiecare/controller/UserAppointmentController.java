@@ -94,6 +94,7 @@ public class UserAppointmentController {
         return jsonObject.toMap();
     }
 
+    // 예약 완전 삭제 - 사용하지 말것
     @DeleteMapping("delete")
     public Map appoDelete(@RequestParam String appoNo, WebRequest request){
         JSONObject jsonObject = userAppointmentService.appoDelete(appoNo, request);

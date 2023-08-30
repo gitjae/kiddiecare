@@ -34,6 +34,14 @@ public class SMSSender {
 
     private RestTemplate restTemplate = new RestTemplate();
 
+    /**
+     * https://api.ncloud-docs.com/docs/ai-application-service-sens-smsv2#APIHeader
+     * @param recipientNumber 수신자 번호
+     * @param message 문자 내용
+     * @return 응답내용 : 요청시간, 요청 상태 등
+     * @throws Exception
+     */
+
     public Map sendSms(String recipientNumber, String message) throws Exception {
         Long time = System.currentTimeMillis();
         // Naver Sens API 엔드포인트 구성
@@ -45,6 +53,8 @@ public class SMSSender {
         headers.set("x-ncp-apigw-timestamp", time.toString());
         headers.set("x-ncp-iam-access-key", myAccessKey);
 
+        // Body를 Access Key Id와 맵핑되는 SecretKey로 암호화한 서명
+        // HMAC 암호화 알고리즘은 HmacSHA256 사용
         String sig = makeSignature(time);
         headers.set("x-ncp-apigw-signature-v2", sig);
 
@@ -104,6 +114,13 @@ public class SMSSender {
         return responseBody;
     }
 
+    /**
+     * 헤더에 포함될 시그니처 생성
+     * https://api.ncloud-docs.com/docs/common-ncpapi
+     * @param time API Gateway 서버와 시간 차가 5분 이상 나는 경우 유효하지 않은 요청으로 간주
+     * @return 헤더에 포함될 시그니처
+     * @throws Exception
+     */
     public String makeSignature(Long time) throws Exception{
         String space = " ";					// one space
         String newLine = "\n";					// new line
@@ -123,6 +140,7 @@ public class SMSSender {
                 .append(accessKey)
                 .toString();
 
+        // SecretKeySpec : 대칭키 암호화에 사용되는 비밀키를 표현하는 객체, sens API에서 요구하는 HmacSHA256 알고리즘 사용
         SecretKeySpec signingKey = new SecretKeySpec(secretKey.getBytes("UTF-8"), "HmacSHA256");
         Mac mac = Mac.getInstance("HmacSHA256");
         mac.init(signingKey);

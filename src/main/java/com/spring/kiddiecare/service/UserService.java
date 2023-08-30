@@ -16,6 +16,12 @@ public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
+    /**
+     * 사용자 정보 수정 서비스
+     * @param id 사용자 아이디
+     * @param userDto 업데이트 할 사용자 정보를 담고있는 Dto 객체
+     * @return 업데이트 성공 여부
+     */
     @Transactional
     public boolean updateUser(String id, UserRequestDto userDto){
         boolean check = false;
@@ -36,6 +42,7 @@ public class UserService {
         return check;
     }
 
+    // 계정 탈퇴 시 정보 삭제 대신 비활성화
     @Transactional
     public boolean deactiveUser(String id){
         boolean check = false;
@@ -52,6 +59,11 @@ public class UserService {
         return check;
     }
 
+    /**
+     * 사용자 탈퇴 서비스
+     * @param id 탈퇴할 사용자 아이디
+     * @return 탈퇴 성공 여부
+     */
     @Transactional
     public boolean deleteUser(String id){
         boolean check = false;

@@ -19,13 +19,18 @@ public class KakaoMapClient {
 
     private final RestTemplate restTemplate;
 
-    //@Value("${kakao.rest_api_key}")
-    private String API_KEY = "76566ba0dfe292387f057613321b300c";
+    @Value("${kakao.restapi.key}")
+    private String API_KEY;
 
     public KakaoMapClient(){
         restTemplate = new RestTemplate();
     }
 
+    /**
+     * 회원가입시 입력한 주소를 경도, 위도값으로 변환
+     * @param addr 회원가입시 입력한 주소
+     * @return 경도, 위도 정보가 담긴 string
+     */
     public String geocodeAddress(String addr){
         String url = "https://dapi.kakao.com/v2/local/search/address?query=" + addr;
 

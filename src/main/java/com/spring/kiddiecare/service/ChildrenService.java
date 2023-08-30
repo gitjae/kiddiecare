@@ -19,6 +19,13 @@ public class ChildrenService {
         return childrenRepository.findByParentNo(parentNo);
     }
 
+    /**
+     * # 로그인 유저와 보호자 일치 확인 필요
+     * 자녀 정보 업데이트 서비스
+     * @param childDto 업데이트 할 자녀 정보가 담긴 Dto
+     * @param id 자녀 PK값
+     * @return 업데이트 성공 여부
+     */
     @Transactional
     public boolean updateChild(ChildrenRequestDto childDto, int id){
         Optional<Children> foundChild = childrenRepository.findById(id);
@@ -30,6 +37,12 @@ public class ChildrenService {
         return false;
     }
 
+    /**
+     * # 로그인 유저와 보호자 일치 확인 필요
+     * 자녀 정보 삭제 서비스
+     * @param id 삭제 할 자녀 PK값
+     * @return 삭제 성공 여부
+     */
     @Transactional
     public boolean deleteChildById(int id){
         Optional<Children> foundChild = childrenRepository.findById(id);
