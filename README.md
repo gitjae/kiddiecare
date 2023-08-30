@@ -15,6 +15,10 @@
 ### 아키텍처
 ![image](/KiddiecareArchitecture.png)
 
+
+### 사이트
+[바로가기](https://kiddiecare.site/)
+
 ### 기능 및 담당자
 - 팀장 이규재✨[이메일](mailto:dlrbwo2022@gmail.com) ([GitHub](https://github.com/gitjae))
   * 사용자 CRUD 구현
