@@ -11,13 +11,11 @@
 - 우리동네소아과 Notion [link](https://sally-.notion.site/Index-7ee893e575af456e98a09b7bfae9ea0f?pvs=4)
 - 회의록 [link](https://sally-.notion.site/5beff6a68f144e18bf806deda0353b0a?v=9e172e94f7654f0a9538f797ba60e429&pvs=4)
 
+### 사이트
+[바로가기](https://kiddiecare.site/)
 
 ### 아키텍처
 ![image](/KiddiecareArchitecture.png)
-
-
-### 사이트
-[바로가기](https://kiddiecare.site/)
 
 ### 기능 및 담당자
 - 팀장 이규재✨[이메일](mailto:dlrbwo2022@gmail.com) ([GitHub](https://github.com/gitjae))
