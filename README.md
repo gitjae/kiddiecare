@@ -12,7 +12,7 @@
 - 회의록 [link](https://sally-.notion.site/5beff6a68f144e18bf806deda0353b0a?v=9e172e94f7654f0a9538f797ba60e429&pvs=4)
 
 ### 사이트
-[바로가기](https://kiddiecare.site/)
+[kiddiecare 사이트 바로가기](https://kiddiecare.site/)
 
 ### 아키텍처
 ![image](/KiddiecareArchitecture.png)
