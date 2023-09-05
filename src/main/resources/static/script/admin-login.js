@@ -1,17 +1,19 @@
-function checkValue(htmlForm) {
-    const ID = htmlForm.adminId.value;
-    const PW = htmlForm.adminPw.value;
+function checkValue() {
+    const ID = $('#input-id').val();
+    const PW = $('#input-pw').val();
 
     let check = true;
 
     if (ID === "") {
+        $('#error-id').html(`<span>아이디를 입력해주세요.</span>`);
         $('#error-id').show();
-        $('#user_email').focus();
+        $('#input-id').focus();
         check = false;
 
     } else if (PW === "") {
+        $('#error-password').html(`<span>비밀번호를 입력해주세요.</span>`);
         $('#error-password').show();
-        $('#user_password').focus();//포커스 이동시켜서 다시 입력하라고
+        $('#input-pw').focus();//포커스 이동시켜서 다시 입력하라고
         check = false;
 
     }
@@ -20,7 +22,7 @@ function checkValue(htmlForm) {
         $.ajax({
             method: "POST",
             url: "/admin/login/check",
-            data: JSON.stringify({adminId:ID, adminPw: PW }),
+            data: JSON.stringify({ adminId:ID, adminPw: PW }),
             contentType:'application/json; charset=utf-8',
             success: function(data) {
                 if (data.adminLogin === "success") {
