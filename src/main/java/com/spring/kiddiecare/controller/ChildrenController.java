@@ -83,7 +83,7 @@ public class ChildrenController {
     @PutMapping("child/{no}")
     public Map updateChild(@PathVariable(name = "no") int id, @RequestBody ChildrenRequestDto childDto){
         JSONObject jsonObject = new JSONObject();
-        System.out.println("childDto:" + childDto);
+
         boolean update = childrenService.updateChild(childDto, id);
         if(update){
             jsonObject.put("update", "success");

@@ -97,7 +97,6 @@ function exceptAdd() {
     const day = document.getElementById('except-day').value;
 
     let content = "";
-    // console.log(day);
     const exceptDaysButtons = document.querySelectorAll("#except-days-area .remove");
 
     if(day === '') {
@@ -125,11 +124,7 @@ function exceptAdd() {
 
 // 요일 추출
 function dayWeekExtrc(date, setWeekdayArr) {
-
-    // console.log(date);
-    // return `${year}년 ${month}월 ${day}일 (${dayOfWeek}요일)`;
     const duplWeek = setWeekdayArr.includes(date.getDay());
-    console.log(duplWeek);
     if (!duplWeek) {
         setWeekdayArr.push(date.getDay());
     }
@@ -383,13 +378,10 @@ function saveTimes() {
         success: function (response) {
             $("#loading").hide();
             location.href = "/admin/timeSlotsCreateComp";
-            console.log("저장 성공!");
-
         },
         error: function (error) {
             $("#loading").hide();
             alert("스케줄 생성을 실패하였습니다.");
-            console.log(error);
         }
     });
 }

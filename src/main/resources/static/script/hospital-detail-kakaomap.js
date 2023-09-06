@@ -29,5 +29,6 @@ function makeMarker(){
 
     // 마커가 지도 위에 표시되도록 설정합니다
     marker.setMap(map);
+    $('#loading').hide();
 }
 

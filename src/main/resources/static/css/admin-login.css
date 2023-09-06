@@ -1,183 +1,116 @@
-@font-face{
-    font-family: 'nanum';
-    src: url(/font/NanumSquareNeo-cBd.ttf);
-    font-weight: 400;
-}
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap');
 
-@font-face{
-    font-family: 'nanum';
-    src: url(/font/NanumSquareNeo-eHv.ttf);
-    font-weight: 700;
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins',sans-serif;
 }
-
-.icon-area span{
-    font-weight: bold;
-    font-size: 30px;
-    color: white;
-}
-
-.login-area{
-    min-width: 500px;
-    height: 500px;
+container{
     display: flex;
+    justify-content: center;
     align-items: center;
+    min-height: 100vh;
+    background: #dfdfdf;
+}
+.login-box{
+    display: flex;
     justify-content: center;
     flex-direction: column;
-    position: relative;
-    max-width: 0%;
-    margin: 0px auto;
-    box-shadow: rgba(0, 0, 0, 0.12) 0px 3px 6px -4px, rgba(0, 0, 0, 0.08) 0px 6px 16px 0px, rgba(0, 0, 0, 0.05) 0px 9px 28px 8px;
-    border-radius: 8px;
-    overflow: hidden;
-    gap: 30px;
-
-    background-color: #394c9a;
+    width: 440px;
+    height: 480px;
+    padding: 30px;
 }
-
-.input-setting{
-    /*border: 1px solid rgb(228, 229, 237);*/
-    /*border-radius: 4px;*/
-    height: 30px;
+.login-header{
+    text-align: center;
+    margin: 20px 0 40px 0;
+}
+.login-header header{
+    color: #333;
+    font-size: 30px;
+    font-weight: 600;
+}
+.input-box .input-field{
+    width: 100%;
+    height: 60px;
+    font-size: 17px;
+    padding: 0 25px;
+    margin-bottom: 15px;
+    border-radius: 30px;
+    border: none;
+    box-shadow: 0px 5px 10px 1px rgba(0,0,0, 0.05);
+    outline: none;
+    transition: .3s;
+}
+::placeholder{
+    font-weight: 500;
+    color: #222;
+}
+.input-field:focus{
+    width: 105%;
+}
+.forgot{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 40px;
+}
+section{
+    display: flex;
+    align-items: center;
+    margin: 0 auto;
+    font-size: 14px;
+    color: #555;
+}
+#check{
+    margin-right: 10px;
+}
+a{
+    text-decoration: none;
+}
+a:hover{
+    text-decoration: underline;
+}
+section a{
+    color: #555;
+}
+.input-submit{
+    position: relative;
+}
+.submit-btn{
+    width: 100%;
+    height: 60px;
+    background: #222;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: .3s;
+    color: #fff;
+    font-size: 17px;
+}
+.input-submit label{
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    color: #fff;
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    cursor: pointer;
+}
+.submit-btn:hover{
+    background: #000;
+    transform: scale(1.05,1);
+}
+.sign-up-link{
+    text-align: center;
     font-size: 15px;
     margin-top: 20px;
-    margin-bottom: 20px;
-    color: white;
+}
+.sign-up-link a{
+    color: #000;
+    font-weight: 600;
 }
 
-#label-id{
-    margin-right: 20px;
+.err-box{
+    display: none;
 }
-
-.input-setting>input{
-    background: transparent;
-    color: white;
-}
-
-.input-setting>input::placeholder{
-    color: white;
-}
-
-#label-pw{
-    margin-right: 15px;
-}
-
-
-#submit-btn-area{
-    text-align: center;
-}
-
-#submit-btn{
-    width: 100%;
-    padding: 10px;
-    border-radius: 10px;
-    color: white;
-    background-color: #5ea5ec;
-    border: none;
-}
-
-#submit-btn:hover{
-    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.50);
-}
-
-.current-id,.current-password {
-    font-size: 15px;
-    border-bottom: 1px solid #dce1e5;
-    padding-bottom: 10px;
-}
-
-.sign-up-area>a{
-    color:white;
-}
-
-/*
-html, body{
-    min-height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-input:focus {
-    outline: none;
-}
-
-
-
-.icon-area{
-    margin: 20px;
-}
-
-.icon-area a{
-    text-decoration: none;
-    color: black;
-}
-
-.icon-area a:hover a:visited{
-    cursor: pointer;
-    color: black;
-}
-
-.icon-area span{
-    font-size: 36px;
-}
-
-.login-form{
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    width: 300px;
-}
-
-.input-setting{
-    border: 1px solid rgb(228, 229, 237);
-    border-radius: 4px;
-    height: 30px;
-    font-size: 15px;
-}
-
-.login-form input{
-    border: none;
-    box-sizing: border-box;
-    text-align: left;
-    color: inherit;
-    background-color: transparent;
-    font-size: inherit;
-    height: 30px;
-    width: 100%;
-}
-
-.login-form #submit-btn {
-    width: 100%;
-    height: 42px;
-    border : none;
-    box-sizing: border-box;
-    font-size: inherit;
-}
-
-.sign-up-area{
-    width: 100%;
-    height: 42px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border : none;
-    box-sizing: border-box;
-    margin-bottom: 20px;
-}
-
-.sign-up-a{
-    cursor: pointer;
-    user-select: none;
-    color: rgb(48, 52, 65);
-    text-decoration: none;
-}
-
-span,a,h1,h4{
-    font-family: 'nanum';
-}
-
-input::placeholder {
-    font-family: 'nanum';
-}
-
-*/

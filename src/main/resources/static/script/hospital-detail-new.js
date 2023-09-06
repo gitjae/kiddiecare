@@ -30,14 +30,13 @@ document.getElementById("booking-btn").onclick = function () {
 // 정보 뿌리기
 function getHospInfoDetail() {
     const hospitalName = getHospitalNameFromUrl();
-    // console.log("hospitalName : ", hospitalName);
 
     $.ajax({
         method: 'GET',
         url: `/api/appointment/hospitalDetail?hospitalName=${hospitalName}`,
+        timeout: 10000
     })
         .done(res => {
-            console.log(res);
             if (res.dbHospitalData) {
                 document.getElementById('hospital-name').textContent = res.dbHospitalData.hospitalName;
                 document.getElementById('hospital-name').setAttribute('ykiho', res.dbHospitalData.ykiho);
@@ -75,6 +74,8 @@ function getHospInfoDetail() {
         })
         .fail(err => {
             console.error("Error:", err);
+            alert('병원 등록 정보를 불러오는데 실패했습니다.');
+            $('#loading').hide();
         });
 }
 
@@ -107,7 +108,6 @@ function updateButtonBasedOnLikeStatus(isLiked) {
 
 function isLiked(){
     const thisYkiho = ykihoD;
-    console.log("y:",thisYkiho);
     $.ajax({
         method:'GET',
         url:`/api/like`,
@@ -116,7 +116,6 @@ function isLiked(){
             sgguCd:urlSgguCd
         }
     }).done(res => {
-        console.log("isLiked:" + res);
         isLikedHosp = res;
         displayLikeSymbol();
     })
@@ -152,8 +151,6 @@ function likeHospital() {
             sgguCd:urlSgguCd
         }
     }).done(function () {
-        console.log("Liked the hospital successfully!");
-        //handleLikeStatus(ykihoD);
         isLiked();
     })
     .fail(function (err) {
@@ -171,8 +168,6 @@ function unlikeHospital() {
         }
     })
         .done(function () {
-            console.log("Unliked the hospital successfully!");
-            //handleLikeStatus(ykihoD);
             isLiked();
         })
         .fail(function (err) {
@@ -191,9 +186,9 @@ function getTotalInfo() {
         data: {
             yadmNm: hospitalName,
             sgguCd: sgguCd
-        }
+        },
+        timeout:10000
     }).done(res => {
-        console.log(res);
         const BD = res.data.hospBasisData;
         const DD = res.data.hospDetailData;
         //const LD = res.data.hospListData;
@@ -220,8 +215,12 @@ function getTotalInfo() {
                 $('#hospital-park').text(DD.parkEtc + "주차 가능");
             }
         } else {
-            alert('병원정보를 불러오지 못했습니다. \n잠시 후 다시 시도해주세요.')
+            alert('병원정보를 불러오지 못했습니다. \n잠시 후 다시 시도해주세요.');
+            $('#loading').hide();
         }
+    }).fail(function (){
+        alert('병원정보를 불러오지 못했습니다. \n잠시 후 다시 시도해주세요.');
+        $('#loading').hide();
     })
 }
 

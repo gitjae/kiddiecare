@@ -10,7 +10,6 @@ function get_hospital_name() {
         method: 'GET',
         timeout: 0
     }).done(function (response) {
-        console.log(response);
         $('#hospital_name').text(response.hospitalName);
         $('#hos-name').text(response.hospitalName)
     }).fail(function (error) {

@@ -113,7 +113,6 @@ document.getElementById('time-list').addEventListener("click", (event) => {
 
                     const tr = document.createElement('tr');
                     // let createdTime = new Date(detail.createdTime);
-                    console.log(detail.createdTime);
                     tr.innerHTML = `
                         <td>${detail.appoNo}</td>
 <!--                        <td>createdTime</td>-->
@@ -153,7 +152,6 @@ document.getElementById('time-list').addEventListener("click", (event) => {
                             const selectedValue = event.target.value;
                             const hospitalName = document.getElementById('hospital_name').textContent;
                             let selectedAppoNo = tr.dataset.appoNo;
-                            console.log(selectedAppoNo);
 
                             $.ajax({
                                 url: '/api/v1/admin/appo/modifyAdminAppo/appoStatusChange',
@@ -164,8 +162,6 @@ document.getElementById('time-list').addEventListener("click", (event) => {
                                     hospitalName: hospitalName
                                 }
                             }).done(function (result) {
-                                console.log(result.sms);
-                                console.log(result.status);
                                 // alarmDto 받음
                                 let alarm = result.alarm;
                                 // userid 받음
@@ -184,7 +180,6 @@ document.getElementById('time-list').addEventListener("click", (event) => {
                                 socket.send(hospitalName+","+target+","+content+","+url);
 
                             }).fail(function (error) {
-                                console.log(error);
                                 alert('상태변경 실패');
                                 // 변경 실패했을 때 기존 상태로 변경
                                 statusDropdown.value = lastStatus;
@@ -207,7 +202,6 @@ document.getElementById('time-list').addEventListener("click", (event) => {
                     detailButton.addEventListener("click", () => {
                         event.stopPropagation(); // tr의 클릭 이벤트 동작을 막음
                         let selectedAppoNo = tr.dataset.appoNo;
-                        console.log(selectedAppoNo);
 
                         $.ajax({
                             url: '/api/v1/admin/appo/getAppoUserDetail',
@@ -215,7 +209,6 @@ document.getElementById('time-list').addEventListener("click", (event) => {
                             data: {hospAppoNo: selectedAppoNo}
                         }).done (function (detail) {
                             showModal();
-                            console.log(detail.childrenName);
 
                             let genderStr = '';
 
@@ -276,7 +269,6 @@ document.getElementById('time-list').addEventListener("click", (event) => {
                     tableBody.appendChild(tr);
                 });
             } else {
-                console.log("예약 없음");
                 $('#appo-table').hide();
                 $('#no-appo').show();
 
@@ -308,7 +300,6 @@ function changeDate() {
     content.innerHTML = '';
 
     // 받아왔던 객체 전달받기
-    // console.log(selectedUser);
 
     content.innerHTML = `
         <div>
@@ -325,7 +316,6 @@ function changeDate() {
     document.getElementById('modify-date').addEventListener("change", (event) => {
         const selectedDate = new Date(event.target.value);
         const formattedDate = selectedDate.toISOString().slice(0, 10);
-        console.log(formattedDate);
         const selectedDoctor = document.getElementById('selectedDoctor').textContent;
         const timeList = document.getElementById('mo-time-list');
         $.ajax({
@@ -337,7 +327,6 @@ function changeDate() {
                 doctorNo: selectedDoctor
             },
         }).done(function (list) {
-            console.log(list);
             // 기존 요소 삭제
             timeList.innerHTML = "";
 
@@ -377,9 +366,6 @@ function clickListener(event) {
     const id = event.target.id;
     // int status => 1: 추가, 2: 삭제, 3: 변경
     let status;
-    console.log(hour);
-    console.log(date);
-    console.log(id);
 
     let result = confirm(`
     * 선택한 예약자
@@ -437,7 +423,6 @@ $(document).ready(function() {
 
     $('#status').on('change', function() {
         const selectedOption = $(this).val();
-        console.log(`선택된 옵션: ${selectedOption}`);
     });
 });
 

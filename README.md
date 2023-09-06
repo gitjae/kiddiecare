@@ -2,7 +2,7 @@
 ### 프로젝트 개요
   - 소아과 진료 대란으로 인한 진료 예약 오픈런 사회 문제 발생
   - 위치 기반 진료 가능 소아과 예약 서비스를 통한 사회 문제 완화 목표  
-  - [서비스 소개](https://www.canva.com/design/DAFq090KJgM/7b8D36mU1B6-N7yS6tYZfw/edit) 
+  - [서비스 소개](https://www.canva.com/design/DAFsau9GZBY/2M8eC4xSIYN6akEFfxHpSw/edit?utm_content=DAFsau9GZBY&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton) 
 
 ### 작업기간
 - 2023.08.01 ~ 2023.08.25(3주)
@@ -11,6 +11,8 @@
 - 우리동네소아과 Notion [link](https://sally-.notion.site/Index-7ee893e575af456e98a09b7bfae9ea0f?pvs=4)
 - 회의록 [link](https://sally-.notion.site/5beff6a68f144e18bf806deda0353b0a?v=9e172e94f7654f0a9538f797ba60e429&pvs=4)
 
+### 사이트
+[kiddiecare 사이트 바로가기](https://kiddiecare.site/)
 
 ### 아키텍처
 ![image](/KiddiecareArchitecture.png)
@@ -101,5 +103,5 @@
       - 유저의 예약상태 변경 가능
      
     - web socket 알림 기능
-      - peer to peer로 실시간 알람 기능 구현(진행중)
+      - peer to peer로 실시간 알람 기능 구현
 

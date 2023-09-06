@@ -181,13 +181,11 @@ function chkAdminId(){
                         alert("사용 가능한 아이디 입니다.");
                         chkAdminIdValue = true;
                     } else {
-                        console.log(response.response === "duplicate value");
                         alert("사용 불가능한 아이디 입니다.");
                         chkAdminIdValue = false;
                     }
                 },
                 error: function (xhr, status, error) {
-                    console.log(error);
                     alert("아이디 중복확인이 실패하였습니다. 잠시 후 다시 시도해주세요.");
                 }
             });
@@ -204,7 +202,6 @@ function searchHospName() {
     let hospName = $('#hosp-search').val();
     $('.hosp-list').empty();
     $(".container-spinner").show();
-    console.log("hospName"+hospName);
     $.ajax({
         type: "GET",
         url: "/search/hospList/check",
@@ -262,7 +259,6 @@ function sendAuthToken() {
                 }
             },
             error: function(xhr, status, error) {
-                console.log(error);
                 alert("인증번호 전송에 실패하였습니다. 잠시 후 다시 시도해주세요.");
             }
         });
@@ -293,7 +289,6 @@ function checkAuthToken() {
                 }
             },
             error: function(xhr, status, error) {
-                console.log(error);
                 alert("인증번호를 다시 확인해주세요.");
             }
         });

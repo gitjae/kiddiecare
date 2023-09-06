@@ -19,7 +19,6 @@ function buildCalendar() {
     let lastDate = new Date(nowMonth.getFullYear(), nowMonth.getMonth() + 1, 0);
 
     let tbody_Calendar = document.querySelector(".Calendar > tbody");
-    // console.log("nowMonth : " + nowMonth.getFullYear());
 
     document.getElementById("calYear").innerText = nowMonth.getFullYear();
     document.getElementById("calMonth").innerText = leftPad(nowMonth.getMonth() + 1);
@@ -81,13 +80,9 @@ function choiceDate(nowColumn) {
     selectDay = dayNames[selectDate.getDay()]; // 선택된 요일 저장
     formattedDate = selectDate.getFullYear() + "-" + leftPad(selectDate.getMonth() + 1) + "-" + leftPad(selectDate.getDate());  // --> 선택된 날짜: Thu Aug 17 2023 00:00:00 GMT+0900 (한국 표준시) 값 변경
 
-    //console.log("선택된 날짜:", formattedDate);  // String
-    //console.log("선택된 요일:", selectDay);
-
     document.querySelector('.time-slots-table').style.display = 'block';        // css
 
     let ykiho = document.getElementById("hospital-name").getAttribute("ykiho");
-    console.log("ykiho : ", ykiho);
 
     document.querySelector('.time-slots-table').innerHTML = '';     // ajax 호출 전에 슬롯 정보 초기화시켜서 데이터가 있는 날 -> 없는 날 클릭하면 다시 호출되도록
 
@@ -96,8 +91,6 @@ function choiceDate(nowColumn) {
             ykiho: ykiho, date: selectDate
         }
     }).done(res => {
-        console.log(res);
-        console.log(res.slots);
         if (res.slots && res.slots.length > 0) {  // slots 데이터가 있을 경우에만 화면 업데이트
             showTimeSlots(res.slots);
         }
@@ -159,8 +152,6 @@ function showTimeSlots(slots) {
             selectedSlotInfo.ykiho = this.getAttribute('data-ykiho');
             selectedSlotInfo.timeSlotNo = this.getAttribute('data-timeSlotNo');
 
-            console.log(selectedSlotInfo);
-
             $.ajax({
                 method: 'GET',
                 url: '/api/v1/doctor/schedule',
@@ -170,9 +161,6 @@ function showTimeSlots(slots) {
                     time:selectedSlotInfo.time
                 }
             }).done(res => {
-                console.log("<doctors>")
-                console.log(res);
-
                 $('#doctor-cards').empty();
                 // 닥터 카드 만들기
                 for(let i=0; i<res.doctors.length; i++){

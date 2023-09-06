@@ -138,7 +138,7 @@ public class UserController {
                 if(statusCode.equals("202")){
                     session.setAttribute("code", code);
                     session.setAttribute("time", LocalDateTime.now());
-                    System.out.println(LocalDateTime.now());
+
                     jsonObject.put("send","success");
                     jsonObject.put("dupl","false");
                     jsonObject.put("code",code);
@@ -185,7 +185,7 @@ public class UserController {
                     if(statusCode.equals("202")){
                         session.setAttribute("code", code);
                         session.setAttribute("time", LocalDateTime.now());
-                        System.out.println(LocalDateTime.now());
+
                         jsonObject.put("send","success");
                         //jsonObject.put("dupl","false");
                         jsonObject.put("code",code);
@@ -257,7 +257,7 @@ public class UserController {
     @PostMapping("findpw")
     public Map findpassword(@RequestBody UserRequestDto userDto){
         JSONObject jsonObject = new JSONObject();
-        System.out.println(userDto);
+
         boolean check = userService.updateUser(userDto.getId(), userDto);
         if (check){
             return jsonObject.put("find", "success").toMap();

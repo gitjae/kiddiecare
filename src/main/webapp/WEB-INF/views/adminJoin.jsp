@@ -44,9 +44,7 @@
                             <div class="container-spinner">
                                 <div class="spinner"></div>
                             </div>
-                            <div class="hosp-list">
-
-                            </div>
+                            <div class="hosp-list"></div>
                         </div>
                     </div>
                 </div>

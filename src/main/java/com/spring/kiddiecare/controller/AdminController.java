@@ -28,9 +28,9 @@ public class AdminController {
     @PostMapping("id/check")
     public Map adminIdDuplCheck(@ModelAttribute AdminRequestDto adminDto){
         JSONObject result = new JSONObject();
-        System.out.println("adminDto 확인 "+adminDto);
+
         Admin admin = adminRepository.findByAdminId(adminDto.getAdminId());
-        System.out.println("admin 확인"+admin);
+
         String message = admin == null ? "Not a duplicate value." : "duplicate value";
         result.put("response", message);
         return result.toMap();
@@ -142,8 +142,8 @@ public class AdminController {
                 String adminPw = adminDto.getAdminPw();
                 String adminUpdatePw = adminDto.getUpdateAdminPw();
 
-                System.out.println(adminPw);
-                System.out.println(adminUpdatePw);
+
+
 
                 Admin admin = adminRepository.findByAdminId(sessionId);
 

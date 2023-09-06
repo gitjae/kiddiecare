@@ -85,10 +85,7 @@ public class AppointmentController {
 
         JSONObject json = new JSONObject();
 
-        System.out.println(list.get(0).getDoctorNo());
-
         for (TimeSlotsLimitRequestDto dto : list) {
-            System.out.println(dto);
             TimeSlotsLimit timeSlotsLimit = new TimeSlotsLimit(dto);
             timeSlotsLimitRepository.save(timeSlotsLimit);
         }
@@ -177,7 +174,7 @@ public class AppointmentController {
 
             User user = userRepository.findUserByNo(userNo);
             userName = user.getName();
-            System.out.println("user확인" + user);
+
             userId = user.getId();
 
             String statusVal = "";
