@@ -78,22 +78,6 @@ public class AppointmentController {
         return json.toMap();
     }
 
-    // 최종추가 되는거? 예약 생성됨
-    @Transactional
-    @PostMapping(value="timeset-add", consumes = {"application/json"})
-    public Map timeset_add(@RequestBody List<TimeSlotsLimitRequestDto> list) {
-
-        JSONObject json = new JSONObject();
-
-        for (TimeSlotsLimitRequestDto dto : list) {
-            TimeSlotsLimit timeSlotsLimit = new TimeSlotsLimit(dto);
-            timeSlotsLimitRepository.save(timeSlotsLimit);
-        }
-            json.put("result", "success");
-
-        return json.toMap();
-    }
-
 
     @PostMapping(consumes = {"application/json"})
     public ResponseEntity<Map<String, Boolean>> bookAppointment(@RequestBody AppoRequestDto appoDto) {
@@ -113,10 +97,6 @@ public class AppointmentController {
         }
     }
 
-//    @GetMapping("/getAppoDetails")
-//    public List<Appointment> getAppoDetails(@RequestParam int timeSlotNo) {
-//        return appoRepository.findAllByTimeSlotNo(timeSlotNo);
-//    }
 
     @GetMapping("/getAppoDetails")
     public List<AppoResponseDto> getAppoDetails(@RequestParam int timeSlotNo) {
